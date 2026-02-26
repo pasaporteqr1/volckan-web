@@ -12,36 +12,36 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <script id="tailwind-config">
-tailwind.config = {
-    theme: {
-        extend: {
-            colors: {
-                "primary": "#0A1128", // Navy Blue
-                "brand-purple": "#6b21a8",
-                "brand-red": "#dc2626",
-                "brand-yellow": "#facc15",
-                "electric-blue": "#6b21a8", // Mapped to purple
-                "safety-orange": "#dc2626", // Mapped to red
-                "safety-yellow": "#facc15", // Mapped to yellow
-                "brand-dark": "#0A1128",    // Mapped to primary navy
-                
-                // Legacy mappings for the existing header
-                "navy": "#0A1128",
-                "accent-orange": "#dc2626",
-                "accent-yellow": "#facc15",
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0A1128", // Navy Blue
+                        "brand-purple": "#6b21a8",
+                        "brand-red": "#dc2626",
+                        "brand-yellow": "#facc15",
+                        "electric-blue": "#6b21a8", // Mapped to purple
+                        "safety-orange": "#dc2626", // Mapped to red
+                        "safety-yellow": "#facc15", // Mapped to yellow
+                        "brand-dark": "#0A1128",    // Mapped to primary navy
+
+                        // Legacy mappings for the existing header
+                        "navy": "#0A1128",
+                        "accent-orange": "#dc2626",
+                        "accent-yellow": "#facc15",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "heading": ["Montserrat", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "card": "24px",
+                    },
+                },
             },
-            fontFamily: {
-                "sans": ["Inter", "sans-serif"],
-                "heading": ["Montserrat", "sans-serif"],
-            },
-            borderRadius: {
-                "card": "24px",
-            },
-        },
-    },
-}
-</script>
-<style type="text/tailwindcss">
+        }
+    </script>
+    <style type="text/tailwindcss">
 
         @layer base {
             body { @apply font-sans bg-white text-slate-900; }
@@ -55,308 +55,369 @@ tailwind.config = {
         }
     
 </style>
-<style>
+    <style>
         body {
             font-family: "Space Grotesk", sans-serif;
             color: #0a192f;
         }
-</style>
+    </style>
     <link rel="stylesheet" href="./src/styles/main.css" type="text/tailwindcss" />
 </head>
 
 <body class="antialiased font-sans bg-white text-slate-900">
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
-<div class="max-w-7xl mx-auto px-6 lg:px-12">
-<div class="flex items-center justify-between h-24">
-<a href="index.html" class="flex items-center gap-3 group">
-<div class="bg-brand-purple w-12 h-12 rounded-xl flex items-center justify-center text-white group-hover:bg-brand-red transition-colors">
-<span class="material-symbols-outlined font-bold">shield</span>
-</div>
-<span class="text-2xl font-black text-brand-dark tracking-tighter group-hover:text-brand-purple transition-colors">VOLCKAN</span>
-</a>
-<nav class="hidden md:flex items-center gap-10">
-<a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors" href="index.html">Inicio</a>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex items-center justify-between h-24">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div
+                        class="bg-brand-purple w-12 h-12 rounded-xl flex items-center justify-center text-white group-hover:bg-brand-red transition-colors">
+                        <span class="material-symbols-outlined font-bold">shield</span>
+                    </div>
+                    <span
+                        class="text-2xl font-black text-brand-dark tracking-tighter group-hover:text-brand-purple transition-colors">VOLCKAN</span>
+                </a>
+                <nav class="hidden md:flex items-center gap-10">
+                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
+                        href="index.html">Inicio</a>
 
-<!-- Menú Desplegable: Soluciones -->
-<div class="relative group">
-    <button class="font-bold text-sm uppercase hover:text-brand-purple transition-colors inline-flex items-center gap-1">
-        Soluciones
-        <span class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
-    </button>
+                    <!-- Menú Desplegable: Soluciones -->
+                    <div class="relative group">
+                        <button
+                            class="font-bold text-sm uppercase hover:text-brand-purple transition-colors inline-flex items-center gap-1">
+                            Soluciones
+                            <span
+                                class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+                        </button>
 
-    <!-- Contenedor del Dropdown (Light Theme Update) -->
-    <div class="absolute left-0 mt-6 w-64 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
-        <div class="py-2">
-            <a href="soluciones-sosqr.html" class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors">
-                <div class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red">
-                    <span class="material-symbols-outlined text-base">emergency</span>
+                        <!-- Contenedor del Dropdown (Light Theme Update) -->
+                        <div
+                            class="absolute left-0 mt-6 w-64 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
+                            <div class="py-2">
+                                <a href="soluciones-sosqr.html"
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red">
+                                        <span class="material-symbols-outlined text-base">emergency</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-brand-dark text-sm">Sistema SOSQR</span>
+                                        <span class="text-xs text-slate-500 mt-0.5">Alertas escolares</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-parqueos.html"
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                                        <span class="material-symbols-outlined text-base">local_parking</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-brand-dark text-sm">Parqueos Digitales</span>
+                                        <span class="text-xs text-slate-500 mt-0.5">Control de acceso</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
+                        href="#">Automatizaciones</a>
+                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
+                        href="#">Ciberseguridad</a>
+                </nav>
+
+                <div class="flex items-center gap-4">
+                    <button
+                        class="hidden sm:block bg-brand-purple text-white px-8 py-3 rounded-full font-bold text-sm hover:scale-105 hover:bg-brand-red transition-all shadow-lg shadow-purple-900/20">
+                        CONTACTO
+                    </button>
+                    <button class="md:hidden text-brand-dark">
+                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    </button>
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-bold text-brand-dark text-sm">Sistema SOSQR</span>
-                    <span class="text-xs text-slate-500 mt-0.5">Alertas escolares</span>
-                </div>
-            </a>
-            <a href="soluciones-parqueos.html" class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
-                <div class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple">
-                    <span class="material-symbols-outlined text-base">local_parking</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-bold text-brand-dark text-sm">Parqueos Digitales</span>
-                    <span class="text-xs text-slate-500 mt-0.5">Control de acceso</span>
-                </div>
-            </a>
+            </div>
         </div>
-    </div>
-</div>
-
-<a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors" href="#">Automatizaciones</a>
-<a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors" href="#">Ciberseguridad</a>
-</nav>
-
-<div class="flex items-center gap-4">
-<button class="hidden sm:block bg-brand-purple text-white px-8 py-3 rounded-full font-bold text-sm hover:scale-105 hover:bg-brand-red transition-all shadow-lg shadow-purple-900/20">
-    CONTACTO
-</button>
-<button class="md:hidden text-brand-dark">
-    <span class="material-symbols-outlined text-3xl">menu</span>
-</button>
-</div>
-</div>
-</div>
-</header>
+    </header>
     <main>
 
-<section class="relative pt-20 pb-32 overflow-hidden">
-<div class="absolute inset-0 -z-10 bg-[radial-gradient(45%_45%_at_50%_50%,rgba(0,82,255,0.05)_0%,transparent_100%)]"></div>
-<div class="max-w-7xl mx-auto px-6 text-center">
-<div class="mb-12 inline-block">
-<div class="w-32 h-32 md:w-40 md:h-40 bg-slate-50 border-4 border-white shadow-2xl rounded-card flex items-center justify-center mx-auto overflow-hidden relative group">
-<span class="text-slate-300 font-bold uppercase text-xs">SOSQR LOGO</span>
-<div class="absolute inset-0 bg-gradient-to-tr from-electric-blue/10 to-transparent"></div>
-</div>
-</div>
-<h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[0.95] text-brand-dark max-w-5xl mx-auto">
-                Revoluciona la Seguridad de tu <span class="text-electric-blue">Institución</span>
-</h1>
-<p class="text-xl md:text-2xl text-slate-800 max-w-2xl mx-auto mb-12 font-medium">
-                La plataforma inteligente líder en prevención y respuesta inmediata para entornos escolares y corporativos de alto impacto.
-            </p>
-<div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-<button class="w-full sm:w-auto px-10 py-5 bg-safety-orange text-white font-black text-lg rounded-full hover:shadow-2xl hover:shadow-safety-orange/40 hover:-translate-y-1 transition-all">
-                    COTIZA TU PROYECTO SOSQR
-                </button>
-<div class="flex items-center gap-4 text-slate-400">
-<span class="material-symbols-outlined text-safety-yellow fill-1">verified_user</span>
-<span class="text-sm font-bold uppercase tracking-widest">Tecnología de Grado Militar</span>
-</div>
-</div>
-</div>
-</section>
-<section class="py-24 bg-slate-50" id="features">
-<div class="max-w-7xl mx-auto px-6">
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<div class="bg-white p-10 rounded-card card-shadow border border-slate-100 hover:border-electric-blue/30 transition-all group">
-<div class="w-16 h-16 bg-electric-blue/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-electric-blue transition-colors">
-<span class="material-symbols-outlined text-4xl text-electric-blue group-hover:text-white icon-3d">psychology</span>
-</div>
-<h3 class="text-xl font-black mb-4">Prevención Inteligente</h3>
-<p class="text-slate-800 leading-relaxed">Algoritmos avanzados que analizan patrones para anticipar riesgos antes de que ocurran incidencias en el campus.</p>
-</div>
-<div class="bg-white p-10 rounded-card card-shadow border border-slate-100 hover:border-electric-blue/30 transition-all group">
-<div class="w-16 h-16 bg-safety-yellow/20 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-safety-yellow transition-colors">
-<span class="material-symbols-outlined text-4xl text-safety-yellow group-hover:text-brand-dark icon-3d">emergency</span>
-</div>
-<h3 class="text-xl font-black mb-4">Botones de Pánico Digitales</h3>
-<p class="text-slate-800 leading-relaxed">Activación en un solo toque desde cualquier dispositivo móvil con geolocalización precisa en tiempo real.</p>
-</div>
-<div class="bg-white p-10 rounded-card card-shadow border border-slate-100 hover:border-electric-blue/30 transition-all group">
-<div class="w-16 h-16 bg-brand-dark/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-brand-dark transition-colors">
-<span class="material-symbols-outlined text-4xl text-brand-dark group-hover:text-white icon-3d">lan</span>
-</div>
-<h3 class="text-xl font-black mb-4">Centro de Monitoreo 24/7</h3>
-<p class="text-slate-800 leading-relaxed">Operatividad total los 365 días del año con enlace directo a cuerpos de emergencia y protección civil.</p>
-</div>
-</div>
-</div>
-</section>
-<section class="py-32" id="solutions">
-<div class="max-w-7xl mx-auto px-6">
-<div class="text-center mb-20">
-<h2 class="text-4xl md:text-5xl font-black mb-6">Planes de Protección</h2>
-<div class="h-2 w-24 bg-safety-yellow mx-auto"></div>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-<div class="relative bg-white border border-slate-200 rounded-card p-10 flex flex-col hover:shadow-2xl transition-all">
-<div class="mb-8">
-<h4 class="text-electric-blue font-black text-sm mb-2 tracking-widest">NIVEL 01</h4>
-<h3 class="text-3xl font-black">Escuela Segura</h3>
-</div>
-<ul class="space-y-4 mb-12 flex-grow">
-<li class="flex items-center gap-3 text-slate-800 font-medium">
-<span class="material-symbols-outlined text-electric-blue">check_circle</span>
-                            QR IDs para Alumnos
-                        </li>
-<li class="flex items-center gap-3 text-slate-800 font-medium">
-<span class="material-symbols-outlined text-electric-blue">check_circle</span>
-                            App para Padres
-                        </li>
-<li class="flex items-center gap-3 text-slate-800 font-medium">
-<span class="material-symbols-outlined text-electric-blue">check_circle</span>
-                            Protocolos COVID/Emergencia
-                        </li>
-</ul>
-<button class="w-full py-4 border-2 border-electric-blue text-electric-blue font-black rounded-xl hover:bg-electric-blue hover:text-white transition-all">SELECCIONAR PLAN</button>
-</div>
-<div class="relative bg-brand-dark text-white rounded-card p-10 flex flex-col transform lg:-translate-y-4 shadow-2xl overflow-hidden">
-<div class="absolute top-0 right-0 bg-safety-yellow text-brand-dark font-black px-6 py-2 rounded-bl-2xl text-xs tracking-tighter">MÁS SOLICITADO</div>
-<div class="mb-8">
-<h4 class="text-safety-yellow font-black text-sm mb-2 tracking-widest">NIVEL 02</h4>
-<h3 class="text-3xl font-black">Corporativo Protegido</h3>
-</div>
-<ul class="space-y-4 mb-12 flex-grow">
-<li class="flex items-center gap-3 text-slate-300 font-medium">
-<span class="material-symbols-outlined text-safety-yellow">verified</span>
-                            Control de Acceso Biométrico
-                        </li>
-<li class="flex items-center gap-3 text-slate-300 font-medium">
-<span class="material-symbols-outlined text-safety-yellow">verified</span>
-                            Dashboard de Analítica
-                        </li>
-<li class="flex items-center gap-3 text-slate-300 font-medium">
-<span class="material-symbols-outlined text-safety-yellow">verified</span>
-                            Soporte Técnico VIP
-                        </li>
-<li class="flex items-center gap-3 text-slate-300 font-medium">
-<span class="material-symbols-outlined text-safety-yellow">verified</span>
-                            Integración API Completa
-                        </li>
-</ul>
-<button class="w-full py-4 bg-safety-yellow text-brand-dark font-black rounded-xl hover:bg-white transition-all">SELECCIONAR PLAN</button>
-</div>
-<div class="relative bg-white border border-slate-200 rounded-card p-10 flex flex-col hover:shadow-2xl transition-all">
-<div class="mb-8">
-<h4 class="text-slate-400 font-black text-sm mb-2 tracking-widest">NIVEL 03</h4>
-<h3 class="text-3xl font-black">Proyecto a Medida</h3>
-</div>
-<ul class="space-y-4 mb-12 flex-grow">
-<li class="flex items-center gap-3 text-slate-800 font-medium">
-<span class="material-symbols-outlined text-electric-blue">settings</span>
-                            Consultoría de Seguridad
-                        </li>
-<li class="flex items-center gap-3 text-slate-800 font-medium">
-<span class="material-symbols-outlined text-electric-blue">settings</span>
-                            Hardware Especializado
-                        </li>
-<li class="flex items-center gap-3 text-slate-800 font-medium">
-<span class="material-symbols-outlined text-electric-blue">settings</span>
-                            Implementación in-situ
-                        </li>
-</ul>
-<button class="w-full py-4 border-2 border-slate-800 text-brand-dark font-black rounded-xl hover:bg-brand-dark hover:text-white transition-all">HABLAR CON EXPERTO</button>
-</div>
-</div>
-</div>
-</section>
-<section class="py-24 bg-electric-blue overflow-hidden relative">
-<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-<div class="text-white">
-<h2 class="text-4xl md:text-5xl font-black mb-8 leading-tight">Control total en la palma de tu mano</h2>
-<p class="text-xl text-white/80 mb-10 font-medium">Nuestra interfaz intuitiva permite a directivos y personal de seguridad gestionar protocolos críticos desde cualquier tablet o smartphone, garantizando entornos seguros para estudiantes y empleados.</p>
-<div class="flex items-center gap-8">
-<div class="bg-white/10 p-6 rounded-card border border-white/20">
-<span class="text-3xl font-black block">99.9%</span>
-<span class="text-xs font-bold uppercase opacity-60">Uptime del Sistema</span>
-</div>
-<div class="bg-white/10 p-6 rounded-card border border-white/20">
-<span class="text-3xl font-black block">&lt; 3s</span>
-<span class="text-xs font-bold uppercase opacity-60">Respuesta Alerta</span>
-</div>
-</div>
-</div>
-<div class="relative">
-<div class="absolute -top-20 -right-20 w-80 h-80 bg-safety-yellow rounded-full blur-3xl opacity-20"></div>
-<div class="relative bg-white p-4 rounded-[32px] shadow-2xl transform rotate-2">
-<img alt="SOSQR Interface" class="rounded-[24px] w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABFDT0Tg5gma6ajo5jMLMl9h32YBQw1Ey6bWml3Y1vWTR8H3Qs0XzClFAThn9tiMrRL4gc0CElvO6RgPe3X6j16FLXtOQwVjMKo-gflErkPfg6a5yFfU_zup6bMywuLxsP18i2AOylVXngrh31MyCYDl2rvV35VWguEhGF-uqiso-AJcpz_sGYlR_eBjt0sFYnzgVXvKEg0xbb5pAfl--cFJm-fxgHTIWUqKn7euFZavhJ7yryiLeVidSXjBiHx-AjrzFUEqLFPI2n"/>
-<div class="absolute -bottom-6 -left-6 bg-safety-yellow text-brand-dark font-black px-8 py-4 rounded-2xl shadow-xl flex items-center gap-3">
-<span class="material-symbols-outlined">shield_with_heart</span>
-                        ENTORNO PROTEGIDO
+        <section class="relative pt-20 pb-32 overflow-hidden">
+            <div
+                class="absolute inset-0 -z-10 bg-[radial-gradient(45%_45%_at_50%_50%,rgba(0,82,255,0.05)_0%,transparent_100%)]">
+            </div>
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <div class="mb-12 inline-block">
+                    <div
+                        class="w-32 h-32 md:w-40 md:h-40 bg-slate-50 border-4 border-white shadow-2xl rounded-card flex items-center justify-center mx-auto overflow-hidden relative group">
+                        <!-- Logo SOSQR -->
+                        <img src="./public/images/logo-sosqr.png" alt="SOSQR Logo"
+                            class="w-full h-full object-contain p-4 relative z-10"
+                            onerror="this.outerHTML='<span class=\'text-slate-300 font-bold uppercase text-xs\'>SOSQR LOGO</span>'" />
+                        <div class="absolute inset-0 bg-gradient-to-tr from-brand-purple/10 to-transparent"></div>
                     </div>
-</div>
-</div>
-</div>
-</section>
-<section class="py-32 bg-white">
-<div class="max-w-7xl mx-auto px-6">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-<div class="h-[400px] rounded-card overflow-hidden relative group">
-<img alt="Safe School Environment" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAik_LqdjsnjWsifQBec_LRKVqZSrBL4UXp32K-cZgSDEiX9Vx5jP6duvqt_yff_Z1LCpisdFuluoimTUyAR-d3vD5UG_VLoZa68O8IX469VOygKlXhMjdKwbd39Z6XERsyJu5ZmLGY-zz43Pu5Ca5qLkSZjQkpLwqBAOCvVUdg68XF3u1LH4T1z-dEjRR8SfnZWIIS_4-edCPr4UY5mSj0m1lw3xzhNpe7XcBBfyUxZWDxHclHcaG-b7e_Ij3lUDJPR0RY105qWX2N"/>
-<div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 to-transparent flex items-end p-10">
-<h4 class="text-white text-2xl font-black">Escuelas Vigiladas</h4>
-</div>
-</div>
-<div class="h-[400px] rounded-card overflow-hidden relative group">
-<img alt="Safe Office Environment" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpj8izCKB2-P88wP2fnG_RnywhsnuDZnwOs1NcvdncVRmzi1U7Ron9nS6pfCNQa1O7NXOaZXDkAqFidZHFd37t0Sgw9Kdxa9eBWVjUHNn9zmqG1QVyDoTJUSkJN2PoNDQfHfMwB0l-97FiM27hEWNvQRg1CE1vpfpY09bTxA7ND9f0bO6H4_I24Q8umivlAx3PqZ5n2MA1jT0_eagQ1_nRsYDa4DMTesN6CuEHQLN5VavsZhfUWiQLwZB8HLASaDugjcjOomId8Dfv"/>
-<div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 to-transparent flex items-end p-10">
-<h4 class="text-white text-2xl font-black">Oficinas Blindadas</h4>
-</div>
-</div>
-</div>
-</div>
-</section>
+                </div>
+                <h1
+                    class="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[0.95] text-brand-dark max-w-5xl mx-auto uppercase">
+                    Conoce SOSQR <span class="text-brand-purple">Seguridad</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-800 max-w-2xl mx-auto mb-12 font-medium">
+                    La plataforma inteligente líder en prevención y respuesta inmediata para entornos escolares y
+                    corporativos de alto impacto.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    <a href="soluciones-sosqr.html"
+                        class="w-full sm:w-auto px-10 py-5 bg-brand-red text-white font-black text-lg rounded-full hover:shadow-2xl hover:shadow-brand-red/40 hover:-translate-y-1 transition-all inline-block text-center">
+                        COTIZA TU PROYECTO SOSQR
+                    </a>
+                    <div class="flex items-center gap-4 text-slate-400">
+                        <span class="material-symbols-outlined text-safety-yellow fill-1">verified_user</span>
+                        <span class="text-sm font-bold uppercase tracking-widest">Tecnología de Grado Militar</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-24 bg-slate-50" id="features">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div
+                        class="bg-white p-10 rounded-card card-shadow border border-slate-100 hover:border-electric-blue/30 transition-all group">
+                        <div
+                            class="w-16 h-16 bg-electric-blue/10 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-electric-blue transition-colors">
+                            <span
+                                class="material-symbols-outlined text-4xl text-electric-blue group-hover:text-white icon-3d">psychology</span>
+                        </div>
+                        <h3 class="text-xl font-black mb-4">Prevención Inteligente</h3>
+                        <p class="text-slate-800 leading-relaxed">Algoritmos avanzados que analizan patrones para
+                            anticipar riesgos antes de que ocurran incidencias en el campus.</p>
+                    </div>
+                    <div
+                        class="bg-white p-10 rounded-card card-shadow border border-slate-100 hover:border-electric-blue/30 transition-all group">
+                        <div
+                            class="w-16 h-16 bg-safety-yellow/20 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-safety-yellow transition-colors">
+                            <span
+                                class="material-symbols-outlined text-4xl text-safety-yellow group-hover:text-brand-dark icon-3d">emergency</span>
+                        </div>
+                        <h3 class="text-xl font-black mb-4">Botones de Pánico Digitales</h3>
+                        <p class="text-slate-800 leading-relaxed">Activación en un solo toque desde cualquier
+                            dispositivo móvil con geolocalización precisa en tiempo real.</p>
+                    </div>
+                    <div
+                        class="bg-white p-10 rounded-card card-shadow border border-slate-100 hover:border-electric-blue/30 transition-all group">
+                        <div
+                            class="w-16 h-16 bg-brand-dark/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-brand-dark transition-colors">
+                            <span
+                                class="material-symbols-outlined text-4xl text-brand-dark group-hover:text-white icon-3d">lan</span>
+                        </div>
+                        <h3 class="text-xl font-black mb-4">Centro de Monitoreo 24/7</h3>
+                        <p class="text-slate-800 leading-relaxed">Operatividad total los 365 días del año con enlace
+                            directo a cuerpos de emergencia y protección civil.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-32" id="solutions">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-20">
+                    <h2 class="text-4xl md:text-5xl font-black mb-6">Planes de Protección</h2>
+                    <div class="h-2 w-24 bg-safety-yellow mx-auto"></div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                    <div
+                        class="relative bg-white border border-slate-200 rounded-card p-10 flex flex-col hover:shadow-2xl transition-all">
+                        <div class="mb-8">
+                            <h4 class="text-electric-blue font-black text-sm mb-2 tracking-widest">NIVEL 01</h4>
+                            <h3 class="text-3xl font-black">Escuela Segura</h3>
+                        </div>
+                        <ul class="space-y-4 mb-12 flex-grow">
+                            <li class="flex items-center gap-3 text-slate-800 font-medium">
+                                <span class="material-symbols-outlined text-electric-blue">check_circle</span>
+                                QR IDs para Alumnos
+                            </li>
+                            <li class="flex items-center gap-3 text-slate-800 font-medium">
+                                <span class="material-symbols-outlined text-electric-blue">check_circle</span>
+                                App para Padres
+                            </li>
+                            <li class="flex items-center gap-3 text-slate-800 font-medium">
+                                <span class="material-symbols-outlined text-electric-blue">check_circle</span>
+                                Protocolos COVID/Emergencia
+                            </li>
+                        </ul>
+                        <button
+                            class="w-full py-4 border-2 border-electric-blue text-electric-blue font-black rounded-xl hover:bg-electric-blue hover:text-white transition-all">SELECCIONAR
+                            PLAN</button>
+                    </div>
+                    <div
+                        class="relative bg-brand-dark text-white rounded-card p-10 flex flex-col transform lg:-translate-y-4 shadow-2xl overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 bg-safety-yellow text-brand-dark font-black px-6 py-2 rounded-bl-2xl text-xs tracking-tighter">
+                            MÁS SOLICITADO</div>
+                        <div class="mb-8">
+                            <h4 class="text-safety-yellow font-black text-sm mb-2 tracking-widest">NIVEL 02</h4>
+                            <h3 class="text-3xl font-black">Corporativo Protegido</h3>
+                        </div>
+                        <ul class="space-y-4 mb-12 flex-grow">
+                            <li class="flex items-center gap-3 text-slate-300 font-medium">
+                                <span class="material-symbols-outlined text-safety-yellow">verified</span>
+                                Control de Acceso Biométrico
+                            </li>
+                            <li class="flex items-center gap-3 text-slate-300 font-medium">
+                                <span class="material-symbols-outlined text-safety-yellow">verified</span>
+                                Dashboard de Analítica
+                            </li>
+                            <li class="flex items-center gap-3 text-slate-300 font-medium">
+                                <span class="material-symbols-outlined text-safety-yellow">verified</span>
+                                Soporte Técnico VIP
+                            </li>
+                            <li class="flex items-center gap-3 text-slate-300 font-medium">
+                                <span class="material-symbols-outlined text-safety-yellow">verified</span>
+                                Integración API Completa
+                            </li>
+                        </ul>
+                        <button
+                            class="w-full py-4 bg-safety-yellow text-brand-dark font-black rounded-xl hover:bg-white transition-all">SELECCIONAR
+                            PLAN</button>
+                    </div>
+                    <div
+                        class="relative bg-white border border-slate-200 rounded-card p-10 flex flex-col hover:shadow-2xl transition-all">
+                        <div class="mb-8">
+                            <h4 class="text-slate-400 font-black text-sm mb-2 tracking-widest">NIVEL 03</h4>
+                            <h3 class="text-3xl font-black">Proyecto a Medida</h3>
+                        </div>
+                        <ul class="space-y-4 mb-12 flex-grow">
+                            <li class="flex items-center gap-3 text-slate-800 font-medium">
+                                <span class="material-symbols-outlined text-electric-blue">settings</span>
+                                Consultoría de Seguridad
+                            </li>
+                            <li class="flex items-center gap-3 text-slate-800 font-medium">
+                                <span class="material-symbols-outlined text-electric-blue">settings</span>
+                                Hardware Especializado
+                            </li>
+                            <li class="flex items-center gap-3 text-slate-800 font-medium">
+                                <span class="material-symbols-outlined text-electric-blue">settings</span>
+                                Implementación in-situ
+                            </li>
+                        </ul>
+                        <button
+                            class="w-full py-4 border-2 border-slate-800 text-brand-dark font-black rounded-xl hover:bg-brand-dark hover:text-white transition-all">HABLAR
+                            CON EXPERTO</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-24 bg-electric-blue overflow-hidden relative">
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="text-white">
+                    <h2 class="text-4xl md:text-5xl font-black mb-8 leading-tight">Control total en la palma de tu mano
+                    </h2>
+                    <p class="text-xl text-white/80 mb-10 font-medium">Nuestra interfaz intuitiva permite a directivos y
+                        personal de seguridad gestionar protocolos críticos desde cualquier tablet o smartphone,
+                        garantizando entornos seguros para estudiantes y empleados.</p>
+                    <div class="flex items-center gap-8">
+                        <div class="bg-white/10 p-6 rounded-card border border-white/20">
+                            <span class="text-3xl font-black block">99.9%</span>
+                            <span class="text-xs font-bold uppercase opacity-60">Uptime del Sistema</span>
+                        </div>
+                        <div class="bg-white/10 p-6 rounded-card border border-white/20">
+                            <span class="text-3xl font-black block">&lt; 3s</span>
+                            <span class="text-xs font-bold uppercase opacity-60">Respuesta Alerta</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -top-20 -right-20 w-80 h-80 bg-safety-yellow rounded-full blur-3xl opacity-20">
+                    </div>
+                    <div class="relative bg-white p-4 rounded-[32px] shadow-2xl transform rotate-2">
+                        <img alt="SOSQR Interface" class="rounded-[24px] w-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuABFDT0Tg5gma6ajo5jMLMl9h32YBQw1Ey6bWml3Y1vWTR8H3Qs0XzClFAThn9tiMrRL4gc0CElvO6RgPe3X6j16FLXtOQwVjMKo-gflErkPfg6a5yFfU_zup6bMywuLxsP18i2AOylVXngrh31MyCYDl2rvV35VWguEhGF-uqiso-AJcpz_sGYlR_eBjt0sFYnzgVXvKEg0xbb5pAfl--cFJm-fxgHTIWUqKn7euFZavhJ7yryiLeVidSXjBiHx-AjrzFUEqLFPI2n" />
+                        <div
+                            class="absolute -bottom-6 -left-6 bg-safety-yellow text-brand-dark font-black px-8 py-4 rounded-2xl shadow-xl flex items-center gap-3">
+                            <span class="material-symbols-outlined">shield_with_heart</span>
+                            ENTORNO PROTEGIDO
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="h-[400px] rounded-card overflow-hidden relative group">
+                        <img alt="Safe School Environment"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAik_LqdjsnjWsifQBec_LRKVqZSrBL4UXp32K-cZgSDEiX9Vx5jP6duvqt_yff_Z1LCpisdFuluoimTUyAR-d3vD5UG_VLoZa68O8IX469VOygKlXhMjdKwbd39Z6XERsyJu5ZmLGY-zz43Pu5Ca5qLkSZjQkpLwqBAOCvVUdg68XF3u1LH4T1z-dEjRR8SfnZWIIS_4-edCPr4UY5mSj0m1lw3xzhNpe7XcBBfyUxZWDxHclHcaG-b7e_Ij3lUDJPR0RY105qWX2N" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 to-transparent flex items-end p-10">
+                            <h4 class="text-white text-2xl font-black">Escuelas Vigiladas</h4>
+                        </div>
+                    </div>
+                    <div class="h-[400px] rounded-card overflow-hidden relative group">
+                        <img alt="Safe Office Environment"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpj8izCKB2-P88wP2fnG_RnywhsnuDZnwOs1NcvdncVRmzi1U7Ron9nS6pfCNQa1O7NXOaZXDkAqFidZHFd37t0Sgw9Kdxa9eBWVjUHNn9zmqG1QVyDoTJUSkJN2PoNDQfHfMwB0l-97FiM27hEWNvQRg1CE1vpfpY09bTxA7ND9f0bO6H4_I24Q8umivlAx3PqZ5n2MA1jT0_eagQ1_nRsYDa4DMTesN6CuEHQLN5VavsZhfUWiQLwZB8HLASaDugjcjOomId8Dfv" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 to-transparent flex items-end p-10">
+                            <h4 class="text-white text-2xl font-black">Oficinas Blindadas</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-</main>
+    </main>
     <footer class="bg-brand-dark text-white pt-24 pb-12">
-<div class="max-w-7xl mx-auto px-6">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
-<div class="col-span-1 md:col-span-2">
-<div class="flex items-center gap-3 mb-8">
-<div class="bg-electric-blue w-10 h-10 rounded-lg flex items-center justify-center">
-<span class="material-symbols-outlined">qr_code_2</span>
-</div>
-<span class="text-2xl font-black tracking-tighter">SOSQR</span>
-</div>
-<p class="text-slate-400 max-w-sm mb-10 font-medium">Líderes en tecnología de seguridad preventiva para México y Latinoamérica. Protegiendo lo que más importa con innovación constante.</p>
-<div class="flex gap-4">
-<div class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-electric-blue transition-colors cursor-pointer">
-<span class="material-symbols-outlined text-sm">share</span>
-</div>
-<div class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-electric-blue transition-colors cursor-pointer">
-<span class="material-symbols-outlined text-sm">public</span>
-</div>
-</div>
-</div>
-<div>
-<h5 class="font-black text-sm tracking-widest mb-8 text-safety-yellow">SOLUCIONES</h5>
-<ul class="space-y-4 text-slate-400 font-bold text-sm">
-<li><a class="hover:text-white transition-colors" href="#">Seguridad Escolar</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Seguridad Corporativa</a></li>
-<li><a class="hover:text-white transition-colors" href="#">Botones de Pánico</a></li>
-<li><a class="hover:text-white transition-colors" href="#">CCTV Inteligente</a></li>
-</ul>
-</div>
-<div>
-<h5 class="font-black text-sm tracking-widest mb-8 text-safety-yellow">CONTACTO</h5>
-<ul class="space-y-4 text-slate-400 font-bold text-sm">
-<li class="flex items-center gap-3">
-<span class="material-symbols-outlined text-electric-blue text-lg">mail</span>
-                        contacto@sosqr.mx
-                    </li>
-<li class="flex items-center gap-3">
-<span class="material-symbols-outlined text-electric-blue text-lg">phone</span>
-                        800 SOSQR SAFE
-                    </li>
-</ul>
-</div>
-</div>
-<div class="pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8 text-xs font-bold text-slate-800 uppercase tracking-widest">
-<p>© 2024 SOSQR Seguridad Escolar. Todos los derechos reservados.</p>
-<div class="flex gap-10">
-<a class="hover:text-white transition-colors" href="#">Aviso de Privacidad</a>
-<a class="hover:text-white transition-colors" href="#">Términos de Servicio</a>
-</div>
-</div>
-</div>
-</footer>
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="bg-electric-blue w-10 h-10 rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined">qr_code_2</span>
+                        </div>
+                        <span class="text-2xl font-black tracking-tighter">SOSQR</span>
+                    </div>
+                    <p class="text-slate-400 max-w-sm mb-10 font-medium">Líderes en tecnología de seguridad preventiva
+                        para México y Latinoamérica. Protegiendo lo que más importa con innovación constante.</p>
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-electric-blue transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">share</span>
+                        </div>
+                        <div
+                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-electric-blue transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">public</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-black text-sm tracking-widest mb-8 text-safety-yellow">SOLUCIONES</h5>
+                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
+                        <li><a class="hover:text-white transition-colors" href="#">Seguridad Escolar</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#">Seguridad Corporativa</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#">Botones de Pánico</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#">CCTV Inteligente</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-black text-sm tracking-widest mb-8 text-safety-yellow">CONTACTO</h5>
+                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-electric-blue text-lg">mail</span>
+                            contacto@sosqr.mx
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-electric-blue text-lg">phone</span>
+                            800 SOSQR SAFE
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8 text-xs font-bold text-slate-800 uppercase tracking-widest">
+                <p>© 2024 SOSQR Seguridad Escolar. Todos los derechos reservados.</p>
+                <div class="flex gap-10">
+                    <a class="hover:text-white transition-colors" href="#">Aviso de Privacidad</a>
+                    <a class="hover:text-white transition-colors" href="#">Términos de Servicio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
 
