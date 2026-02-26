@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Parqueos Digitales | Grupo Volckan</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                "primary": "#0A1128", // Navy Blue
+                "brand-purple": "#6b21a8",
+                "brand-red": "#dc2626",
+                "brand-yellow": "#facc15",
+                "electric-blue": "#6b21a8", // Mapped to purple
+                "safety-orange": "#dc2626", // Mapped to red
+                "safety-yellow": "#facc15", // Mapped to yellow
+                "brand-dark": "#0A1128",    // Mapped to primary navy
+                
+                // Legacy mappings for the existing header
+                "navy": "#0A1128",
+                "accent-orange": "#dc2626",
+                "accent-yellow": "#facc15",
+            },
+            fontFamily: {
+                "sans": ["Inter", "sans-serif"],
+                "heading": ["Montserrat", "sans-serif"],
+            },
+            borderRadius: {
+                "card": "24px",
+            },
+        },
+    },
+}
+</script>
+<style type="text/tailwindcss">
+
+        @layer base {
+            body { @apply font-sans bg-white text-slate-900; }
+            h1, h2, h3, h4 { @apply font-heading uppercase tracking-tight; }
+        }
+        .card-shadow {
+            box-shadow: 0 10px 40px -10px rgba(0, 82, 255, 0.1);
+        }
+        .icon-3d {
+            filter: drop-shadow(4px 4px 0px rgba(255, 215, 0, 0.4));
+        }
+    
+</style>
+<style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+            color: #0a192f;
+        }
+</style>
+    <link rel="stylesheet" href="./src/styles/main.css" type="text/tailwindcss" />
+</head>
+<body class="antialiased font-sans bg-white text-slate-900">
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex items-center justify-between h-24">
+<a href="index.html" class="flex items-center gap-3 group">
+<div class="bg-brand-purple w-12 h-12 rounded-xl flex items-center justify-center text-white group-hover:bg-brand-red transition-colors">
+<span class="material-symbols-outlined font-bold">shield</span>
+</div>
+<span class="text-2xl font-black text-slate-800 tracking-tighter group-hover:text-brand-purple transition-colors">VOLCKAN</span>
+</a>
+<nav class="hidden md:flex items-center gap-10">
+<a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors" href="index.html">Inicio</a>
+
+<!-- Menú Desplegable: Soluciones -->
+<div class="relative group">
+    <button class="font-bold text-sm uppercase hover:text-brand-purple transition-colors inline-flex items-center gap-1">
+        Soluciones
+        <span class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+    </button>
+
+    <!-- Contenedor del Dropdown (Light Theme Update) -->
+    <div class="absolute left-0 mt-6 w-64 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
+        <div class="py-2">
+            <a href="soluciones-sosqr.html" class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors">
+                <div class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red">
+                    <span class="material-symbols-outlined text-base">emergency</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-slate-800 text-sm">Sistema SOSQR</span>
+                    <span class="text-xs text-slate-500 mt-0.5">Alertas escolares</span>
+                </div>
+            </a>
+            <a href="soluciones-parqueos.html" class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
+                <div class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                    <span class="material-symbols-outlined text-base">local_parking</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-slate-800 text-sm">Parqueos Digitales</span>
+                    <span class="text-xs text-slate-500 mt-0.5">Control de acceso</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors" href="#">Automatizaciones</a>
+<a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors" href="#">Ciberseguridad</a>
+</nav>
+
+<div class="flex items-center gap-4">
+<button class="hidden sm:block bg-brand-purple text-white px-8 py-3 rounded-full font-bold text-sm hover:scale-105 hover:bg-brand-red transition-all shadow-lg shadow-purple-900/20">
+    CONTACTO
+</button>
+<button class="md:hidden text-slate-800">
+    <span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative bg-background-alt overflow-hidden">
+<div class="absolute inset-0 z-0 opacity-10" data-alt="Abstract parking lot pattern from above" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_r5UAR40cNIVOeTGTKgfnwxojEnNhe7X51x4T7gRch1_mD5XPpSHbpEMSB9vCs4eDQsV0Q0iScwAwUsrIo0mJhj73UAuD0O5buCEnFI_XLgH8-8b2SH-CQ2s7_O5iVwswf8H5VZpg8r4Fyot5hYHk1S1jKldRWfe9KLkA5QHg-MPU1K1nD5nd4iCA6wCPfUnUHfV0s_1wwHK8AMeLl-iGk9Pn1Wy-DXDM1v3M2QEcVEKIlrRHWblBfBrGXILI_hrYMdXAPmxyuH9E'); background-size: cover; background-position: center;">
+</div>
+<div class="relative z-10 max-w-[1280px] mx-auto px-4 py-16 sm:px-6 lg:px-8 lg:py-24 grid lg:grid-cols-2 gap-12 items-center">
+<div class="flex flex-col gap-6">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-red/10 text-brand-red-dark text-xs font-bold w-fit uppercase tracking-wider">
+<span class="material-symbols-outlined text-sm">security</span>
+                        Seguridad Avanzada
+                    </div>
+<h1 class="text-slate-800 text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
+                        Parqueos Digitales: <span class="text-brand-red">Gestión Inteligente</span> y Segura
+                    </h1>
+<p class="text-slate-600 text-lg sm:text-xl leading-relaxed max-w-lg">
+                        Eficiencia optimizada para estacionamientos de 10 a 200 vehículos en Guatemala. Automatización, seguridad y control total al alcance de su mano.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="bg-brand-red hover:bg-brand-red-dark text-slate-800 font-bold text-base rounded-lg px-8 py-3 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                            Solicitar Cotización
+                        </button>
+<button class="flex items-center justify-center gap-2 bg-white border border-gray-200 hover:border-primary text-slate-800 font-semibold text-base rounded-lg px-8 py-3 transition-all hover:bg-gray-50">
+<span class="material-symbols-outlined text-brand-red">play_circle</span>
+                            Ver Demo
+                        </button>
+</div>
+</div>
+<div class="relative lg:h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl group">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img alt="Modern smart parking garage entrance with digital signs" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" data-alt="Modern smart parking garage entrance" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaVSZsoruDh6ym9X72meIIg6EK09UwxZ474pcF6ME60Buor34SAt3HNKkQlfqv7gVx92widd55MKTbxl8ZWqv4Y5WAOy0M9eIjpAcXNakGWtKxk0kdt6g39ObnYGJAjXDqTVxEVU72N1802wX4LD5iVLXl0HxWyOTRn9oPVCkccfiaVivczp15jp6I7_wlzymAeIThcsOrN1hn5lpWXdrKN1l7qWQmu1TymRG6mXlEx4d1VZogLZ6M5iECAb5Hdl8dHgLqsCAQ_MHs"/>
+<div class="absolute bottom-0 left-0 p-8 z-20">
+<div class="flex items-center gap-4 mb-2">
+<div class="bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg">
+<span class="material-symbols-outlined text-brand-red text-2xl">directions_car</span>
+</div>
+<div>
+<p class="text-white font-bold text-lg">Control en Tiempo Real</p>
+<p class="text-white/80 text-sm">Monitoreo 24/7</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Grid -->
+<section class="py-20 bg-white">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16 max-w-3xl mx-auto">
+<h2 class="text-slate-800 text-3xl sm:text-4xl font-bold mb-4">Características Principales</h2>
+<p class="text-slate-600 text-lg">Descubra cómo nuestra tecnología transforma la gestión operativa de su estacionamiento con herramientas diseñadas para el control total.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Feature 1: Control Económico -->
+<div class="bg-background-alt rounded-2xl p-8 transition-all hover:shadow-soft border border-transparent hover:border-accent-yellow/30 group">
+<div class="w-14 h-14 bg-accent-yellow/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent-yellow/20 transition-colors">
+<span class="material-symbols-outlined text-accent-yellow text-3xl">payments</span>
+</div>
+<h3 class="text-xl font-bold text-slate-800 mb-3">Control Económico</h3>
+<p class="text-slate-600 leading-relaxed mb-6">
+                            Monetización eficiente con seguimiento de ingresos transparente e integración de pagos seguros. Evite fugas de capital y optimice tarifas dinámicas.
+                        </p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-sm text-slate-700">
+<span class="material-symbols-outlined text-accent-yellow text-lg">check_circle</span>
+                                Auditoría de ingresos en vivo
+                            </li>
+<li class="flex items-center gap-2 text-sm text-slate-700">
+<span class="material-symbols-outlined text-accent-yellow text-lg">check_circle</span>
+                                Pagos sin contacto
+                            </li>
+</ul>
+</div>
+<!-- Feature 2: LPR -->
+<div class="bg-background-alt rounded-2xl p-8 transition-all hover:shadow-soft border border-transparent hover:border-accent-blue/30 group relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-accent-blue/5 rounded-bl-full -mr-4 -mt-4"></div>
+<div class="w-14 h-14 bg-accent-blue/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent-blue/20 transition-colors">
+<span class="material-symbols-outlined text-accent-blue text-3xl">videocam</span>
+</div>
+<h3 class="text-xl font-bold text-slate-800 mb-3">Lectores de Matrícula (LPR)</h3>
+<p class="text-slate-600 leading-relaxed mb-6">
+                            Reconocimiento automático de placas mediante cámaras de alta tecnología con IA para un acceso sin fricción y máxima seguridad perimetral.
+                        </p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-sm text-slate-700">
+<span class="material-symbols-outlined text-accent-blue text-lg">check_circle</span>
+                                Acceso automático autorizado
+                            </li>
+<li class="flex items-center gap-2 text-sm text-slate-700">
+<span class="material-symbols-outlined text-accent-blue text-lg">check_circle</span>
+                                Listas negras y alertas
+                            </li>
+</ul>
+</div>
+<!-- Feature 3: Reportes -->
+<div class="bg-background-alt rounded-2xl p-8 transition-all hover:shadow-soft border border-transparent hover:border-primary/30 group">
+<div class="w-14 h-14 bg-brand-red/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-red/20 transition-colors">
+<span class="material-symbols-outlined text-brand-red text-3xl">analytics</span>
+</div>
+<h3 class="text-xl font-bold text-slate-800 mb-3">Reportes Automáticos</h3>
+<p class="text-slate-600 leading-relaxed mb-6">
+                            Visualización de análisis de datos, registros diarios y gestión basada en la nube para decisiones informadas. Todo desde un dashboard centralizado.
+                        </p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-sm text-slate-700">
+<span class="material-symbols-outlined text-brand-red text-lg">check_circle</span>
+                                Estadísticas de ocupación
+                            </li>
+<li class="flex items-center gap-2 text-sm text-slate-700">
+<span class="material-symbols-outlined text-brand-red text-lg">check_circle</span>
+                                Historial exportable
+                            </li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Value Prop / Scalability -->
+<section class="py-20 bg-slate-50 border-y border-slate-200">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col lg:flex-row gap-16 items-center">
+<div class="lg:w-1/2">
+<h2 class="text-slate-800 text-3xl sm:text-4xl font-bold mb-6">Escalabilidad Perfecta para su Institución</h2>
+<p class="text-slate-600 text-lg mb-8 leading-relaxed">
+                            Nuestra solución no es genérica; está diseñada específicamente para adaptarse a las necesidades de flujo vehicular medio en Guatemala. Ya sea un control estricto para estudiantes o un acceso fluido para ejecutivos, SOSQR se adapta.
+                        </p>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="flex-shrink-0 mt-1">
+<div class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-slate-800">school</span>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-bold text-slate-800">Para Colegios y Universidades</h4>
+<p class="text-slate-600 mt-1">Gestión segura de entrada y salida de estudiantes y personal en horas pico. Control de padres de familia y rutas escolares.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 mt-1">
+<div class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-slate-800">business</span>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-bold text-slate-800">Para Edificios Corporativos</h4>
+<p class="text-slate-600 mt-1">Control de acceso diferenciado para empleados, directivos y visitantes ocasionales con registros detallados por departamento.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2 w-full">
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-4 mt-8">
+<div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 h-48 flex flex-col justify-end relative overflow-hidden group">
+<img alt="University campus building" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-110" data-alt="Modern university campus building" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIbnx7ZRkoG56CKsz9al00PYz5iJfisR-hsWyFVTjvYo1UsZwTNxkDzDjQpdxo7sgBgUFWvte4jPmOwwFKsxYFgZanbpvwvRfXv-SNJxM_CcQFLIdG20abQecQgqErrPZ68mr7qmMWs9lprQUs5VJUbkoCWtes9fNEqj0hP4KljkrnmOlS86a75wzWAbGo2Yj3ka0Waa1VRu9wqwqzbjGM6ctXCB7sIjybh7rHcQncgsT3-0NdPWFdvFC_n068kfpTqvSxfeB3wofb"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+<span class="relative text-white font-bold z-10">Colegios</span>
+</div>
+<div class="bg-brand-red/10 p-6 rounded-xl border border-primary/20 flex flex-col justify-center items-center text-center h-40">
+<span class="text-4xl font-black text-brand-red mb-1">10-200</span>
+<span class="text-sm font-semibold text-slate-800">Espacios Optimizados</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-40 flex flex-col justify-center items-center text-center">
+<span class="material-symbols-outlined text-slate-800 text-4xl mb-2">verified_user</span>
+<span class="text-sm font-semibold text-slate-800">Seguridad Garantizada</span>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 h-48 flex flex-col justify-end relative overflow-hidden group">
+<img alt="Corporate glass building low angle" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-110" data-alt="High rise corporate building" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUbCEkx9SBlfTDuqy8giVbzk_DY2eqTVKnY_X3cN7flFmdh5aGohSZWu7TsSCppBHnhZSUt0x-NA1zgpc2jrom7zWfuFJbNrLaz7nMsUnTVAXGWrhytmJIAOsCra1oD2RDhl03JchRiYqeBAdqRsR1gof94kbPD4fK0Uwgn2jA6xTRYUxuWLVnjddg7oX3p0VsWAMVkJ2yDVufbCh4O_AiPUQ3o-2VPdEnhl9JC48ysP_jw18OP2LnV66IVhfu428kcHXRn4TBjOw0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+<span class="relative text-white font-bold z-10">Corporativos</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 bg-white relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+<div class="max-w-4xl mx-auto px-4 text-center">
+<h2 class="text-4xl sm:text-5xl font-black text-slate-800 mb-6 tracking-tight">Optimiza tu Parqueo Hoy</h2>
+<p class="text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
+                    Únase a la revolución de parqueos digitales y mejore la seguridad y eficiencia de su espacio con SOSQR.
+                </p>
+<div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+<button class="w-full sm:w-auto bg-brand-red hover:bg-brand-red-dark text-slate-800 font-bold text-lg rounded-lg px-10 py-4 transition-all shadow-lg hover:shadow-primary/20">
+                        Contactar Ventas
+                    </button>
+<button class="w-full sm:w-auto text-slate-600 hover:text-slate-800 font-semibold text-lg px-8 py-4 transition-colors">
+                        Descargar Brochure
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-brand-dark text-white pt-24 pb-12">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+<div class="col-span-1 md:col-span-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-brand-purple w-10 h-10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">qr_code_2</span>
+</div>
+<span class="text-2xl font-black tracking-tighter">SOSQR</span>
+</div>
+<p class="text-slate-400 max-w-sm mb-10 font-medium">Líderes en tecnología de seguridad preventiva para México y Latinoamérica. Protegiendo lo que más importa con innovación constante.</p>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">share</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">public</span>
+</div>
+</div>
+</div>
+<div>
+<h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">SOLUCIONES</h5>
+<ul class="space-y-4 text-slate-400 font-bold text-sm">
+<li><a class="hover:text-white transition-colors" href="#">Seguridad Escolar</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Seguridad Corporativa</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Botones de Pánico</a></li>
+<li><a class="hover:text-white transition-colors" href="#">CCTV Inteligente</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">CONTACTO</h5>
+<ul class="space-y-4 text-slate-400 font-bold text-sm">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-brand-purple text-lg">mail</span>
+                        contacto@sosqr.mx
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-brand-purple text-lg">phone</span>
+                        800 SOSQR SAFE
+                    </li>
+</ul>
+</div>
+</div>
+<div class="pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8 text-xs font-bold text-slate-800 uppercase tracking-widest">
+<p>© 2024 SOSQR Seguridad Escolar. Todos los derechos reservados.</p>
+<div class="flex gap-10">
+<a class="hover:text-white transition-colors" href="#">Aviso de Privacidad</a>
+<a class="hover:text-white transition-colors" href="#">Términos de Servicio</a>
+</div>
+</div>
+</div>
+</footer>
+</body>
+</html>

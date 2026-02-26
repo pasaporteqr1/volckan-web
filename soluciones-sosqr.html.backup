@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Soluciones SOSQR | Grupo Volckan</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ef4444", // Vibrant Red
+                        "safety-orange": "#f97316",
+                        "warning-yellow": "#eab308",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0a0a0a", // Deeper charcoal/black
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="./src/styles/main.css" type="text/tailwindcss" />
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+    <header
+        class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-white/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <span
+                        class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform"
+                        data-icon="shield">shield</span>
+                    <h2 class="text-xl font-bold tracking-tight uppercase group-hover:text-primary transition-colors">
+                        Grupo Volckan</h2>
+                </a>
+                <nav class="hidden xl:flex items-center gap-6">
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="index.html">Inicio</a>
+                    <!-- Menú Desplegable: Soluciones -->
+                    <div class="relative group">
+                        <button
+                            class="text-sm font-medium hover:text-safety-orange transition-colors text-safety-orange inline-flex items-center gap-1">
+                            Soluciones
+                            <span
+                                class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+                        </button>
+
+                        <!-- Contenedor del Dropdown -->
+                        <div
+                            class="absolute left-0 mt-2 w-56 rounded-xl bg-slate-900 border border-white/10 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
+                            <div class="py-2">
+                                <a href="soluciones-sosqr.html"
+                                    class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-primary">
+                                        <span class="material-symbols-outlined text-sm">emergency</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold">Sistema SOSQR</span>
+                                        <span class="text-xs text-slate-500">Alertas escolares</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-parqueos.html"
+                                    class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-t border-white/5">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-[#229ED9]">
+                                        <span class="material-symbols-outlined text-sm">local_parking</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold">Parqueos Digitales</span>
+                                        <span class="text-xs text-slate-500">Control de acceso</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="#">Automatizaciones</a>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors" href="#">Monitores</a>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="#">Ciberseguridad</a>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="#">Capacitaciones</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button class="hidden sm:flex btn-gradient-alert text-white px-6 py-2 rounded-lg font-bold text-sm">
+                        Solicitar Cotización
+                    </button>
+                    <button class="xl:hidden text-slate-100">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- Hero section simple -->
+        <section
+            class="relative overflow-hidden pt-16 pb-12 lg:pt-24 lg:pb-16 bg-background-dark border-b border-white/5">
+            <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,#ef4444_0%,transparent_50%)]"></div>
+            </div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div
+                    class="inline-flex items-center gap-2 bg-red-950/30 border border-red-500/30 rounded-full px-4 py-1.5 mb-6">
+                    <span class="material-symbols-outlined text-primary text-sm">verified</span>
+                    <span class="text-xs font-bold text-warning-yellow uppercase tracking-widest">Tecnología de
+                        Vanguardia</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-tight text-white">
+                    Soluciones de Seguridad <br />
+                    <span class="text-gradient-fire">Ecosistema SOSQR</span>
+                </h1>
+                <p class="text-lg text-slate-400 max-w-2xl">
+                    Descubre nuestro sistema automatizado de prevención y respuesta a emergencias diseñado para proteger
+                    tus instalaciones.
+                </p>
+            </div>
+        </section>
+
+        <!-- SOSQR Section content -->
+        <section class="py-24 bg-slate-900/50" id="sosqr-system">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-16 text-center">
+                    <h2 class="text-warning-yellow font-bold tracking-widest uppercase text-sm mb-4">Solución Destacada
+                    </h2>
+                    <h3 class="text-3xl md:text-5xl font-bold text-white mb-6">SOSQR: Sistema de Alertas</h3>
+                    <p class="text-lg text-slate-400 max-w-3xl mx-auto">
+                        El sistema de alertas de SOSQR funciona mediante un protocolo tecnológico específico y notifica
+                        a una red de contactos preestablecida para asegurar una respuesta rápida.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <!-- Column 1: How it works -->
+                    <div
+                        class="bg-background-dark p-8 rounded-2xl border border-white/5 shadow-xl relative overflow-hidden group">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">build_circle</span>
+                            ¿Cómo funciona el sistema?
+                        </h4>
+
+                        <div class="space-y-6 relative z-10">
+                            <div class="flex gap-4">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-primary font-bold">
+                                    1</div>
+                                <div>
+                                    <h5 class="text-white font-bold mb-1">Activación</h5>
+                                    <p class="text-slate-400 text-sm leading-relaxed">La alerta se dispara de forma
+                                        automática cuando una persona escanea el código QR único del estudiante o cuando
+                                        se activa el "Botón de Emergencia" directamente en la interfaz de la plataforma.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-primary font-bold">
+                                    2</div>
+                                <div>
+                                    <h5 class="text-white font-bold mb-1">Transmisión</h5>
+                                    <p class="text-slate-400 text-sm leading-relaxed">El sistema genera y envía una
+                                        alerta múltiple de manera inmediata a través de SMS, notificaciones Push o <span
+                                            class="inline-flex items-center gap-1 text-[#229ED9] font-bold"><svg
+                                                class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                                            </svg>Telegram</span>. El envío exitoso depende de la conexión a Internet y
+                                        cobertura
+                                        celular.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-primary font-bold">
+                                    3</div>
+                                <div>
+                                    <h5 class="text-white font-bold mb-1">Geolocalización (GPS)</h5>
+                                    <p class="text-slate-400 text-sm leading-relaxed">Al activarse la alerta, el sistema
+                                        recoge y comparte la ubicación geográfica exacta del dispositivo que emitió la
+                                        señal, facilitando la llegada del auxilio.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-primary font-bold">
+                                    4</div>
+                                <div>
+                                    <h5 class="text-white font-bold mb-1">Acompañamiento y Cierre</h5>
+                                    <p class="text-slate-400 text-sm leading-relaxed">La alerta queda en la "Bitácora de
+                                        Eventos" del estudiante. El Centro de Monitoreo realiza seguimiento. Permanece
+                                        "Activa" hasta ser marcada como "Resuelta" por un padre o autoridad.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Who receives it -->
+                    <div
+                        class="bg-background-dark p-8 rounded-2xl border border-white/5 shadow-xl relative overflow-hidden group lg:mt-12">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-bl from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-8 flex items-center gap-3 relative z-10">
+                            <span class="material-symbols-outlined text-safety-orange">group</span>
+                            ¿Quiénes reciben las alertas?
+                        </h4>
+
+                        <p class="text-slate-400 mb-6 relative z-10">Al momento de la emergencia, el sistema envía la
+                            notificación simultáneamente a los siguientes destinatarios:</p>
+
+                        <ul class="space-y-4 relative z-10">
+                            <li
+                                class="bg-slate-900 border border-slate-800 p-4 rounded-lg flex items-center gap-4 hover:border-safety-orange/50 transition-colors">
+                                <span
+                                    class="material-symbols-outlined text-safety-orange text-3xl">family_restroom</span>
+                                <span class="text-white font-medium">Hasta dos (2) responsables legales <span
+                                        class="text-slate-500 text-sm font-normal block">Padres de familia o tutores
+                                        registrados.</span></span>
+                            </li>
+                            <li
+                                class="bg-slate-900 border border-slate-800 p-4 rounded-lg flex items-center gap-4 hover:border-safety-orange/50 transition-colors">
+                                <span
+                                    class="material-symbols-outlined text-safety-orange text-3xl">account_balance</span>
+                                <span class="text-white font-medium">La autoridad designada <span
+                                        class="text-slate-500 text-sm font-normal block">Por la Institución Educativa
+                                        (el colegio).</span></span>
+                            </li>
+                            <li
+                                class="bg-slate-900 border border-slate-800 p-4 rounded-lg flex items-center gap-4 hover:border-safety-orange/50 transition-colors">
+                                <span
+                                    class="material-symbols-outlined text-safety-orange text-3xl">admin_panel_settings</span>
+                                <span class="text-white font-medium">El Centro de Monitoreo <span
+                                        class="text-slate-500 text-sm font-normal block">De la plataforma
+                                        SOSQR.</span></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sección: ¿Por qué Telegram? -->
+                <div class="mt-20 lg:mt-32 relative">
+                    <div class="text-center mb-12">
+                        <div class="inline-flex items-center justify-center p-4 bg-[#229ED9]/10 rounded-full mb-6">
+                            <span class="inline-flex items-center gap-2 text-[#229ED9] font-bold text-xl">
+                                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                                </svg>
+                                Integrado con Telegram
+                            </span>
+                        </div>
+                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">Eficiencia y Seguridad sin
+                            Precedentes</h3>
+                        <p class="text-lg text-slate-400 max-w-3xl mx-auto">
+                            SOSQR ha elegido a Telegram como el núcleo comunicacional de su sistema por su sólida
+                            infraestructura y capacidades técnicas de nivel corporativo. ¿Por qué es la opción más
+                            segura y eficiente para tu ecosistema escolar?
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+                        <!-- Beneficio 1: Velocidad -->
+                        <div
+                            class="bg-slate-900 border border-[#229ED9]/20 p-8 rounded-2xl hover:border-[#229ED9]/60 transition-colors group">
+                            <span
+                                class="material-symbols-outlined text-[#229ED9] text-4xl mb-6 group-hover:scale-110 transition-transform">bolt</span>
+                            <h4 class="text-xl font-bold text-white mb-3">Velocidad de Entrega Operativa</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Telegram posee una red de servidores distribuidos a nivel mundial que minimizan el
+                                tiempo de enrutamiento.
+                                En situaciones de emergencia donde milisegundos pueden hacer la diferencia, la robustez
+                                de sus servidores garantiza que los despachos lleguen a los destinatarios de forma casi
+                                inmediata.
+                            </p>
+                        </div>
+
+                        <!-- Beneficio 2: Encriptación y Seguridad -->
+                        <div
+                            class="bg-slate-900 border border-[#229ED9]/20 p-8 rounded-2xl hover:border-[#229ED9]/60 transition-colors group">
+                            <span
+                                class="material-symbols-outlined text-[#229ED9] text-4xl mb-6 group-hover:scale-110 transition-transform">enhanced_encryption</span>
+                            <h4 class="text-xl font-bold text-white mb-3">Cifrado de Alta Complejidad</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Toda la data transmitida (ubicación, identidad y hora) fluye cifrada bajo el protocolo
+                                MTProto de Telegram desarrollado matemáticamente para velocidad y encriptación.
+                                Esto blinda la privacidad de la comunicación, asegurando que extraños o terceros no
+                                tengan acceso a datos delicados de los alumnos.
+                            </p>
+                        </div>
+
+                        <!-- Beneficio 3: Fiabilidad en Redes congestionadas -->
+                        <div
+                            class="bg-slate-900 border border-[#229ED9]/20 p-8 rounded-2xl hover:border-[#229ED9]/60 transition-colors group">
+                            <span
+                                class="material-symbols-outlined text-[#229ED9] text-4xl mb-6 group-hover:scale-110 transition-transform">network_ping</span>
+                            <h4 class="text-xl font-bold text-white mb-3">Estabilidad en Crisis</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                A nivel arquitectónico, Telegram requiere un consumo minúsculo de ancho de banda.
+                                Ante una congestión aguda de señal –un fenómeno habitual durante crisis o evacuaciones
+                                masivas– el sistema previene ahogamiento de red para entregar los de reportes
+                                eficazmente bajo conectividad deficiente.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-slate-950 text-slate-400 py-16 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/10 pb-12">
+            <div class="col-span-1 md:col-span-2">
+                <a href="index.html" class="flex items-center gap-2 text-white mb-6 group inline-flex">
+                    <span
+                        class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform">shield</span>
+                    <h2 class="text-xl font-bold uppercase group-hover:text-primary transition-colors">Grupo Volckan
+                    </h2>
+                </a>
+                <p class="max-w-sm mb-6">Empoderando instituciones con tecnología de seguridad de punta para crear
+                    entornos más seguros en Guatemala.</p>
+                <div class="flex gap-4">
+                    <a class="hover:text-warning-yellow transition-colors" href="#"><span
+                            class="material-symbols-outlined">public</span></a>
+                    <a class="hover:text-warning-yellow transition-colors" href="#"><span
+                            class="material-symbols-outlined">verified_user</span></a>
+                    <a class="hover:text-warning-yellow transition-colors" href="#"><span
+                            class="material-symbols-outlined">contact_support</span></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-widest">Navegación</h4>
+                <ul class="space-y-4 text-sm">
+                    <li><a class="hover:text-warning-yellow transition-colors" href="index.html">Inicio</a></li>
+                    <li><a class="hover:text-warning-yellow transition-colors"
+                            href="soluciones-sosqr.html">Soluciones</a></li>
+                    <li><a class="hover:text-warning-yellow transition-colors" href="#">Automatizaciones</a></li>
+                    <li><a class="hover:text-warning-yellow transition-colors" href="#">Capacitaciones</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-widest">Contacto</h4>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-xs text-safety-orange">mail</span> ventas@sosqr.com.gt
+                    </li>
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-xs text-safety-orange">phone</span> +502 2000-0000
+                    </li>
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-xs text-safety-orange">location_on</span> Ciudad de
+                        Guatemala</li>
+                </ul>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-widest">
+            <p>© 2024 Grupo Volckan. Todos los derechos reservados.</p>
+            <div class="flex gap-6">
+                <a class="hover:text-white transition-colors" href="#">Privacidad</a>
+                <a class="hover:text-white transition-colors" href="#">Términos</a>
+                <a class="hover:text-white transition-colors" href="#">Cumplimiento</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

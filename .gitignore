@@ -1,0 +1,25 @@
+# Python scripts used for generation/testing
+*.py
+*.pyc
+__pycache__/
+
+# Stitch downloaded files
+stitch_sosqr.html
+stitch_parqueos.html
+correct_stitch.html
+ecd7.html
+85ed.html
+df47.html
+stitch_light.html
+
+# Logs and outputs
+output.txt
+test_logs.py
+test_logs2.py
+test_logs3.py
+test_mcp.py
+
+# Ignore IDE files if any
+.vscode/
+.idea/
+.DS_Store

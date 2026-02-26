@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Parqueos Digitales | Grupo Volckan</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ef4444", // Vibrant Red
+                        "safety-orange": "#f97316",
+                        "warning-yellow": "#eab308",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0a0a0a", // Deeper charcoal/black
+                        "tech-blue": "#229ED9"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="./src/styles/main.css" type="text/tailwindcss" />
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+    <header
+        class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-white/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <span
+                        class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform"
+                        data-icon="shield">shield</span>
+                    <h2 class="text-xl font-bold tracking-tight uppercase group-hover:text-primary transition-colors">
+                        Grupo Volckan</h2>
+                </a>
+                <nav class="hidden xl:flex items-center gap-6">
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="index.html">Inicio</a>
+
+                    <!-- Menú Desplegable: Soluciones -->
+                    <div class="relative group">
+                        <button
+                            class="text-sm font-medium hover:text-safety-orange transition-colors text-safety-orange inline-flex items-center gap-1">
+                            Soluciones
+                            <span
+                                class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+                        </button>
+
+                        <!-- Contenedor del Dropdown -->
+                        <div
+                            class="absolute left-0 mt-2 w-56 rounded-xl bg-slate-900 border border-white/10 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
+                            <div class="py-2">
+                                <a href="soluciones-sosqr.html"
+                                    class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-primary">
+                                        <span class="material-symbols-outlined text-sm">emergency</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold">Sistema SOSQR</span>
+                                        <span class="text-xs text-slate-500">Alertas escolares</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-parqueos.html"
+                                    class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-t border-white/5">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-[#229ED9]">
+                                        <span class="material-symbols-outlined text-sm">local_parking</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold">Parqueos Digitales</span>
+                                        <span class="text-xs text-slate-500">Control de acceso</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="#">Automatizaciones</a>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors" href="#">Monitores</a>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="#">Ciberseguridad</a>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="#">Capacitaciones</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button class="hidden sm:flex btn-gradient-alert text-white px-6 py-2 rounded-lg font-bold text-sm">
+                        Solicitar Cotización
+                    </button>
+                    <button class="xl:hidden text-slate-100">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero section simple -->
+        <section
+            class="relative overflow-hidden pt-16 pb-12 lg:pt-24 lg:pb-16 bg-background-dark border-b border-white/5">
+            <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,#229ED9_0%,transparent_50%)]"></div>
+            </div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div
+                    class="inline-flex items-center gap-2 bg-blue-950/30 border border-blue-500/30 rounded-full px-4 py-1.5 mb-6">
+                    <span class="material-symbols-outlined text-tech-blue text-sm">verified</span>
+                    <span class="text-xs font-bold text-tech-blue uppercase tracking-widest">Escalable e
+                        Inteligente</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-tight text-white">
+                    Gestión Inteligente de <br />
+                    <span class="text-tech-blue">Parqueos Digitales</span>
+                </h1>
+                <p class="text-lg text-slate-400 max-w-2xl">
+                    Sustituye la burocracia con acceso dinámico, control preciso y reportes instantáneos. Un sistema
+                    económico diseñado a la medida para estacionamientos medianos y pequeños.
+                </p>
+            </div>
+        </section>
+
+        <!-- SOSQR Section content -->
+        <section class="py-24 bg-slate-900/50" id="parking-system">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-16 text-center">
+                    <h2 class="text-tech-blue font-bold tracking-widest uppercase text-sm mb-4">La solución perfecta
+                    </h2>
+                    <h3 class="text-3xl md:text-5xl font-bold text-white mb-6">Control Económico: 10 a 200 Vehículos
+                    </h3>
+                    <p class="text-lg text-slate-400 max-w-3xl mx-auto">
+                        No necesitas infraestructura que cueste miles de dólares ni equipos de lectura pesada. Nuestro
+                        sistema opera directamente conectando el acceso con la simplicidad del uso moderno, siendo
+                        accesible y garantizando orden.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <!-- Column 1: How it works -->
+                    <div
+                        class="bg-background-dark p-8 rounded-2xl border border-white/5 shadow-xl relative overflow-hidden group">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-tech-blue">speed</span>
+                            Accesos Sin Fricción
+                        </h4>
+
+                        <div class="space-y-6 relative z-10">
+                            <div class="flex gap-4">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-tech-blue font-bold">
+                                    1</div>
+                                <div>
+                                    <h5 class="text-white font-bold mb-1">Registro Simplificado</h5>
+                                    <p class="text-slate-400 text-sm leading-relaxed">Olvídate de las tarjetas
+                                        plásticas. Cada usuario permanente o recurrente es registrado en nuestra nube y
+                                        recibe un acceso digital encriptado desde su móvil o con un gafete básico que
+                                        permite un escaneo dinámico.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-tech-blue font-bold">
+                                    2</div>
+                                <div>
+                                    <h5 class="text-white font-bold mb-1">Validación en Tiempo Real</h5>
+                                    <p class="text-slate-400 text-sm leading-relaxed">Con herramientas como lectura de
+                                        placas mediante la cámara de la caseta, lectores portátiles o sistemas QR/RFID
+                                        de escaso costo en la barrera del sistema, se autoriza instantáneamente el paso.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-tech-blue font-bold">
+                                    3</div>
+                                <div>
+                                    <h5 class="text-white font-bold mb-1">Auditoría Transparente</h5>
+                                    <p class="text-slate-400 text-sm leading-relaxed">Cualquier evento irregular,
+                                        entrada en horas no autorizadas u ocupación que rebase el máximo establecido se
+                                        auditará para prevenir abuso en la disponibilidad de sus parqueos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Return on Investment -->
+                    <div
+                        class="bg-background-dark p-8 rounded-2xl border border-white/5 shadow-xl relative overflow-hidden group lg:mt-12">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-bl from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-8 flex items-center gap-3 relative z-10">
+                            <span class="material-symbols-outlined text-emerald-500">monitoring</span>
+                            ¿Por qué es ideal para tu complejo?
+                        </h4>
+
+                        <p class="text-slate-400 mb-6 relative z-10">Diseñamos este modelo pensando en la relación
+                            costo/beneficio, lo que lo hace perfecto no solo para empresas sino para centros comerciales
+                            pequeños, colegios o residenciales:</p>
+
+                        <ul class="space-y-4 relative z-10">
+                            <li
+                                class="bg-slate-900 border border-slate-800 p-4 rounded-lg flex items-center gap-4 hover:border-emerald-500/50 transition-colors">
+                                <span class="material-symbols-outlined text-emerald-500 text-3xl">savings</span>
+                                <span class="text-white font-medium">Ultra Económico <span
+                                        class="text-slate-500 text-sm font-normal block">La mayoría de la inteligencia
+                                        de procesamiento ocurre en nuestros servidores, así que no debes adquirir
+                                        hardware costosísimo.</span></span>
+                            </li>
+                            <li
+                                class="bg-slate-900 border border-slate-800 p-4 rounded-lg flex items-center gap-4 hover:border-emerald-500/50 transition-colors">
+                                <span
+                                    class="material-symbols-outlined text-emerald-500 text-3xl">display_settings</span>
+                                <span class="text-white font-medium">Control Dinámico (10-200 plazas)<span
+                                        class="text-slate-500 text-sm font-normal block">La interfaz te indicará
+                                        exactamente qué porcentaje de tu estacionamiento está siendo usado, minimizando
+                                        cuellos de botella.</span></span>
+                            </li>
+                            <li
+                                class="bg-slate-900 border border-slate-800 p-4 rounded-lg flex items-center gap-4 hover:border-emerald-500/50 transition-colors">
+                                <span class="material-symbols-outlined text-emerald-500 text-3xl">bar_chart</span>
+                                <span class="text-white font-medium">Reportes Instantáneos<span
+                                        class="text-slate-500 text-sm font-normal block">En un par de clicks en el
+                                        administrador en la web para que evalúes tendencias y reportes.</span></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-slate-950 text-slate-400 py-16 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/10 pb-12">
+            <div class="col-span-1 md:col-span-2">
+                <a href="index.html" class="flex items-center gap-2 text-white mb-6 group inline-flex">
+                    <span
+                        class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform">shield</span>
+                    <h2 class="text-xl font-bold uppercase group-hover:text-primary transition-colors">Grupo Volckan
+                    </h2>
+                </a>
+                <p class="max-w-sm mb-6">Empoderando instituciones con tecnología de seguridad de punta para crear
+                    entornos más seguros en Guatemala.</p>
+                <div class="flex gap-4">
+                    <a class="hover:text-warning-yellow transition-colors" href="#"><span
+                            class="material-symbols-outlined">public</span></a>
+                    <a class="hover:text-warning-yellow transition-colors" href="#"><span
+                            class="material-symbols-outlined">verified_user</span></a>
+                    <a class="hover:text-warning-yellow transition-colors" href="#"><span
+                            class="material-symbols-outlined">contact_support</span></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-widest">Navegación</h4>
+                <ul class="space-y-4 text-sm">
+                    <li><a class="hover:text-warning-yellow transition-colors" href="index.html">Inicio</a></li>
+                    <li><a class="hover:text-warning-yellow transition-colors" href="#">Automatizaciones</a></li>
+                    <li><a class="hover:text-warning-yellow transition-colors" href="#">Capacitaciones</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-widest">Contacto</h4>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-xs text-safety-orange">mail</span> ventas@sosqr.com.gt
+                    </li>
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-xs text-safety-orange">phone</span> +502 2000-0000
+                    </li>
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-xs text-safety-orange">location_on</span> Ciudad de
+                        Guatemala</li>
+                </ul>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-widest">
+            <p>© 2024 Grupo Volckan. Todos los derechos reservados.</p>
+            <div class="flex gap-6">
+                <a class="hover:text-white transition-colors" href="#">Privacidad</a>
+                <a class="hover:text-white transition-colors" href="#">Términos</a>
+                <a class="hover:text-white transition-colors" href="#">Cumplimiento</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

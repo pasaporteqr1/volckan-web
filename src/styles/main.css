@@ -1,0 +1,15 @@
+body {
+    font-family: "Space Grotesk", sans-serif;
+}
+
+.text-gradient-fire {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-purple via-brand-red to-brand-yellow;
+}
+
+.btn-gradient-alert {
+    @apply bg-gradient-to-r from-safety-orange to-warning-yellow hover:from-orange-600 hover:to-orange-500 transition-all duration-300 shadow-lg shadow-safety-orange/20 text-slate-900;
+}
+
+.border-alert {
+    @apply border-brand-purple/30 hover:border-brand-yellow/50 transition-colors;
+}

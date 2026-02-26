@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Grupo Volckan</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ef4444", // Vibrant Red
+                        "safety-orange": "#f97316",
+                        "warning-yellow": "#eab308",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#0a0a0a", // Deeper charcoal/black
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="./src/styles/main.css" type="text/tailwindcss" />
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+    <header
+        class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-white/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <span
+                        class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform"
+                        data-icon="shield">shield</span>
+                    <h2 class="text-xl font-bold tracking-tight uppercase group-hover:text-primary transition-colors">
+                        Grupo Volckan</h2>
+                </a>
+                <nav class="hidden xl:flex items-center gap-6">
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="index.html">Inicio</a>
+
+                    <!-- Menú Desplegable: Soluciones -->
+                    <div class="relative group">
+                        <button
+                            class="text-sm font-medium hover:text-safety-orange transition-colors inline-flex items-center gap-1">
+                            Soluciones
+                            <span
+                                class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+                        </button>
+
+                        <!-- Contenedor del Dropdown -->
+                        <div
+                            class="absolute left-0 mt-2 w-56 rounded-xl bg-slate-900 border border-white/10 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
+                            <div class="py-2">
+                                <a href="soluciones-sosqr.html"
+                                    class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-primary">
+                                        <span class="material-symbols-outlined text-sm">emergency</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold">Sistema SOSQR</span>
+                                        <span class="text-xs text-slate-500">Alertas escolares</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-parqueos.html"
+                                    class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-t border-white/5">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-[#229ED9]">
+                                        <span class="material-symbols-outlined text-sm">local_parking</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold">Parqueos Digitales</span>
+                                        <span class="text-xs text-slate-500">Control de acceso</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="#">Automatizaciones</a>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors" href="#">Monitores</a>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="#">Ciberseguridad</a>
+                    <a class="text-sm font-medium hover:text-safety-orange transition-colors"
+                        href="#">Capacitaciones</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button class="hidden sm:flex btn-gradient-alert text-white px-6 py-2 rounded-lg font-bold text-sm">
+                        Solicitar Cotización
+                    </button>
+                    <button class="xl:hidden text-slate-100">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="relative overflow-hidden pt-16 pb-24 lg:pt-32 lg:pb-40">
+            <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#ef4444_0%,transparent_50%)]"></div>
+                <div class="absolute top-0 left-0 w-full h-full"
+                    style="background-image: radial-gradient(#ef4444 1px, transparent 1px); background-size: 40px 40px;">
+                </div>
+            </div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div
+                    class="inline-flex items-center gap-2 bg-red-950/30 border border-red-500/30 rounded-full px-4 py-1.5 mb-8">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    <span class="text-xs font-bold text-warning-yellow uppercase tracking-widest">Alerta Roja:
+                        Prevención Activa</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-8 max-w-4xl mx-auto leading-[1.1]">
+                    Soluciones de Seguridad Avanzada: <br />
+                    <span class="text-gradient-fire">Protección Sin Límites</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-12">
+                    Monitoreo en tiempo real de alta tecnología y prevención de amenazas diseñada específicamente para
+                    el mercado educativo y comercial guatemalteco.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button
+                        class="w-full sm:w-auto px-8 py-4 btn-gradient-alert text-white font-bold rounded-lg text-lg hover:shadow-primary/30">
+                        Ver Soluciones
+                    </button>
+                    <button
+                        class="w-full sm:w-auto px-8 py-4 bg-slate-800 border border-slate-700 text-white font-bold rounded-lg text-lg hover:bg-slate-700 transition-all">
+                        Contactar Soporte
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section class="py-24 bg-slate-950/50" id="hardware">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-16">
+                    <h2 class="text-warning-yellow font-bold tracking-widest uppercase text-sm mb-4">Ecosistema de
+                        Prevención</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white">Excelencia en Hardware y Software</h3>
+                    <p class="text-slate-400 mt-4 max-w-2xl">Herramientas especializadas diseñadas para la detección
+                        proactiva de amenazas e integridad arquitectónica.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="group bg-background-dark p-2 rounded-xl border border-alert">
+                        <div class="aspect-video rounded-lg mb-6 overflow-hidden bg-slate-900">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                data-alt="High tech security camera with AI lens"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAik_LqdjsnjWsifQBec_LRKVqZSrBL4UXp32K-cZgSDEiX9Vx5jP6duvqt_yff_Z1LCpisdFuluoimTUyAR-d3vD5UG_VLoZa68O8IX469VOygKlXhMjdKwbd39Z6XERsyJu5ZmLGY-zz43Pu5Ca5qLkSZjQkpLwqBAOCvVUdg68XF3u1LH4T1z-dEjRR8SfnZWIIS_4-edCPr4UY5mSj0m1lw3xzhNpe7XcBBfyUxZWDxHclHcaG-b7e_Ij3lUDJPR0RY105qWX2N" />
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center gap-2 text-safety-orange mb-2">
+                                <span class="material-symbols-outlined text-xl">videocam</span>
+                                <span class="font-bold text-sm uppercase tracking-wider">Cámaras Inteligentes</span>
+                            </div>
+                            <p class="text-slate-400 text-sm">Reconocimiento visual impulsado por IA con análisis de
+                                comportamiento y rastreo automático.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-background-dark p-2 rounded-xl border border-alert">
+                        <div class="aspect-video rounded-lg mb-6 overflow-hidden bg-slate-900">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                data-alt="Biometric fingerprint and keypad entry system"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpj8izCKB2-P88wP2fnG_RnywhsnuDZnwOs1NcvdncVRmzi1U7Ron9nS6pfCNQa1O7NXOaZXDkAqFidZHFd37t0Sgw9Kdxa9eBWVjUHNn9zmqG1QVyDoTJUSkJN2PoNDQfHfMwB0l-97FiM27hEWNvQRg1CE1vpfpY09bTxA7ND9f0bO6H4_I24Q8umivlAx3PqZ5n2MA1jT0_eagQ1_nRsYDa4DMTesN6CuEHQLN5VavsZhfUWiQLwZB8HLASaDugjcjOomId8Dfv" />
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center gap-2 text-safety-orange mb-2">
+                                <span class="material-symbols-outlined text-xl">fingerprint</span>
+                                <span class="font-bold text-sm uppercase tracking-wider">Control de Acceso</span>
+                            </div>
+                            <p class="text-slate-400 text-sm">Integración biométrica sin fricciones y entrada sin llave
+                                cifrada para áreas restringidas.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-background-dark p-2 rounded-xl border border-alert">
+                        <div class="aspect-video rounded-lg mb-6 overflow-hidden bg-slate-900">
+                            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                data-alt="Digital encryption shield and data flow"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWhW1WAqEg3XlH1TyLCcfINDtdCKGRjfP5SVEBLLnV6wAGJFaP4KAUWbb4pg5ioBNztdp1hBWMvgMVustxa8Zm4gE6cy_Kmwc_4EPn_wy8pBeoBAziirpsDhpPlT5aY0nxWIjDssbHy3ilC_XK3zDQi7IHpQCAyRu1r7Vnfiv_6OXrgS18WDzj2NC7Cw357iiYAkApYdRY7R754AKL50HumMzBBm_ivqAUEuB9dVY5TSamKQpYo02TIrH6UmZxoT-pWSaCLNWqlMc2" />
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center gap-2 text-safety-orange mb-2">
+                                <span class="material-symbols-outlined text-xl">security</span>
+                                <span class="font-bold text-sm uppercase tracking-wider">Software Cifrado</span>
+                            </div>
+                            <p class="text-slate-400 text-sm">Protocolos de gestión de datos cifrados de extremo a
+                                extremo que garantizan vulnerabilidad cero.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-20 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div
+                    class="relative overflow-hidden bg-red-950/20 border border-red-500/20 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-10">
+                    <div class="flex-1">
+                        <div class="inline-flex p-3 bg-red-600 rounded-lg text-white mb-6 shadow-lg shadow-red-900/50">
+                            <span class="material-symbols-outlined text-3xl">emergency</span>
+                        </div>
+                        <h2 class="text-3xl font-bold mb-4 text-white">Respuesta de Pánico Instantánea</h2>
+                        <p class="text-lg text-slate-400 mb-8 max-w-xl">
+                            Despliegue activadores de pánico físicos y digitales en toda su instalación. La activación
+                            de un solo toque inicia procedimientos de cierre y notifica a las autoridades locales en
+                            menos de 3 segundos.
+                        </p>
+                        <button
+                            class="px-6 py-3 btn-gradient-alert text-white font-bold rounded-lg flex items-center gap-2">
+                            Protocolos de Emergencia <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                    <div class="w-full md:w-1/3 relative group">
+                        <div
+                            class="absolute inset-0 bg-red-600 blur-2xl opacity-20 group-hover:opacity-30 transition-opacity">
+                        </div>
+                        <img class="relative rounded-xl shadow-2xl border border-white/5"
+                            data-alt="Futuristic red emergency panic button"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsDZgIpvE-Ulv16F90n9dR_mQroVjZ86nC1120ve9lndMkSRgT6x5XqESBraQyR2QG0yYeV_ByBz7F80pSy_oirqT1IgnE1fDXPr7Wufrm3NFXyQ-esZ04p5XG6ncj-MAXBgU67dS5Mv3C3mRgErbiZ1blQd1O-GURjk-nAzHe7pE63uGYFRh0sQGrcMp45OzkEslSgwc26fXUDA0DT4lbf3dPlcXmgSRdwVDRnO1bW6I28KGV6FYTse7U7i-ojIe_LbF_yxt3vz1g" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-24" id="monitoring">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row gap-16 items-center">
+                    <div class="w-full lg:w-1/2 order-2 lg:order-1">
+                        <div class="relative group">
+                            <div
+                                class="absolute -inset-1 bg-gradient-to-r from-red-600 to-orange-600 rounded-xl blur opacity-25 group-hover:opacity-40 transition duration-1000">
+                            </div>
+                            <img class="relative rounded-xl shadow-2xl w-full border border-white/5"
+                                data-alt="Modern security control center with multiple displays"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuABFDT0Tg5gma6ajo5jMLMl9h32YBQw1Ey6bWml3Y1vWTR8H3Qs0XzClFAThn9tiMrRL4gc0CElvO6RgPe3X6j16FLXtOQwVjMKo-gflErkPfg6a5yFfU_zup6bMywuLxsP18i2AOylVXngrh31MyCYDl2rvV35VWguEhGF-uqiso-AJcpz_sGYlR_eBjt0sFYnzgVXvKEg0xbb5pAfl--cFJm-fxgHTIWUqKn7euFZavhJ7yryiLeVidSXjBiHx-AjrzFUEqLFPI2n" />
+                            <div
+                                class="absolute bottom-4 left-4 right-4 bg-background-dark/95 backdrop-blur border border-red-500/20 p-4 rounded-lg flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-red-500 animate-pulse">emergency_home</span>
+                                    <span class="text-xs font-bold uppercase tracking-widest text-white">Estado: Alerta
+                                        Máxima</span>
+                                </div>
+                                <span class="text-[10px] text-warning-yellow font-mono">LATENCIA 0.02ms</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2 order-1 lg:order-2">
+                        <h2 class="text-warning-yellow font-bold tracking-widest uppercase text-sm mb-4">Comando y
+                            Control</h2>
+                        <h3 class="text-3xl md:text-5xl font-bold mb-6 text-white">Centro de Monitoreo Visual</h3>
+                        <p class="text-slate-400 text-lg mb-8">
+                            Nuestro tablero propietario proporciona una vista unificada de todo su perímetro. Rastree
+                            incidentes mientras suceden con mapas de calor automatizados y predicción de movimientos.
+                        </p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-safety-orange mt-1">sensors</span>
+                                <div>
+                                    <span class="font-bold block text-white">Fusión de Sensores Múltiples</span>
+                                    <span class="text-sm text-slate-500">Combinación de datos térmicos, visuales y de
+                                        audio para una conciencia total.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-safety-orange mt-1">analytics</span>
+                                <div>
+                                    <span class="font-bold block text-white">Analítica Predictiva</span>
+                                    <span class="text-sm text-slate-500">Identifique patrones sospechosos antes de que
+                                        escalen a incidentes críticos.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-24 bg-red-700 text-white overflow-hidden relative">
+            <div class="absolute top-0 right-0 w-1/2 h-full opacity-10">
+                <span
+                    class="material-symbols-outlined text-[400px] leading-none -rotate-12 translate-x-20">local_police</span>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="max-w-3xl">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8">Coordinación Directa con Autoridades</h2>
+                    <p class="text-xl text-white/90 mb-10 leading-relaxed">
+                        En momentos críticos, cada segundo cuenta. Nuestra plataforma establece un enlace de datos
+                        directo y cifrado con la policía local y centros de despacho de emergencias en Guatemala.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                        <div class="flex flex-col border-l-2 border-warning-yellow pl-4">
+                            <span class="text-3xl font-bold">2.4s</span>
+                            <span class="text-sm text-white/70 uppercase tracking-tighter">Tiempo de Alerta</span>
+                        </div>
+                        <div class="flex flex-col border-l-2 border-warning-yellow pl-4">
+                            <span class="text-3xl font-bold">LIVE</span>
+                            <span class="text-sm text-white/70 uppercase tracking-tighter">Video en Vivo</span>
+                        </div>
+                        <div class="flex flex-col border-l-2 border-warning-yellow pl-4">
+                            <span class="text-3xl font-bold">100%</span>
+                            <span class="text-sm text-white/70 uppercase tracking-tighter">Protocolos Verificados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-24" id="solutions">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-warning-yellow font-bold tracking-widest uppercase text-sm mb-4">Tecnología de
+                        Vanguardia</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white">Funciones de Seguridad Inteligente</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div
+                        class="p-8 rounded-xl bg-slate-900 border border-alert group hover:bg-slate-900/80 transition-all">
+                        <span
+                            class="material-symbols-outlined text-safety-orange text-4xl mb-4 group-hover:scale-110 transition-transform">psychology</span>
+                        <h4 class="text-xl font-bold mb-2 text-white">Reconocimiento IA</h4>
+                        <p class="text-slate-400 text-sm">Identificación de rostros, placas y firmas de objetos únicos
+                            en tiempo real.</p>
+                    </div>
+                    <div
+                        class="p-8 rounded-xl bg-slate-900 border border-alert group hover:bg-slate-900/80 transition-all">
+                        <span
+                            class="material-symbols-outlined text-safety-orange text-4xl mb-4 group-hover:scale-110 transition-transform">cloud_sync</span>
+                        <h4 class="text-xl font-bold mb-2 text-white">Archivo en Nube</h4>
+                        <p class="text-slate-400 text-sm">Almacenamiento inmutable y seguro para evidencia forense y
+                            cumplimiento legal.</p>
+                    </div>
+                    <div
+                        class="p-8 rounded-xl bg-slate-900 border border-alert group hover:bg-slate-900/80 transition-all">
+                        <span
+                            class="material-symbols-outlined text-safety-orange text-4xl mb-4 group-hover:scale-110 transition-transform">notifications_active</span>
+                        <h4 class="text-xl font-bold mb-2 text-white">Alertas Smart</h4>
+                        <p class="text-slate-400 text-sm">Notificaciones conscientes del contexto que minimizan falsas
+                            alarmas priorizando amenazas.</p>
+                    </div>
+                    <div
+                        class="p-8 rounded-xl bg-slate-900 border border-alert group hover:bg-slate-900/80 transition-all">
+                        <span
+                            class="material-symbols-outlined text-safety-orange text-4xl mb-4 group-hover:scale-110 transition-transform">settings_input_antenna</span>
+                        <h4 class="text-xl font-bold mb-2 text-white">Edge Computing</h4>
+                        <p class="text-slate-400 text-sm">Procesamiento en el dispositivo para detección ultra rápida
+                            incluso sin red.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <footer class="bg-slate-950 text-slate-400 py-16 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/10 pb-12">
+            <div class="col-span-1 md:col-span-2">
+                <a href="index.html" class="flex items-center gap-2 text-white mb-6 group inline-flex">
+                    <span
+                        class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform">shield</span>
+                    <h2 class="text-xl font-bold uppercase group-hover:text-primary transition-colors">Grupo Volckan
+                    </h2>
+                </a>
+                <p class="max-w-sm mb-6">Empoderando instituciones con tecnología de seguridad de punta para crear
+                    entornos más seguros en Guatemala.</p>
+                <div class="flex gap-4">
+                    <a class="hover:text-warning-yellow transition-colors" href="#"><span
+                            class="material-symbols-outlined">public</span></a>
+                    <a class="hover:text-warning-yellow transition-colors" href="#"><span
+                            class="material-symbols-outlined">verified_user</span></a>
+                    <a class="hover:text-warning-yellow transition-colors" href="#"><span
+                            class="material-symbols-outlined">contact_support</span></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-widest">Navegación</h4>
+                <ul class="space-y-4 text-sm">
+                    <li><a class="hover:text-warning-yellow transition-colors" href="index.html">Inicio</a></li>
+                    <li><a class="hover:text-warning-yellow transition-colors"
+                            href="soluciones-sosqr.html">Soluciones</a></li>
+                    <li><a class="hover:text-warning-yellow transition-colors" href="#">Automatizaciones</a></li>
+                    <li><a class="hover:text-warning-yellow transition-colors" href="#">Capacitaciones</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-widest">Contacto</h4>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-xs text-safety-orange">mail</span> ventas@sosqr.com.gt
+                    </li>
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-xs text-safety-orange">phone</span> +502 2000-0000
+                    </li>
+                    <li class="flex items-center gap-2"><span
+                            class="material-symbols-outlined text-xs text-safety-orange">location_on</span> Ciudad de
+                        Guatemala</li>
+                </ul>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-widest">
+            <p>© 2024 Grupo Volckan. Todos los derechos reservados.</p>
+            <div class="flex gap-6">
+                <a class="hover:text-white transition-colors" href="#">Privacidad</a>
+                <a class="hover:text-white transition-colors" href="#">Términos</a>
+                <a class="hover:text-white transition-colors" href="#">Cumplimiento</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
