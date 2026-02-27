@@ -435,33 +435,33 @@
 
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu"
-        class="fixed inset-0 z-[60] bg-brand-dark/95 backdrop-blur-lg translate-x-full transition-transform duration-300 pointer-events-none md:hidden">
+        class="fixed inset-0 z-[60] bg-white/95 backdrop-blur-md translate-x-full transition-transform duration-300 pointer-events-none md:hidden">
         <div class="flex flex-col h-full pointer-events-auto">
-            <div class="flex items-center justify-between p-6 h-24 border-b border-white/10">
-                <img src="public/images/logo-volckan.png" alt="Grupo Volckan" class="h-10 w-auto brightness-0 invert">
-                <button id="mobile-menu-close" class="text-white">
+            <div class="flex items-center justify-between p-6 h-24 border-b border-slate-200">
+                <img src="public/images/logo-volckan.png" alt="Grupo Volckan" class="h-10 w-auto">
+                <button id="mobile-menu-close" class="text-slate-800 hover:text-brand-red transition-colors">
                     <span class="material-symbols-outlined text-3xl">close</span>
                 </button>
             </div>
             <nav class="flex-grow flex flex-col items-center justify-center gap-8 text-center p-10">
-                <a class="text-2xl font-black text-white hover:text-brand-purple transition-colors uppercase tracking-widest"
+                <a class="text-2xl font-black text-slate-800 hover:text-brand-purple transition-colors uppercase tracking-widest"
                     href="index.html">Inicio</a>
 
                 <div class="flex flex-col items-center gap-4">
-                    <span class="text-xs font-black text-brand-purple tracking-widest uppercase">Soluciones</span>
-                    <a class="text-xl font-bold text-white/80 hover:text-white" href="soluciones-sosqr.html">Sistema
-                        SOSQR</a>
-                    <a class="text-xl font-bold text-white/80 hover:text-white" href="soluciones-parqueos.html">Parqueos
-                        Digitales</a>
+                    <span class="text-xs font-black text-brand-red tracking-widest uppercase">Soluciones</span>
+                    <a class="text-xl font-bold text-slate-600 hover:text-brand-purple transition-colors"
+                        href="soluciones-sosqr.html">Sistema SOSQR</a>
+                    <a class="text-xl font-bold text-slate-600 hover:text-brand-purple transition-colors"
+                        href="soluciones-parqueos.html">Parqueos Digitales</a>
                 </div>
 
-                <a class="text-2xl font-black text-white hover:text-brand-purple transition-colors uppercase tracking-widest"
+                <a class="text-2xl font-black text-slate-800 hover:text-brand-purple transition-colors uppercase tracking-widest"
                     href="#">Automatizaciones</a>
-                <a class="text-2xl font-black text-white hover:text-brand-purple transition-colors uppercase tracking-widest"
+                <a class="text-2xl font-black text-slate-800 hover:text-brand-purple transition-colors uppercase tracking-widest"
                     href="#">Ciberseguridad</a>
 
                 <button
-                    class="mt-8 bg-brand-purple text-white px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest shadow-2xl">
+                    class="mt-8 bg-brand-red text-white hover:bg-red-700 px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest shadow-2xl transition-all shadow-red-900/20 hover:scale-105">
                     Contacto
                 </button>
             </nav>
