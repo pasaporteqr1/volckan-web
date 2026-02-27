@@ -123,7 +123,7 @@
 
                 <div class="flex items-center gap-4">
                     <button
-                        class="hidden sm:block bg-brand-purple text-white px-8 py-3 rounded-full font-bold text-sm hover:scale-105 hover:bg-brand-red transition-all shadow-lg shadow-purple-900/20">
+                        class="agendar-demo-btn hidden sm:block bg-brand-purple text-white px-8 py-3 rounded-full font-bold text-sm hover:scale-105 hover:bg-brand-red transition-all shadow-lg shadow-purple-900/20">
                         CONTACTO
                     </button>
                     <button id="mobile-menu-btn" class="md:hidden text-brand-dark">
@@ -517,10 +517,97 @@
             <!-- CTA Button -->
             <div class="p-5 flex-shrink-0 border-t border-slate-100">
                 <button
-                    class="w-full bg-brand-red text-white hover:bg-red-700 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 transition-all hover:shadow-xl hover:shadow-red-500/30 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+                    class="agendar-demo-btn w-full bg-brand-red text-white hover:bg-red-700 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 transition-all hover:shadow-xl hover:shadow-red-500/30 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined text-lg">mail</span>
                     Contacto
                 </button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Agendar Demo Modal -->
+    <div id="demo-modal"
+        class="fixed inset-0 z-[70] bg-slate-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <!-- Modal Content -->
+        <div
+            class="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 relative group flex flex-col max-h-[90vh]">
+
+            <!-- Header -->
+            <div
+                class="bg-gradient-to-r from-brand-navy to-brand-purple p-6 text-white flex justify-between items-center shrink-0">
+                <div>
+                    <h3 class="font-display font-black text-2xl">Agendar Demo</h3>
+                    <p class="text-white/80 text-sm mt-1">Transforma la seguridad de tu institución</p>
+                </div>
+                <button id="demo-modal-close"
+                    class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+                    <span class="material-symbols-outlined text-white">close</span>
+                </button>
+            </div>
+
+            <!-- Form Body (Scrollable) -->
+            <div class="p-6 md:p-8 overflow-y-auto">
+                <form id="demo-form" class="space-y-5">
+
+                    <!-- Name -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-name">Nombre Completo
+                            <span class="text-brand-red">*</span></label>
+                        <input type="text" id="demo-name" required placeholder="Ej. Juan Pérez"
+                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
+                    </div>
+
+                    <!-- Institution -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-institution">Institución
+                            Educativa <span class="text-brand-red">*</span></label>
+                        <input type="text" id="demo-institution" required placeholder="Ej. Colegio XYZ"
+                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
+                    </div>
+
+                    <!-- Contact (Phone/Email) -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-contact">Teléfono o
+                            Correo <span class="text-brand-red">*</span></label>
+                        <input type="text" id="demo-contact" required placeholder="+502 1234 5678"
+                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
+                    </div>
+
+                    <!-- Date & Time Row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <!-- Date -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-date">Fecha Deseada
+                                <span class="text-brand-red">*</span></label>
+                            <input type="date" id="demo-date" required
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
+                        </div>
+                        <!-- Time -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-time">Preferencia de
+                                Horario <span class="text-brand-red">*</span></label>
+                            <select id="demo-time" required
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700 appearance-none">
+                                <option value="" disabled selected>Selecciona un turno</option>
+                                <option value="Mañana (8:00 AM - 12:00 PM)">Mañana (8:00 AM - 12:00 PM)</option>
+                                <option value="Tarde (1:00 PM - 5:00 PM)">Tarde (1:00 PM - 5:00 PM)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Botón de Envío -->
+                    <button type="submit" id="demo-submit-btn"
+                        class="w-full mt-4 bg-brand-red text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 hover:bg-orange-600 hover:shadow-xl hover:-translate-y-0.5 transition-all flex justify-center items-center gap-2">
+                        <span>Solicitar Demo</span>
+                        <span class="material-symbols-outlined text-lg">send</span>
+                    </button>
+
+                    <!-- Feedback Message -->
+                    <div id="demo-feedback" class="hidden text-center mt-3 text-sm font-bold p-3 rounded-lg">
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
@@ -579,6 +666,132 @@
                     card.classList.add('bg-white', 'shadow-md');
                 }
             });
+
+            // ==========================================
+            // LOGICA DEL MODAL "AGENDAR DEMO"
+            // ==========================================
+            const demoModal = document.getElementById('demo-modal');
+            const demoBtns = document.querySelectorAll('.agendar-demo-btn'); // Necesitaremos agregar esta clase a los botones
+            const demoModalClose = document.getElementById('demo-modal-close');
+            const demoForm = document.getElementById('demo-form');
+            const demoSubmitBtn = document.getElementById('demo-submit-btn');
+            const demoFeedback = document.getElementById('demo-feedback');
+
+            // Abrir Modal
+            demoBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); // Por si es etiqueta <a>
+                    demoModal.classList.remove('opacity-0', 'pointer-events-none');
+                    demoModal.querySelector('div').classList.remove('scale-95');
+                    demoModal.querySelector('div').classList.add('scale-100');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            // Cerrar Modal
+            function closeDemoModal() {
+                demoModal.classList.add('opacity-0', 'pointer-events-none');
+                demoModal.querySelector('div').classList.remove('scale-100');
+                demoModal.querySelector('div').classList.add('scale-95');
+                document.body.style.overflow = '';
+                // Limpiar formulario y feedback opcionalmente
+                setTimeout(() => {
+                    demoForm.reset();
+                    demoFeedback.classList.add('hidden');
+                    demoSubmitBtn.disabled = false;
+                    demoSubmitBtn.innerHTML = `<span>Solicitar Demo</span><span class="material-symbols-outlined text-lg">send</span>`;
+                }, 300);
+            }
+
+            demoModalClose.addEventListener('click', closeDemoModal);
+
+            // Cerrar clicando fuera
+            demoModal.addEventListener('click', (e) => {
+                if (e.target === demoModal) {
+                    closeDemoModal();
+                }
+            });
+
+            // Enviar formulario (Integración Telegram)
+            demoForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // --- CONFIGURACIÓN DE TELEGRAM ---
+                // Reemplaza estas constantes cuando el usuario te dé el Token y Chat ID
+                const BOT_TOKEN = 'REEMPLAZAR_POR_TOKEN';
+                const CHAT_ID = 'REEMPLAZAR_POR_CHAT_ID';
+
+                if (BOT_TOKEN === 'REEMPLAZAR_POR_TOKEN' || CHAT_ID === 'REEMPLAZAR_POR_CHAT_ID') {
+                    // Feedback temporal
+                    demoFeedback.classList.remove('hidden', 'bg-red-50', 'text-brand-red');
+                    demoFeedback.classList.add('bg-green-50', 'text-green-600');
+                    demoFeedback.textContent = '¡Modo de prueba! Configura el Bot de Telegram para enviar mensajes reales.';
+                    return;
+                }
+
+                const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+                // Recolectar datos
+                const name = document.getElementById('demo-name').value;
+                const institution = document.getElementById('demo-institution').value;
+                const contact = document.getElementById('demo-contact').value;
+                const date = document.getElementById('demo-date').value;
+                const time = document.getElementById('demo-time').value;
+
+                // Formatear mensaje
+                const text = `🔔 *NUEVA SOLICITUD DE DEMO* 🔔\n\n` +
+                    `👤 *Candidato:* ${name}\n` +
+                    `🏫 *Institución:* ${institution}\n` +
+                    `📞 *Contacto:* ${contact}\n` +
+                    `📅 *Fecha:* ${date}\n` +
+                    `⏰ *Horario:* ${time}\n\n` +
+                    `_Generado automáticamente desde Volckan Web_`;
+
+                // Estado de carga
+                demoSubmitBtn.disabled = true;
+                demoSubmitBtn.innerHTML = `<span>Enviando...</span><span class="material-symbols-outlined text-lg animate-spin">sync</span>`;
+                demoFeedback.classList.add('hidden');
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: CHAT_ID,
+                            text: text,
+                            parse_mode: 'Markdown'
+                        })
+                    });
+
+                    if (response.ok) {
+                        demoFeedback.classList.remove('hidden', 'bg-red-50', 'text-brand-red');
+                        demoFeedback.classList.add('bg-green-50', 'text-green-600');
+                        demoFeedback.textContent = '¡Solicitud enviada! Nos contactaremos contigo pronto.';
+                        demoSubmitBtn.innerHTML = `<span>¡Enviado!</span><span class="material-symbols-outlined text-lg">check_circle</span>`;
+                        demoSubmitBtn.classList.remove('bg-brand-red', 'hover:bg-orange-600');
+                        demoSubmitBtn.classList.add('bg-green-600');
+
+                        setTimeout(() => {
+                            closeDemoModal();
+                            setTimeout(() => {
+                                // Restaurar botón
+                                demoSubmitBtn.classList.add('bg-brand-red', 'hover:bg-orange-600');
+                                demoSubmitBtn.classList.remove('bg-green-600');
+                            }, 500);
+                        }, 2500);
+                    } else {
+                        throw new Error('Error en API Telegram');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    demoFeedback.classList.remove('hidden', 'bg-green-50', 'text-green-600');
+                    demoFeedback.classList.add('bg-red-50', 'text-brand-red');
+                    demoFeedback.textContent = 'Ocurrió un error. Por favor intenta de nuevo.';
+                    demoSubmitBtn.disabled = false;
+                    demoSubmitBtn.innerHTML = `<span>Solicitar Demo</span><span class="material-symbols-outlined text-lg">send</span>`;
+                }
+            });
+
         });
     </script>
 
