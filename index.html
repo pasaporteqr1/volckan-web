@@ -417,51 +417,111 @@
 
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu"
-        class="fixed inset-0 z-[60] bg-white/95 backdrop-blur-md translate-x-full transition-transform duration-300 pointer-events-none md:hidden">
-        <div class="flex flex-col h-full pointer-events-auto">
-            <div class="flex items-center justify-between p-6 h-24 border-b border-slate-200">
-                <img src="public/images/logo-volckan.png" alt="Grupo Volckan" class="h-10 w-auto">
-                <button id="mobile-menu-close" class="text-slate-800 hover:text-brand-red transition-colors">
-                    <span class="material-symbols-outlined text-3xl">close</span>
+        class="fixed inset-0 z-[60] bg-white translate-x-full transition-transform duration-300 ease-in-out pointer-events-none md:hidden">
+        <div class="flex flex-col h-full pointer-events-auto overflow-y-auto">
+
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 h-24 border-b border-slate-100 flex-shrink-0">
+                <a href="index.html">
+                    <img src="public/images/logo-volckan.png" alt="Grupo Volckan" class="h-10 w-auto">
+                </a>
+                <button id="mobile-menu-close"
+                    class="w-10 h-10 rounded-full bg-slate-100 hover:bg-red-50 flex items-center justify-center text-slate-500 hover:text-brand-red transition-all">
+                    <span class="material-symbols-outlined text-xl">close</span>
                 </button>
             </div>
-            <nav class="flex-grow flex flex-col items-center justify-center gap-6 text-center p-8 w-full">
-                <a class="text-xl font-black text-slate-800 hover:text-brand-purple transition-colors uppercase tracking-widest w-full py-2"
-                    href="index.html">Inicio</a>
 
-                <div class="w-full flex items-center justify-center p-0 m-0">
+            <!-- Navigation Cards -->
+            <nav class="flex flex-col gap-3 p-5 flex-grow">
+
+                <!-- Inicio -->
+                <a href="index.html"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple transition-colors group-hover:bg-brand-purple group-hover:text-white">
+                        <span class="material-symbols-outlined text-xl">home</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">Inicio</span>
+                </a>
+
+                <!-- Soluciones (Accordion) -->
+                <div class="rounded-xl bg-slate-50/80 border-l-4 border-brand-red overflow-hidden transition-all">
                     <button id="mobile-soluciones-btn"
-                        class="text-xl font-black text-slate-800 hover:text-brand-purple transition-colors uppercase tracking-widest flex items-center justify-center gap-2 w-full py-2">
-                        Soluciones
+                        class="w-full flex items-center gap-4 px-5 py-4 hover:bg-slate-100 transition-all group">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-brand-red/10 flex items-center justify-center text-brand-red transition-colors group-hover:bg-brand-red group-hover:text-white">
+                            <span class="material-symbols-outlined text-xl">widgets</span>
+                        </div>
+                        <span
+                            class="font-bold text-sm uppercase tracking-wider text-brand-dark flex-grow text-left">Soluciones</span>
                         <span id="mobile-soluciones-icon"
-                            class="material-symbols-outlined transition-transform duration-300">expand_more</span>
+                            class="material-symbols-outlined text-slate-400 transition-transform duration-300 text-xl">expand_more</span>
                     </button>
+
+                    <!-- Submenu -->
+                    <div id="mobile-soluciones-menu"
+                        class="overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out">
+                        <div class="px-4 pb-4 pt-1 flex flex-col gap-2">
+                            <a href="soluciones-sosqr.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div
+                                    class="w-9 h-9 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">emergency</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span
+                                        class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-red transition-colors">Sistema
+                                        SOSQR</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Alertas escolares</span>
+                                </div>
+                            </a>
+                            <a href="soluciones-parqueos.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div
+                                    class="w-9 h-9 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">local_parking</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span
+                                        class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-purple transition-colors">Parqueos
+                                        Digitales</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Control de acceso</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-                <div id="mobile-soluciones-menu"
-                    class="flex flex-col items-center gap-4 overflow-hidden max-h-0 opacity-0 transition-all duration-300 w-full mb-2">
-                    <a class="text-lg font-bold text-slate-600 hover:text-brand-purple transition-colors flex items-center gap-2"
-                        href="soluciones-sosqr.html">
-                        <span class="w-1.5 h-1.5 rounded-full bg-brand-red"></span>
-                        Sistema SOSQR
-                    </a>
-                    <a class="text-lg font-bold text-slate-600 hover:text-brand-purple transition-colors flex items-center gap-2"
-                        href="soluciones-parqueos.html">
-                        <span class="w-1.5 h-1.5 rounded-full bg-brand-red"></span>
-                        Parqueos Digitales
-                    </a>
-                </div>
+                <!-- Automatizaciones -->
+                <a href="#"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple transition-colors group-hover:bg-brand-purple group-hover:text-white">
+                        <span class="material-symbols-outlined text-xl">precision_manufacturing</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">Automatizaciones</span>
+                </a>
 
-                <a class="text-xl font-black text-slate-800 hover:text-brand-purple transition-colors uppercase tracking-widest w-full py-2"
-                    href="#">Automatizaciones</a>
-                <a class="text-xl font-black text-slate-800 hover:text-brand-purple transition-colors uppercase tracking-widest w-full py-2"
-                    href="#">Ciberseguridad</a>
+                <!-- Ciberseguridad -->
+                <a href="#"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple transition-colors group-hover:bg-brand-purple group-hover:text-white">
+                        <span class="material-symbols-outlined text-xl">shield_lock</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">Ciberseguridad</span>
+                </a>
 
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="p-5 flex-shrink-0 border-t border-slate-100">
                 <button
-                    class="mt-6 bg-brand-red text-white hover:bg-red-700 px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest shadow-2xl transition-all shadow-red-900/20 hover:scale-105">
+                    class="w-full bg-brand-red text-white hover:bg-red-700 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 transition-all hover:shadow-xl hover:shadow-red-500/30 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-lg">mail</span>
                     Contacto
                 </button>
-            </nav>
+            </div>
         </div>
     </div>
 
@@ -476,31 +536,47 @@
             const solucionesMenu = document.getElementById('mobile-soluciones-menu');
             const solucionesIcon = document.getElementById('mobile-soluciones-icon');
 
-            function toggleMenu() {
-                mobileMenu.classList.toggle('translate-x-full');
+            function openMenu() {
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
             }
 
-            mobileMenuBtn.addEventListener('click', toggleMenu);
-            mobileMenuClose.addEventListener('click', toggleMenu);
+            function closeMenu() {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+                // Reset accordion when closing menu
+                solucionesMenu.classList.remove('max-h-[300px]', 'opacity-100');
+                solucionesMenu.classList.add('max-h-0', 'opacity-0');
+                solucionesIcon.classList.remove('rotate-180');
+                solucionesBtn.closest('div.rounded-xl').classList.remove('bg-white', 'shadow-md');
+                solucionesBtn.closest('div.rounded-xl').classList.add('bg-slate-50/80');
+            }
 
-            // Close menu when clicking links (excluding the accordion toggle itself)
-            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', toggleMenu);
+            mobileMenuBtn.addEventListener('click', openMenu);
+            mobileMenuClose.addEventListener('click', closeMenu);
+
+            // Close menu when clicking nav links
+            mobileMenu.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', closeMenu);
             });
 
-            // Accordion toggle logic
+            // Accordion toggle for Soluciones
             solucionesBtn.addEventListener('click', () => {
-                const isOpen = solucionesMenu.classList.contains('max-h-[500px]');
+                const isOpen = solucionesMenu.classList.contains('max-h-[300px]');
+                const card = solucionesBtn.closest('div.rounded-xl');
 
                 if (isOpen) {
-                    solucionesMenu.classList.remove('max-h-[500px]', 'opacity-100', 'mt-4');
+                    solucionesMenu.classList.remove('max-h-[300px]', 'opacity-100');
                     solucionesMenu.classList.add('max-h-0', 'opacity-0');
-                    solucionesIcon.classList.remove('rotate-180', 'text-brand-red');
+                    solucionesIcon.classList.remove('rotate-180');
+                    card.classList.remove('bg-white', 'shadow-md');
+                    card.classList.add('bg-slate-50/80');
                 } else {
                     solucionesMenu.classList.remove('max-h-0', 'opacity-0');
-                    solucionesMenu.classList.add('max-h-[500px]', 'opacity-100', 'mt-4');
-                    solucionesIcon.classList.add('rotate-180', 'text-brand-red');
+                    solucionesMenu.classList.add('max-h-[300px]', 'opacity-100');
+                    solucionesIcon.classList.add('rotate-180');
+                    card.classList.remove('bg-slate-50/80');
+                    card.classList.add('bg-white', 'shadow-md');
                 }
             });
         });
