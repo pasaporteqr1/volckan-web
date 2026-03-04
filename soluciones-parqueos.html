@@ -769,8 +769,17 @@
 
                 const name = document.getElementById('demo-name').value;
                 const institution = document.getElementById('demo-institution').value;
-                const contact = document.getElementById('demo-contact').value;
-                const fullContact = "'" + (contact.startsWith('+502') ? contact : `+502 ${contact}`);
+                const contactValue = document.getElementById('demo-contact').value;
+                const onlyDigits = contactValue.replace(/\D/g, '');
+
+                if (onlyDigits.length < 8) {
+                    demoFeedback.classList.remove('hidden', 'bg-green-100', 'text-green-800');
+                    demoFeedback.classList.add('bg-red-100', 'text-red-800');
+                    demoFeedback.innerHTML = `<p>Por favor, ingrese un número de teléfono válido (mínimo 8 dígitos).</p>`;
+                    return;
+                }
+
+                const finalPhone = onlyDigits.slice(-8);
                 const date = document.getElementById('demo-date').value;
                 const time = document.getElementById('demo-time').value;
 
@@ -784,7 +793,7 @@
                         body: JSON.stringify({
                             nombre: name,
                             institucion: institution,
-                            contacto: fullContact,
+                            contacto: finalPhone,
                             fechaDeseada: date,
                             horario: time
                         })
