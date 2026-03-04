@@ -756,7 +756,7 @@
                 const name = document.getElementById('demo-name').value;
                 const institution = document.getElementById('demo-institution').value;
                 const contact = document.getElementById('demo-contact').value;
-                const fullContact = contact.startsWith('+502') ? contact : `+502 ${contact}`;
+                const fullContact = "'" + (contact.startsWith('+502') ? contact : `+502 ${contact}`);
                 const date = document.getElementById('demo-date').value;
                 const time = document.getElementById('demo-time').value;
 
