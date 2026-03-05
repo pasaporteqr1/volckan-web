@@ -4,12 +4,11 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Soluciones SOSQR | Grupo Volckan</title>
+    <title>Ciberseguridad | Grupo Volckan</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
@@ -29,6 +28,8 @@
                         "navy": "#0A1128",
                         "accent-orange": "#dc2626",
                         "accent-yellow": "#facc15",
+                        "accent-blue": "#0A1128",
+                        "background-alt": "#f8fafc"
                     },
                     fontFamily: {
                         "sans": ["Inter", "sans-serif"],
@@ -42,7 +43,6 @@
         }
     </script>
     <style type="text/tailwindcss">
-
         @layer base {
             body { @apply font-sans bg-white text-slate-900; }
             h1, h2, h3, h4 { @apply font-heading uppercase tracking-tight; }
@@ -53,8 +53,7 @@
         .icon-3d {
             filter: drop-shadow(4px 4px 0px rgba(255, 215, 0, 0.4));
         }
-    
-</style>
+    </style>
     <style>
         body {
             font-family: "Space Grotesk", sans-serif;
@@ -64,7 +63,7 @@
     <link rel="stylesheet" href="./src/styles/main.css" type="text/tailwindcss" />
 </head>
 
-<body class="antialiased font-sans bg-white text-slate-900">
+<body class="antialiased font-sans bg-white text-slate-900 flex flex-col min-h-screen">
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="flex items-center justify-between h-24">
@@ -85,7 +84,6 @@
                                 class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
                         </button>
 
-                        <!-- Contenedor del Dropdown (Light Theme Update) -->
                         <div
                             class="absolute left-0 mt-6 w-64 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
                             <div class="py-2">
@@ -117,7 +115,7 @@
 
                     <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
                         href="#">Automatizaciones</a>
-                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
+                    <a class="font-bold text-sm uppercase text-brand-purple transition-colors border-b-2 border-brand-purple pb-1"
                         href="soluciones-ciberseguridad.html">Ciberseguridad</a>
                 </nav>
 
@@ -138,366 +136,395 @@
             </div>
         </div>
     </header>
+
     <main class="flex-grow">
         <!-- Hero Section -->
-        <section class="relative bg-white pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden">
-            <div class="mx-auto max-w-[1280px] px-6 lg:px-8">
-                <div class="flex justify-center mb-10 lg:mb-16">
-                    <img src="public/images/logo-sosqr.png" alt="Sistema SOSQR"
-                        class="h-28 md:h-36 lg:h-44 w-auto object-contain transform hover:scale-105 transition-transform duration-500">
+        <section class="relative bg-slate-900 text-white overflow-hidden py-24 lg:py-32">
+            <!-- Background Elements -->
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-brand-purple/20 mix-blend-multiply"></div>
+                <!-- Abstract tech grid background -->
+                <div class="absolute inset-0 opacity-20"
+                    style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 32px 32px;">
                 </div>
-                <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
-                    <!-- Content -->
-                    <div class="flex-1 max-w-2xl">
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-purple rounded-full blur-[120px] opacity-40 animate-pulse">
+                </div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-purple/50 bg-brand-purple/10 text-brand-purple mb-8 backdrop-blur-sm">
+                    <span class="material-symbols-outlined text-sm">shield_person</span>
+                    <span class="text-sm font-bold uppercase tracking-wider text-white">Centro de Inteligencia
+                        Digital</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight tracking-tight uppercase">
+                    Ciber<span class="text-brand-purple">seguridad</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-12 font-medium">
+                    Protege tus activos digitales. Comprende las amenazas modernas y descubre cómo nuestra
+                    infraestructura segura blindar tu institución.
+                </p>
+                <button
+                    class="agendar-demo-btn bg-brand-purple hover:bg-brand-red text-white font-bold text-lg rounded-full px-12 py-4 transition-all shadow-[0_0_30px_rgba(107,33,168,0.5)] hover:shadow-[0_0_40px_rgba(220,38,38,0.6)] hover:-translate-y-1">
+                    Análisis de Riesgo Gratuito
+                </button>
+            </div>
+        </section>
+
+        <!-- Nivel de Riesgo Interactivo -->
+        <section class="py-24 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-black mb-4 text-brand-dark">Conoce Tus Enemigos <br><span
+                            class="text-brand-red text-3xl md:text-4xl">Niveles de Riesgo Explicados</span></h2>
+                    <p class="text-slate-600 text-lg max-w-2xl mx-auto">Pasa el cursor por cada nivel para descubrir las
+                        amenazas comunes que acechan a las instituciones y empresas hoy en día.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                    <!-- Riesgo Bajo -->
+                    <div
+                        class="group relative bg-white rounded-3xl p-8 border border-green-100 hover:border-green-500 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-[400px]">
                         <div
-                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-slate-800 text-xs font-bold uppercase tracking-wider mb-6 border border-blue-100">
-                            <span class="w-2 h-2 rounded-full bg-brand-purple animate-pulse"></span>
-                            Tecnología en Seguridad
+                            class="absolute inset-0 bg-gradient-to-br from-green-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         </div>
-                        <h1
-                            class="text-slate-800 font-display text-4xl lg:text-5xl xl:text-6xl font-black leading-tight tracking-tight mb-6">
-                            Soluciones Integrales de <span class="text-slate-800">Seguridad Escolar</span>
-                        </h1>
-                        <p class="text-slate-600 text-lg lg:text-xl font-normal leading-relaxed mb-8 max-w-lg">
-                            Protegiendo a estudiantes y personal educativo en Guatemala con tecnología avanzada,
-                            respuesta inmediata y protocolos automatizados.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <button
-                                class="h-12 px-8 rounded-lg bg-brand-red text-white font-bold text-base hover:bg-orange-600 transition-colors shadow-lg shadow-orange-200">
-                                Ver Soluciones
-                            </button>
-                            <button
-                                class="agendar-demo-btn group relative overflow-hidden h-12 px-8 rounded-xl bg-white border border-slate-200 text-slate-800 font-bold text-base hover:border-brand-purple hover:text-brand-purple transition-all duration-300 shadow-sm hover:shadow-xl hover:shadow-brand-purple/20 hover:-translate-y-1">
-                                <span class="relative z-10 flex items-center justify-center gap-2">
-                                    Agendar Demo
-                                    <span
-                                        class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                                </span>
-                            </button>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div
+                                class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-6 text-green-600 group-hover:scale-110 transition-transform duration-500">
+                                <span class="material-symbols-outlined text-3xl">security</span>
+                            </div>
+                            <h3
+                                class="text-2xl font-black text-slate-800 mb-2 group-hover:text-green-600 transition-colors">
+                                Nivel 1: Básico</h3>
+                            <p class="text-slate-500 font-medium uppercase tracking-widest text-sm mb-6">Ataques
+                                Oportunistas</p>
+
+                            <!-- Default state -->
+                            <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
+                                <p class="text-slate-600">Ataques no dirigidos que buscan vulnerabilidades fáciles de
+                                    explotar en sistemas desactualizados o usuarios desprevenidos.</p>
+                                <div class="mt-8 flex items-center gap-2 text-green-600 font-bold text-sm">
+                                    <span>Pasa el cursor para ver detalles</span>
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </div>
+                            </div>
+                            <!-- Hover state -->
+                            <div
+                                class="absolute top-48 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                <ul class="space-y-4">
+                                    <li class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-green-500 mt-0.5">warning</span>
+                                        <div>
+                                            <strong class="text-slate-800 block text-sm">Phishing Masivo</strong>
+                                            <span class="text-slate-600 text-sm">Correos electrónicos falsos buscando
+                                                contraseñas.</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-green-500 mt-0.5">warning</span>
+                                        <div>
+                                            <strong class="text-slate-800 block text-sm">Malware Común</strong>
+                                            <span class="text-slate-600 text-sm">Virus descargados accidentalmente que
+                                                ralentizan equipos.</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <!-- Image -->
-                    <div class="flex-1 w-full lg:w-auto">
-                        <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-slate-100 aspect-[4/3] group">
-                            <div class="absolute inset-0 bg-gradient-to-tr from-brand-dark/20 to-transparent z-10">
-                            </div>
-                            <img alt="Security monitor showing school hallways"
-                                class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
-                                data-alt="Modern school hallway security camera footage on a monitor"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR8HkwBIdZEzdo8CAyMCW6qzUPa3P0CMBmKetB9n-2ufHnNcXsF_O-gvODhMT2RDEj8_ALnQd_f8_mlfJl08sexmI2o6Wu_V4uOXfzHPKC9LLh53XTQShAqWy0zLWatYYmJ7wevRWnD91Oi1oh3ma1elioLTeIabYfaldbPMLiH3fQJVwAWCIkV6GiQ9LrbVteovSfNWrwpuRnOtt8kcN5uVNYZpXpsRGR8uL0Feq4tPYDg2frl6mRuGkLrHzR4Ylx4SKCU-QstAAk" />
-                            <!-- Floating Card -->
+
+                    <!-- Riesgo Medio -->
+                    <div
+                        class="group relative bg-white rounded-3xl p-8 border border-amber-100 hover:border-amber-500 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-[400px]">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-amber-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                        <div class="relative z-10 flex flex-col h-full">
                             <div
-                                class="absolute bottom-6 left-6 right-6 z-20 bg-white/90 backdrop-blur-md p-4 rounded-xl border border-white/50 shadow-lg">
-                                <div class="flex items-center gap-4">
-                                    <div
-                                        class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                                        <span class="material-symbols-outlined">check_circle</span>
-                                    </div>
-                                    <div>
-                                        <p class="text-slate-800 font-bold text-sm">Sistema Activo</p>
-                                        <p class="text-slate-500 text-xs">Monitoreo en tiempo real: Campus Central</p>
-                                    </div>
+                                class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center mb-6 text-amber-600 group-hover:scale-110 transition-transform duration-500">
+                                <span class="material-symbols-outlined text-3xl">vpn_key_alert</span>
+                            </div>
+                            <h3
+                                class="text-2xl font-black text-slate-800 mb-2 group-hover:text-amber-600 transition-colors">
+                                Nivel 2: Severo</h3>
+                            <p class="text-slate-500 font-medium uppercase tracking-widest text-sm mb-6">Amenazas
+                                Dirigidas</p>
+
+                            <!-- Default state -->
+                            <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
+                                <p class="text-slate-600">Ataques específicos diseñados para robar bases de datos,
+                                    credenciales de administrador o alterar información importante.</p>
+                                <div class="mt-8 flex items-center gap-2 text-amber-600 font-bold text-sm">
+                                    <span>Pasa el cursor para ver detalles</span>
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </div>
+                            </div>
+                            <!-- Hover state -->
+                            <div
+                                class="absolute top-48 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                <ul class="space-y-4">
+                                    <li class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-amber-500 mt-0.5">warning</span>
+                                        <div>
+                                            <strong class="text-slate-800 block text-sm">Spear Phishing</strong>
+                                            <span class="text-slate-600 text-sm">Engaños adaptados con datos reales de
+                                                la institución.</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-amber-500 mt-0.5">warning</span>
+                                        <div>
+                                            <strong class="text-slate-800 block text-sm">Fuerza Bruta</strong>
+                                            <span class="text-slate-600 text-sm">Intentos repetidos para adivinar
+                                                contraseñas débiles.</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Riesgo Alto -->
+                    <div
+                        class="group relative bg-white rounded-3xl p-8 border border-brand-red/20 hover:border-brand-red shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-[400px]">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-red-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        </div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div
+                                class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-6 text-brand-red group-hover:scale-110 transition-transform duration-500">
+                                <span class="material-symbols-outlined text-3xl">bug_report</span>
+                            </div>
+                            <h3
+                                class="text-2xl font-black text-slate-800 mb-2 group-hover:text-brand-red transition-colors">
+                                Nivel 3: Crítico</h3>
+                            <p class="text-slate-500 font-medium uppercase tracking-widest text-sm mb-6">Compromiso
+                                Total</p>
+
+                            <!-- Default state -->
+                            <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
+                                <p class="text-slate-600">Secuestro total de sistemas, robo y exposición de datos
+                                    financieros o personales de alumnos, paralizando la operación.</p>
+                                <div class="mt-8 flex items-center gap-2 text-brand-red font-bold text-sm">
+                                    <span>Pasa el cursor para ver detalles</span>
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </div>
+                            </div>
+                            <!-- Hover state -->
+                            <div
+                                class="absolute top-48 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                <ul class="space-y-4">
+                                    <li class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-red mt-0.5">warning</span>
+                                        <div>
+                                            <strong class="text-slate-800 block text-sm">Ransomware</strong>
+                                            <span class="text-slate-600 text-sm">Encriptan tus datos y exigen rescates
+                                                millonarios.</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-red mt-0.5">warning</span>
+                                        <div>
+                                            <strong class="text-slate-800 block text-sm">Ataques DDoS</strong>
+                                            <span class="text-slate-600 text-sm">Sobrecarga de servidores dejando
+                                                inoperable el sistema.</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Mejores Prácticas -->
+        <section class="py-24 bg-white border-t border-slate-100">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row gap-16 items-center">
+
+                    <!-- Text Content -->
+                    <div class="w-full lg:w-1/2">
+                        <div class="mb-8">
+                            <span class="text-brand-purple font-bold uppercase tracking-widest text-sm">Educación
+                                Preventiva</span>
+                            <h2 class="text-4xl lg:text-5xl font-black text-slate-800 mt-2 mb-6">4 Prácticas que salvan
+                                datos.</h2>
+                            <p class="text-slate-600 text-lg leading-relaxed">
+                                La ciberseguridad no es solo tecnología, es cultura. Implementar hábitos saludables de
+                                seguridad digital en su personal es la primera y mejor defensa existente.
+                            </p>
+                        </div>
+
+                        <div class="space-y-6">
+                            <!-- Tip 1 -->
+                            <div
+                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-brand-purple/10 text-brand-purple flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined font-bold">password</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Higiene de Contraseñas</h4>
+                                    <p class="text-slate-600 text-sm mt-1">Usa frases o contraseñas mayores a 12
+                                        caracteres, nunca repetidas entre servicios. Activa Autenticación de Dos
+                                        Factores (2FA).</p>
+                                </div>
+                            </div>
+                            <!-- Tip 2 -->
+                            <div
+                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined font-bold">policy</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Verificar Remitentes</h4>
+                                    <p class="text-slate-600 text-sm mt-1">Si un correo solicita "urgencia" en un pago o
+                                        restablecer cuenta, detente. Confirma por teléfono antes de hacer clic.</p>
+                                </div>
+                            </div>
+                            <!-- Tip 3 -->
+                            <div
+                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined font-bold">update</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Actualizaciones Inmediatas</h4>
+                                    <p class="text-slate-600 text-sm mt-1">Los ciberdelincuentes aprovechan fallos
+                                        conocidos. Mantén SO y software siempre en su última versión.</p>
+                                </div>
+                            </div>
+                            <!-- Tip 4 -->
+                            <div
+                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-brand-dark/10 text-brand-dark flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined font-bold">wifi_off</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Cuidado con Wi-Fi Público</h4>
+                                    <p class="text-slate-600 text-sm mt-1">Nunca accedas a sistemas escolares
+                                        corporativos usando redes públicas sin una VPN empresarial certificada.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Visual / Image -->
+                    <div class="w-full lg:w-1/2 relative">
+                        <div
+                            class="absolute inset-0 bg-brand-purple/10 rounded-full blur-[80px] -z-10 transform translate-x-10 translate-y-10">
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                            alt="Cybersecurity Server Room"
+                            class="rounded-3xl shadow-2xl w-full object-cover h-[600px] border border-slate-200">
+                        <!-- Floating Badge -->
+                        <div
+                            class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-4 animate-bounce hover:animate-none">
+                            <div
+                                class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                                <span class="material-symbols-outlined">gpp_good</span>
+                            </div>
+                            <div>
+                                <p class="font-black text-xl text-slate-800">100%</p>
+                                <p class="text-xs text-slate-500 font-bold uppercase">Datos Seguros</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
-        <!-- ¿Cómo funciona? Section -->
-        <section class="py-20 bg-surface-light border-y border-slate-100">
-            <div class="mx-auto max-w-[1280px] px-6 lg:px-8">
-                <div class="flex flex-col lg:flex-row gap-12 items-start">
-                    <div class="lg:w-1/3 lg:sticky lg:top-24 mb-8 lg:mb-0">
-                        <div class="flex flex-col gap-2 mb-4">
-                            <span class="text-brand-red font-bold tracking-wider uppercase text-sm">Protocolo
-                                Tecnológico</span>
-                            <h2 class="text-slate-800 font-display text-3xl lg:text-4xl font-black leading-tight">
-                                ¿Cómo funciona el<br />sistema de alertas?
-                            </h2>
-                        </div>
-                        <p class="text-slate-600 text-lg leading-relaxed mb-8">
-                            El sistema de alertas de SOSQR funciona mediante un protocolo tecnológico específico y
-                            notifica a una red de contactos preestablecida para asegurar una respuesta rápida.
-                        </p>
-                    </div>
-                    <div class="lg:w-2/3 grid gap-6 sm:grid-cols-2 w-full">
-                        <!-- Feature Card 1 -->
-                        <div
-                            class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-brand-red mb-4">
-                                <span class="material-symbols-outlined">touch_app</span>
-                            </div>
-                            <h3 class="text-slate-800 font-display font-bold text-lg mb-2">Activación</h3>
-                            <p class="text-slate-500 text-sm">La alerta se dispara de forma automática cuando una
-                                persona escanea el código QR único del estudiante o cuando se activa el "Botón de
-                                Emergencia" directamente en la interfaz de la plataforma.</p>
-                        </div>
-                        <!-- Feature Card 2 -->
-                        <div
-                            class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-brand-red mb-4">
-                                <span class="material-symbols-outlined">wifi_tethering</span>
-                            </div>
-                            <h3 class="text-slate-800 font-display font-bold text-lg mb-2">Transmisión</h3>
-                            <p class="text-slate-500 text-sm">El sistema genera y envía una alerta múltiple de manera
-                                inmediata a través de SMS, notificaciones Push o Telegram. Es importante destacar que el
-                                envío exitoso depende de conexión a Internet y cobertura celular.</p>
-                        </div>
-                        <!-- Feature Card 3 -->
-                        <div
-                            class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-brand-red mb-4">
-                                <span class="material-symbols-outlined">location_on</span>
-                            </div>
-                            <h3 class="text-slate-800 font-display font-bold text-lg mb-2">Geolocalización (GPS)</h3>
-                            <p class="text-slate-500 text-sm">Al momento de activarse la alerta o escanearse el código,
-                                el sistema recoge y comparte la ubicación geográfica exacta del dispositivo que emitió
-                                la señal, con el objetivo de facilitar la llegada del auxilio.</p>
-                        </div>
-                        <!-- Feature Card 4 -->
-                        <div
-                            class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-brand-red mb-4">
-                                <span class="material-symbols-outlined">support_agent</span>
-                            </div>
-                            <h3 class="text-slate-800 font-display font-bold text-lg mb-2">Acompañamiento y Cierre</h3>
-                            <p class="text-slate-500 text-sm">Una vez generada, la alerta queda registrada en la
-                                "Bitácora de Eventos". El Centro de Monitoreo realiza seguimiento. Permanece "Activa"
-                                hasta que un responsable o autoridad validada la marque como "Resuelta".</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ¿Quiénes reciben? Section -->
-        <section class="py-20 bg-white">
-            <div class="mx-auto max-w-[1280px] px-6 lg:px-8">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-slate-800 font-display text-3xl lg:text-4xl font-black mb-4">¿Quiénes reciben las
-                        alertas?</h2>
-                    <p class="text-slate-600 text-lg">Al momento de la emergencia, el sistema envía la notificación
-                        simultáneamente a los siguientes destinatarios.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Card 1 -->
-                    <div
-                        class="group relative overflow-hidden rounded-2xl bg-slate-50 border border-slate-100 p-8 hover:border-brand-purple/30 transition-all duration-300 text-center">
-                        <div
-                            class="w-16 h-16 mx-auto rounded-full bg-blue-100 flex items-center justify-center text-brand-purple mb-6 group-hover:bg-brand-purple group-hover:text-white transition-colors">
-                            <span class="material-symbols-outlined text-3xl">family_restroom</span>
-                        </div>
-                        <h3 class="text-slate-800 font-display font-bold text-xl mb-3">Responsables Legales</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            Hasta dos (2) responsables legales (padres de familia o tutores registrados).
-                        </p>
-                    </div>
-                    <!-- Card 2 -->
-                    <div
-                        class="group relative overflow-hidden rounded-2xl bg-brand-dark text-white p-8 shadow-xl text-center">
-                        <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-purple"></div>
-                        <div class="relative z-10">
-                            <div
-                                class="w-16 h-16 mx-auto rounded-full bg-white/10 flex items-center justify-center text-white mb-6 backdrop-blur-sm border border-white/20">
-                                <span class="material-symbols-outlined text-3xl">local_police</span>
-                            </div>
-                            <h3 class="text-white font-display font-bold text-xl mb-3">Autoridad Escolar</h3>
-                            <p class="text-blue-100 text-sm leading-relaxed">
-                                La autoridad designada por la Institución Educativa (el colegio).
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Card 3 -->
-                    <div
-                        class="group relative overflow-hidden rounded-2xl bg-slate-50 border border-slate-100 p-8 hover:border-brand-purple/30 transition-all duration-300 text-center">
-                        <div
-                            class="w-16 h-16 mx-auto rounded-full bg-blue-100 flex items-center justify-center text-brand-purple mb-6 group-hover:bg-brand-purple group-hover:text-white transition-colors">
-                            <span class="material-symbols-outlined text-3xl">admin_panel_settings</span>
-                        </div>
-                        <h3 class="text-slate-800 font-display font-bold text-xl mb-3">Centro de Monitoreo</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            El Centro de Monitoreo interno de la plataforma SOSQR.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ¿Por qué Telegram? Section -->
-        <section class="py-20 bg-brand-dark relative overflow-hidden text-white">
-            <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-purple opacity-90 z-0"></div>
-            <!-- Decorative Elements -->
-            <div class="absolute -top-40 -right-40 w-96 h-96 bg-brand-purple rounded-full blur-[120px] opacity-50 z-0">
-            </div>
-            <div class="absolute bottom-10 -left-20 w-72 h-72 bg-blue-900 rounded-full blur-[100px] opacity-60 z-0">
-            </div>
 
-            <div class="mx-auto max-w-[1280px] px-6 lg:px-8 relative z-10">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <div
-                        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm mb-6">
-                        <span class="material-symbols-outlined text-sm text-blue-300">chat</span>
-                        <span class="text-xs font-bold text-blue-100 tracking-wider uppercase">Infraestructura
-                            Crítica</span>
-                    </div>
-                    <h2 class="font-display text-3xl lg:text-5xl font-black mb-6 leading-tight">
-                        ¿Por qué usamos <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-indigo-200">Telegram</span><br />para
-                        Emergencias?
-                    </h2>
-                    <p class="text-blue-100/80 text-lg leading-relaxed">
-                        Cuando los segundos cuentan, dependemos de plataformas diseñadas para velocidad, seguridad y
-                        robustez técnica. Telegram nos brinda la infraestructura necesaria para proteger a tu comunidad
-                        escolar sin fallos y sin depender de algoritmos comerciales que retrasen la información.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Feature 1 -->
-                    <div
-                        class="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-md hover:bg-white/10 transition-colors text-left">
-                        <div
-                            class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
-                            <span class="material-symbols-outlined text-white">rocket_launch</span>
-                        </div>
-                        <h3 class="font-display font-bold text-xl mb-3 text-white">Velocidad y Prioridad (Push)</h3>
-                        <p class="text-blue-100/70 text-sm leading-relaxed">
-                            A diferencia de otras apps que limitan el envío masivo o lo retrasan por filtros anti-spam,
-                            Telegram garantiza la entrega de notificaciones <strong>inmediata</strong> y prioritaria,
-                            asegurando que ningún mensaje crítico quede bloqueado durante una emergencia masiva.
-                        </p>
-                    </div>
-
-                    <!-- Feature 2 -->
-                    <div
-                        class="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-md hover:bg-white/10 transition-colors text-left">
-                        <div
-                            class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
-                            <span class="material-symbols-outlined text-white">developer_board</span>
-                        </div>
-                        <h3 class="font-display font-bold text-xl mb-3 text-white">API de Bots Interactivos</h3>
-                        <p class="text-blue-100/70 text-sm leading-relaxed">
-                            Su robusta API nos permite automatizar flujos complejos de respuesta. Las alertas integran
-                            botones interactivos (como "Marcar como a salvo"), despliegue de coordenadas GPS nativas y
-                            formatos de datos estructurados para toma de decisiones rápida.
-                        </p>
-                    </div>
-
-                    <!-- Feature 3 -->
-                    <div
-                        class="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-md hover:bg-white/10 transition-colors text-left">
-                        <div
-                            class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
-                            <span class="material-symbols-outlined text-white">groups</span>
-                        </div>
-                        <h3 class="font-display font-bold text-xl mb-3 text-white">Grupos de Coordinación Crítica</h3>
-                        <p class="text-blue-100/70 text-sm leading-relaxed">
-                            Cuenta con una flexibilidad inigualable para manejar canales y súper grupos a gran escala.
-                            Esto nos resulta esencial para coordinar una respuesta simultánea entre autoridades
-                            escolares, seguridad perimetral y el Centro de Monitoreo SOSQR.
-                        </p>
-                    </div>
-
-                    <!-- Feature 4 -->
-                    <div
-                        class="bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-md hover:bg-white/10 transition-colors text-left">
-                        <div
-                            class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30">
-                            <span class="material-symbols-outlined text-white">lock</span>
-                        </div>
-                        <h3 class="font-display font-bold text-xl mb-3 text-white">Privacidad y Encriptación Extrema
-                        </h3>
-                        <p class="text-blue-100/70 text-sm leading-relaxed">
-                            Con infraestructura en la nube distribuida globalmente, Telegram garantiza que la
-                            información sensible, como trayectos geográficos y detalles del alumnado involucrado, se
-                            mantenga absolutamente resguardada y disponible 24/7 sin dependencias locales.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Bottom CTA -->
-        <section class="py-20 bg-brand-dark text-white relative overflow-hidden">
-            <div
-                class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10">
-            </div>
-            <div class="mx-auto max-w-4xl px-6 lg:px-8 text-center relative z-10">
-                <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-black mb-6 tracking-tight">
-                    ¿Listo para proteger tu institución?
+        <!-- CTA Final -->
+        <section class="py-20 bg-brand-dark relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-purple/20 to-transparent"></div>
+            <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-6">¿Tu institución está realmente protegida?
                 </h2>
-                <p class="text-slate-300 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-                    Únete a las escuelas líderes en Guatemala que ya confían en SOSQR para la seguridad de su comunidad.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <button
-                        class="h-14 px-8 rounded-lg bg-brand-red text-white font-bold text-lg hover:bg-orange-600 transition-all shadow-[0_0_20px_rgba(244,141,37,0.4)] hover:shadow-[0_0_30px_rgba(244,141,37,0.6)]">
-                        Solicitar Diagnóstico Gratuito
-                    </button>
-                    <button
-                        class="h-14 px-8 rounded-lg border border-slate-600 text-white font-bold text-lg hover:bg-white/10 transition-colors">
-                        Contactar Asesor
-                    </button>
-                </div>
+                <p class="text-slate-300 text-lg mb-10">No esperes a un ataque para descubrir tus vulnerabilidades.
+                    Solicita una auditoría demo y conoce nuestras soluciones integrales (Cloud & On-Premise).</p>
+                <button
+                    class="agendar-demo-btn bg-brand-red text-white py-4 px-10 rounded-full font-bold text-lg uppercase tracking-widest hover:bg-white hover:text-brand-red transition-all shadow-lg hover:shadow-2xl">
+                    Agendar Auditoría Gratuita
+                </button>
             </div>
         </section>
+
     </main>
-    <footer class="bg-brand-dark text-white pt-24 pb-12">
+
+    <!-- Footer Area (Retained from existing structure) -->
+    <footer class="bg-primary text-white pt-24 pb-12 relative overflow-hidden">
+        <div
+            class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-purple/50 to-transparent">
+        </div>
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-3 mb-8">
-                        <div class="bg-brand-purple w-10 h-10 rounded-lg flex items-center justify-center">
-                            <span class="material-symbols-outlined">qr_code_2</span>
-                        </div>
-                        <span class="text-2xl font-black tracking-tighter">SOSQR</span>
-                    </div>
-                    <p class="text-slate-400 max-w-sm mb-10 font-medium">Líderes en tecnología de seguridad preventiva
-                        para México y Latinoamérica. Protegiendo lo que más importa con innovación constante.</p>
-                    <div class="flex gap-4">
-                        <div
-                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
-                            <span class="material-symbols-outlined text-sm">share</span>
-                        </div>
-                        <div
-                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
-                            <span class="material-symbols-outlined text-sm">public</span>
-                        </div>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <img src="public/images/logo-volckan.png" alt="Volckan"
+                        class="h-10 w-auto mb-6 brightness-0 invert">
+                    <p class="text-slate-400 text-sm leading-relaxed max-w-xs">Creamos tecnología de vanguardia para la
+                        seguridad física y digital de las instituciones en Latinoamérica.</p>
                 </div>
                 <div>
-                    <h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">SOLUCIONES</h5>
-                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
-                        <li><a class="hover:text-white transition-colors" href="#">Seguridad Escolar</a></li>
-                        <li><a class="hover:text-white transition-colors" href="#">Seguridad Corporativa</a></li>
-                        <li><a class="hover:text-white transition-colors" href="#">Botones de Pánico</a></li>
-                        <li><a class="hover:text-white transition-colors" href="#">CCTV Inteligente</a></li>
+                    <h4 class="font-black mb-6 text-xl text-white">Soluciones</h4>
+                    <ul class="space-y-4">
+                        <li><a href="soluciones-sosqr.html"
+                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-sm">emergency</span> Sistema SOSQR</a></li>
+                        <li><a href="soluciones-parqueos.html"
+                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-sm">local_parking</span> Parqueos
+                                Digitales</a></li>
+                        <li><a href="#"
+                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-sm">shield_lock</span> Ciberseguridad</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">CONTACTO</h5>
-                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-brand-purple text-lg">mail</span>
-                            contacto@sosqr.mx
+                    <h4 class="font-black mb-6 text-xl text-white">Legal</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#"
+                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors">Aviso de
+                                Privacidad</a></li>
+                        <li><a href="#"
+                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors">Términos y
+                                Condiciones</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black mb-6 text-xl text-white">Contacto Directo</h4>
+                    <ul class="space-y-4">
+                        <li class="flex flex-col gap-1 text-slate-400">
+                            <span class="text-xs uppercase tracking-wider font-bold text-slate-500">Ventas</span>
+                            <a href="mailto:ventas@grupovolckan.com"
+                                class="hover:text-brand-yellow font-medium transition-colors flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[1rem]">mail</span>
+                                ventas@grupovolckan.com
+                            </a>
                         </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-brand-purple text-lg">phone</span>
-                            800 SOSQR SAFE
+                        <li class="flex flex-col gap-1 text-slate-400 mt-4">
+                            <span class="text-xs uppercase tracking-wider font-bold text-slate-500">Soporte
+                                24/7</span>
+                            <a href="#"
+                                class="hover:text-brand-yellow font-medium transition-colors flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[1rem]">support_agent</span>
+                                +502 1234-5678
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div
-                class="pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8 text-xs font-bold text-slate-800 uppercase tracking-widest">
-                <p>© 2024 SOSQR Seguridad Escolar. Todos los derechos reservados.</p>
-                <div class="flex gap-10">
-                    <a class="hover:text-white transition-colors" href="#">Aviso de Privacidad</a>
-                    <a class="hover:text-white transition-colors" href="#">Términos de Servicio</a>
-                </div>
+            <div class="pt-8 border-t border-white/10 text-center flex flex-col items-center gap-4">
+                <p class="text-slate-500 text-sm font-medium">© 2026 Grupo Volckan. Todos los derechos reservados.
+                    Ciudad de Guatemala.</p>
             </div>
         </div>
     </footer>
@@ -630,10 +657,10 @@
             <div
                 class="bg-white p-6 pb-4 border-b border-slate-100 flex justify-between items-start shrink-0 rounded-t-3xl">
                 <div class="flex items-center gap-4">
-                    <img src="public/images/logo-sosqr.png" alt="SOSQR" class="h-10 sm:h-12 w-auto object-contain">
+                    <img src="public/images/logo-sosqr.png" alt="Volckan" class="h-10 sm:h-12 w-auto object-contain">
                     <div>
                         <h3 class="font-display font-black text-xl sm:text-2xl text-slate-800">Agendar Demo</h3>
-                        <p class="text-slate-500 text-xs sm:text-sm mt-1">Transforma la seguridad escolar</p>
+                        <p class="text-slate-500 text-xs sm:text-sm mt-1">Nuestros asesores se pondran en contacto</p>
                     </div>
                 </div>
                 <button id="demo-modal-close"
@@ -656,8 +683,8 @@
 
                     <!-- Institution -->
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-institution">Institución
-                            Educativa <span class="text-brand-red">*</span></label>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5"
+                            for="demo-institution">Empresa/Institución <span class="text-brand-red">*</span></label>
                         <input type="text" id="demo-institution" required
                             class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
                     </div>
@@ -708,7 +735,7 @@
                     <!-- Botón de Envío -->
                     <button type="submit" id="demo-submit-btn"
                         class="w-full mt-4 bg-brand-red text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 hover:bg-orange-600 hover:shadow-xl hover:-translate-y-0.5 transition-all flex justify-center items-center gap-2">
-                        <span>Solicitar Demo</span>
+                        <span>Solicitar Auditoría</span>
                         <span class="material-symbols-outlined text-lg">send</span>
                     </button>
 
@@ -804,7 +831,7 @@
                     demoForm.reset();
                     demoFeedback.classList.add('hidden');
                     demoSubmitBtn.disabled = false;
-                    demoSubmitBtn.innerHTML = `<span>Solicitar Demo</span><span class="material-symbols-outlined text-lg">send</span>`;
+                    demoSubmitBtn.innerHTML = `<span>Solicitar Auditoría</span><span class="material-symbols-outlined text-lg">send</span>`;
                 }, 300);
             }
 
@@ -887,13 +914,11 @@
                     demoFeedback.classList.add('bg-red-50', 'text-brand-red');
                     demoFeedback.textContent = 'Ocurrió un error. Por favor intenta de nuevo.';
                     demoSubmitBtn.disabled = false;
-                    demoSubmitBtn.innerHTML = `<span>Solicitar Demo</span><span class="material-symbols-outlined text-lg">send</span>`;
+                    demoSubmitBtn.innerHTML = `<span>Solicitar Auditoría</span><span class="material-symbols-outlined text-lg">send</span>`;
                 }
             });
-
         });
     </script>
-
 </body>
 
 </html>
