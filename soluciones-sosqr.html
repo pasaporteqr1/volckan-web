@@ -1442,44 +1442,60 @@
         </div>
     </div>
 
-<!-- ======== POP-UP AVISO SIMULACIÓN (100% independiente) ======== -->
-<div id="sim-aviso-popup" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(15,23,42,0.6); backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:16px;">
-    <div style="background:#fff; border-radius:24px; max-width:420px; width:100%; box-shadow:0 25px 50px rgba(0,0,0,0.25); overflow:hidden; text-align:center; animation: simPopIn 0.3s ease-out;">
-        <!-- Header -->
-        <div style="background:linear-gradient(135deg, #f8fafc, #f1f5f9); padding:32px 24px; border-bottom:1px solid #e2e8f0;">
-            <div style="width:64px; height:64px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; border:1px solid #e2e8f0;">
-                <span class="material-symbols-outlined" style="font-size:32px; color:#dc2626;">info</span>
+    <!-- ======== POP-UP AVISO SIMULACIÓN (100% independiente) ======== -->
+    <div id="sim-aviso-popup"
+        style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(15,23,42,0.6); backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:16px;">
+        <div
+            style="background:#fff; border-radius:24px; max-width:420px; width:100%; box-shadow:0 25px 50px rgba(0,0,0,0.25); overflow:hidden; text-align:center; animation: simPopIn 0.3s ease-out;">
+            <!-- Header -->
+            <div
+                style="background:linear-gradient(135deg, #f8fafc, #f1f5f9); padding:32px 24px; border-bottom:1px solid #e2e8f0;">
+                <div
+                    style="width:64px; height:64px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; border:1px solid #e2e8f0;">
+                    <span class="material-symbols-outlined" style="font-size:32px; color:#dc2626;">info</span>
+                </div>
+                <h3 style="font-family:'Outfit',sans-serif; font-weight:900; font-size:24px; color:#1e293b; margin:0;">
+                    Simulación Finalizada</h3>
             </div>
-            <h3 style="font-family:'Outfit',sans-serif; font-weight:900; font-size:24px; color:#1e293b; margin:0;">Simulación Finalizada</h3>
-        </div>
-        <!-- Body -->
-        <div style="padding:32px;">
-            <p style="color:#475569; font-size:16px; line-height:1.6; margin:0 0 32px 0;">
-                Esta simulación es únicamente con fines ilustrativos para comprender el funcionamiento general del sistema SOSQR.<br><br>
-                Para conocer los <strong>detalles técnicos</strong>, integraciones y esquema operativo real en tu institución, <strong>contáctanos ahora</strong>.
-            </p>
-            <div style="display:flex; flex-direction:column; gap:12px;">
-                <a href="https://wa.me/50231097191?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20SOSQR" target="_blank" rel="noopener"
-                   style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px 24px; border-radius:12px; background:#dc2626; color:#fff; font-weight:700; font-size:15px; text-decoration:none; box-shadow:0 4px 6px rgba(220,38,38,0.25); border:none; cursor:pointer; transition:background 0.2s;">
-                    <span class="material-symbols-outlined" style="font-size:20px;">support_agent</span>
-                    Contactar Ahora
-                </a>
-                <button onclick="document.getElementById('sim-aviso-popup').style.display='none'; document.body.style.overflow='';"
-                   style="width:100%; padding:14px 24px; border-radius:12px; background:#f1f5f9; color:#475569; font-weight:700; font-size:15px; border:none; cursor:pointer; transition:background 0.2s;"
-                   onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
-                    Cerrar y explorar más
-                </button>
+            <!-- Body -->
+            <div style="padding:32px;">
+                <p style="color:#475569; font-size:16px; line-height:1.6; margin:0 0 32px 0;">
+                    Esta simulación es únicamente con fines ilustrativos para comprender el funcionamiento general del
+                    sistema SOSQR.<br><br>
+                    Para conocer los <strong>detalles técnicos</strong>, integraciones y esquema operativo real en tu
+                    institución, <strong>contáctanos ahora</strong>.
+                </p>
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                    <a href="https://wa.me/50231097191?text=Estoy%20interesado%20en%20el%20sistema%20SOSQR"
+                        target="_blank" rel="noopener"
+                        style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px 24px; border-radius:12px; background:#dc2626; color:#fff; font-weight:700; font-size:15px; text-decoration:none; box-shadow:0 4px 6px rgba(220,38,38,0.25); border:none; cursor:pointer; transition:background 0.2s;">
+                        <span class="material-symbols-outlined" style="font-size:20px;">support_agent</span>
+                        Contactar Ahora
+                    </a>
+                    <button
+                        onclick="document.getElementById('sim-aviso-popup').style.display='none'; document.body.style.overflow='';"
+                        style="width:100%; padding:14px 24px; border-radius:12px; background:#f1f5f9; color:#475569; font-weight:700; font-size:15px; border:none; cursor:pointer; transition:background 0.2s;"
+                        onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
+                        Cerrar y explorar más
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<style>
-@keyframes simPopIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-</style>
-<!-- ======== FIN POP-UP AVISO ======== -->
+    <style>
+        @keyframes simPopIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+    <!-- ======== FIN POP-UP AVISO ======== -->
 
 </body>
 
