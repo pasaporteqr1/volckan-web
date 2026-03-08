@@ -259,9 +259,14 @@
                                         <span class="material-symbols-outlined text-xl">qr_code_scanner</span>
                                         <span>ESCANEAR QR</span>
                                     </button>
-                                    <p
-                                        class="block lg:hidden mt-auto mb-2 text-xs font-bold text-slate-700 bg-white/80 px-4 py-1.5 rounded-full shadow-sm">
-                                        Paso 1: Escaneo</p>
+                                    <div class="block lg:hidden mt-auto mb-2 w-full">
+                                        <p
+                                            class="text-xs font-bold text-purple-700 bg-purple-50 px-4 py-1.5 rounded-full shadow-sm text-center mb-1">
+                                            Paso 1: Escaneo QR</p>
+                                        <p class="text-[11px] text-slate-500 text-center px-2">Lectura de código QR.
+                                            Despliega el botón de emergencia, ficha médica, formulario de reportes y
+                                            marcado rápido.</p>
+                                    </div>
                                 </div>
 
                                 <!-- Estado 1: Ficha Médica y Botón SOS -->
@@ -329,9 +334,13 @@
                                         </div>
                                     </div>
 
-                                    <p
-                                        class="block lg:hidden mt-auto mb-2 text-xs font-bold text-slate-700 bg-white/80 px-4 py-1.5 rounded-full shadow-sm">
-                                        Paso 2: Activación</p>
+                                    <div class="block lg:hidden mt-auto mb-2 w-full">
+                                        <p
+                                            class="text-xs font-bold text-red-700 bg-red-50 px-4 py-1.5 rounded-full shadow-sm text-center mb-1">
+                                            Paso 2: Activación de Emergencia</p>
+                                        <p class="text-[11px] text-slate-500 text-center px-2">El usuario presiona el
+                                            botón de emergencia desde la interfaz protegida.</p>
+                                    </div>
                                 </div>
 
                                 <!-- Estado 2: Transmitiendo -->
@@ -347,9 +356,13 @@
                                     <h3 class="text-xl font-bold text-slate-800 mb-2">Señal Enviada</h3>
                                     <p class="text-sm text-slate-500 px-4">Transmitiendo vía Telegram API y redes
                                         redundantes...</p>
-                                    <p
-                                        class="block lg:hidden mt-4 text-sm font-bold text-slate-700 bg-white/80 px-4 py-2 rounded-full shadow-sm">
-                                        Paso 3: Transmisión Inmediata</p>
+                                    <div class="block lg:hidden mt-4 w-full">
+                                        <p
+                                            class="text-xs font-bold text-blue-700 bg-blue-50 px-4 py-1.5 rounded-full shadow-sm text-center mb-1">
+                                            Paso 3: Transmisión Simultánea</p>
+                                        <p class="text-[11px] text-slate-500 text-center px-2">Alertas instantáneas vía
+                                            Push, SMS y Telegram saltándose cuellos de botella.</p>
+                                    </div>
                                 </div>
 
                                 <!-- Estado 3: Ubicación GPS -->
@@ -375,9 +388,13 @@
                                     <h3 class="text-xl font-bold text-slate-800 mb-2">GPS Fijado</h3>
                                     <p class="text-sm text-slate-500 font-mono bg-slate-100 px-3 py-1 rounded-md">Lat:
                                         14.6349, Lon: -90.5068</p>
-                                    <p
-                                        class="block lg:hidden mt-4 text-sm font-bold text-slate-700 bg-white/80 px-4 py-2 rounded-full shadow-sm">
-                                        Paso 4: Trazado y envío GPS</p>
+                                    <div class="block lg:hidden mt-4 w-full">
+                                        <p
+                                            class="text-xs font-bold text-amber-700 bg-amber-50 px-4 py-1.5 rounded-full shadow-sm text-center mb-1">
+                                            Paso 4: Trazado GPS en Tiempo Real</p>
+                                        <p class="text-[11px] text-slate-500 text-center px-2">Coordenadas geográficas
+                                            exactas del dispositivo emisor adjuntadas automáticamente.</p>
+                                    </div>
                                 </div>
 
                                 <!-- Estado 4: Resuelto / Recibido -->
@@ -399,9 +416,13 @@
                                         <span class="material-symbols-outlined text-2xl">refresh</span>
                                         <span class="text-[10px] uppercase tracking-wider">Reiniciar</span>
                                     </button>
-                                    <p
-                                        class="block lg:hidden mt-6 text-sm font-bold text-slate-700 bg-white/80 px-4 py-2 rounded-full shadow-sm">
-                                        Paso 5: Recepción de Autoridades</p>
+                                    <div class="block lg:hidden mt-4 w-full">
+                                        <p
+                                            class="text-xs font-bold text-green-700 bg-green-50 px-4 py-1.5 rounded-full shadow-sm text-center mb-1">
+                                            Paso 5: Confirmación y Cierre</p>
+                                        <p class="text-[11px] text-slate-500 text-center px-2">Autoridades notificadas.
+                                            Evento registrado hasta marcarse como resuelto.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -419,42 +440,48 @@
 
                         <div class="space-y-4">
                             <!-- Step 0: Escaneo -->
-                            <div id="step-0"
+                            <div id="step-0" data-step-color="purple"
                                 class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
                                 <div
-                                    class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
+                                    class="step-circle absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
                                     <span
                                         class="material-symbols-outlined text-slate-400 text-sm">qr_code_scanner</span>
                                 </div>
-                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                <div
+                                    class="step-card bg-white p-5 rounded-2xl border border-slate-100 shadow-sm transition-all duration-500">
                                     <h3 class="text-slate-800 font-display font-bold text-lg mb-1">1. Escaneo QR</h3>
-                                    <p class="text-slate-500 text-sm leading-relaxed">Lectura de la credencial que
-                                        despliega al instante la ficha médica y opciones vitales.</p>
+                                    <p class="text-slate-500 text-sm leading-relaxed">Lectura de código QR que despliega
+                                        el botón de emergencia, la ficha médica del estudiante, formulario de reportes y
+                                        botones de emergencia de marcado rápido.</p>
                                 </div>
                             </div>
 
                             <!-- Step 1: Activación -->
-                            <div id="step-1"
+                            <div id="step-1" data-step-color="red"
                                 class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
                                 <div
-                                    class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
-                                    <span class="material-symbols-outlined text-slate-400 text-sm">touch_app</span>
+                                    class="step-circle absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
+                                    <span
+                                        class="material-symbols-outlined text-slate-400 text-sm">emergency_share</span>
                                 </div>
-                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">2. Activación</h3>
+                                <div
+                                    class="step-card bg-white p-5 rounded-2xl border border-slate-100 shadow-sm transition-all duration-500">
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">2. Activación de
+                                        Emergencia</h3>
                                     <p class="text-slate-500 text-sm leading-relaxed">El usuario presiona el Botón de
-                                        Emergencia desde la interfaz protegida.</p>
+                                        Emergencia desde la interfaz protegida para activar el protocolo.</p>
                                 </div>
                             </div>
 
                             <!-- Step 2: Transmisión -->
-                            <div id="step-2"
+                            <div id="step-2" data-step-color="blue"
                                 class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
                                 <div
-                                    class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
-                                    <span class="material-symbols-outlined text-slate-400 text-sm">wifi_tethering</span>
+                                    class="step-circle absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
+                                    <span class="material-symbols-outlined text-slate-400 text-sm">cell_tower</span>
                                 </div>
-                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                <div
+                                    class="step-card bg-white p-5 rounded-2xl border border-slate-100 shadow-sm transition-all duration-500">
                                     <h3 class="text-slate-800 font-display font-bold text-lg mb-1">3. Transmisión
                                         Simultánea</h3>
                                     <p class="text-slate-500 text-sm leading-relaxed">SOSQR dispara alertas instantáneas
@@ -463,27 +490,30 @@
                             </div>
 
                             <!-- Step 3: Geolocalización -->
-                            <div id="step-3"
+                            <div id="step-3" data-step-color="amber"
                                 class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
                                 <div
-                                    class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
-                                    <span class="material-symbols-outlined text-slate-400 text-sm">location_on</span>
+                                    class="step-circle absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
+                                    <span class="material-symbols-outlined text-slate-400 text-sm">my_location</span>
                                 </div>
-                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">4. Trazado GPS</h3>
+                                <div
+                                    class="step-card bg-white p-5 rounded-2xl border border-slate-100 shadow-sm transition-all duration-500">
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">4. Trazado GPS en
+                                        Tiempo Real</h3>
                                     <p class="text-slate-500 text-sm leading-relaxed">El sistema adjunta coordenadas
                                         geográficas exactas del dispositivo emisor en tiempo real.</p>
                                 </div>
                             </div>
 
-                            <!-- Step 4: Acompañamiento -->
-                            <div id="step-4"
+                            <!-- Step 4: Confirmación -->
+                            <div id="step-4" data-step-color="green"
                                 class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
                                 <div
-                                    class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
-                                    <span class="material-symbols-outlined text-slate-400 text-sm">support_agent</span>
+                                    class="step-circle absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
+                                    <span class="material-symbols-outlined text-slate-400 text-sm">verified_user</span>
                                 </div>
-                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                <div
+                                    class="step-card bg-white p-5 rounded-2xl border border-slate-100 shadow-sm transition-all duration-500">
                                     <h3 class="text-slate-800 font-display font-bold text-lg mb-1">5. Confirmación y
                                         Cierre</h3>
                                     <p class="text-slate-500 text-sm leading-relaxed">Autoridades reciben la alerta. El
@@ -578,6 +608,83 @@
                     transform: translateX(5px);
                 }
 
+                /* Colores por paso */
+                [data-step-color="purple"].step-active .step-circle {
+                    border-color: #7c3aed !important;
+                    background-color: #f5f3ff !important;
+                }
+
+                [data-step-color="purple"].step-active .step-circle span {
+                    color: #7c3aed !important;
+                    font-variation-settings: 'FILL' 1;
+                }
+
+                [data-step-color="purple"].step-active .step-card {
+                    border-color: #ddd6fe !important;
+                    background: linear-gradient(135deg, #faf5ff, #ffffff) !important;
+                }
+
+                [data-step-color="red"].step-active .step-circle {
+                    border-color: #dc2626 !important;
+                    background-color: #fef2f2 !important;
+                }
+
+                [data-step-color="red"].step-active .step-circle span {
+                    color: #dc2626 !important;
+                    font-variation-settings: 'FILL' 1;
+                }
+
+                [data-step-color="red"].step-active .step-card {
+                    border-color: #fecaca !important;
+                    background: linear-gradient(135deg, #fef2f2, #ffffff) !important;
+                }
+
+                [data-step-color="blue"].step-active .step-circle {
+                    border-color: #2563eb !important;
+                    background-color: #eff6ff !important;
+                }
+
+                [data-step-color="blue"].step-active .step-circle span {
+                    color: #2563eb !important;
+                    font-variation-settings: 'FILL' 1;
+                }
+
+                [data-step-color="blue"].step-active .step-card {
+                    border-color: #bfdbfe !important;
+                    background: linear-gradient(135deg, #eff6ff, #ffffff) !important;
+                }
+
+                [data-step-color="amber"].step-active .step-circle {
+                    border-color: #d97706 !important;
+                    background-color: #fffbeb !important;
+                }
+
+                [data-step-color="amber"].step-active .step-circle span {
+                    color: #d97706 !important;
+                    font-variation-settings: 'FILL' 1;
+                }
+
+                [data-step-color="amber"].step-active .step-card {
+                    border-color: #fde68a !important;
+                    background: linear-gradient(135deg, #fffbeb, #ffffff) !important;
+                }
+
+                [data-step-color="green"].step-active .step-circle {
+                    border-color: #16a34a !important;
+                    background-color: #f0fdf4 !important;
+                }
+
+                [data-step-color="green"].step-active .step-circle span {
+                    color: #16a34a !important;
+                    font-variation-settings: 'FILL' 1;
+                }
+
+                [data-step-color="green"].step-active .step-card {
+                    border-color: #bbf7d0 !important;
+                    background: linear-gradient(135deg, #f0fdf4, #ffffff) !important;
+                }
+
+                /* Legacy fallback */
                 .step-icon-active {
                     border-color: #dc2626 !important;
                     background-color: #fef2f2 !important;
