@@ -240,28 +240,72 @@
                             <div id="sim-display"
                                 class="absolute inset-0 bg-slate-50 flex flex-col items-center justify-center p-6 z-10 transition-colors duration-500">
 
-                                <!-- Estado 0: Inicial / Botón -->
+                                <!-- Estado 0: Escaneo / Ficha -->
                                 <div id="sim-state-0"
-                                    class="flex flex-col items-center justify-center w-full h-full text-center transition-all duration-500 scale-100 opacity-100 absolute">
-                                    <div class="relative w-48 h-48 flex items-center justify-center mb-8">
-                                        <!-- Anillos de pulso (animados con JS) -->
+                                    class="flex flex-col items-center justify-start w-full h-full text-center transition-all duration-500 scale-100 opacity-100 absolute pt-2">
+
+                                    <!-- Ficha Médica -->
+                                    <div
+                                        class="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 w-full mb-auto relative overflow-hidden text-left">
+                                        <div
+                                            class="absolute top-0 right-0 w-16 h-16 bg-brand-purple/5 rounded-bl-[40px]">
+                                        </div>
+                                        <div class="flex items-center gap-3 mb-3 relative z-10">
+                                            <div
+                                                class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-200">
+                                                <span
+                                                    class="material-symbols-outlined text-slate-400 text-2xl">person</span>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-slate-800 leading-none">Estudiante Volckan
+                                                </h4>
+                                                <p class="text-[11px] text-slate-500 mt-1">ID: 2024-8902</p>
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-2 mb-3">
+                                            <div class="bg-red-50/50 p-2 rounded-lg border border-red-50">
+                                                <p
+                                                    class="text-[9px] text-red-600 font-bold uppercase tracking-wider mb-0.5">
+                                                    Sangre</p>
+                                                <p class="text-sm font-black text-slate-700">O+</p>
+                                            </div>
+                                            <div class="bg-amber-50/50 p-2 rounded-lg border border-amber-50">
+                                                <p
+                                                    class="text-[9px] text-amber-600 font-bold uppercase tracking-wider mb-0.5">
+                                                    Alergias</p>
+                                                <p class="text-xs font-bold text-slate-700 truncate" title="Penicilina">
+                                                    Penicilina</p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="bg-slate-50 p-2 rounded-lg flex items-center justify-between cursor-pointer hover:bg-slate-100 transition-colors border border-slate-100">
+                                            <div class="flex items-center gap-2">
+                                                <span
+                                                    class="material-symbols-outlined text-brand-purple text-[16px]">contact_phone</span>
+                                                <span class="text-[11px] font-bold text-slate-700">Contactos
+                                                    Emergencia</span>
+                                            </div>
+                                            <span
+                                                class="material-symbols-outlined text-slate-400 text-[14px]">chevron_right</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Botón SOS Físico Inferior -->
+                                    <div class="relative w-32 h-32 flex items-center justify-center mb-6 mt-4">
                                         <div
                                             class="sim-ripple absolute inset-0 rounded-full border-2 border-brand-red opacity-0">
                                         </div>
                                         <div class="sim-ripple absolute inset-0 rounded-full border-2 border-brand-red opacity-0"
                                             style="animation-delay: 0.5s"></div>
-
-                                        <!-- Botón SOS Físico -->
                                         <button id="sim-btn-sos"
-                                            class="relative z-10 w-36 h-36 rounded-full bg-gradient-to-br from-red-500 to-red-700 shadow-[0_10px_25px_rgba(220,38,38,0.5),inset_0_-5px_15px_rgba(0,0,0,0.2),inset_0_5px_15px_rgba(255,255,255,0.4)] flex items-center justify-center active:scale-95 active:shadow-[0_5px_15px_rgba(220,38,38,0.5),inset_0_-2px_5px_rgba(0,0,0,0.2),inset_0_2px_5px_rgba(255,255,255,0.4)] transition-all duration-150 cursor-pointer">
+                                            class="relative z-10 w-24 h-24 rounded-full bg-gradient-to-br from-red-500 to-red-700 shadow-[0_8px_20px_rgba(220,38,38,0.5),inset_0_-4px_10px_rgba(0,0,0,0.2),inset_0_4px_10px_rgba(255,255,255,0.4)] flex items-center justify-center active:scale-95 active:shadow-[0_4px_10px_rgba(220,38,38,0.5),inset_0_-2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(255,255,255,0.4)] transition-all duration-150 cursor-pointer">
                                             <span
-                                                class="text-white font-black text-4xl tracking-widest drop-shadow-md">SOS</span>
+                                                class="material-symbols-outlined text-white text-4xl drop-shadow-md">emergency</span>
                                         </button>
                                     </div>
-                                    <p class="text-slate-500 font-medium animate-pulse">Tocar para simular alerta</p>
                                     <p
-                                        class="block lg:hidden mt-8 text-sm font-bold text-slate-700 bg-white/80 px-4 py-2 rounded-full shadow-sm">
-                                        Paso 1: Emite la alerta</p>
+                                        class="block lg:hidden mt-auto mb-2 text-xs font-bold text-slate-700 bg-white/80 px-4 py-1.5 rounded-full shadow-sm">
+                                        Paso 1: Escaneo y Activación</p>
                                 </div>
 
                                 <!-- Estado 1: Transmitiendo -->
@@ -279,7 +323,7 @@
                                         redundantes...</p>
                                     <p
                                         class="block lg:hidden mt-4 text-sm font-bold text-slate-700 bg-white/80 px-4 py-2 rounded-full shadow-sm">
-                                        Paso 2: Transmisión Inmediata (SMS, Push, Telegram)</p>
+                                        Paso 3: Transmisión Inmediata (SMS, Push)</p>
                                 </div>
 
                                 <!-- Estado 2: Ubicación GPS -->
@@ -310,7 +354,7 @@
                                         14.6349, Lon: -90.5068</p>
                                     <p
                                         class="block lg:hidden mt-4 text-sm font-bold text-slate-700 bg-white/80 px-4 py-2 rounded-full shadow-sm">
-                                        Paso 3: Trazado y envío de coordenadas GPS</p>
+                                        Paso 4: Trazado y envío GPS</p>
                                 </div>
 
                                 <!-- Estado 3: Resuelto / Recibido -->
@@ -335,7 +379,7 @@
                                     </button>
                                     <p
                                         class="block lg:hidden mt-6 text-sm font-bold text-slate-700 bg-white/80 px-4 py-2 rounded-full shadow-sm">
-                                        Paso 4: Recepción de Autoridades</p>
+                                        Paso 5: Recepción de Autoridades</p>
                                 </div>
 
                             </div>
@@ -353,61 +397,76 @@
                         </div>
 
                         <div class="space-y-4">
-                            <!-- Step 0: Activación -->
+                            <!-- Step 0: Escaneo -->
                             <div id="step-0"
+                                class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
+                                <div
+                                    class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
+                                    <span
+                                        class="material-symbols-outlined text-slate-400 text-sm">qr_code_scanner</span>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">1. Escaneo QR</h3>
+                                    <p class="text-slate-500 text-sm leading-relaxed">Lectura de la credencial que
+                                        despliega al instante la ficha médica y opciones vitales.</p>
+                                </div>
+                            </div>
+
+                            <!-- Step 1: Activación -->
+                            <div id="step-1"
                                 class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
                                 <div
                                     class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
                                     <span class="material-symbols-outlined text-slate-400 text-sm">touch_app</span>
                                 </div>
                                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">1. Activación</h3>
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">2. Activación</h3>
                                     <p class="text-slate-500 text-sm leading-relaxed">El usuario presiona el Botón de
-                                        Emergencia o escanea el QR único.</p>
+                                        Emergencia desde la interfaz protegida.</p>
                                 </div>
                             </div>
 
-                            <!-- Step 1: Transmisión -->
-                            <div id="step-1"
+                            <!-- Step 2: Transmisión -->
+                            <div id="step-2"
                                 class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
                                 <div
                                     class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
                                     <span class="material-symbols-outlined text-slate-400 text-sm">wifi_tethering</span>
                                 </div>
                                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">2. Transmisión
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">3. Transmisión
                                         Simultánea</h3>
                                     <p class="text-slate-500 text-sm leading-relaxed">SOSQR dispara alertas instantáneas
                                         vía Push, SMS y Telegram saltándose cuellos de botella.</p>
                                 </div>
                             </div>
 
-                            <!-- Step 2: Geolocalización -->
-                            <div id="step-2"
+                            <!-- Step 3: Geolocalización -->
+                            <div id="step-3"
                                 class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
                                 <div
                                     class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
                                     <span class="material-symbols-outlined text-slate-400 text-sm">location_on</span>
                                 </div>
                                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">3. Trazado GPS</h3>
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">4. Trazado GPS</h3>
                                     <p class="text-slate-500 text-sm leading-relaxed">El sistema adjunta coordenadas
                                         geográficas exactas del dispositivo emisor en tiempo real.</p>
                                 </div>
                             </div>
 
-                            <!-- Step 3: Acompañamiento -->
-                            <div id="step-3"
+                            <!-- Step 4: Acompañamiento -->
+                            <div id="step-4"
                                 class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
                                 <div
                                     class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
                                     <span class="material-symbols-outlined text-slate-400 text-sm">support_agent</span>
                                 </div>
                                 <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">4. Confirmación y
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">5. Confirmación y
                                         Cierre</h3>
                                     <p class="text-slate-500 text-sm leading-relaxed">Autoridades reciben la alerta. El
-                                        evento queda registrado hasta que un responsable lo marca como "Resuelto".</p>
+                                        evento queda registrado hasta que se marca como "Resuelto".</p>
                                 </div>
                             </div>
                         </div>
@@ -958,7 +1017,8 @@
             const step1 = document.getElementById('step-1');
             const step2 = document.getElementById('step-2');
             const step3 = document.getElementById('step-3');
-            const timelineSteps = [step0, step1, step2, step3];
+            const step4 = document.getElementById('step-4');
+            const timelineSteps = [step0, step1, step2, step3, step4];
 
             let simulationTimeouts = [];
 
@@ -980,7 +1040,7 @@
                 step.querySelector('div.rounded-full').classList.add('step-icon-active');
 
                 // Animate progress line
-                const heights = ['0%', '33%', '66%', '100%'];
+                const heights = ['0%', '25%', '50%', '75%', '100%'];
                 simProgressLine.style.height = heights[stepIndex];
             }
 
@@ -998,40 +1058,50 @@
 
                 // Reset Display
                 switchDisplay(0);
+
+                // Set default step 0 (Escaneo)
+                activateStep(0);
             }
 
             function startSimulation() {
-                resetSimulation();
-
-                // Add physical press effect to button (optional via JS, mostly handled by CSS active state)
+                // Clear timeouts and reset timeline visually from step 1 onward
+                simulationTimeouts.forEach(clearTimeout);
+                simulationTimeouts = [];
+                for (let i = 1; i <= 4; i++) {
+                    timelineSteps[i].classList.remove('step-active');
+                    timelineSteps[i].querySelector('div.rounded-full').classList.remove('step-icon-active');
+                }
 
                 // Animar Ripples
                 const ripples = state0.querySelectorAll('.sim-ripple');
                 ripples.forEach(r => r.classList.add('sim-ripple-active'));
 
-                // Paso 0: Activación inmediata
-                activateStep(0);
+                // Paso 1: Activación inmediata
+                activateStep(1);
 
-                // Paso 1: Transmisión (t = 1.5s)
+                // Paso 2: Transmisión (t = 2.5s)
                 simulationTimeouts.push(setTimeout(() => {
                     switchDisplay(1);
-                    activateStep(1);
-                }, 1500));
+                    activateStep(2);
+                }, 2500));
 
-                // Paso 2: Geolocalización (t = 3.0s)
+                // Paso 3: Geolocalización (t = 5.0s)
                 simulationTimeouts.push(setTimeout(() => {
                     switchDisplay(2);
-                    activateStep(2);
-                }, 3000));
+                    activateStep(3);
+                }, 5000));
 
-                // Paso 3: Cierre (t = 4.5s)
+                // Paso 4: Cierre (t = 7.5s)
                 simulationTimeouts.push(setTimeout(() => {
                     switchDisplay(3);
-                    activateStep(3);
+                    activateStep(4);
                     // Remove ripples for next time
                     ripples.forEach(r => r.classList.remove('sim-ripple-active'));
-                }, 4500));
+                }, 7500));
             }
+
+            // Initialization
+            resetSimulation();
 
             // Event Listeners
             if (simBtnSos) simBtnSos.addEventListener('click', startSimulation);
