@@ -202,74 +202,282 @@
             </div>
         </section>
         <!-- ¿Cómo funciona? Section -->
-        <section class="py-20 bg-surface-light border-y border-slate-100">
-            <div class="mx-auto max-w-[1280px] px-6 lg:px-8">
-                <div class="flex flex-col lg:flex-row gap-12 items-start">
-                    <div class="lg:w-1/3 lg:sticky lg:top-24 mb-8 lg:mb-0">
-                        <div class="flex flex-col gap-2 mb-4">
-                            <span class="text-brand-red font-bold tracking-wider uppercase text-sm">Protocolo
-                                Tecnológico</span>
-                            <h2 class="text-slate-800 font-display text-3xl lg:text-4xl font-black leading-tight">
-                                ¿Cómo funciona el<br />sistema de alertas?
-                            </h2>
+        <!-- ¿Cómo funciona? Section Interactivo -->
+        <section class="py-24 bg-surface-light border-y border-slate-100 overflow-hidden relative" id="como-funciona">
+            <!-- Decorative Background -->
+            <div
+                class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-slate-50 to-transparent pointer-events-none">
+            </div>
+            <div
+                class="absolute -bottom-40 -left-40 w-96 h-96 bg-brand-red/5 rounded-full blur-[100px] pointer-events-none">
+            </div>
+
+            <div class="mx-auto max-w-[1280px] px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-brand-red font-bold tracking-wider uppercase text-sm mb-2 block">Simulador
+                        Interactivo</span>
+                    <h2 class="text-slate-800 font-display text-4xl lg:text-5xl font-black leading-tight mb-4">
+                        ¿Cómo funciona el sistema?
+                    </h2>
+                    <p class="text-slate-600 text-lg max-w-2xl mx-auto">
+                        Presiona el botón SOS para iniciar una simulación en tiempo real del protocolo tecnológico de
+                        alerta.
+                    </p>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-16 items-center lg:items-start justify-center">
+
+                    <!-- Lado Izquierdo: Mockup Dispositivo (Simulador Visual) -->
+                    <div class="w-full lg:w-5/12 max-w-md flex justify-center perspective-1000">
+                        <div
+                            class="relative bg-white rounded-[2.5rem] w-full aspect-[9/18] p-4 shadow-2xl border-[8px] border-slate-800 flex flex-col items-center justify-center overflow-hidden group transform transition-transform duration-500 hover:rotate-y-[-5deg] hover:rotate-x-[5deg]">
+                            <!-- Notch/Camera -->
+                            <div
+                                class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-xl z-20">
+                            </div>
+
+                            <!-- Área Dinámica del Simulador -->
+                            <div id="sim-display"
+                                class="absolute inset-0 bg-slate-50 flex flex-col items-center justify-center p-6 z-10 transition-colors duration-500">
+
+                                <!-- Estado 0: Inicial / Botón -->
+                                <div id="sim-state-0"
+                                    class="flex flex-col items-center justify-center w-full h-full text-center transition-all duration-500 scale-100 opacity-100 absolute">
+                                    <div class="relative w-48 h-48 flex items-center justify-center mb-8">
+                                        <!-- Anillos de pulso (animados con JS) -->
+                                        <div
+                                            class="sim-ripple absolute inset-0 rounded-full border-2 border-brand-red opacity-0">
+                                        </div>
+                                        <div class="sim-ripple absolute inset-0 rounded-full border-2 border-brand-red opacity-0"
+                                            style="animation-delay: 0.5s"></div>
+
+                                        <!-- Botón SOS Físico -->
+                                        <button id="sim-btn-sos"
+                                            class="relative z-10 w-36 h-36 rounded-full bg-gradient-to-br from-red-500 to-red-700 shadow-[0_10px_25px_rgba(220,38,38,0.5),inset_0_-5px_15px_rgba(0,0,0,0.2),inset_0_5px_15px_rgba(255,255,255,0.4)] flex items-center justify-center active:scale-95 active:shadow-[0_5px_15px_rgba(220,38,38,0.5),inset_0_-2px_5px_rgba(0,0,0,0.2),inset_0_2px_5px_rgba(255,255,255,0.4)] transition-all duration-150 cursor-pointer">
+                                            <span
+                                                class="text-white font-black text-4xl tracking-widest drop-shadow-md">SOS</span>
+                                        </button>
+                                    </div>
+                                    <p class="text-slate-500 font-medium animate-pulse">Tocar para simular alerta</p>
+                                </div>
+
+                                <!-- Estado 1: Transmitiendo -->
+                                <div id="sim-state-1"
+                                    class="flex flex-col items-center justify-center w-full h-full text-center transition-all duration-500 scale-95 opacity-0 absolute pointer-events-none">
+                                    <div
+                                        class="w-24 h-24 mb-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shadow-inner relative">
+                                        <span
+                                            class="material-symbols-outlined text-5xl z-10 animate-bounce">podcasts</span>
+                                        <div class="absolute inset-0 rounded-full bg-blue-200 animate-ping opacity-20">
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">Señal Enviada</h3>
+                                    <p class="text-sm text-slate-500 px-4">Transmitiendo vía Telegram API y redes
+                                        redundantes...</p>
+                                </div>
+
+                                <!-- Estado 2: Ubicación GPS -->
+                                <div id="sim-state-2"
+                                    class="flex flex-col items-center justify-center w-full h-full text-center transition-all duration-500 scale-95 opacity-0 absolute pointer-events-none">
+                                    <div
+                                        class="relative w-full h-48 bg-slate-200/50 rounded-xl overflow-hidden mb-6 border border-slate-200">
+                                        <!-- Mapa estático de fondo -->
+                                        <div
+                                            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cartographer.png')] opacity-30">
+                                        </div>
+                                        <div class="absolute inset-x-0 h-px bg-slate-300 top-1/2 -translate-y-1/2">
+                                        </div>
+                                        <div class="absolute inset-y-0 w-px bg-slate-300 left-1/2 -translate-x-1/2">
+                                        </div>
+
+                                        <!-- Pin cayendo -->
+                                        <div
+                                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                                            <span
+                                                class="material-symbols-outlined text-5xl text-brand-red sim-pin-drop drop-shadow-lg">location_on</span>
+                                            <div class="w-4 h-1 bg-black/20 rounded-full blur-sm mt-1 animate-pulse">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">GPS Fijado</h3>
+                                    <p class="text-sm text-slate-500 font-mono bg-slate-100 px-3 py-1 rounded-md">Lat:
+                                        14.6349, Lon: -90.5068</p>
+                                </div>
+
+                                <!-- Estado 3: Resuelto / Recibido -->
+                                <div id="sim-state-3"
+                                    class="flex flex-col items-center justify-center w-full h-full text-center transition-all duration-500 scale-95 opacity-0 absolute pointer-events-none">
+                                    <div
+                                        class="w-24 h-24 mb-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                                        <svg class="w-12 h-12 sim-checkmark" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                                d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">Alerta Confirmada</h3>
+                                    <p class="text-sm text-slate-500 px-4 mb-8">Centro de Monitoreo y Autoridades
+                                        notificadas.</p>
+
+                                    <button id="sim-btn-reset"
+                                        class="px-6 py-2 bg-slate-800 text-white rounded-full text-sm font-bold shadow-lg hover:bg-slate-700 transition-colors flex items-center gap-2 pointer-events-auto">
+                                        <span class="material-symbols-outlined text-sm">refresh</span>
+                                        Reiniciar
+                                    </button>
+                                </div>
+
+                            </div>
                         </div>
-                        <p class="text-slate-600 text-lg leading-relaxed mb-8">
-                            El sistema de alertas de SOSQR funciona mediante un protocolo tecnológico específico y
-                            notifica a una red de contactos preestablecida para asegurar una respuesta rápida.
-                        </p>
                     </div>
-                    <div class="lg:w-2/3 grid gap-6 sm:grid-cols-2 w-full">
-                        <!-- Feature Card 1 -->
-                        <div
-                            class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-brand-red mb-4">
-                                <span class="material-symbols-outlined">touch_app</span>
+
+                    <!-- Lado Derecho: Timeline Vertical -->
+                    <div class="w-full lg:w-6/12 relative">
+                        <!-- Línea conectora base -->
+                        <div class="absolute left-8 lg:left-[41px] top-6 bottom-6 w-0.5 bg-slate-200">
+                            <!-- Línea de progreso (se llena con JS) -->
+                            <div id="sim-progress-line"
+                                class="absolute top-0 left-0 w-full bg-brand-red transition-all duration-1000 origin-top h-0">
                             </div>
-                            <h3 class="text-slate-800 font-display font-bold text-lg mb-2">Activación</h3>
-                            <p class="text-slate-500 text-sm">La alerta se dispara de forma automática cuando una
-                                persona escanea el código QR único del estudiante o cuando se activa el "Botón de
-                                Emergencia" directamente en la interfaz de la plataforma.</p>
                         </div>
-                        <!-- Feature Card 2 -->
-                        <div
-                            class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-brand-red mb-4">
-                                <span class="material-symbols-outlined">wifi_tethering</span>
+
+                        <div class="space-y-4">
+                            <!-- Step 0: Activación -->
+                            <div id="step-0"
+                                class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
+                                <div
+                                    class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
+                                    <span class="material-symbols-outlined text-slate-400 text-sm">touch_app</span>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">1. Activación</h3>
+                                    <p class="text-slate-500 text-sm leading-relaxed">El usuario presiona el Botón de
+                                        Emergencia o escanea el QR único.</p>
+                                </div>
                             </div>
-                            <h3 class="text-slate-800 font-display font-bold text-lg mb-2">Transmisión</h3>
-                            <p class="text-slate-500 text-sm">El sistema genera y envía una alerta múltiple de manera
-                                inmediata a través de SMS, notificaciones Push o Telegram. Es importante destacar que el
-                                envío exitoso depende de conexión a Internet y cobertura celular.</p>
-                        </div>
-                        <!-- Feature Card 3 -->
-                        <div
-                            class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-brand-red mb-4">
-                                <span class="material-symbols-outlined">location_on</span>
+
+                            <!-- Step 1: Transmisión -->
+                            <div id="step-1"
+                                class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
+                                <div
+                                    class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
+                                    <span class="material-symbols-outlined text-slate-400 text-sm">wifi_tethering</span>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">2. Transmisión
+                                        Simultánea</h3>
+                                    <p class="text-slate-500 text-sm leading-relaxed">SOSQR dispara alertas instantáneas
+                                        vía Push, SMS y Telegram saltándose cuellos de botella.</p>
+                                </div>
                             </div>
-                            <h3 class="text-slate-800 font-display font-bold text-lg mb-2">Geolocalización (GPS)</h3>
-                            <p class="text-slate-500 text-sm">Al momento de activarse la alerta o escanearse el código,
-                                el sistema recoge y comparte la ubicación geográfica exacta del dispositivo que emitió
-                                la señal, con el objetivo de facilitar la llegada del auxilio.</p>
-                        </div>
-                        <!-- Feature Card 4 -->
-                        <div
-                            class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-brand-red mb-4">
-                                <span class="material-symbols-outlined">support_agent</span>
+
+                            <!-- Step 2: Geolocalización -->
+                            <div id="step-2"
+                                class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
+                                <div
+                                    class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
+                                    <span class="material-symbols-outlined text-slate-400 text-sm">location_on</span>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">3. Trazado GPS</h3>
+                                    <p class="text-slate-500 text-sm leading-relaxed">El sistema adjunta coordenadas
+                                        geográficas exactas del dispositivo emisor en tiempo real.</p>
+                                </div>
                             </div>
-                            <h3 class="text-slate-800 font-display font-bold text-lg mb-2">Acompañamiento y Cierre</h3>
-                            <p class="text-slate-500 text-sm">Una vez generada, la alerta queda registrada en la
-                                "Bitácora de Eventos". El Centro de Monitoreo realiza seguimiento. Permanece "Activa"
-                                hasta que un responsable o autoridad validada la marque como "Resuelta".</p>
+
+                            <!-- Step 3: Acompañamiento -->
+                            <div id="step-3"
+                                class="relative pl-24 lg:pl-28 py-4 opacity-50 grayscale transition-all duration-500">
+                                <div
+                                    class="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border-2 border-slate-300 flex items-center justify-center z-10 transition-colors duration-500">
+                                    <span class="material-symbols-outlined text-slate-400 text-sm">support_agent</span>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                                    <h3 class="text-slate-800 font-display font-bold text-lg mb-1">4. Confirmación y
+                                        Cierre</h3>
+                                    <p class="text-slate-500 text-sm leading-relaxed">Autoridades reciben la alerta. El
+                                        evento queda registrado hasta que un responsable lo marca como "Resuelto".</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
+
+            <style>
+                /* Animaciones Personalizadas para el Simulador */
+                .perspective-1000 {
+                    transform-style: preserve-3d;
+                    perspective: 1000px;
+                }
+
+                @keyframes ripple {
+                    0% {
+                        transform: scale(0.8);
+                        opacity: 1;
+                    }
+
+                    100% {
+                        transform: scale(2);
+                        opacity: 0;
+                    }
+                }
+
+                .sim-ripple-active {
+                    animation: ripple 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+                }
+
+                @keyframes pin-drop {
+                    0% {
+                        transform: translateY(-50px) scale(1.5);
+                        opacity: 0;
+                    }
+
+                    50% {
+                        opacity: 1;
+                    }
+
+                    100% {
+                        transform: translateY(0) scale(1);
+                        opacity: 1;
+                    }
+                }
+
+                .sim-pin-drop {
+                    animation: pin-drop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+                }
+
+                .sim-checkmark {
+                    stroke-dasharray: 100;
+                    stroke-dashoffset: 100;
+                    animation: draw-check 0.8s ease forwards;
+                    animation-delay: 0.2s;
+                }
+
+                @keyframes draw-check {
+                    to {
+                        stroke-dashoffset: 0;
+                    }
+                }
+
+                /* Clases dinámicas aplicadas por JS */
+                .step-active {
+                    opacity: 1;
+                    filter: grayscale(0);
+                    transform: translateX(5px);
+                }
+
+                .step-icon-active {
+                    border-color: #dc2626 !important;
+                    background-color: #fef2f2 !important;
+                    color: #dc2626 !important;
+                }
+
+                .step-icon-active span {
+                    color: #dc2626 !important;
+                    font-variation-settings: 'FILL' 1;
+                }
+            </style>
         </section>
         <!-- ¿Quiénes reciben? Section -->
         <section class="py-20 bg-white">
@@ -719,6 +927,108 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // ==========================================
+            // LOGICA DEL SIMULADOR INTERACTIVO SOSQR
+            // ==========================================
+            const simBtnSos = document.getElementById('sim-btn-sos');
+            const simBtnReset = document.getElementById('sim-btn-reset');
+            const simProgressLine = document.getElementById('sim-progress-line');
+
+            // Displays
+            const state0 = document.getElementById('sim-state-0');
+            const state1 = document.getElementById('sim-state-1');
+            const state2 = document.getElementById('sim-state-2');
+            const state3 = document.getElementById('sim-state-3');
+            const states = [state0, state1, state2, state3];
+
+            // Timeline Steps
+            const step0 = document.getElementById('step-0');
+            const step1 = document.getElementById('step-1');
+            const step2 = document.getElementById('step-2');
+            const step3 = document.getElementById('step-3');
+            const timelineSteps = [step0, step1, step2, step3];
+
+            let simulationTimeouts = [];
+
+            function switchDisplay(activeIndex) {
+                states.forEach((state, idx) => {
+                    if (idx === activeIndex) {
+                        state.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+                        state.classList.add('opacity-100', 'scale-100');
+                    } else {
+                        state.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+                        state.classList.remove('opacity-100', 'scale-100');
+                    }
+                });
+            }
+
+            function activateStep(stepIndex) {
+                const step = timelineSteps[stepIndex];
+                step.classList.add('step-active');
+                step.querySelector('div.rounded-full').classList.add('step-icon-active');
+
+                // Animate progress line
+                const heights = ['0%', '33%', '66%', '100%'];
+                simProgressLine.style.height = heights[stepIndex];
+            }
+
+            function resetSimulation() {
+                // Clear any running timeouts
+                simulationTimeouts.forEach(clearTimeout);
+                simulationTimeouts = [];
+
+                // Reset Timeline
+                timelineSteps.forEach(step => {
+                    step.classList.remove('step-active');
+                    step.querySelector('div.rounded-full').classList.remove('step-icon-active');
+                });
+                simProgressLine.style.height = '0%';
+
+                // Reset Display
+                switchDisplay(0);
+            }
+
+            function startSimulation() {
+                resetSimulation();
+
+                // Add physical press effect to button (optional via JS, mostly handled by CSS active state)
+
+                // Animar Ripples
+                const ripples = state0.querySelectorAll('.sim-ripple');
+                ripples.forEach(r => r.classList.add('sim-ripple-active'));
+
+                // Paso 0: Activación inmediata
+                activateStep(0);
+
+                // Paso 1: Transmisión (t = 1.5s)
+                simulationTimeouts.push(setTimeout(() => {
+                    switchDisplay(1);
+                    activateStep(1);
+                }, 1500));
+
+                // Paso 2: Geolocalización (t = 3.0s)
+                simulationTimeouts.push(setTimeout(() => {
+                    switchDisplay(2);
+                    activateStep(2);
+                }, 3000));
+
+                // Paso 3: Cierre (t = 4.5s)
+                simulationTimeouts.push(setTimeout(() => {
+                    switchDisplay(3);
+                    activateStep(3);
+                    // Remove ripples for next time
+                    ripples.forEach(r => r.classList.remove('sim-ripple-active'));
+                }, 4500));
+            }
+
+            // Event Listeners
+            if (simBtnSos) simBtnSos.addEventListener('click', startSimulation);
+            if (simBtnReset) simBtnReset.addEventListener('click', resetSimulation);
+
+
+            // ==========================================
+            // LOGICA DEL MENU MOVIL E INTERFACES EXISTENTES
+            // ==========================================
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenuClose = document.getElementById('mobile-menu-close');
             const mobileMenu = document.getElementById('mobile-menu');
