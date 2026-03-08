@@ -1016,107 +1016,9 @@
     </div>
     </div>
 
-    <!-- Agendar Demo Modal -->
-    <div id="demo-modal"
-        class="fixed inset-0 z-[70] bg-slate-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
-        <!-- Modal Content -->
-        <div
-            class="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 relative group flex flex-col max-h-[90vh]">
 
-            <!-- Header -->
-            <div
-                class="bg-white p-6 pb-4 border-b border-slate-100 flex justify-between items-start shrink-0 rounded-t-3xl">
-                <div class="flex items-center gap-4">
-                    <img src="public/images/logo-sosqr.png" alt="SOSQR" class="h-10 sm:h-12 w-auto object-contain">
-                    <div>
-                        <h3 class="font-display font-black text-xl sm:text-2xl text-slate-800">Agendar Demo</h3>
-                        <p class="text-slate-500 text-xs sm:text-sm mt-1">Transforma la seguridad escolar</p>
-                    </div>
-                </div>
-                <button id="demo-modal-close"
-                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-500 hover:text-slate-800 -mt-1 -mr-1">
-                    <span class="material-symbols-outlined text-xl">close</span>
-                </button>
-            </div>
 
-            <!-- Form Body (Scrollable) -->
-            <div class="p-6 md:p-8 overflow-y-auto">
-                <form id="demo-form" class="space-y-5">
 
-                    <!-- Name -->
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-name">Nombre Completo
-                            <span class="text-brand-red">*</span></label>
-                        <input type="text" id="demo-name" required
-                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
-                    </div>
-
-                    <!-- Institution -->
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-institution">Institución
-                            Educativa <span class="text-brand-red">*</span></label>
-                        <input type="text" id="demo-institution" required
-                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
-                    </div>
-
-                    <!-- Contact (Phone/Email) -->
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-contact">Teléfono
-                            (WhatsApp)
-                            <span class="text-brand-red">*</span></label>
-                        <div class="relative flex items-center">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                                <span class="text-lg mr-2 leading-none">🇬🇹</span>
-                                <span class="text-slate-600 font-bold border-r border-slate-200 pr-3 mr-1">+502</span>
-                            </div>
-                            <input type="tel" id="demo-contact" required
-                                class="w-full pl-[100px] pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700 font-medium tracking-wider">
-                        </div>
-                    </div>
-
-                    <!-- Date & Time Row -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <!-- Date -->
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-date">Fecha Deseada
-                                <span class="text-brand-red">*</span></label>
-                            <div class="relative">
-                                <div
-                                    class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-slate-400">
-                                    <span class="material-symbols-outlined text-lg">calendar_today</span>
-                                </div>
-                                <input type="date" id="demo-date" required
-                                    class="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
-                            </div>
-                        </div>
-                        <!-- Time -->
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-time">Preferencia de
-                                Horario <span class="text-brand-red">*</span></label>
-                            <select id="demo-time" required
-                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700 appearance-none">
-                                <option value="" disabled selected>Selecciona un turno</option>
-                                <option value="Mañana (8:00 AM - 12:00 PM)">Mañana (8:00 AM - 12:00 PM)</option>
-                                <option value="Tarde (1:00 PM - 5:00 PM)">Tarde (1:00 PM - 5:00 PM)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Botón de Envío -->
-                    <button type="submit" id="demo-submit-btn"
-                        class="w-full mt-4 bg-brand-red text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 hover:bg-orange-600 hover:shadow-xl hover:-translate-y-0.5 transition-all flex justify-center items-center gap-2">
-                        <span>Solicitar Demo</span>
-                        <span class="material-symbols-outlined text-lg">send</span>
-                    </button>
-
-                    <!-- Feedback Message -->
-                    <div id="demo-feedback" class="hidden text-center mt-3 text-sm font-bold p-3 rounded-lg">
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -1240,6 +1142,12 @@
                     // Remove ripples for next time
                     ripples.forEach(r => r.classList.remove('sim-ripple-active'));
                 }, 7500));
+
+                // Pop-up Final: Aviso Ilustrativo (t = 9.5s)
+                simulationTimeouts.push(setTimeout(() => {
+                    document.getElementById('sim-aviso-popup').style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }, 9500));
             }
 
             // Initialization
@@ -1318,6 +1226,12 @@
             demoBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
+
+                    // Si el modal de fin de simulación está abierto, cerrarlo
+                    if (!simEndModal.classList.contains('opacity-0')) {
+                        closeSimEndModal();
+                    }
+
                     demoModal.classList.remove('opacity-0', 'pointer-events-none');
                     demoModal.querySelector('div').classList.remove('scale-95');
                     demoModal.querySelector('div').classList.add('scale-100');
@@ -1424,6 +1338,148 @@
 
         });
     </script>
+
+
+    <!-- Agendar Demo Modal -->
+    <div id="demo-modal"
+        class="fixed inset-0 z-[70] bg-slate-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <!-- Modal Content -->
+        <div
+            class="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 relative group flex flex-col max-h-[90vh]">
+
+            <!-- Header -->
+            <div
+                class="bg-white p-6 pb-4 border-b border-slate-100 flex justify-between items-start shrink-0 rounded-t-3xl">
+                <div class="flex items-center gap-4">
+                    <img src="public/images/logo-sosqr.png" alt="SOSQR" class="h-10 sm:h-12 w-auto object-contain">
+                    <div>
+                        <h3 class="font-display font-black text-xl sm:text-2xl text-slate-800">Agendar Demo</h3>
+                        <p class="text-slate-500 text-xs sm:text-sm mt-1">Transforma la seguridad escolar</p>
+                    </div>
+                </div>
+                <button id="demo-modal-close"
+                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-500 hover:text-slate-800 -mt-1 -mr-1">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+
+            <!-- Form Body (Scrollable) -->
+            <div class="p-6 md:p-8 overflow-y-auto">
+                <form id="demo-form" class="space-y-5">
+
+                    <!-- Name -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-name">Nombre Completo
+                            <span class="text-brand-red">*</span></label>
+                        <input type="text" id="demo-name" required
+                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
+                    </div>
+
+                    <!-- Institution -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-institution">Institución
+                            Educativa <span class="text-brand-red">*</span></label>
+                        <input type="text" id="demo-institution" required
+                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
+                    </div>
+
+                    <!-- Contact (Phone/Email) -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-contact">Teléfono
+                            (WhatsApp)
+                            <span class="text-brand-red">*</span></label>
+                        <div class="relative flex items-center">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                <span class="text-lg mr-2 leading-none">🇬🇹</span>
+                                <span class="text-slate-600 font-bold border-r border-slate-200 pr-3 mr-1">+502</span>
+                            </div>
+                            <input type="tel" id="demo-contact" required
+                                class="w-full pl-[100px] pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700 font-medium tracking-wider">
+                        </div>
+                    </div>
+
+                    <!-- Date & Time Row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <!-- Date -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-date">Fecha Deseada
+                                <span class="text-brand-red">*</span></label>
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-slate-400">
+                                    <span class="material-symbols-outlined text-lg">calendar_today</span>
+                                </div>
+                                <input type="date" id="demo-date" required
+                                    class="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
+                            </div>
+                        </div>
+                        <!-- Time -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-time">Preferencia de
+                                Horario <span class="text-brand-red">*</span></label>
+                            <select id="demo-time" required
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700 appearance-none">
+                                <option value="" disabled selected>Selecciona un turno</option>
+                                <option value="Mañana (8:00 AM - 12:00 PM)">Mañana (8:00 AM - 12:00 PM)</option>
+                                <option value="Tarde (1:00 PM - 5:00 PM)">Tarde (1:00 PM - 5:00 PM)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Botón de Envío -->
+                    <button type="submit" id="demo-submit-btn"
+                        class="w-full mt-4 bg-brand-red text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 hover:bg-orange-600 hover:shadow-xl hover:-translate-y-0.5 transition-all flex justify-center items-center gap-2">
+                        <span>Solicitar Demo</span>
+                        <span class="material-symbols-outlined text-lg">send</span>
+                    </button>
+
+                    <!-- Feedback Message -->
+                    <div id="demo-feedback" class="hidden text-center mt-3 text-sm font-bold p-3 rounded-lg">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- ======== POP-UP AVISO SIMULACIÓN (100% independiente) ======== -->
+<div id="sim-aviso-popup" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(15,23,42,0.6); backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:16px;">
+    <div style="background:#fff; border-radius:24px; max-width:420px; width:100%; box-shadow:0 25px 50px rgba(0,0,0,0.25); overflow:hidden; text-align:center; animation: simPopIn 0.3s ease-out;">
+        <!-- Header -->
+        <div style="background:linear-gradient(135deg, #f8fafc, #f1f5f9); padding:32px 24px; border-bottom:1px solid #e2e8f0;">
+            <div style="width:64px; height:64px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; border:1px solid #e2e8f0;">
+                <span class="material-symbols-outlined" style="font-size:32px; color:#dc2626;">info</span>
+            </div>
+            <h3 style="font-family:'Outfit',sans-serif; font-weight:900; font-size:24px; color:#1e293b; margin:0;">Simulación Finalizada</h3>
+        </div>
+        <!-- Body -->
+        <div style="padding:32px;">
+            <p style="color:#475569; font-size:16px; line-height:1.6; margin:0 0 32px 0;">
+                Esta simulación es únicamente con fines ilustrativos para comprender el funcionamiento general del sistema SOSQR.<br><br>
+                Para conocer los <strong>detalles técnicos</strong>, integraciones y esquema operativo real en tu institución, <strong>contáctanos ahora</strong>.
+            </p>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <a href="https://wa.me/50231097191?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20SOSQR" target="_blank" rel="noopener"
+                   style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px 24px; border-radius:12px; background:#dc2626; color:#fff; font-weight:700; font-size:15px; text-decoration:none; box-shadow:0 4px 6px rgba(220,38,38,0.25); border:none; cursor:pointer; transition:background 0.2s;">
+                    <span class="material-symbols-outlined" style="font-size:20px;">support_agent</span>
+                    Contactar Ahora
+                </a>
+                <button onclick="document.getElementById('sim-aviso-popup').style.display='none'; document.body.style.overflow='';"
+                   style="width:100%; padding:14px 24px; border-radius:12px; background:#f1f5f9; color:#475569; font-weight:700; font-size:15px; border:none; cursor:pointer; transition:background 0.2s;"
+                   onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
+                    Cerrar y explorar más
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+@keyframes simPopIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+</style>
+<!-- ======== FIN POP-UP AVISO ======== -->
 
 </body>
 
