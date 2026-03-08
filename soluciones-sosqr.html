@@ -240,28 +240,117 @@
                             <div id="sim-display"
                                 class="absolute inset-0 bg-slate-50 flex flex-col items-center justify-center p-6 z-10 transition-colors duration-500">
 
-                                <!-- Estado 0: Escaneo / Ficha -->
+                                                                <!-- Estado 0: Pantalla de Escaneo -->
                                 <div id="sim-state-0"
-                                    class="flex flex-col items-center justify-start w-full h-full text-center transition-all duration-500 scale-100 opacity-100 absolute pt-2">
+                                    class="flex flex-col items-center justify-center w-full h-full text-center transition-all duration-500 scale-100 opacity-100 absolute">
+                                    <h3 class="text-xl font-bold text-slate-800 mb-6 font-display">Simular Demostración</h3>
+                                    <div class="relative w-48 h-48 flex items-center justify-center mb-8">
+                                        <div class="absolute inset-0 border-4 border-dashed border-slate-300 rounded-3xl opacity-60"></div>
+                                        <div class="sim-scanner-line absolute inset-x-0 h-1 bg-brand-red shadow-[0_0_15px_rgba(220,38,38,0.8)]"></div>
+                                        <span class="material-symbols-outlined text-7xl text-slate-300">qr_code_2</span>
+                                    </div>
+                                    <button id="sim-btn-scan" class="bg-slate-800 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-slate-700 hover:-translate-y-1 transition-all active:scale-95 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-xl">qr_code_scanner</span>
+                                        <span>ESCANEAR QR</span>
+                                    </button>
+                                    <p class="block lg:hidden mt-auto mb-2 text-xs font-bold text-slate-700 bg-white/80 px-4 py-1.5 rounded-full shadow-sm">Paso 1: Escaneo</p>
+                                </div>
 
-                                    <!-- Ficha Médica -->
-                                    <div
-                                        class="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 w-full mb-auto relative overflow-hidden text-left">
-                                        <div
-                                            class="absolute top-0 right-0 w-16 h-16 bg-brand-purple/5 rounded-bl-[40px]">
-                                        </div>
+                                <!-- Estado 1: Ficha Médica y Botón SOS -->
+                                <div id="sim-state-1"
+                                    class="flex flex-col items-center justify-start w-full h-full text-center transition-all duration-500 scale-95 opacity-0 absolute pointer-events-none pt-2">
+                                    
+                                    <!-- Botón SOS Físico Superior -->
+                                    <div class="relative w-32 h-32 flex items-center justify-center mb-4 mt-2">
+                                        <div class="sim-ripple absolute inset-0 rounded-full border-2 border-brand-red opacity-0"></div>
+                                        <div class="sim-ripple absolute inset-0 rounded-full border-2 border-brand-red opacity-0" style="animation-delay: 0.5s"></div>
+                                        <button id="sim-btn-sos"
+                                            class="relative z-10 w-28 h-28 rounded-full bg-gradient-to-br from-red-500 to-red-700 shadow-[0_8px_20px_rgba(220,38,38,0.5),inset_0_-4px_10px_rgba(0,0,0,0.2),inset_0_4px_10px_rgba(255,255,255,0.4)] flex flex-col items-center justify-center active:scale-95 active:shadow-[0_4px_10px_rgba(220,38,38,0.5),inset_0_-2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(255,255,255,0.4)] transition-all duration-150 cursor-pointer group">
+                                            <span class="material-symbols-outlined text-white text-4xl drop-shadow-md mb-1 transition-transform group-hover:scale-110">emergency</span>
+                                            <span class="text-[9px] font-black text-white/90 uppercase tracking-widest leading-none text-center px-2">Activar<br>Emergencia</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Ficha Médica Inferior -->
+                                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 w-full mt-auto mb-2 relative overflow-hidden text-left">
+                                        <div class="absolute top-0 right-0 w-16 h-16 bg-brand-purple/5 rounded-bl-[40px]"></div>
                                         <div class="flex items-center gap-3 mb-3 relative z-10">
-                                            <div
-                                                class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-200">
-                                                <span
-                                                    class="material-symbols-outlined text-slate-400 text-2xl">person</span>
+                                            <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-200">
+                                                <span class="material-symbols-outlined text-slate-400 text-2xl">person</span>
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-slate-800 leading-none">Estudiante Volckan
-                                                </h4>
+                                                <h4 class="font-bold text-slate-800 leading-none">Estudiante Volckan</h4>
                                                 <p class="text-[11px] text-slate-500 mt-1">ID: 2024-8902</p>
                                             </div>
                                         </div>
+                                        <div class="grid grid-cols-2 gap-2 mb-3">
+                                            <div class="bg-red-50/50 p-2 rounded-lg border border-red-50">
+                                                <p class="text-[9px] text-red-600 font-bold uppercase tracking-wider mb-0.5">Sangre</p>
+                                                <p class="text-sm font-black text-slate-700">O+</p>
+                                            </div>
+                                            <div class="bg-amber-50/50 p-2 rounded-lg border border-amber-50">
+                                                <p class="text-[9px] text-amber-600 font-bold uppercase tracking-wider mb-0.5">Alergias</p>
+                                                <p class="text-xs font-bold text-slate-700 truncate" title="Penicilina">Penicilina</p>
+                                            </div>
+                                        </div>
+                                        <div class="bg-slate-50 p-2 rounded-lg flex items-center justify-between cursor-pointer hover:bg-slate-100 transition-colors border border-slate-100">
+                                            <div class="flex items-center gap-2">
+                                                <span class="material-symbols-outlined text-brand-purple text-[16px]">contact_phone</span>
+                                                <span class="text-[11px] font-bold text-slate-700">Contactos Emergencia</span>
+                                            </div>
+                                            <span class="material-symbols-outlined text-slate-400 text-[14px]">chevron_right</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="block lg:hidden mt-auto mb-2 text-xs font-bold text-slate-700 bg-white/80 px-4 py-1.5 rounded-full shadow-sm">Paso 2: Activación</p>
+                                </div>
+
+                                <!-- Estado 2: Transmitiendo -->
+                                <div id="sim-state-2"
+                                    class="flex flex-col items-center justify-center w-full h-full text-center transition-all duration-500 scale-95 opacity-0 absolute pointer-events-none">
+                                    <div class="w-24 h-24 mb-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shadow-inner relative">
+                                        <span class="material-symbols-outlined text-5xl z-10 animate-bounce">podcasts</span>
+                                        <div class="absolute inset-0 rounded-full bg-blue-200 animate-ping opacity-20"></div>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">Señal Enviada</h3>
+                                    <p class="text-sm text-slate-500 px-4">Transmitiendo vía Telegram API y redes redundantes...</p>
+                                    <p class="block lg:hidden mt-4 text-sm font-bold text-slate-700 bg-white/80 px-4 py-2 rounded-full shadow-sm">Paso 3: Transmisión Inmediata</p>
+                                </div>
+
+                                <!-- Estado 3: Ubicación GPS -->
+                                <div id="sim-state-3"
+                                    class="flex flex-col items-center justify-center w-full h-full text-center transition-all duration-500 scale-95 opacity-0 absolute pointer-events-none">
+                                    <div class="relative w-full h-48 bg-slate-200/50 rounded-xl overflow-hidden mb-6 border border-slate-200">
+                                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cartographer.png')] opacity-30"></div>
+                                        <div class="absolute inset-x-0 h-px bg-slate-300 top-1/2 -translate-y-1/2"></div>
+                                        <div class="absolute inset-y-0 w-px bg-slate-300 left-1/2 -translate-x-1/2"></div>
+                                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                                            <span class="material-symbols-outlined text-5xl text-brand-red sim-pin-drop drop-shadow-lg">location_on</span>
+                                            <div class="w-4 h-1 bg-black/20 rounded-full blur-sm mt-1 animate-pulse"></div>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">GPS Fijado</h3>
+                                    <p class="text-sm text-slate-500 font-mono bg-slate-100 px-3 py-1 rounded-md">Lat: 14.6349, Lon: -90.5068</p>
+                                    <p class="block lg:hidden mt-4 text-sm font-bold text-slate-700 bg-white/80 px-4 py-2 rounded-full shadow-sm">Paso 4: Trazado y envío GPS</p>
+                                </div>
+
+                                <!-- Estado 4: Resuelto / Recibido -->
+                                <div id="sim-state-4"
+                                    class="flex flex-col items-center justify-center w-full h-full text-center transition-all duration-500 scale-95 opacity-0 absolute pointer-events-none">
+                                    <div class="w-24 h-24 mb-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                                        <svg class="w-12 h-12 sim-checkmark" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">Evento Confirmado</h3>
+                                    <p class="text-sm text-slate-500 px-4 mb-6">Autoridades notificadas. Evento en proceso de apoyo.</p>
+                                    <button id="sim-btn-reset" class="px-6 py-2.5 bg-slate-100 font-bold text-slate-600 rounded-lg hover:bg-slate-200 transition-colors border border-slate-200 flex flex-col items-center gap-1 mx-auto">
+                                        <span class="material-symbols-outlined text-2xl">refresh</span>
+                                        <span class="text-[10px] uppercase tracking-wider">Reiniciar</span>
+                                    </button>
+                                    <p class="block lg:hidden mt-6 text-sm font-bold text-slate-700 bg-white/80 px-4 py-2 rounded-full shadow-sm">Paso 5: Recepción de Autoridades</p>
+                                </div>
+                            </div>
                                         <div class="grid grid-cols-2 gap-2 mb-3">
                                             <div class="bg-red-50/50 p-2 rounded-lg border border-red-50">
                                                 <p
@@ -494,7 +583,16 @@
                     }
                 }
 
-                .sim-ripple-active {
+                
+                @keyframes scan {
+                    0% { top: 5%; }
+                    50% { top: 95%; }
+                    100% { top: 5%; }
+                }
+                .sim-scanner-line {
+                    animation: scan 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+                }
+.sim-ripple-active {
                     animation: ripple 2s cubic-bezier(0, 0, 0.2, 1) infinite;
                 }
 
@@ -1010,7 +1108,10 @@
             const state1 = document.getElementById('sim-state-1');
             const state2 = document.getElementById('sim-state-2');
             const state3 = document.getElementById('sim-state-3');
-            const states = [state0, state1, state2, state3];
+            const state4 = document.getElementById('sim-state-4');
+            const states = [state0, state1, state2, state3, state4];
+            
+            const simBtnScan = document.getElementById('sim-btn-scan');
 
             // Timeline Steps
             const step0 = document.getElementById('step-0');
@@ -1056,6 +1157,10 @@
                 });
                 simProgressLine.style.height = '0%';
 
+                // Remove ripples
+                const ripples = state1.querySelectorAll('.sim-ripple');
+                ripples.forEach(r => r.classList.remove('sim-ripple-active'));
+
                 // Reset Display
                 switchDisplay(0);
 
@@ -1063,37 +1168,50 @@
                 activateStep(0);
             }
 
-            function startSimulation() {
-                // Clear timeouts and reset timeline visually from step 1 onward
+            function scanAction() {
+                // Clear timeouts just in case
                 simulationTimeouts.forEach(clearTimeout);
                 simulationTimeouts = [];
+
+                // Remove timelines from step 1 onward
                 for (let i = 1; i <= 4; i++) {
+                    timelineSteps[i].classList.remove('step-active');
+                    timelineSteps[i].querySelector('div.rounded-full').classList.remove('step-icon-active');
+                }
+                
+                // Show Step 1 UI
+                switchDisplay(1);
+                activateStep(1);
+            }
+
+            function startSimulation() {
+                // Clear timeouts and reset timeline visually from step 2 onward
+                simulationTimeouts.forEach(clearTimeout);
+                simulationTimeouts = [];
+                for (let i = 2; i <= 4; i++) {
                     timelineSteps[i].classList.remove('step-active');
                     timelineSteps[i].querySelector('div.rounded-full').classList.remove('step-icon-active');
                 }
 
                 // Animar Ripples
-                const ripples = state0.querySelectorAll('.sim-ripple');
+                const ripples = state1.querySelectorAll('.sim-ripple');
                 ripples.forEach(r => r.classList.add('sim-ripple-active'));
-
-                // Paso 1: Activación inmediata
-                activateStep(1);
 
                 // Paso 2: Transmisión (t = 2.5s)
                 simulationTimeouts.push(setTimeout(() => {
-                    switchDisplay(1);
+                    switchDisplay(2);
                     activateStep(2);
                 }, 2500));
 
                 // Paso 3: Geolocalización (t = 5.0s)
                 simulationTimeouts.push(setTimeout(() => {
-                    switchDisplay(2);
+                    switchDisplay(3);
                     activateStep(3);
                 }, 5000));
 
                 // Paso 4: Cierre (t = 7.5s)
                 simulationTimeouts.push(setTimeout(() => {
-                    switchDisplay(3);
+                    switchDisplay(4);
                     activateStep(4);
                     // Remove ripples for next time
                     ripples.forEach(r => r.classList.remove('sim-ripple-active'));
@@ -1104,6 +1222,7 @@
             resetSimulation();
 
             // Event Listeners
+            if (simBtnScan) simBtnScan.addEventListener('click', scanAction);
             if (simBtnSos) simBtnSos.addEventListener('click', startSimulation);
             if (simBtnReset) simBtnReset.addEventListener('click', resetSimulation);
 
