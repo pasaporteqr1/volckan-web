@@ -154,19 +154,19 @@
                     protegiendo tanto dentro como fuera del país con tecnología de grado mundial.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <a href="#solutions"
+                    <button id="btn-vision"
                         class="w-full sm:w-auto px-10 py-4 md:py-5 bg-brand-red text-white font-black text-base md:text-lg rounded-full hover:shadow-2xl hover:shadow-brand-red/40 hover:-translate-y-1 hover:bg-orange-600 transition-all inline-flex items-center justify-center gap-3 group">
-                        <span>NUESTRAS SOLUCIONES</span>
+                        <span>NUESTRA VISIÓN</span>
                         <span
-                            class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
-                    <button id="btn-vision-mision"
+                            class="material-symbols-outlined group-hover:scale-110 transition-transform">visibility</span>
+                    </button>
+                    <button id="btn-mision"
                         class="flex items-center gap-4 text-slate-500 hover:text-brand-purple transition-all group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-purple/30 rounded-xl p-3 -m-3 hover:bg-slate-800/5">
                         <span
-                            class="material-symbols-outlined text-brand-purple fill-1 group-hover:scale-110 transition-transform">visibility</span>
+                            class="material-symbols-outlined text-brand-purple fill-1 group-hover:scale-110 transition-transform">rocket_launch</span>
                         <span
                             class="text-sm font-bold border-b border-transparent group-hover:border-brand-purple/50 pb-0.5 uppercase tracking-widest">Nuestra
-                            Visión y Misión</span>
+                            Misión</span>
                     </button>
                 </div>
             </div>
@@ -810,54 +810,55 @@
             });
 
             // ==========================================
-            // LÓGICA DEL MODAL VISIÓN/MISIÓN
+            // LÓGICA DE MODALES VISIÓN Y MISIÓN
             // ==========================================
-            const visionModal = document.getElementById('vision-modal');
-            const visionBtn = document.getElementById('btn-vision-mision');
-            const visionCloseIcons = document.querySelectorAll('#vision-modal-close, #vision-modal-close-btn');
+            const setupModal = (btnId, modalId, closeIds) => {
+                const btn = document.getElementById(btnId);
+                const modal = document.getElementById(modalId);
+                if (!btn || !modal) return;
 
-            if (visionBtn && visionModal) {
-                // Abrir Modal
-                visionBtn.addEventListener('click', (e) => {
+                const closeElements = document.querySelectorAll(closeIds);
+
+                const openModal = (e) => {
                     e.preventDefault();
-                    visionModal.classList.remove('opacity-0', 'pointer-events-none');
-                    visionModal.querySelector('div').classList.remove('scale-95');
-                    visionModal.querySelector('div').classList.add('scale-100');
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    modal.querySelector('div').classList.remove('scale-95');
+                    modal.querySelector('div').classList.add('scale-100');
                     document.body.style.overflow = 'hidden';
-                });
+                };
 
-                // Función para cerrar modal
-                const closeVisionModal = () => {
-                    visionModal.classList.add('opacity-0', 'pointer-events-none');
-                    visionModal.querySelector('div').classList.remove('scale-100');
-                    visionModal.querySelector('div').classList.add('scale-95');
+                const closeModal = () => {
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                    modal.querySelector('div').classList.remove('scale-100');
+                    modal.querySelector('div').classList.add('scale-95');
                     document.body.style.overflow = '';
                 };
 
-                // Cerrar al click en botones
-                visionCloseIcons.forEach(btn => {
-                    btn.addEventListener('click', closeVisionModal);
+                btn.addEventListener('click', openModal);
+
+                closeElements.forEach(el => {
+                    el.addEventListener('click', closeModal);
                 });
 
-                // Cerrar al click fuera del contenido
-                visionModal.addEventListener('click', (e) => {
-                    if (e.target === visionModal) {
-                        closeVisionModal();
-                    }
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal();
                 });
 
-                // Cerrar con Escape
                 document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && !visionModal.classList.contains('opacity-0')) {
-                        closeVisionModal();
+                    if (e.key === 'Escape' && !modal.classList.contains('opacity-0')) {
+                        closeModal();
                     }
                 });
-            }
+            };
+
+            // Inicializar ambos modales
+            setupModal('btn-vision', 'vision-modal', '#vision-modal-close, #vision-modal-close-btn');
+            setupModal('btn-mision', 'mision-modal', '#mision-modal-close, #mision-modal-close-btn');
 
         });
     </script>
 
-    <!-- Modal de Visión y Misión -->
+    <!-- Modal de Visión -->
     <div id="vision-modal"
         class="fixed inset-0 z-[80] bg-slate-900/60 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
         <!-- Modal Content -->
@@ -866,6 +867,75 @@
 
             <!-- Close Button Top Right -->
             <button id="vision-modal-close"
+                class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100/50 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-600 hover:text-slate-900 z-10 transition-transform hover:rotate-90">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+
+            <!-- Decorative Header -->
+            <div class="bg-gradient-to-r from-brand-red to-orange-600 p-8 relative overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent">
+                </div>
+                <img src="public/images/logo-volckan.png" alt="Grupo Volckan"
+                    class="h-12 w-auto object-contain relative z-10 brightness-0 invert opacity-90 drop-shadow-md">
+            </div>
+
+            <!-- Body Area -->
+            <div class="p-8 md:p-10 overflow-y-auto bg-slate-50 relative">
+                <!-- Background Icon -->
+                <span
+                    class="material-symbols-outlined absolute top-10 right-10 text-[120px] text-slate-200/50 -rotate-12 select-none pointer-events-none">visibility</span>
+
+                <div class="relative z-10 space-y-8">
+                    <!-- Origen -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="material-symbols-outlined text-brand-red text-2xl">location_on</span>
+                            <h4 class="text-sm font-black text-slate-400 uppercase tracking-widest">Nuestras Raíces</h4>
+                        </div>
+                        <p class="text-xl md:text-2xl font-bold text-slate-800 leading-snug">
+                            Somos una empresa 100% guatemalteca, nacida en Quetzaltenango.
+                        </p>
+                    </div>
+
+                    <!-- Visión -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex gap-5 items-start">
+                        <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-brand-red text-2xl">visibility</span>
+                        </div>
+                        <div>
+                            <h4 class="text-base font-black text-brand-dark uppercase tracking-wider mb-2">Nuestra
+                                Visión</h4>
+                            <p class="text-slate-600 leading-relaxed text-base font-medium">
+                                Ser la empresa líder a nivel mundial nacida en Guatemala (Quetzaltenango) en innovación
+                                tecnológica mediante automatización y ciberseguridad. Proveedora oficial de plataformas
+                                tecnológicas que prevengan de situaciones de riesgo y amenaza la integridad de
+                                instituciones, empresas y ciudades.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="bg-white p-6 border-t border-slate-100 flex justify-end">
+                <button id="vision-modal-close-btn"
+                    class="px-8 py-3 bg-brand-red text-white font-bold rounded-xl hover:bg-orange-600 transition-colors">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Misión -->
+    <div id="mision-modal"
+        class="fixed inset-0 z-[80] bg-slate-900/60 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <!-- Modal Content -->
+        <div
+            class="bg-white rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 relative group flex flex-col max-h-[90vh]">
+
+            <!-- Close Button Top Right -->
+            <button id="mision-modal-close"
                 class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100/50 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-600 hover:text-slate-900 z-10 transition-transform hover:rotate-90">
                 <span class="material-symbols-outlined text-2xl">close</span>
             </button>
@@ -883,24 +953,13 @@
             <div class="p-8 md:p-10 overflow-y-auto bg-slate-50 relative">
                 <!-- Background Icon -->
                 <span
-                    class="material-symbols-outlined absolute top-10 right-10 text-[120px] text-slate-200/50 -rotate-12 select-none pointer-events-none">public</span>
+                    class="material-symbols-outlined absolute top-10 right-10 text-[120px] text-slate-200/50 -rotate-12 select-none pointer-events-none">rocket_launch</span>
 
                 <div class="relative z-10 space-y-8">
-                    <!-- Origen -->
-                    <div>
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="material-symbols-outlined text-brand-red text-2xl">location_on</span>
-                            <h4 class="text-sm font-black text-slate-400 uppercase tracking-widest">Nuestras Raíces</h4>
-                        </div>
-                        <p class="text-xl md:text-2xl font-bold text-slate-800 leading-snug">
-                            Somos una empresa 100% guatemalteca, nacida en Quetzaltenango.
-                        </p>
-                    </div>
-
                     <!-- Misión -->
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex gap-5 items-start">
                         <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
-                            <span class="material-symbols-outlined text-blue-600 text-2xl">rocket_launch</span>
+                            <span class="material-symbols-outlined text-brand-purple text-2xl">rocket_launch</span>
                         </div>
                         <div>
                             <h4 class="text-base font-black text-brand-dark uppercase tracking-wider mb-2">Nuestra
@@ -916,8 +975,8 @@
 
             <!-- Footer Actions -->
             <div class="bg-white p-6 border-t border-slate-100 flex justify-end">
-                <button id="vision-modal-close-btn"
-                    class="px-8 py-3 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition-colors">
+                <button id="mision-modal-close-btn"
+                    class="px-8 py-3 bg-brand-purple text-white font-bold rounded-xl hover:bg-slate-800 transition-colors">
                     Entendido
                 </button>
             </div>
