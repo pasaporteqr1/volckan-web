@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Agendar Visita — Grupo Volckan</title>
+    <meta name="description"
+        content="Agenda una visita con un asesor de Grupo Volckan. Selecciona la fecha y hora que más te convengan.">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0A1128",
+                        "brand-purple": "#6b21a8",
+                        "brand-red": "#dc2626",
+                        "brand-yellow": "#facc15",
+                        "electric-blue": "#6b21a8",
+                        "safety-orange": "#dc2626",
+                        "safety-yellow": "#facc15",
+                        "brand-dark": "#0A1128",
+                        "navy": "#0A1128",
+                        "accent-orange": "#dc2626",
+                        "accent-yellow": "#facc15",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "heading": ["Montserrat", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "card": "24px",
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply font-sans bg-white text-slate-900; }
+            h1, h2, h3, h4 { @apply font-heading uppercase tracking-tight; }
+        }
+    </style>
+    <style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+            color: #0a192f;
+        }
+
+        /* Calendar animations */
+        .cal-day {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cal-day:not(.disabled):hover {
+            transform: scale(1.12);
+        }
+
+        .cal-day.selected {
+            background: linear-gradient(135deg, #6b21a8, #9333ea);
+            color: white;
+            box-shadow: 0 4px 20px rgba(107, 33, 168, 0.4);
+            transform: scale(1.08);
+        }
+
+        .cal-day.today:not(.selected) {
+            border: 2px solid #6b21a8;
+        }
+
+        .slot-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slot-card.available:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(107, 33, 168, 0.2);
+        }
+
+        .slot-card.booked {
+            opacity: 0.85;
+        }
+
+        /* Fade in animation */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeSlideUp 0.4s ease-out forwards;
+        }
+
+        /* Stagger children */
+        .stagger>* {
+            opacity: 0;
+            animation: fadeSlideUp 0.4s ease-out forwards;
+        }
+
+        .stagger>*:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .stagger>*:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .stagger>*:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .stagger>*:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+
+        /* Pulse for loading */
+        .shimmer {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans bg-slate-50 text-slate-900">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex items-center justify-between h-24">
+                <a href="index.html" class="flex items-center group">
+                    <img src="public/images/logo-volckan.png" alt="Grupo Volckan"
+                        class="h-12 w-auto object-contain transition-transform group-hover:scale-105">
+                </a>
+                <nav class="hidden md:flex items-center gap-10">
+                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
+                        href="index.html">Inicio</a>
+
+                    <!-- Menú Desplegable: Soluciones -->
+                    <div class="relative group">
+                        <button
+                            class="font-bold text-sm uppercase hover:text-brand-purple transition-colors inline-flex items-center gap-1">
+                            Soluciones
+                            <span
+                                class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+                        </button>
+                        <div
+                            class="absolute left-0 mt-6 w-64 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
+                            <div class="py-2">
+                                <a href="soluciones-sosqr.html"
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red">
+                                        <span class="material-symbols-outlined text-base">emergency</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-brand-dark text-sm">Sistema SOSQR</span>
+                                        <span class="text-xs text-slate-500 mt-0.5">Alertas escolares</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-parqueos.html"
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                                        <span class="material-symbols-outlined text-base">local_parking</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-brand-dark text-sm">Parqueos Digitales</span>
+                                        <span class="text-xs text-slate-500 mt-0.5">Control de acceso</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
+                        href="soluciones-automatizaciones.html">Automatizaciones</a>
+                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
+                        href="soluciones-ciberseguridad.html">Ciberseguridad</a>
+                </nav>
+
+                <div class="flex items-center gap-4">
+                    <a href="agendar-visita.html"
+                        class="hidden sm:flex items-center gap-2 bg-brand-purple text-white px-8 py-3 rounded-full font-bold text-sm hover:-translate-y-1 hover:bg-brand-red transition-all duration-300 shadow-lg shadow-brand-purple/30 hover:shadow-brand-red/40 relative overflow-hidden group">
+                        <span class="relative z-10 flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-lg">calendar_month</span>
+                            AGENDAR VISITA
+                        </span>
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden text-brand-dark">
+                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[60] bg-white transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="flex flex-col h-full">
+            <div class="p-5 flex items-center justify-between border-b border-slate-100">
+                <a href="index.html" class="flex items-center">
+                    <img src="public/images/logo-volckan.png" alt="Grupo Volckan" class="h-10 w-auto object-contain">
+                </a>
+                <button id="mobile-menu-close"
+                    class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 hover:bg-slate-200 transition-colors">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+            <nav class="p-5 space-y-3 flex-1 overflow-y-auto">
+                <a href="index.html"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                        <span class="material-symbols-outlined text-xl">home</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">Inicio</span>
+                </a>
+                <a href="soluciones-sosqr.html"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-red transition-all group">
+                    <div class="w-10 h-10 rounded-xl bg-brand-red/10 flex items-center justify-center text-brand-red">
+                        <span class="material-symbols-outlined text-xl">emergency</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">SOSQR</span>
+                </a>
+                <a href="soluciones-parqueos.html"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                        <span class="material-symbols-outlined text-xl">local_parking</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">Parqueos</span>
+                </a>
+                <a href="soluciones-automatizaciones.html"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                        <span class="material-symbols-outlined text-xl">precision_manufacturing</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">Automatizaciones</span>
+                </a>
+                <a href="soluciones-ciberseguridad.html"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                        <span class="material-symbols-outlined text-xl">shield_lock</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">Ciberseguridad</span>
+                </a>
+            </nav>
+            <div class="p-5 flex-shrink-0 border-t border-slate-100">
+                <a href="agendar-visita.html"
+                    class="group relative overflow-hidden w-full bg-brand-purple text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-lg">calendar_month</span>
+                    Agendar Visita
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section
+            class="relative bg-gradient-to-br from-brand-dark via-[#0d1a3a] to-brand-purple/40 py-20 md:py-28 overflow-hidden">
+            <!-- Decorative elements -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-20 left-10 w-72 h-72 bg-brand-purple rounded-full blur-[100px]"></div>
+                <div class="absolute bottom-10 right-20 w-96 h-96 bg-brand-red rounded-full blur-[120px]"></div>
+            </div>
+            <div
+                class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4xIi8+PC9zdmc+')] opacity-30">
+            </div>
+
+            <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+                <div
+                    class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 mb-8">
+                    <span class="material-symbols-outlined text-brand-yellow text-lg">calendar_month</span>
+                    <span class="text-white/90 font-semibold text-sm tracking-wide">Reserva tu horario preferido</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+                    Agenda tu <span
+                        class="bg-gradient-to-r from-brand-yellow to-orange-400 bg-clip-text text-transparent">Visita</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-medium leading-relaxed">
+                    Selecciona el día y la hora que más se adapten a tu agenda. Un asesor de Grupo Volckan te visitará
+                    para evaluar las necesidades de tu institución.
+                </p>
+            </div>
+        </section>
+
+        <!-- Calendar Section -->
+        <section class="py-16 md:py-24">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="grid lg:grid-cols-[1fr_400px] gap-8 items-start">
+
+                    <!-- Calendar Card -->
+                    <div
+                        class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+                        <!-- Calendar Header -->
+                        <div
+                            class="bg-gradient-to-r from-brand-purple to-purple-700 px-6 md:px-8 py-6 flex items-center justify-between">
+                            <button id="cal-prev"
+                                class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95">
+                                <span class="material-symbols-outlined">chevron_left</span>
+                            </button>
+                            <div class="text-center">
+                                <h2 id="cal-month-year"
+                                    class="text-2xl md:text-3xl font-black text-white tracking-wide"></h2>
+                            </div>
+                            <button id="cal-next"
+                                class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95">
+                                <span class="material-symbols-outlined">chevron_right</span>
+                            </button>
+                        </div>
+
+                        <!-- Weekday Labels -->
+                        <div class="grid grid-cols-7 bg-slate-50 border-b border-slate-100">
+                            <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Lun
+                            </div>
+                            <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Mar
+                            </div>
+                            <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Mié
+                            </div>
+                            <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Jue
+                            </div>
+                            <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Vie
+                            </div>
+                            <div class="py-3 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">Sáb
+                            </div>
+                            <div class="py-3 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">Dom
+                            </div>
+                        </div>
+
+                        <!-- Calendar Grid -->
+                        <div id="cal-grid" class="grid grid-cols-7 gap-px bg-slate-100 p-px">
+                            <!-- Days rendered by JS -->
+                        </div>
+
+                        <!-- Legend -->
+                        <div
+                            class="px-6 md:px-8 py-4 bg-slate-50 border-t border-slate-100 flex flex-wrap gap-6 text-xs font-semibold text-slate-500">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-gradient-to-br from-brand-purple to-purple-600">
+                                </div>
+                                Seleccionado
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full border-2 border-brand-purple"></div>
+                                Hoy
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-slate-200"></div>
+                                No disponible
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: Slots + Form -->
+                    <div class="lg:sticky lg:top-32 space-y-6">
+                        <!-- Empty state -->
+                        <div id="panel-empty"
+                            class="bg-white rounded-3xl shadow-lg shadow-slate-200/50 border border-slate-100 p-8 text-center">
+                            <div
+                                class="w-20 h-20 rounded-full bg-brand-purple/10 flex items-center justify-center mx-auto mb-5">
+                                <span class="material-symbols-outlined text-brand-purple text-4xl">touch_app</span>
+                            </div>
+                            <h3 class="text-lg font-black text-slate-800 mb-2">Selecciona un Día</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">
+                                Haz clic en una fecha disponible del calendario para ver los horarios disponibles.
+                            </p>
+                        </div>
+
+                        <!-- Slots Panel (hidden until day selected) -->
+                        <div id="panel-slots" class="hidden">
+                            <div
+                                class="bg-white rounded-3xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden">
+                                <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-lg font-black text-slate-800">Horarios</h3>
+                                        <p id="slots-date-label" class="text-sm text-slate-500 mt-0.5"></p>
+                                    </div>
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center">
+                                        <span
+                                            class="material-symbols-outlined text-brand-purple text-xl">schedule</span>
+                                    </div>
+                                </div>
+                                <div id="slots-container" class="p-4 space-y-3 stagger">
+                                    <!-- Slots rendered by JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Booking Form (hidden until slot selected) -->
+                        <div id="panel-form" class="hidden fade-in">
+                            <div
+                                class="bg-white rounded-3xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden">
+                                <div
+                                    class="px-6 py-5 border-b border-slate-100 bg-gradient-to-r from-brand-purple/5 to-transparent">
+                                    <h3 class="text-lg font-black text-slate-800 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-brand-purple">edit_note</span>
+                                        Confirma tu Visita
+                                    </h3>
+                                    <p id="form-slot-label" class="text-sm text-brand-purple font-semibold mt-1"></p>
+                                </div>
+                                <form id="booking-form" class="p-6 space-y-5">
+                                    <div>
+                                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="book-name">
+                                            Nombre Completo <span class="text-brand-red">*</span>
+                                        </label>
+                                        <input type="text" id="book-name" required
+                                            class="w-full rounded-xl border-slate-200 focus:border-brand-purple focus:ring-brand-purple/20 text-sm py-3 px-4 transition-all"
+                                            placeholder="Ej: Carlos Mendoza">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-bold text-slate-700 mb-1.5"
+                                            for="book-institution">
+                                            Nombre de la Institución <span class="text-brand-red">*</span>
+                                        </label>
+                                        <input type="text" id="book-institution" required
+                                            class="w-full rounded-xl border-slate-200 focus:border-brand-purple focus:ring-brand-purple/20 text-sm py-3 px-4 transition-all"
+                                            placeholder="Ej: Colegio La Salle">
+                                    </div>
+                                    <button type="submit" id="book-submit-btn"
+                                        class="w-full bg-gradient-to-r from-brand-purple to-purple-700 hover:from-purple-700 hover:to-brand-purple text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-brand-purple/20 transition-all hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] flex items-center justify-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">check_circle</span>
+                                        Confirmar Visita
+                                    </button>
+                                    <div id="book-feedback"
+                                        class="hidden rounded-xl p-4 text-sm font-semibold text-center"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="pb-20">
+            <div class="max-w-4xl mx-auto px-6">
+                <div
+                    class="bg-gradient-to-br from-brand-dark to-[#1a2744] rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-10">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-purple rounded-full blur-[80px]"></div>
+                    </div>
+                    <div class="relative z-10">
+                        <span class="material-symbols-outlined text-brand-yellow text-5xl mb-6 block">info</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-white mb-4">¿Cómo funciona?</h2>
+                        <div class="grid md:grid-cols-3 gap-8 mt-10 text-left">
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-2xl bg-brand-purple/20 flex items-center justify-center flex-shrink-0">
+                                    <span
+                                        class="material-symbols-outlined text-brand-yellow text-2xl">calendar_month</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm mb-1">1. Elige Fecha y Hora</h4>
+                                    <p class="text-slate-400 text-sm">Selecciona el día y la franja horaria que mejor se
+                                        acomode a tu disponibilidad.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-2xl bg-brand-purple/20 flex items-center justify-center flex-shrink-0">
+                                    <span class="material-symbols-outlined text-brand-yellow text-2xl">person</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm mb-1">2. Ingresa tus Datos</h4>
+                                    <p class="text-slate-400 text-sm">Proporciona tu nombre y el de tu institución para
+                                        personalizar la visita.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-2xl bg-brand-purple/20 flex items-center justify-center flex-shrink-0">
+                                    <span class="material-symbols-outlined text-brand-yellow text-2xl">handshake</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm mb-1">3. Te Visitamos</h4>
+                                    <p class="text-slate-400 text-sm">Un asesor certificado se presentará en la fecha y
+                                        hora acordadas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-white pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-8">
+                        <img src="public/images/logo-volckan.png" alt="Grupo Volckan"
+                            class="h-10 w-auto object-contain brightness-0 invert">
+                    </div>
+                    <p class="text-slate-400 max-w-sm mb-10 font-medium">Líderes en tecnología de seguridad preventiva
+                        para Centroamérica. Protegiendo lo que más importa con innovación constante.</p>
+                </div>
+                <div>
+                    <h4 class="font-black mb-6 text-xl text-white">Soluciones</h4>
+                    <ul class="space-y-4">
+                        <li><a href="soluciones-parqueos.html"
+                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-sm">local_parking</span> Parqueos
+                                Digitales</a></li>
+                        <li><a href="#"
+                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
+                                    class="material-symbols-outlined text-sm">storefront</span> Botón Seguro para
+                                Comercios</a></li>
+                        <li><a href="#"
+                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
+                                    class="material-symbols-outlined text-sm">precision_manufacturing</span>
+                                Automatizaciones para Empresas</a></li>
+                        <li><a href="#"
+                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
+                                    class="material-symbols-outlined text-sm">shield_lock</span> Capacitaciones en
+                                Ciberseguridad</a></li>
+                        <li><a href="#"
+                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
+                                    class="material-symbols-outlined text-sm">handshake</span> Alianzas Estratégicas</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black mb-6 text-xl text-white">Contacto</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-slate-400 font-medium">
+                            <span class="material-symbols-outlined text-brand-purple text-lg">mail</span>
+                            grupovolckan@gmail.com
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-400 font-medium">
+                            <span class="material-symbols-outlined text-brand-purple text-lg">phone</span>
+                            +502 3109-7191
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8 text-xs font-bold text-slate-800 uppercase tracking-widest">
+                <p>© 2024 Grupo Volckan. Todos los derechos reservados.</p>
+                <div class="flex gap-10">
+                    <a class="hover:text-white transition-colors" href="#">Aviso de Privacidad</a>
+                    <a class="hover:text-white transition-colors" href="#">Términos de Servicio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =============================================
+        // CONFIGURATION
+        // =============================================
+        const SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwQzKSvHpgHnAOXBheG9fxSdZ9_jPGCkAaAVKU6kUi5aOzptK_EuVThN4Xb-XH4Yl_X/exec';
+
+        const TIME_SLOTS = [
+            { start: '09:00', end: '11:00', label: '9:00 AM — 11:00 AM' },
+            { start: '11:00', end: '13:00', label: '11:00 AM — 1:00 PM' },
+            { start: '13:00', end: '15:00', label: '1:00 PM — 3:00 PM' },
+            { start: '15:00', end: '17:00', label: '3:00 PM — 5:00 PM' },
+        ];
+
+        const MONTHS_ES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+        // =============================================
+        // STATE
+        // =============================================
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        let selectedDate = null;
+        let selectedSlot = null;
+        let bookedSlots = {}; // { "2026-03-15": [ { start: "09:00", name: "Juan", institution: "Colegio X" } ] }
+
+        // =============================================
+        // DOM ELEMENTS
+        // =============================================
+        const calGrid = document.getElementById('cal-grid');
+        const calMonthYear = document.getElementById('cal-month-year');
+        const calPrev = document.getElementById('cal-prev');
+        const calNext = document.getElementById('cal-next');
+        const panelEmpty = document.getElementById('panel-empty');
+        const panelSlots = document.getElementById('panel-slots');
+        const panelForm = document.getElementById('panel-form');
+        const slotsContainer = document.getElementById('slots-container');
+        const slotsDateLabel = document.getElementById('slots-date-label');
+        const formSlotLabel = document.getElementById('form-slot-label');
+        const bookingForm = document.getElementById('booking-form');
+        const bookSubmitBtn = document.getElementById('book-submit-btn');
+        const bookFeedback = document.getElementById('book-feedback');
+
+        // =============================================
+        // CALENDAR RENDERING
+        // =============================================
+        function renderCalendar() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const startDow = (firstDay.getDay() + 6) % 7; // Monday = 0
+
+            calMonthYear.textContent = `${MONTHS_ES[currentMonth]} ${currentYear}`;
+            calGrid.innerHTML = '';
+
+            // Empty cells before first day
+            for (let i = 0; i < startDow; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'bg-white p-4';
+                calGrid.appendChild(emptyCell);
+            }
+
+            // Days
+            for (let d = 1; d <= lastDay.getDate(); d++) {
+                const date = new Date(currentYear, currentMonth, d);
+                date.setHours(0, 0, 0, 0);
+                const dow = date.getDay(); // 0=Sun, 6=Sat
+                const isPast = date < today;
+                const isWeekend = dow === 0 || dow === 6;
+                const isToday = date.getTime() === today.getTime();
+                const dateStr = formatDate(date);
+                const isSelected = selectedDate === dateStr;
+                const disabled = isPast || isWeekend;
+
+                const cell = document.createElement('div');
+                cell.className = `bg-white flex items-center justify-center p-2 md:p-3`;
+
+                const btn = document.createElement('button');
+                btn.textContent = d;
+                btn.className = `cal-day w-10 h-10 md:w-12 md:h-12 rounded-xl font-bold text-sm flex items-center justify-center`;
+
+                if (disabled) {
+                    btn.classList.add('disabled', 'text-slate-300', 'cursor-not-allowed');
+                    btn.disabled = true;
+                } else {
+                    btn.classList.add('text-slate-700', 'hover:bg-brand-purple/10', 'cursor-pointer');
+                    btn.addEventListener('click', () => selectDate(dateStr));
+                }
+
+                if (isToday) btn.classList.add('today');
+                if (isSelected) btn.classList.add('selected');
+
+                // Show dot if slots are booked on this day
+                const dayBookings = bookedSlots[dateStr];
+                if (dayBookings && dayBookings.length > 0 && !disabled) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'flex flex-col items-center gap-0.5';
+                    wrapper.appendChild(btn);
+                    const dot = document.createElement('div');
+                    if (dayBookings.length >= TIME_SLOTS.length) {
+                        dot.className = 'w-1.5 h-1.5 rounded-full bg-red-400';
+                    } else {
+                        dot.className = 'w-1.5 h-1.5 rounded-full bg-brand-yellow';
+                    }
+                    wrapper.appendChild(dot);
+                    cell.appendChild(wrapper);
+                } else {
+                    cell.appendChild(btn);
+                }
+
+                calGrid.appendChild(cell);
+            }
+        }
+
+        // =============================================
+        // DATE SELECTION
+        // =============================================
+        function selectDate(dateStr) {
+            selectedDate = dateStr;
+            selectedSlot = null;
+            renderCalendar();
+            showSlots(dateStr);
+        }
+
+        function showSlots(dateStr) {
+            panelEmpty.classList.add('hidden');
+            panelSlots.classList.remove('hidden');
+            panelForm.classList.add('hidden');
+
+            const parts = dateStr.split('-');
+            const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+            const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            slotsDateLabel.textContent = `${dayNames[d.getDay()]} ${d.getDate()} de ${MONTHS_ES[d.getMonth()]}`;
+
+            const dayBookings = bookedSlots[dateStr] || [];
+
+            slotsContainer.innerHTML = '';
+            TIME_SLOTS.forEach((slot, idx) => {
+                const booking = dayBookings.find(b => b.start === slot.start);
+                const card = document.createElement('div');
+
+                if (booking) {
+                    // BOOKED SLOT
+                    card.className = 'slot-card booked flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200';
+                    card.innerHTML = `
+                        <div class="w-11 h-11 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-red-500 text-xl">lock</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="font-bold text-sm text-slate-500 line-through">${slot.label}</p>
+                            <p class="text-xs text-red-500 font-semibold mt-0.5 truncate">
+                                Reservado por ${booking.name} — ${booking.institution}
+                            </p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-300">block</span>
+                    `;
+                } else {
+                    // AVAILABLE SLOT
+                    card.className = 'slot-card available flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200 hover:border-brand-purple cursor-pointer group';
+                    card.innerHTML = `
+                        <div class="w-11 h-11 rounded-xl bg-brand-purple/10 group-hover:bg-brand-purple flex items-center justify-center flex-shrink-0 transition-colors">
+                            <span class="material-symbols-outlined text-brand-purple group-hover:text-white text-xl transition-colors">schedule</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-bold text-sm text-slate-800">${slot.label}</p>
+                            <p class="text-xs text-green-600 font-semibold mt-0.5">Disponible</p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-300 group-hover:text-brand-purple transition-colors">arrow_forward</span>
+                    `;
+                    card.addEventListener('click', () => selectSlot(dateStr, slot));
+                }
+
+                slotsContainer.appendChild(card);
+            });
+
+            // Re-trigger stagger animation
+            slotsContainer.classList.remove('stagger');
+            void slotsContainer.offsetWidth;
+            slotsContainer.classList.add('stagger');
+        }
+
+        // =============================================
+        // SLOT SELECTION & BOOKING
+        // =============================================
+        function selectSlot(dateStr, slot) {
+            selectedSlot = slot;
+            panelForm.classList.remove('hidden');
+            panelForm.classList.add('fade-in');
+
+            const parts = dateStr.split('-');
+            const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+            const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            formSlotLabel.textContent = `${dayNames[d.getDay()]} ${d.getDate()} de ${MONTHS_ES[d.getMonth()]} · ${slot.label}`;
+
+            // Reset form
+            bookingForm.reset();
+            bookFeedback.classList.add('hidden');
+            bookSubmitBtn.disabled = false;
+            bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">check_circle</span> Confirmar Visita`;
+
+            // Scroll form into view on mobile
+            setTimeout(() => {
+                panelForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        bookingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!selectedDate || !selectedSlot) return;
+
+            const name = document.getElementById('book-name').value.trim();
+            const institution = document.getElementById('book-institution').value.trim();
+
+            if (!name || !institution) return;
+
+            bookSubmitBtn.disabled = true;
+            bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg animate-spin">sync</span> Enviando...`;
+            bookFeedback.classList.add('hidden');
+
+            try {
+                const response = await fetch(SCRIPT_WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        tipo: 'visita',
+                        nombre: name,
+                        institucion: institution,
+                        fecha: selectedDate,
+                        horaInicio: selectedSlot.start,
+                        horaFin: selectedSlot.end,
+                        franja: selectedSlot.label,
+                    })
+                });
+
+                if (response.ok) {
+                    // Add to local state immediately
+                    if (!bookedSlots[selectedDate]) bookedSlots[selectedDate] = [];
+                    bookedSlots[selectedDate].push({
+                        start: selectedSlot.start,
+                        name: name,
+                        institution: institution,
+                    });
+
+                    bookFeedback.classList.remove('hidden', 'bg-red-50', 'text-red-600');
+                    bookFeedback.classList.add('bg-green-50', 'text-green-700');
+                    bookFeedback.innerHTML = `<span class="flex items-center justify-center gap-2"><span class="material-symbols-outlined text-lg">check_circle</span>¡Visita confirmada! Te esperamos.</span>`;
+
+                    bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">check_circle</span> ¡Reservado!`;
+                    bookSubmitBtn.classList.remove('from-brand-purple', 'to-purple-700');
+                    bookSubmitBtn.classList.add('from-green-600', 'to-green-700');
+
+                    // Refresh slots view
+                    showSlots(selectedDate);
+                    renderCalendar();
+
+                    setTimeout(() => {
+                        panelForm.classList.add('hidden');
+                        bookSubmitBtn.classList.add('from-brand-purple', 'to-purple-700');
+                        bookSubmitBtn.classList.remove('from-green-600', 'to-green-700');
+                    }, 3000);
+
+                } else {
+                    throw new Error('Error de servidor');
+                }
+            } catch (err) {
+                bookFeedback.classList.remove('hidden', 'bg-green-50', 'text-green-700');
+                bookFeedback.classList.add('bg-red-50', 'text-red-600');
+                bookFeedback.textContent = 'Error al enviar. Intenta de nuevo.';
+                bookSubmitBtn.disabled = false;
+                bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">check_circle</span> Confirmar Visita`;
+            }
+        });
+
+        // =============================================
+        // FETCH BOOKED SLOTS
+        // =============================================
+        async function fetchBookedSlots() {
+            try {
+                const response = await fetch(`${SCRIPT_WEB_APP_URL}?action=getVisitas`);
+                if (response.ok) {
+                    const data = await response.json();
+                    // data should be array of { fecha, horaInicio, nombre, institucion }
+                    bookedSlots = {};
+                    if (data && data.visitas) {
+                        data.visitas.forEach(v => {
+                            if (!bookedSlots[v.fecha]) bookedSlots[v.fecha] = [];
+                            bookedSlots[v.fecha].push({
+                                start: v.horaInicio,
+                                name: v.nombre,
+                                institution: v.institucion,
+                            });
+                        });
+                    }
+                    renderCalendar();
+                    if (selectedDate) showSlots(selectedDate);
+                }
+            } catch (err) {
+                console.log('No se pudieron cargar los slots. El calendario funciona sin datos previos.');
+            }
+        }
+
+        // =============================================
+        // UTILS
+        // =============================================
+        function formatDate(d) {
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
+        }
+
+        // =============================================
+        // NAVIGATION
+        // =============================================
+        calPrev.addEventListener('click', () => {
+            const now = new Date();
+            // Don't go before current month
+            if (currentYear === now.getFullYear() && currentMonth <= now.getMonth()) return;
+            currentMonth--;
+            if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+            selectedDate = null;
+            panelEmpty.classList.remove('hidden');
+            panelSlots.classList.add('hidden');
+            panelForm.classList.add('hidden');
+            renderCalendar();
+        });
+
+        calNext.addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+            selectedDate = null;
+            panelEmpty.classList.remove('hidden');
+            panelSlots.classList.add('hidden');
+            panelForm.classList.add('hidden');
+            renderCalendar();
+        });
+
+        // =============================================
+        // MOBILE MENU
+        // =============================================
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('translate-x-full');
+            });
+        }
+        if (mobileMenuClose && mobileMenu) {
+            mobileMenuClose.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+        }
+
+        // =============================================
+        // INIT
+        // =============================================
+        renderCalendar();
+        fetchBookedSlots();
+    </script>
+</body>
+
+</html>
