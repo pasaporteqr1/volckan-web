@@ -592,10 +592,10 @@
         const SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwQzKSvHpgHnAOXBheG9fxSdZ9_jPGCkAaAVKU6kUi5aOzptK_EuVThN4Xb-XH4Yl_X/exec';
 
         const TIME_SLOTS = [
-            { start: '09:00', end: '11:00', label: '9:00 AM — 11:00 AM' },
-            { start: '11:00', end: '13:00', label: '11:00 AM — 1:00 PM' },
-            { start: '13:00', end: '15:00', label: '1:00 PM — 3:00 PM' },
-            { start: '15:00', end: '17:00', label: '3:00 PM — 5:00 PM' },
+            { start: '08:00', end: '10:00', label: '8:00 AM — 10:00 AM', color: 'bg-brand-yellow' },
+            { start: '10:00', end: '12:00', label: '10:00 AM — 12:00 PM', color: 'bg-blue-500' },
+            { start: '12:00', end: '14:00', label: '12:00 PM — 2:00 PM', color: 'bg-green-500' },
+            { start: '14:00', end: '16:00', label: '2:00 PM — 4:00 PM', color: 'bg-brand-purple' },
         ];
 
         const MONTHS_ES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -678,19 +678,25 @@
                 if (isToday) btn.classList.add('today');
                 if (isSelected) btn.classList.add('selected');
 
-                // Show dot if slots are booked on this day
+                // Show dots if slots are booked on this day
                 const dayBookings = bookedSlots[dateStr];
                 if (dayBookings && dayBookings.length > 0 && !disabled) {
                     const wrapper = document.createElement('div');
-                    wrapper.className = 'flex flex-col items-center gap-0.5';
+                    wrapper.className = 'flex flex-col items-center gap-1';
                     wrapper.appendChild(btn);
-                    const dot = document.createElement('div');
-                    if (dayBookings.length >= TIME_SLOTS.length) {
-                        dot.className = 'w-1.5 h-1.5 rounded-full bg-red-400';
-                    } else {
-                        dot.className = 'w-1.5 h-1.5 rounded-full bg-brand-yellow';
-                    }
-                    wrapper.appendChild(dot);
+
+                    const dotsContainer = document.createElement('div');
+                    dotsContainer.className = 'flex gap-1 justify-center';
+
+                    dayBookings.forEach(booking => {
+                        const slotInfo = TIME_SLOTS.find(s => s.start === booking.start);
+                        const dotColor = slotInfo ? slotInfo.color : 'bg-brand-red';
+                        const dot = document.createElement('div');
+                        dot.className = `w-1.5 h-1.5 rounded-full ${dotColor}`;
+                        dotsContainer.appendChild(dot);
+                    });
+
+                    wrapper.appendChild(dotsContainer);
                     cell.appendChild(wrapper);
                 } else {
                     cell.appendChild(btn);
@@ -744,16 +750,35 @@
                     `;
                 } else {
                     // AVAILABLE SLOT
-                    card.className = 'slot-card available flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200 hover:border-brand-purple cursor-pointer group';
+                    // Extract color name (e.g. from bg-brand-yellow get brand-yellow)
+                    const colorParts = slot.color.split('-');
+                    let iconBg, iconText, hoverBorder, groupHoverBg, groupHoverIcon;
+
+                    if (slot.color === 'bg-brand-yellow') {
+                        iconBg = 'bg-yellow-100'; iconText = 'text-yellow-600'; hoverBorder = 'hover:border-yellow-400';
+                        groupHoverBg = 'group-hover:bg-yellow-400'; groupHoverIcon = 'group-hover:text-white';
+                    } else if (slot.color === 'bg-blue-500') {
+                        iconBg = 'bg-blue-100'; iconText = 'text-blue-500'; hoverBorder = 'hover:border-blue-500';
+                        groupHoverBg = 'group-hover:bg-blue-500'; groupHoverIcon = 'group-hover:text-white';
+                    } else if (slot.color === 'bg-green-500') {
+                        iconBg = 'bg-green-100'; iconText = 'text-green-600'; hoverBorder = 'hover:border-green-500';
+                        groupHoverBg = 'group-hover:bg-green-500'; groupHoverIcon = 'group-hover:text-white';
+                    } else {
+                        // brand-purple default
+                        iconBg = 'bg-brand-purple/10'; iconText = 'text-brand-purple'; hoverBorder = 'hover:border-brand-purple';
+                        groupHoverBg = 'group-hover:bg-brand-purple'; groupHoverIcon = 'group-hover:text-white';
+                    }
+
+                    card.className = `slot-card available flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200 ${hoverBorder} cursor-pointer group`;
                     card.innerHTML = `
-                        <div class="w-11 h-11 rounded-xl bg-brand-purple/10 group-hover:bg-brand-purple flex items-center justify-center flex-shrink-0 transition-colors">
-                            <span class="material-symbols-outlined text-brand-purple group-hover:text-white text-xl transition-colors">schedule</span>
+                        <div class="w-11 h-11 rounded-xl ${iconBg} ${groupHoverBg} flex items-center justify-center flex-shrink-0 transition-colors">
+                            <span class="material-symbols-outlined ${iconText} ${groupHoverIcon} text-xl transition-colors">schedule</span>
                         </div>
                         <div class="flex-1">
                             <p class="font-bold text-sm text-slate-800">${slot.label}</p>
                             <p class="text-xs text-green-600 font-semibold mt-0.5">Disponible</p>
                         </div>
-                        <span class="material-symbols-outlined text-slate-300 group-hover:text-brand-purple transition-colors">arrow_forward</span>
+                        <span class="material-symbols-outlined text-slate-300 ${iconText.replace('text-', 'group-hover:text-')} transition-colors">arrow_forward</span>
                     `;
                     card.addEventListener('click', () => selectSlot(dateStr, slot));
                 }
@@ -778,13 +803,13 @@
             const parts = dateStr.split('-');
             const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
             const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-            formSlotLabel.textContent = `${dayNames[d.getDay()]} ${d.getDate()} de ${MONTHS_ES[d.getMonth()]} · ${slot.label}`;
+            formSlotLabel.textContent = `${dayNames[d.getDay()]} ${d.getDate()} de ${MONTHS_ES[d.getMonth()]} · ${slot.label} `;
 
             // Reset form
             bookingForm.reset();
             bookFeedback.classList.add('hidden');
             bookSubmitBtn.disabled = false;
-            bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">check_circle</span> Confirmar Visita`;
+            bookSubmitBtn.innerHTML = `< span class="material-symbols-outlined text-lg" > check_circle</span > Confirmar Visita`;
 
             // Scroll form into view on mobile
             setTimeout(() => {
@@ -802,7 +827,7 @@
             if (!name || !institution) return;
 
             bookSubmitBtn.disabled = true;
-            bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg animate-spin">sync</span> Enviando...`;
+            bookSubmitBtn.innerHTML = `< span class="material-symbols-outlined text-lg animate-spin" > sync</span > Enviando...`;
             bookFeedback.classList.add('hidden');
 
             try {
@@ -830,9 +855,9 @@
 
                     bookFeedback.classList.remove('hidden', 'bg-red-50', 'text-red-600');
                     bookFeedback.classList.add('bg-green-50', 'text-green-700');
-                    bookFeedback.innerHTML = `<span class="flex items-center justify-center gap-2"><span class="material-symbols-outlined text-lg">check_circle</span>¡Visita confirmada! Te esperamos.</span>`;
+                    bookFeedback.innerHTML = `< span class= "flex items-center justify-center gap-2" > <span class="material-symbols-outlined text-lg">check_circle</span>¡Visita confirmada! Te esperamos.</span > `;
 
-                    bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">check_circle</span> ¡Reservado!`;
+                    bookSubmitBtn.innerHTML = `< span class= "material-symbols-outlined text-lg" > check_circle</span > ¡Reservado!`;
                     bookSubmitBtn.classList.remove('from-brand-purple', 'to-purple-700');
                     bookSubmitBtn.classList.add('from-green-600', 'to-green-700');
 
@@ -854,7 +879,7 @@
                 bookFeedback.classList.add('bg-red-50', 'text-red-600');
                 bookFeedback.textContent = 'Error al enviar. Intenta de nuevo.';
                 bookSubmitBtn.disabled = false;
-                bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">check_circle</span> Confirmar Visita`;
+                bookSubmitBtn.innerHTML = `< span class= "material-symbols-outlined text-lg" > check_circle</span > Confirmar Visita`;
             }
         });
 
@@ -863,7 +888,7 @@
         // =============================================
         async function fetchBookedSlots() {
             try {
-                const response = await fetch(`${SCRIPT_WEB_APP_URL}?action=getVisitas`);
+                const response = await fetch(`${SCRIPT_WEB_APP_URL} ? action = getVisitas`);
                 if (response.ok) {
                     const data = await response.json();
                     // data should be array of { fecha, horaInicio, nombre, institucion }
@@ -893,7 +918,7 @@
             const y = d.getFullYear();
             const m = String(d.getMonth() + 1).padStart(2, '0');
             const day = String(d.getDate()).padStart(2, '0');
-            return `${y}-${m}-${day}`;
+            return `${y} - ${m} - ${day}`;
         }
 
         // =============================================
