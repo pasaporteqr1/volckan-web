@@ -311,8 +311,8 @@
         </section>
 
         <!-- Calendar Section -->
-        <section class="py-16 md:py-24">
-            <div class="max-w-6xl mx-auto px-6">
+        <section class="py-12 md:py-24">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="grid lg:grid-cols-[1fr_400px] gap-8 items-start">
 
                     <!-- Calendar Card -->
@@ -320,7 +320,7 @@
                         class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
                         <!-- Calendar Header -->
                         <div
-                            class="bg-gradient-to-r from-brand-purple to-purple-700 px-6 md:px-8 py-6 flex items-center justify-between">
+                            class="bg-gradient-to-r from-brand-purple to-purple-700 px-4 sm:px-6 md:px-8 py-5 md:py-6 flex items-center justify-between">
                             <button id="cal-prev"
                                 class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95">
                                 <span class="material-symbols-outlined">chevron_left</span>
@@ -337,20 +337,27 @@
 
                         <!-- Weekday Labels -->
                         <div class="grid grid-cols-7 bg-slate-50 border-b border-slate-100">
-                            <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Lun
-                            </div>
-                            <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Mar
-                            </div>
-                            <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Mié
-                            </div>
-                            <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Jue
-                            </div>
-                            <div class="py-3 text-center text-xs font-bold text-slate-500 uppercase tracking-widest">Vie
-                            </div>
-                            <div class="py-3 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">Sáb
-                            </div>
-                            <div class="py-3 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">Dom
-                            </div>
+                            <div
+                                class="py-3 text-center text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest sm:tracking-widest">
+                                Lun</div>
+                            <div
+                                class="py-3 text-center text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest sm:tracking-widest">
+                                Mar</div>
+                            <div
+                                class="py-3 text-center text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest sm:tracking-widest">
+                                Mié</div>
+                            <div
+                                class="py-3 text-center text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest sm:tracking-widest">
+                                Jue</div>
+                            <div
+                                class="py-3 text-center text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest sm:tracking-widest">
+                                Vie</div>
+                            <div
+                                class="py-3 text-center text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest sm:tracking-widest">
+                                Sáb</div>
+                            <div
+                                class="py-3 text-center text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest sm:tracking-widest">
+                                Dom</div>
                         </div>
 
                         <!-- Calendar Grid -->
@@ -649,11 +656,11 @@
                 const disabled = isPast || isWeekend;
 
                 const cell = document.createElement('div');
-                cell.className = `bg-white flex items-center justify-center p-2 md:p-3`;
+                cell.className = `bg-white flex items-center justify-center p-1 sm:p-2 md:p-3`;
 
                 const btn = document.createElement('button');
                 btn.textContent = d;
-                btn.className = `cal-day w-10 h-10 md:w-12 md:h-12 rounded-xl font-bold text-sm flex items-center justify-center`;
+                btn.className = `cal-day w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl font-bold text-sm flex items-center justify-center`;
 
                 if (disabled) {
                     btn.classList.add('disabled', 'text-slate-300', 'cursor-not-allowed');
