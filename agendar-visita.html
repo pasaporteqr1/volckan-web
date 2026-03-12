@@ -443,8 +443,7 @@
                                             Nombre Completo <span class="text-brand-red">*</span>
                                         </label>
                                         <input type="text" id="book-name" required
-                                            class="w-full rounded-xl border-slate-200 focus:border-brand-purple focus:ring-brand-purple/20 text-sm py-3 px-4 transition-all"
-                                            placeholder="Ej: Carlos Mendoza">
+                                            class="w-full rounded-xl border-slate-200 focus:border-brand-purple focus:ring-brand-purple/20 text-sm py-3 px-4 transition-all">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-bold text-slate-700 mb-1.5"
@@ -452,8 +451,15 @@
                                             Nombre de la Institución <span class="text-brand-red">*</span>
                                         </label>
                                         <input type="text" id="book-institution" required
-                                            class="w-full rounded-xl border-slate-200 focus:border-brand-purple focus:ring-brand-purple/20 text-sm py-3 px-4 transition-all"
-                                            placeholder="Ej: Colegio La Salle">
+                                            class="w-full rounded-xl border-slate-200 focus:border-brand-purple focus:ring-brand-purple/20 text-sm py-3 px-4 transition-all">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-bold text-slate-700 mb-1.5"
+                                            for="book-phone">
+                                            Teléfono del Encargado <span class="text-brand-red">*</span>
+                                        </label>
+                                        <input type="tel" id="book-phone" required
+                                            class="w-full rounded-xl border-slate-200 focus:border-brand-purple focus:ring-brand-purple/20 text-sm py-3 px-4 transition-all">
                                     </div>
                                     <button type="submit" id="book-submit-btn"
                                         class="w-full bg-gradient-to-r from-brand-purple to-purple-700 hover:from-purple-700 hover:to-brand-purple text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-brand-purple/20 transition-all hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] flex items-center justify-center gap-2">
@@ -658,6 +664,9 @@
                 const isToday = date.getTime() === today.getTime();
                 const dateStr = formatDate(date);
                 const isSelected = selectedDate === dateStr;
+                // Calculate disable state depending on bookings
+                const dayBookings = bookedSlots[dateStr] || [];
+                const hasBookings = dayBookings.length > 0;
                 const disabled = isPast || isWeekend;
 
                 const cell = document.createElement('div');
@@ -667,11 +676,15 @@
                 btn.textContent = d;
                 btn.className = `cal-day w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl font-bold text-sm flex items-center justify-center`;
 
-                if (disabled) {
+                if (disabled && !hasBookings) {
                     btn.classList.add('disabled', 'text-slate-300', 'cursor-not-allowed');
                     btn.disabled = true;
                 } else {
-                    btn.classList.add('text-slate-700', 'hover:bg-brand-purple/10', 'cursor-pointer');
+                    if (disabled && hasBookings) {
+                        btn.classList.add('text-slate-500', 'hover:bg-slate-100', 'cursor-pointer');
+                    } else {
+                        btn.classList.add('text-slate-700', 'hover:bg-brand-purple/10', 'cursor-pointer');
+                    }
                     btn.addEventListener('click', () => selectDate(dateStr));
                 }
 
@@ -679,8 +692,7 @@
                 if (isSelected) btn.classList.add('selected');
 
                 // Show dots if slots are booked on this day
-                const dayBookings = bookedSlots[dateStr];
-                if (dayBookings && dayBookings.length > 0 && !disabled) {
+                if (hasBookings) {
                     const wrapper = document.createElement('div');
                     wrapper.className = 'flex flex-col items-center gap-1';
                     wrapper.appendChild(btn);
@@ -723,6 +735,11 @@
 
             const parts = dateStr.split('-');
             const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+            d.setHours(0, 0, 0, 0);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const isPastOrWeekend = d < today || d.getDay() === 0 || d.getDay() === 6;
+
             const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
             slotsDateLabel.textContent = `${dayNames[d.getDay()]} ${d.getDate()} de ${MONTHS_ES[d.getMonth()]}`;
 
@@ -744,6 +761,21 @@
                             <p class="font-bold text-sm text-slate-500 line-through">${slot.label}</p>
                             <p class="text-xs text-red-500 font-semibold mt-0.5 truncate">
                                 Reservado por ${booking.name} — ${booking.institution}
+                            </p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-300">block</span>
+                    `;
+                } else if (isPastOrWeekend) {
+                    // PAST OR WEEKEND UNAVAILABLE SLOT
+                    card.className = 'slot-card booked flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200';
+                    card.innerHTML = `
+                        <div class="w-11 h-11 rounded-xl bg-slate-200 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-slate-500 text-xl">block</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="font-bold text-sm text-slate-500 line-through">${slot.label}</p>
+                            <p class="text-xs text-slate-500 font-semibold mt-0.5 truncate">
+                                No disponible
                             </p>
                         </div>
                         <span class="material-symbols-outlined text-slate-300">block</span>
@@ -809,7 +841,7 @@
             bookingForm.reset();
             bookFeedback.classList.add('hidden');
             bookSubmitBtn.disabled = false;
-            bookSubmitBtn.innerHTML = `< span class="material-symbols-outlined text-lg" > check_circle</span > Confirmar Visita`;
+            bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">check_circle</span> Confirmar Visita`;
 
             // Scroll form into view on mobile
             setTimeout(() => {
@@ -823,11 +855,12 @@
 
             const name = document.getElementById('book-name').value.trim();
             const institution = document.getElementById('book-institution').value.trim();
+            const phone = document.getElementById('book-phone').value.trim();
 
-            if (!name || !institution) return;
+            if (!name || !institution || !phone) return;
 
             bookSubmitBtn.disabled = true;
-            bookSubmitBtn.innerHTML = `< span class="material-symbols-outlined text-lg animate-spin" > sync</span > Enviando...`;
+            bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg animate-spin">sync</span> Enviando...`;
             bookFeedback.classList.add('hidden');
 
             try {
@@ -837,6 +870,7 @@
                         tipo: 'visita',
                         nombre: name,
                         institucion: institution,
+                        telefono: phone,
                         fecha: selectedDate,
                         horaInicio: selectedSlot.start,
                         horaFin: selectedSlot.end,
@@ -855,9 +889,9 @@
 
                     bookFeedback.classList.remove('hidden', 'bg-red-50', 'text-red-600');
                     bookFeedback.classList.add('bg-green-50', 'text-green-700');
-                    bookFeedback.innerHTML = `< span class= "flex items-center justify-center gap-2" > <span class="material-symbols-outlined text-lg">check_circle</span>¡Visita confirmada! Te esperamos.</span > `;
+                    bookFeedback.innerHTML = `<span class="flex items-center justify-center gap-2"><span class="material-symbols-outlined text-lg">check_circle</span>¡Visita confirmada! Te esperamos.</span>`;
 
-                    bookSubmitBtn.innerHTML = `< span class= "material-symbols-outlined text-lg" > check_circle</span > ¡Reservado!`;
+                    bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">check_circle</span> ¡Reservado!`;
                     bookSubmitBtn.classList.remove('from-brand-purple', 'to-purple-700');
                     bookSubmitBtn.classList.add('from-green-600', 'to-green-700');
 
@@ -879,7 +913,7 @@
                 bookFeedback.classList.add('bg-red-50', 'text-red-600');
                 bookFeedback.textContent = 'Error al enviar. Intenta de nuevo.';
                 bookSubmitBtn.disabled = false;
-                bookSubmitBtn.innerHTML = `< span class= "material-symbols-outlined text-lg" > check_circle</span > Confirmar Visita`;
+                bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">check_circle</span> Confirmar Visita`;
             }
         });
 
@@ -888,7 +922,7 @@
         // =============================================
         async function fetchBookedSlots() {
             try {
-                const response = await fetch(`${SCRIPT_WEB_APP_URL} ? action = getVisitas`);
+                const response = await fetch(`${SCRIPT_WEB_APP_URL}?action=getVisitas`);
                 if (response.ok) {
                     const data = await response.json();
                     // data should be array of { fecha, horaInicio, nombre, institucion }
@@ -918,7 +952,7 @@
             const y = d.getFullYear();
             const m = String(d.getMonth() + 1).padStart(2, '0');
             const day = String(d.getDate()).padStart(2, '0');
-            return `${y} - ${m} - ${day}`;
+            return `${y}-${m}-${day}`;
         }
 
         // =============================================
