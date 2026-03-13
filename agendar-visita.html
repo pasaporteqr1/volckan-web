@@ -929,8 +929,10 @@
                     bookedSlots = {};
                     if (data && data.visitas) {
                         data.visitas.forEach(v => {
-                            if (!bookedSlots[v.fecha]) bookedSlots[v.fecha] = [];
-                            bookedSlots[v.fecha].push({
+                            // Extraer solo la parte YYYY-MM-DD del string ISO
+                            const dateStr = v.fecha.split('T')[0];
+                            if (!bookedSlots[dateStr]) bookedSlots[dateStr] = [];
+                            bookedSlots[dateStr].push({
                                 start: v.horaInicio,
                                 name: v.nombre,
                                 institution: v.institucion,
