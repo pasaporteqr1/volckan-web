@@ -611,6 +611,13 @@
             { start: '14:00', end: '16:00', label: '2:00 PM — 4:00 PM', color: 'bg-brand-purple' },
         ];
 
+        // Fechas bloqueadas (Formato YYYY-MM-DD)
+        const HOLIDAYS = [
+            '2026-04-01', // Miércoles Santo
+            '2026-04-02', // Jueves Santo
+            '2026-04-03', // Viernes Santo
+        ];
+
         const MONTHS_ES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
             'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
@@ -672,10 +679,11 @@
                 const isToday = date.getTime() === today.getTime();
                 const dateStr = formatDate(date);
                 const isSelected = selectedDate === dateStr;
+                const isHoliday = HOLIDAYS.includes(dateStr);
                 // Calculate disable state depending on bookings
                 const dayBookings = bookedSlots[dateStr] || [];
                 const hasBookings = dayBookings.length > 0;
-                const disabled = isPast || isWeekend;
+                const disabled = isPast || isWeekend || isHoliday;
 
                 const cell = document.createElement('div');
                 cell.className = `bg-white flex items-center justify-center p-1 sm:p-2 md:p-3`;
@@ -746,7 +754,8 @@
             d.setHours(0, 0, 0, 0);
             const today = new Date();
             today.setHours(0, 0, 0, 0);
-            const isPastOrWeekend = d < today || d.getDay() === 0 || d.getDay() === 6;
+            const isHoliday = HOLIDAYS.includes(dateStr);
+            const isPastOrWeekend = d < today || d.getDay() === 0 || d.getDay() === 6 || isHoliday;
 
             const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
             slotsDateLabel.textContent = `${dayNames[d.getDay()]} ${d.getDate()} de ${MONTHS_ES[d.getMonth()]}`;
@@ -774,19 +783,18 @@
                         <span class="material-symbols-outlined text-slate-300">block</span>
                     `;
                 } else if (isPastOrWeekend) {
-                    // PAST OR WEEKEND UNAVAILABLE SLOT
-                    card.className = 'slot-card booked flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-50 border border-slate-200';
+                    // DISABLED OR HAS PASSED OR IS HOLIDAY
+                    card.className = 'slot-card flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-100 opacity-60';
+                    const icon = isHoliday ? 'event_busy' : 'history';
+                    const text = isHoliday ? 'Día Festivo / Cerrado' : 'Ya no disponible';
                     card.innerHTML = `
-                        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-slate-200 flex items-center justify-center flex-shrink-0">
-                            <span class="material-symbols-outlined text-slate-500 text-xl">block</span>
+                        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-slate-50 flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-slate-300 text-xl">${icon}</span>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="font-bold text-sm text-slate-500 line-through">${slot.label}</p>
-                            <p class="text-xs text-slate-500 font-semibold mt-0.5 truncate">
-                                No disponible
-                            </p>
+                            <p class="font-bold text-sm text-slate-400">${slot.label}</p>
+                            <p class="text-xs text-slate-400 font-medium mt-0.5 truncate">${text}</p>
                         </div>
-                        <span class="material-symbols-outlined text-slate-300">block</span>
                     `;
                 } else {
                     // AVAILABLE SLOT
