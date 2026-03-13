@@ -931,9 +931,19 @@
                         data.visitas.forEach(v => {
                             // Extraer solo la parte YYYY-MM-DD del string ISO
                             const dateStr = v.fecha.split('T')[0];
+                            // Google Sheets backend devuelve horaInicio como "8:00 AM" o "2:00 PM"
+                            // Necesitamos mapearlo de vuelta a "08:00", "14:00", etc. para que coincida con TIME_SLOTS.start
+                            const timeMap = {
+                                '8:00 AM': '08:00',
+                                '10:00 AM': '10:00',
+                                '12:00 PM': '12:00',
+                                '2:00 PM': '14:00'
+                            };
+                            const mappedStart = timeMap[v.horaInicio] || v.horaInicio;
+
                             if (!bookedSlots[dateStr]) bookedSlots[dateStr] = [];
                             bookedSlots[dateStr].push({
-                                start: v.horaInicio,
+                                start: mappedStart,
                                 name: v.nombre,
                                 institution: v.institucion,
                             });
