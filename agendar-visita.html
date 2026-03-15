@@ -647,14 +647,17 @@
         const bookSubmitBtn = document.getElementById('book-submit-btn');
         const bookFeedback = document.getElementById('book-feedback');
         const calLoading = document.getElementById('cal-loading');
-        const successModal = document.getElementById('success-modal');
-        const modalDateSpan = document.getElementById('modal-date-span');
-        const modalTimeSpan = document.getElementById('modal-time-span');
-        const closeSuccessModalBtn = document.getElementById('close-success-modal');
 
-        // Close Modal Event
-        closeSuccessModalBtn.addEventListener('click', () => {
-            successModal.classList.add('opacity-0', 'pointer-events-none');
+        // Modal elements might not be strictly parsed if script is placed above them in some environments
+        // We defer attaching the listener
+        document.addEventListener('DOMContentLoaded', () => {
+            const closeSuccessModalBtn = document.getElementById('close-success-modal');
+            const successModal = document.getElementById('success-modal');
+            if(closeSuccessModalBtn && successModal) {
+                closeSuccessModalBtn.addEventListener('click', () => {
+                    successModal.classList.add('opacity-0', 'pointer-events-none');
+                });
+            }
         });
 
         // =============================================
@@ -913,13 +916,19 @@
                     });
 
                     // Update and show success modal
-                    const dateParts = selectedDate.split('-');
-                    const modalDate = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
-                    const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-                    modalDateSpan.textContent = `${dayNames[modalDate.getDay()]} ${modalDate.getDate()} de ${MONTHS_ES[modalDate.getMonth()]}`;
-                    modalTimeSpan.textContent = selectedSlot.label;
+                    const successModal = document.getElementById('success-modal');
+                    const modalDateSpan = document.getElementById('modal-date-span');
+                    const modalTimeSpan = document.getElementById('modal-time-span');
                     
-                    successModal.classList.remove('opacity-0', 'pointer-events-none');
+                    if (successModal && modalDateSpan && modalTimeSpan) {
+                        const dateParts = selectedDate.split('-');
+                        const modalDate = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+                        const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                        modalDateSpan.textContent = `${dayNames[modalDate.getDay()]} ${modalDate.getDate()} de ${MONTHS_ES[modalDate.getMonth()]}`;
+                        modalTimeSpan.textContent = selectedSlot.label;
+                        
+                        successModal.classList.remove('opacity-0', 'pointer-events-none');
+                    }
 
                     // Reset form state visually for next time
                     bookSubmitBtn.innerHTML = `<span class="material-symbols-outlined text-lg">check_circle</span> Confirmar Visita`;
