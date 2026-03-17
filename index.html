@@ -171,6 +171,62 @@
         </section>
         <section class="py-24 bg-slate-50" id="features">
             <div class="max-w-7xl mx-auto px-6">
+                <!-- SOSQR Logo Integration -->
+                <div class="flex justify-center mb-16">
+                    <img src="public/images/logo-sosqr.png" alt="SOSQR Logo" class="h-36 md:h-44 w-auto object-contain opacity-90">
+                </div>
+
+                <!-- Presentación Melissa -->
+                <div class="mb-20 bg-white rounded-3xl p-8 md:p-12 card-shadow border border-slate-100 flex flex-col lg:flex-row items-center gap-12 relative overflow-hidden group">
+                    <!-- Decoración fondo -->
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-brand-purple/5 rounded-full blur-3xl group-hover:bg-brand-purple/10 transition-colors duration-700 pointer-events-none"></div>
+                    <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-brand-red/5 rounded-full blur-3xl group-hover:bg-brand-red/10 transition-colors duration-700 pointer-events-none"></div>
+                    
+                    <div class="w-full lg:w-1/2 relative z-10">
+                        <div class="relative rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 group-hover:scale-[1.02] border border-slate-100">
+                            <img src="public/images/Fotos ia/Melissa.png" alt="Melissa presentando el sistema SOSQR a un público interesado" class="w-full h-auto object-cover rounded-2xl max-h-[500px]">
+                            <!-- Overlay sutil -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/40 via-transparent to-transparent pointer-events-none"></div>
+                            
+                            <!-- Etiqueta de Presentación -->
+                            <div class="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md px-5 py-2.5 rounded-full shadow-lg flex items-center gap-3 border border-white/20">
+                                <span class="relative flex h-3 w-3">
+                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span>
+                                  <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-red"></span>
+                                </span>
+                                <span class="font-bold text-brand-dark text-xs uppercase tracking-wider">Demostración Activa</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full lg:w-1/2 relative z-10">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-purple/10 text-brand-purple font-bold text-xs tracking-widest uppercase mb-6">
+                            <span class="material-symbols-outlined text-sm">campaign</span>
+                            Conoce el Sistema
+                        </div>
+                        <h3 class="text-3xl md:text-4xl font-black mb-6 leading-tight text-brand-dark">
+                            Descubre cómo funciona <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-brand-red">SOSQR</span> en acción
+                        </h3>
+                        <p class="text-slate-600 text-lg mb-8 leading-relaxed">
+                            Acompaña a <span class="font-bold text-brand-dark">Melissa</span> en una demostración donde explica paso a paso cómo nuestra plataforma transforma la seguridad escolar y corporativa, agilizando las respuestas ante cualquier emergencia.
+                        </p>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button class="agendar-demo-btn group relative overflow-hidden bg-brand-dark text-white px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg hover:-translate-y-1 transition-all">
+                                <span class="relative z-10 flex items-center justify-center gap-2">
+                                    <span class="material-symbols-outlined text-lg">play_circle</span>
+                                    Ver Presentación
+                                </span>
+                                <div class="absolute inset-0 h-full w-full bg-slate-800 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded-xl pointer-events-none"></div>
+                            </button>
+                            <a href="soluciones-sosqr.html" class="flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-widest text-brand-dark hover:bg-slate-50 transition-colors border border-slate-200">
+                                Leer más detalles
+                                <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div
                         class="bg-white p-10 rounded-card card-shadow border border-slate-100 hover:border-brand-purple/30 transition-all group">
@@ -205,6 +261,14 @@
                         <p class="text-slate-800 leading-relaxed">Geolocalización precisa en tiempo real con monitoreo
                             continuo hasta el cierre validado por la autoridad.</p>
                     </div>
+                </div>
+                <!-- Conocer Proyecto CTA -->
+                <div class="mt-20 text-center">
+                    <a href="soluciones-sosqr.html" 
+                       class="inline-flex items-center gap-3 px-12 py-5 bg-brand-red text-white font-black text-lg rounded-full hover:shadow-2xl hover:shadow-brand-red/40 hover:-translate-y-1 hover:bg-orange-600 transition-all group shadow-lg">
+                        <span>CONOCER PROYECTO</span>
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -911,7 +975,7 @@
                             <h4 class="text-base font-black text-brand-dark uppercase tracking-wider mb-2">Nuestra
                                 Visión</h4>
                             <p class="text-slate-600 leading-relaxed text-base font-medium">
-                                Ser la empresa líder a nivel mundial nacida en Guatemala (Quetzaltenango) en innovación
+                                Ser la empresa líder a nivel continental nacida en Guatemala (Quetzaltenango) en innovación
                                 tecnológica mediante automatización y ciberseguridad. Proveedora oficial de plataformas
                                 tecnológicas que prevengan de situaciones de riesgo y amenaza la integridad de
                                 instituciones, empresas y ciudades.
