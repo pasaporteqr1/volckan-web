@@ -78,14 +78,23 @@
         
         /* Animación moderna y elegante para el logo del congreso */
         .logo-fade-in {
-            animation: logoFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: logoFadeIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                      logoFloat 3.5s ease-in-out infinite alternate 1.6s;
             opacity: 0;
-            transform: scale(0.85) translateY(-15px);
+            transform: scale(0.7) translateY(-30px);
         }
         @keyframes logoFadeIn {
             to {
                 opacity: 1;
                 transform: scale(1) translateY(0);
+            }
+        }
+        @keyframes logoFloat {
+            0% {
+                transform: translateY(0px) scale(1);
+            }
+            100% {
+                transform: translateY(-8px) scale(1.02);
             }
         }
     </style>
@@ -103,7 +112,7 @@
             <div class="relative z-10 px-4 sm:px-6 py-12 md:py-24 max-w-5xl mx-auto text-center flex flex-col items-center">
                 <!-- Logo Congreso con animación elegante -->
                 <div class="mb-8 logo-fade-in">
-                    <img src="Logo congreso.png" alt="Logo Congreso de la República" class="h-20 sm:h-24 md:h-28 mx-auto drop-shadow-[0_4px_12px_rgba(255,255,255,0.15)] hover:drop-shadow-[0_6px_22px_rgba(212,175,55,0.45)] hover:scale-105 transition duration-500 ease-out">
+                    <img src="Logo congreso.png" alt="Logo Congreso de la República" class="h-[120px] sm:h-[144px] md:h-[168px] mx-auto drop-shadow-[0_4px_12px_rgba(255,255,255,0.15)] hover:drop-shadow-[0_6px_22px_rgba(212,175,55,0.45)] hover:scale-105 transition duration-500 ease-out">
                 </div>
                 <span class="inline-block py-1 px-3 rounded-full bg-gob-gold text-gob-blue font-bold text-sm tracking-widest mb-6 fade-in-up">HUEHUETENANGO 2026</span>
                 <h1 class="text-3xl sm:text-5xl md:text-6xl font-serif font-bold mb-6 leading-tight fade-in-up delay-100">
