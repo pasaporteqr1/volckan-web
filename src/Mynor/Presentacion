@@ -84,8 +84,8 @@
 
         <!-- Hero Section -->
         <header class="relative bg-gob-blue text-white overflow-hidden">
-            <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('Bandera.png');"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-gob-blue to-transparent"></div>
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('Bandera.png');"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-slate-900/90"></div>
             
             <div class="relative z-10 px-6 py-16 md:py-24 max-w-5xl mx-auto text-center">
                 <span class="inline-block py-1 px-3 rounded-full bg-gob-gold text-gob-blue font-bold text-sm tracking-widest mb-6 fade-in-up">HUEHUETENANGO 2026</span>
