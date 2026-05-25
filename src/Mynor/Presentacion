@@ -114,7 +114,7 @@
                     <i class="fas fa-users"></i>
                 </div>
                 <h3 class="font-bold text-xl mb-2 text-gob-blue">Modalidad</h3>
-                <p class="text-gray-600 text-sm">Participa de forma <strong>Individual</strong> o <strong>Grupal</strong> (Máximo 4 estudiantes).</p>
+                <p class="text-gray-600 text-sm">Participa de forma <strong>Individual</strong> o <strong>Grupal</strong> (Máximo 3 personas).</p>
             </div>
             <div class="p-8 text-center flex flex-col items-center">
                 <div class="w-16 h-16 bg-blue-100 text-gob-accent rounded-full flex items-center justify-center text-2xl mb-4">
@@ -128,7 +128,7 @@
                     <i class="fas fa-calendar-check"></i>
                 </div>
                 <h3 class="font-bold text-xl mb-2 text-gob-blue">Cierre de Recepción</h3>
-                <p class="text-gray-600 text-sm">Envía tu propuesta antes del <strong class="text-red-600">Lunes 10 de agosto</strong>.</p>
+                <p class="text-gray-600 text-sm">Último día <strong class="text-red-600">10 de agosto</strong> hasta la medianoche.</p>
             </div>
         </section>
 
@@ -143,7 +143,7 @@
                     <h2 class="text-3xl font-serif font-bold text-gob-blue mb-4">Licda. Lucrecia Samayoa</h2>
                     <h3 class="text-xl text-gray-500 mb-6 font-light">Diputada Distrito de Huehuetenango</h3>
                     <p class="text-gray-700 mb-6 italic border-l-4 border-gob-gold pl-4">
-                        "Conviértete en protagonista del desarrollo de tu departamento y país. Estamos buscando soluciones innovadoras en temas sociales, económicos, de seguridad, salud y educación."
+                        "Conviértete en protagonista del desarrollo de tu departamento y país. Estamos buscando soluciones innovadoras en temas sociales, económicos, de seguridad, salud, educación y tecnológicos."
                     </p>
                     <div>
                         <p class="text-sm text-gray-500 font-semibold uppercase tracking-wide">Invita y Organiza</p>
@@ -203,7 +203,7 @@
                             <h3 class="text-xl md:text-2xl font-bold">PREMIO ESPECIAL GRUPAL</h3>
                         </div>
                         <div class="md:w-2/3">
-                            <p class="mb-4 font-semibold text-sm md:text-base">Si la iniciativa ganadora fue presentada en grupo, además de la presentación oficial y la visita guiada al Congreso, recibirán:</p>
+                            <p class="mb-4 font-semibold text-sm md:text-base">Si la iniciativa ganadora de primer lugar fue presentada en la modalidad de grupo (máximo 3 personas), además de la presentación oficial y la visita guiada al Congreso, recibirán:</p>
                             <p class="text-base md:text-lg bg-yellow-100 p-4 rounded-lg border border-yellow-300">
                                 <i class="fas fa-star text-yellow-600 mr-2"></i> <strong>Un viaje a Petén vía aérea</strong>, de fin de semana, con todos los gastos pagados (boleto, alimentación y hotel).
                             </p>
