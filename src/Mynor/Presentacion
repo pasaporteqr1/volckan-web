@@ -87,13 +87,13 @@
             <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('Bandera.png');"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-slate-900/90"></div>
             
-            <div class="relative z-10 px-6 py-16 md:py-24 max-w-5xl mx-auto text-center">
+            <div class="relative z-10 px-4 sm:px-6 py-12 md:py-24 max-w-5xl mx-auto text-center">
                 <span class="inline-block py-1 px-3 rounded-full bg-gob-gold text-gob-blue font-bold text-sm tracking-widest mb-6 fade-in-up">HUEHUETENANGO 2026</span>
-                <h1 class="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight fade-in-up delay-100">
-                    GRAN CONCURSO <br><span class="text-gob-gold">LEGISLATIVO</span>
+                <h1 class="text-3xl sm:text-5xl md:text-6xl font-serif font-bold mb-6 leading-tight fade-in-up delay-100">
+                    GRAN CONCURSO <br class="hidden sm:inline"><span class="text-gob-gold">LEGISLATIVO</span>
                 </h1>
-                <p class="text-lg md:text-2xl font-light mb-8 max-w-3xl mx-auto fade-in-up delay-200">
-                    Presenta tu mejor iniciativa de ley para el desarrollo de nuestro Huehuetenango y de Guatemala. <br>
+                <p class="text-base sm:text-lg md:text-2xl font-light mb-8 max-w-3xl mx-auto fade-in-up delay-200">
+                    Presenta tu mejor iniciativa de ley para el desarrollo de nuestro Huehuetenango y de Guatemala. <br class="hidden sm:inline">
                     <strong class="font-semibold text-white">Un espacio abierto para escucharte.</strong>
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4 fade-in-up delay-300">
@@ -133,12 +133,12 @@
         </section>
 
         <!-- Organizadora Section -->
-        <section class="py-16 px-6 max-w-6xl mx-auto">
+        <section class="py-12 md:py-16 px-4 sm:px-6 max-w-6xl mx-auto">
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
                 <div class="md:w-2/5 h-64 md:h-auto relative bg-gray-200">
                     <img src="651325944_1437487735089147_4184399090571923932_n.jpg.jpeg" alt="Licda. Lucrecia Samayoa" class="absolute inset-0 w-full h-full object-cover object-top" onerror="this.src='https://via.placeholder.com/800x600?text=Licda.+Lucrecia+Samayoa'">
                 </div>
-                <div class="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+                <div class="md:w-3/5 p-6 sm:p-8 md:p-12 flex flex-col justify-center">
                     <div class="text-gob-accent font-bold tracking-wider text-sm mb-2 uppercase">Convocatoria Oficial</div>
                     <h2 class="text-3xl font-serif font-bold text-gob-blue mb-4">Licda. Lucrecia Samayoa</h2>
                     <h3 class="text-xl text-gray-500 mb-6 font-light">Diputada Distrito de Huehuetenango</h3>
@@ -153,16 +153,16 @@
         </section>
 
         <!-- Premios Section -->
-        <section class="py-16 px-6 bg-gob-blue text-white" id="premios">
+        <section class="py-12 md:py-16 px-4 sm:px-6 bg-gob-blue text-white" id="premios">
             <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-16">
+                <div class="text-center mb-10 md:mb-16">
                     <h2 class="text-3xl md:text-5xl font-serif font-bold text-gob-gold mb-4">Reconocimientos y Premios</h2>
-                    <p class="text-lg font-light text-gray-300 max-w-2xl mx-auto">Por tu participación, propuesta y esfuerzo en crear tu iniciativa, queremos reconocerte a lo grande.</p>
+                    <p class="text-base sm:text-lg font-light text-gray-300 max-w-2xl mx-auto">Por tu participación, propuesta y esfuerzo en crear tu iniciativa, queremos reconocerte a lo grande.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12">
                     <!-- Primer Lugar -->
-                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden">
                         <div class="absolute top-0 right-0 bg-gob-gold text-gob-blue font-black py-1 px-4 rounded-bl-xl">1er LUGAR</div>
                         <div class="text-gob-gold text-5xl mb-6"><i class="fas fa-trophy"></i></div>
                         <ul class="space-y-4 text-gray-200 text-sm">
@@ -173,7 +173,7 @@
                     </div>
                     
                     <!-- Segundo Lugar -->
-                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden">
                         <div class="absolute top-0 right-0 bg-gray-300 text-gob-blue font-black py-1 px-4 rounded-bl-xl">2do LUGAR</div>
                         <div class="text-gray-300 text-5xl mb-6"><i class="fas fa-medal"></i></div>
                         <ul class="space-y-4 text-gray-200 text-sm">
@@ -184,7 +184,7 @@
                     </div>
 
                     <!-- Tercer Lugar -->
-                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden">
                         <div class="absolute top-0 right-0 bg-orange-400 text-gob-blue font-black py-1 px-4 rounded-bl-xl">3er LUGAR</div>
                         <div class="text-orange-400 text-5xl mb-6"><i class="fas fa-award"></i></div>
                         <ul class="space-y-4 text-gray-200 text-sm">
@@ -197,14 +197,14 @@
 
                 <!-- Premio Especial Grupo -->
                 <div class="bg-gradient-to-r from-gob-gold to-yellow-500 rounded-2xl p-1 shadow-2xl">
-                    <div class="bg-white rounded-xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 text-gob-blue">
+                    <div class="bg-white rounded-xl p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center gap-6 md:gap-8 text-gob-blue">
                         <div class="md:w-1/3 text-center">
-                            <i class="fas fa-plane-departure text-6xl text-gob-accent mb-4"></i>
-                            <h3 class="text-2xl font-bold">PREMIO ESPECIAL GRUPAL</h3>
+                            <i class="fas fa-plane-departure text-5xl md:text-6xl text-gob-accent mb-4"></i>
+                            <h3 class="text-xl md:text-2xl font-bold">PREMIO ESPECIAL GRUPAL</h3>
                         </div>
                         <div class="md:w-2/3">
-                            <p class="mb-4 font-semibold">Si la iniciativa ganadora fue presentada en grupo, además de la presentación oficial y la visita guiada al Congreso, recibirán:</p>
-                            <p class="text-lg bg-yellow-100 p-4 rounded-lg border border-yellow-300">
+                            <p class="mb-4 font-semibold text-sm md:text-base">Si la iniciativa ganadora fue presentada en grupo, además de la presentación oficial y la visita guiada al Congreso, recibirán:</p>
+                            <p class="text-base md:text-lg bg-yellow-100 p-4 rounded-lg border border-yellow-300">
                                 <i class="fas fa-star text-yellow-600 mr-2"></i> <strong>Un viaje a Petén vía aérea</strong>, de fin de semana, con todos los gastos pagados (boleto, alimentación y hotel).
                             </p>
                         </div>
@@ -214,10 +214,10 @@
         </section>
 
         <!-- Requisitos y Criterios (Accordion) -->
-        <section class="py-16 px-6 max-w-4xl mx-auto" id="bases">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-serif font-bold text-gob-blue mb-4">Bases y Estructura del Documento</h2>
-                <p class="text-gray-600">Conoce los criterios técnicos y de forma para presentar tu propuesta.</p>
+        <section class="py-12 md:py-16 px-4 sm:px-6 max-w-4xl mx-auto" id="bases">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-gob-blue mb-4">Bases y Estructura del Documento</h2>
+                <p class="text-gray-600 text-sm sm:text-base">Conoce los criterios técnicos y de forma para presentar tu propuesta.</p>
             </div>
 
             <!-- Alerta Anti-IA -->
@@ -232,11 +232,11 @@
             <div class="space-y-4">
                 <!-- Accordion Item 1 -->
                 <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
-                    <button class="accordion-button w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none hover:bg-gray-50 text-gob-blue font-bold">
-                        <span class="flex items-center"><i class="fas fa-file-signature w-6 text-gob-gold mr-2"></i> Aspectos de Forma del Documento</span>
+                    <button class="accordion-button w-full px-4 py-3 sm:px-6 sm:py-4 flex justify-between items-center text-left focus:outline-none hover:bg-gray-50 text-gob-blue font-bold text-sm sm:text-base">
+                        <span class="flex items-center"><i class="fas fa-file-signature w-6 text-gob-gold mr-2 text-sm sm:text-base"></i> Aspectos de Forma del Documento</span>
                         <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
                     </button>
-                    <div class="accordion-content px-6 bg-gray-50 border-t border-gray-100">
+                    <div class="accordion-content px-4 sm:px-6 bg-gray-50 border-t border-gray-100">
                         <ul class="list-disc pl-5 py-4 space-y-2 text-gray-700 text-sm">
                             <li>Extensión máxima: <strong>10 páginas</strong> (La bibliografía no cuenta en este límite).</li>
                             <li>Formato: Letra <strong>Arial 11</strong>, espaciado <strong>1.5</strong>.</li>
@@ -249,11 +249,11 @@
 
                 <!-- Accordion Item 2 -->
                 <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
-                    <button class="accordion-button w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none hover:bg-gray-50 text-gob-blue font-bold">
-                        <span class="flex items-center"><i class="fas fa-list-ol w-6 text-gob-gold mr-2"></i> Estructura de la Propuesta</span>
+                    <button class="accordion-button w-full px-4 py-3 sm:px-6 sm:py-4 flex justify-between items-center text-left focus:outline-none hover:bg-gray-50 text-gob-blue font-bold text-sm sm:text-base">
+                        <span class="flex items-center"><i class="fas fa-list-ol w-6 text-gob-gold mr-2 text-sm sm:text-base"></i> Estructura de la Propuesta</span>
                         <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
                     </button>
-                    <div class="accordion-content px-6 bg-gray-50 border-t border-gray-100">
+                    <div class="accordion-content px-4 sm:px-6 bg-gray-50 border-t border-gray-100">
                         <div class="py-4 space-y-4 text-sm text-gray-700">
                             <div><strong class="text-gob-accent">1. Nombre de la Iniciativa:</strong> Primer acercamiento del nombre (puede variar luego).</div>
                             <div><strong class="text-gob-accent">2. Planteamiento del Problema:</strong> Definición sucinta y solución planteada (máximo 5 líneas).</div>
@@ -267,11 +267,11 @@
 
                 <!-- Accordion Item 3 -->
                 <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
-                    <button class="accordion-button w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none hover:bg-gray-50 text-gob-blue font-bold">
-                        <span class="flex items-center"><i class="fas fa-balance-scale w-6 text-gob-gold mr-2"></i> Criterios de Evaluación y Temáticas</span>
+                    <button class="accordion-button w-full px-4 py-3 sm:px-6 sm:py-4 flex justify-between items-center text-left focus:outline-none hover:bg-gray-50 text-gob-blue font-bold text-sm sm:text-base">
+                        <span class="flex items-center"><i class="fas fa-balance-scale w-6 text-gob-gold mr-2 text-sm sm:text-base"></i> Criterios de Evaluación y Temáticas</span>
                         <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
                     </button>
-                    <div class="accordion-content px-6 bg-gray-50 border-t border-gray-100">
+                    <div class="accordion-content px-4 sm:px-6 bg-gray-50 border-t border-gray-100">
                         <div class="py-4 text-sm text-gray-700">
                             <h5 class="font-bold mb-2">1. Adaptación al Contexto:</h5>
                             <p class="mb-4">Soluciones cultural y técnicamente viables. Integración de actores locales (municipalidades, ONG). Uso de tecnologías accesibles. Viabilidad jurídica y económica.</p>
@@ -301,11 +301,11 @@
         </section>
 
         <!-- Footer / CTA final -->
-        <footer class="bg-gray-900 text-white py-12 text-center border-t-4 border-gob-gold">
+        <footer class="bg-gray-900 text-white py-12 text-center border-t-4 border-gob-gold px-4">
             <h3 class="text-2xl font-serif mb-4">¿Tienes lista tu iniciativa?</h3>
-            <p class="text-gray-400 mb-8 max-w-xl mx-auto">Asegúrate de haber cumplido todos los requisitos y envía tu documento final al correo oficial. Recuerda que la fecha límite es el <strong>10 de agosto</strong>.</p>
+            <p class="text-gray-400 mb-8 max-w-xl mx-auto text-sm sm:text-base">Asegúrate de haber cumplido todos los requisitos y envía tu documento final al correo oficial. Recuerda que la fecha límite es el <strong>10 de agosto</strong>.</p>
             
-            <a href="mailto:iniciativahuehue@gmail.com" class="inline-block bg-gob-gold text-gob-blue font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-yellow-400 hover:scale-105 transition transform duration-300">
+            <a href="mailto:iniciativahuehue@gmail.com" class="inline-block bg-gob-gold text-gob-blue font-bold text-sm sm:text-base md:text-lg px-6 py-3 sm:px-8 sm:py-4 rounded-full shadow-lg hover:bg-yellow-400 hover:scale-105 transition transform duration-300 break-all max-w-full">
                 <i class="fas fa-paper-plane mr-2"></i> Enviar a iniciativahuehue@gmail.com
             </a>
             
