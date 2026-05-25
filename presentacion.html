@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gran Concurso Legislativo Huehuetenango 2026</title>
+    
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Merriweather:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        gob: {
+                            blue: '#0B2341',
+                            gold: '#D4AF37',
+                            light: '#F8FAFC',
+                            accent: '#1E3A8A'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos personalizados para asegurar compatibilidad con Elementor */
+        #concurso-landing-wrapper {
+            /* Reseteo local para evitar conflictos con el tema de WP */
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            color: #333;
+        }
+        .accordion-content {
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+        .accordion-content.open {
+            max-height: 1000px; /* Suficiente para el contenido */
+            padding-bottom: 1.5rem;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-button.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Animación suave de entrada */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body class="bg-gray-100 m-0 p-0">
+
+    <!-- WRAPPER PRINCIPAL (Copia desde aquí para el widget HTML de Elementor) -->
+    <div id="concurso-landing-wrapper" class="font-sans w-full max-w-7xl mx-auto bg-white shadow-xl overflow-hidden rounded-none md:rounded-2xl my-0 md:my-8">
+
+        <!-- Hero Section -->
+        <header class="relative bg-gob-blue text-white overflow-hidden">
+            <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1541872703894-c0e44c20f188?q=80&w=2000&auto=format&fit=crop');"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-gob-blue to-transparent"></div>
+            
+            <div class="relative z-10 px-6 py-16 md:py-24 max-w-5xl mx-auto text-center">
+                <span class="inline-block py-1 px-3 rounded-full bg-gob-gold text-gob-blue font-bold text-sm tracking-widest mb-6 fade-in-up">HUEHUETENANGO 2026</span>
+                <h1 class="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight fade-in-up delay-100">
+                    GRAN CONCURSO <br><span class="text-gob-gold">LEGISLATIVO</span>
+                </h1>
+                <p class="text-lg md:text-2xl font-light mb-8 max-w-3xl mx-auto fade-in-up delay-200">
+                    Presenta tu mejor iniciativa de ley para el desarrollo de nuestro Huehuetenango y de Guatemala. <br>
+                    <strong class="font-semibold text-white">Un espacio abierto para escucharte.</strong>
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 fade-in-up delay-300">
+                    <a href="#bases" class="bg-gob-gold hover:bg-yellow-500 text-gob-blue font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-file-alt mr-2"></i> Ver Bases
+                    </a>
+                    <a href="mailto:iniciativahuehue@gmail.com" class="bg-transparent border-2 border-white hover:bg-white hover:text-gob-blue text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-envelope mr-2"></i> Enviar Iniciativa
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Información Rápida (Stats/Icons) -->
+        <section class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200 bg-gob-light border-b border-gray-200">
+            <div class="p-8 text-center flex flex-col items-center">
+                <div class="w-16 h-16 bg-blue-100 text-gob-accent rounded-full flex items-center justify-center text-2xl mb-4">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="font-bold text-xl mb-2 text-gob-blue">Modalidad</h3>
+                <p class="text-gray-600 text-sm">Participa de forma <strong>Individual</strong> o <strong>Grupal</strong> (Máximo 4 estudiantes).</p>
+            </div>
+            <div class="p-8 text-center flex flex-col items-center">
+                <div class="w-16 h-16 bg-blue-100 text-gob-accent rounded-full flex items-center justify-center text-2xl mb-4">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3 class="font-bold text-xl mb-2 text-gob-blue">Participantes</h3>
+                <p class="text-gray-600 text-sm">Estudiantes inscritos en las universidades del país (carreras técnicas y profesionales).</p>
+            </div>
+            <div class="p-8 text-center flex flex-col items-center">
+                <div class="w-16 h-16 bg-blue-100 text-gob-accent rounded-full flex items-center justify-center text-2xl mb-4">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h3 class="font-bold text-xl mb-2 text-gob-blue">Cierre de Recepción</h3>
+                <p class="text-gray-600 text-sm">Envía tu propuesta antes del <strong class="text-red-600">Lunes 10 de agosto</strong>.</p>
+            </div>
+        </section>
+
+        <!-- Organizadora Section -->
+        <section class="py-16 px-6 max-w-6xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
+                <div class="md:w-2/5 h-64 md:h-auto relative bg-gray-200">
+                    <img src="651325944_1437487735089147_4184399090571923932_n.jpg.jpeg" alt="Licda. Lucrecia Samayoa" class="absolute inset-0 w-full h-full object-cover object-top" onerror="this.src='https://via.placeholder.com/800x600?text=Licda.+Lucrecia+Samayoa'">
+                </div>
+                <div class="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+                    <div class="text-gob-accent font-bold tracking-wider text-sm mb-2 uppercase">Convocatoria Oficial</div>
+                    <h2 class="text-3xl font-serif font-bold text-gob-blue mb-4">Licda. Lucrecia Samayoa</h2>
+                    <h3 class="text-xl text-gray-500 mb-6 font-light">Diputada Distrito de Huehuetenango</h3>
+                    <p class="text-gray-700 mb-6 italic border-l-4 border-gob-gold pl-4">
+                        "Conviértete en protagonista del desarrollo de tu departamento y país. Estamos buscando soluciones innovadoras en temas sociales, económicos, de seguridad, salud y educación."
+                    </p>
+                    <div>
+                        <p class="text-sm text-gray-500 font-semibold uppercase tracking-wide">Invita y Organiza</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Premios Section -->
+        <section class="py-16 px-6 bg-gob-blue text-white" id="premios">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-gob-gold mb-4">Reconocimientos y Premios</h2>
+                    <p class="text-lg font-light text-gray-300 max-w-2xl mx-auto">Por tu participación, propuesta y esfuerzo en crear tu iniciativa, queremos reconocerte a lo grande.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <!-- Primer Lugar -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-gob-gold text-gob-blue font-black py-1 px-4 rounded-bl-xl">1er LUGAR</div>
+                        <div class="text-gob-gold text-5xl mb-6"><i class="fas fa-trophy"></i></div>
+                        <ul class="space-y-4 text-gray-200 text-sm">
+                            <li class="flex items-start"><i class="fas fa-check-circle text-gob-gold mt-1 mr-3"></i> Presentación de tu iniciativa al pleno del Congreso de la República (oficial y formal).</li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-gob-gold mt-1 mr-3"></i> Visita guiada al Congreso para conocer el trabajo legislativo.</li>
+                            <li class="flex items-start"><i class="fas fa-laptop text-gob-gold mt-1 mr-3"></i> <strong>Un equipo de cómputo de última generación.</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Segundo Lugar -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-gray-300 text-gob-blue font-black py-1 px-4 rounded-bl-xl">2do LUGAR</div>
+                        <div class="text-gray-300 text-5xl mb-6"><i class="fas fa-medal"></i></div>
+                        <ul class="space-y-4 text-gray-200 text-sm">
+                            <li class="flex items-start"><i class="fas fa-check-circle text-gray-300 mt-1 mr-3"></i> Presentación de tu iniciativa al pleno del Congreso.</li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-gray-300 mt-1 mr-3"></i> Visita guiada al Congreso.</li>
+                            <li class="flex items-start"><i class="fas fa-tablet-alt text-gray-300 mt-1 mr-3"></i> <strong>Una moderna Tablet de última generación.</strong></li>
+                        </ul>
+                    </div>
+
+                    <!-- Tercer Lugar -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:transform hover:-translate-y-2 transition duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-orange-400 text-gob-blue font-black py-1 px-4 rounded-bl-xl">3er LUGAR</div>
+                        <div class="text-orange-400 text-5xl mb-6"><i class="fas fa-award"></i></div>
+                        <ul class="space-y-4 text-gray-200 text-sm">
+                            <li class="flex items-start"><i class="fas fa-check-circle text-orange-400 mt-1 mr-3"></i> Presentación de tu iniciativa al pleno del Congreso.</li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-orange-400 mt-1 mr-3"></i> Visita guiada al Congreso.</li>
+                            <li class="flex items-start"><i class="fas fa-mobile-alt text-orange-400 mt-1 mr-3"></i> <strong>Un teléfono celular.</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Premio Especial Grupo -->
+                <div class="bg-gradient-to-r from-gob-gold to-yellow-500 rounded-2xl p-1 shadow-2xl">
+                    <div class="bg-white rounded-xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 text-gob-blue">
+                        <div class="md:w-1/3 text-center">
+                            <i class="fas fa-plane-departure text-6xl text-gob-accent mb-4"></i>
+                            <h3 class="text-2xl font-bold">PREMIO ESPECIAL GRUPAL</h3>
+                        </div>
+                        <div class="md:w-2/3">
+                            <p class="mb-4 font-semibold">Si la iniciativa ganadora fue presentada en grupo, además de la presentación oficial y la visita guiada al Congreso, recibirán:</p>
+                            <p class="text-lg bg-yellow-100 p-4 rounded-lg border border-yellow-300">
+                                <i class="fas fa-star text-yellow-600 mr-2"></i> <strong>Un viaje a Petén vía aérea</strong>, de fin de semana, con todos los gastos pagados (boleto, alimentación y hotel).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Requisitos y Criterios (Accordion) -->
+        <section class="py-16 px-6 max-w-4xl mx-auto" id="bases">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold text-gob-blue mb-4">Bases y Estructura del Documento</h2>
+                <p class="text-gray-600">Conoce los criterios técnicos y de forma para presentar tu propuesta.</p>
+            </div>
+
+            <!-- Alerta Anti-IA -->
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg mb-8 flex items-start shadow-sm">
+                <i class="fas fa-exclamation-triangle text-red-500 mt-1 mr-4 text-xl"></i>
+                <div>
+                    <h4 class="text-red-800 font-bold">Importante</h4>
+                    <p class="text-red-700 text-sm">No se entrarán a evaluar las propuestas generadas en su totalidad a través de cualquier mecanismo o aplicación de Inteligencia Artificial. Usa fuentes fidedignas (no Wikipedia).</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Accordion Item 1 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                    <button class="accordion-button w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none hover:bg-gray-50 text-gob-blue font-bold">
+                        <span class="flex items-center"><i class="fas fa-file-signature w-6 text-gob-gold mr-2"></i> Aspectos de Forma del Documento</span>
+                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-gray-50 border-t border-gray-100">
+                        <ul class="list-disc pl-5 py-4 space-y-2 text-gray-700 text-sm">
+                            <li>Extensión máxima: <strong>10 páginas</strong> (La bibliografía no cuenta en este límite).</li>
+                            <li>Formato: Letra <strong>Arial 11</strong>, espaciado <strong>1.5</strong>.</li>
+                            <li>Referencias bibliográficas en formato <strong>APA 7a edición</strong>.</li>
+                            <li>Pie de página obligatorio indicando el nombre del equipo o persona individual.</li>
+                            <li><strong>NO incluir:</strong> Carátula, índice, introducción, ni conclusiones. Solo contenido y Bibliografía.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Accordion Item 2 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                    <button class="accordion-button w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none hover:bg-gray-50 text-gob-blue font-bold">
+                        <span class="flex items-center"><i class="fas fa-list-ol w-6 text-gob-gold mr-2"></i> Estructura de la Propuesta</span>
+                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-gray-50 border-t border-gray-100">
+                        <div class="py-4 space-y-4 text-sm text-gray-700">
+                            <div><strong class="text-gob-accent">1. Nombre de la Iniciativa:</strong> Primer acercamiento del nombre (puede variar luego).</div>
+                            <div><strong class="text-gob-accent">2. Planteamiento del Problema:</strong> Definición sucinta y solución planteada (máximo 5 líneas).</div>
+                            <div><strong class="text-gob-accent">3. Justificación:</strong> Motivos o razones fundamentadas con referencias bibliográficas de carácter fidedigno (revistas científicas, libros).</div>
+                            <div><strong class="text-gob-accent">4. Normativa de Análisis:</strong> Identificación de artículos constitucionales, instrumentos internacionales, leyes ordinarias y criterios de la CC.</div>
+                            <div><strong class="text-gob-accent">5. Antecedentes Legislativos:</strong> Revisión de iniciativas anteriores similares y la innovación de tu propuesta.</div>
+                            <div><strong class="text-gob-accent">6. Derecho Comparado:</strong> Análisis de normativa en países con contexto similar a Guatemala.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion Item 3 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                    <button class="accordion-button w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none hover:bg-gray-50 text-gob-blue font-bold">
+                        <span class="flex items-center"><i class="fas fa-balance-scale w-6 text-gob-gold mr-2"></i> Criterios de Evaluación y Temáticas</span>
+                        <i class="fas fa-chevron-down accordion-icon text-gray-400"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-gray-50 border-t border-gray-100">
+                        <div class="py-4 text-sm text-gray-700">
+                            <h5 class="font-bold mb-2">1. Adaptación al Contexto:</h5>
+                            <p class="mb-4">Soluciones cultural y técnicamente viables. Integración de actores locales (municipalidades, ONG). Uso de tecnologías accesibles. Viabilidad jurídica y económica.</p>
+                            
+                            <h5 class="font-bold mb-2">2. Características Técnicas de la Ley:</h5>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>Generalidad:</strong> Regulaciones para todo el territorio nacional, no casos individuales.</li>
+                                <li><strong>Universalidad:</strong> Aplicable a todas las personas en el supuesto, sin excepciones.</li>
+                                <li><strong>Obligatoriedad:</strong> De cumplimiento forzoso.</li>
+                                <li><strong>Abstracción:</strong> Regula conductas hipotéticas generales. Puede ser crear, reformar o derogar.</li>
+                                <li><strong>Irretroactividad:</strong> No aplica a hechos pasados (salvo excepciones penales).</li>
+                                <li><strong>Permanencia:</strong> Duración razonable para generar certeza jurídica.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Download Action -->
+            <div class="mt-10 text-center">
+                <p class="text-gray-500 text-sm mb-4">La propuesta debe basarse estrictamente en el formulario oficial.</p>
+                <!-- Aquí se puede poner un enlace real de descarga al archivo del formulario -->
+                <a href="#" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gob-blue hover:bg-gob-accent transition duration-300">
+                    <i class="fas fa-qrcode mr-2"></i> Descargar Formulario Oficial (QR)
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer / CTA final -->
+        <footer class="bg-gray-900 text-white py-12 text-center border-t-4 border-gob-gold">
+            <h3 class="text-2xl font-serif mb-4">¿Tienes lista tu iniciativa?</h3>
+            <p class="text-gray-400 mb-8 max-w-xl mx-auto">Asegúrate de haber cumplido todos los requisitos y envía tu documento final al correo oficial. Recuerda que la fecha límite es el <strong>10 de agosto</strong>.</p>
+            
+            <a href="mailto:iniciativahuehue@gmail.com" class="inline-block bg-gob-gold text-gob-blue font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-yellow-400 hover:scale-105 transition transform duration-300">
+                <i class="fas fa-paper-plane mr-2"></i> Enviar a iniciativahuehue@gmail.com
+            </a>
+            
+            <div class="mt-12 text-gray-500 text-sm border-t border-gray-800 pt-8 max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center px-6">
+                <p>&copy; 2026 Concurso Legislativo Huehuetenango.</p>
+                <p class="mt-2 md:mt-0">Impulsando el desarrollo de Guatemala.</p>
+            </div>
+        </footer>
+
+    </div>
+    <!-- FIN DEL WRAPPER PRINCIPAL -->
+
+    <!-- Script para Acordeones -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const isActive = button.classList.contains('active');
+                    
+                    // Cerrar todos los acordeones abiertos (Opcional, si quieres que solo haya uno abierto a la vez)
+                    document.querySelectorAll('.accordion-button').forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.nextElementSibling.classList.remove('open');
+                    });
+
+                    // Si no estaba activo, abrirlo
+                    if (!isActive) {
+                        button.classList.add('active');
+                        content.classList.add('open');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
