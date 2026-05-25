@@ -75,6 +75,19 @@
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }
         .delay-300 { animation-delay: 0.3s; }
+        
+        /* Animación moderna y elegante para el logo del congreso */
+        .logo-fade-in {
+            animation: logoFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: scale(0.85) translateY(-15px);
+        }
+        @keyframes logoFadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100 m-0 p-0">
@@ -87,7 +100,11 @@
             <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('Bandera.png');"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-slate-900/90"></div>
             
-            <div class="relative z-10 px-4 sm:px-6 py-12 md:py-24 max-w-5xl mx-auto text-center">
+            <div class="relative z-10 px-4 sm:px-6 py-12 md:py-24 max-w-5xl mx-auto text-center flex flex-col items-center">
+                <!-- Logo Congreso con animación elegante -->
+                <div class="mb-8 logo-fade-in">
+                    <img src="Logo congreso.png" alt="Logo Congreso de la República" class="h-20 sm:h-24 md:h-28 mx-auto drop-shadow-[0_4px_12px_rgba(255,255,255,0.15)] hover:drop-shadow-[0_6px_22px_rgba(212,175,55,0.45)] hover:scale-105 transition duration-500 ease-out">
+                </div>
                 <span class="inline-block py-1 px-3 rounded-full bg-gob-gold text-gob-blue font-bold text-sm tracking-widest mb-6 fade-in-up">HUEHUETENANGO 2026</span>
                 <h1 class="text-3xl sm:text-5xl md:text-6xl font-serif font-bold mb-6 leading-tight fade-in-up delay-100">
                     GRAN CONCURSO <br class="hidden sm:inline"><span class="text-gob-gold">LEGISLATIVO</span>
