@@ -28,8 +28,6 @@
                         "navy": "#0A1128",
                         "accent-orange": "#dc2626",
                         "accent-yellow": "#facc15",
-                        "accent-blue": "#0A1128",
-                        "background-alt": "#f8fafc"
                     },
                     fontFamily: {
                         "sans": ["Inter", "sans-serif"],
@@ -42,7 +40,9 @@
             },
         }
     </script>
+    
     <style type="text/tailwindcss">
+
         @layer base {
             body { @apply font-sans bg-white text-slate-900; }
             h1, h2, h3, h4 { @apply font-heading uppercase tracking-tight; }
@@ -53,7 +53,9 @@
         .icon-3d {
             filter: drop-shadow(4px 4px 0px rgba(255, 215, 0, 0.4));
         }
-    </style>
+    
+</style>
+    
     <style>
         body {
             font-family: "Space Grotesk", sans-serif;
@@ -84,51 +86,52 @@
                                 class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
                         </button>
 
+                        <!-- Contenedor del Dropdown (Light Theme Update) -->
                         <div
                             class="absolute left-0 mt-6 w-64 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
                             <div class="py-2">
                                 <a href="soluciones-sosqr.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors">
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors">
                                     <div
                                         class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red">
                                         <span class="material-symbols-outlined text-base">emergency</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="font-bold text-slate-800 text-sm">Sistema SOSQR</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Alertas escolares</span>
+                                        <span class="font-bold text-brand-dark text-sm">Sistema SOSQR</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Alertas escolares</span>
                                     </div>
                                 </a>
                                 <a href="soluciones-parqueos.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
                                     <div
                                         class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple">
                                         <span class="material-symbols-outlined text-base">local_parking</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="font-bold text-slate-800 text-sm">Parqueos Digitales</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Control de acceso</span>
+                                        <span class="font-bold text-brand-dark text-sm">Parqueos Digitales</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Control de acceso</span>
                                     </div>
                                 </a>
-                                <a href="soluciones-modulo-ventas.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
-                                    <div class="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow">
-                                        <span class="material-symbols-outlined text-base">point_of_sale</span>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-brand-dark text-sm">Módulo de Ventas</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Cero Fricción</span>
-                                    </div>
-                                </a>
-                                <a href="soluciones-modulo-tiendas.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
-                                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                                        <span class="material-symbols-outlined text-base">storefront</span>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-brand-dark text-sm">Admin. de Tiendas</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Sincronización Omnicanal</span>
-                                    </div>
-                                </a>
+                            <a href="soluciones-modulo-ventas.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">point_of_sale</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Módulo de Ventas</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Cero Fricción</span>
+                                </div>
+                            </a>
+                            <a href="soluciones-modulo-tiendas.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">storefront</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-blue-600 transition-colors">Admin. de Tiendas</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Sincronización Omnicanal</span>
+                                </div>
+                            </a>
                             <a href="soluciones-modulo-personal.html"
                                 class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
                                 <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
@@ -155,7 +158,7 @@
 
                     <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
                         href="soluciones-automatizaciones.html">Automatizaciones</a>
-                    <a class="font-bold text-sm uppercase text-brand-purple transition-colors border-b-2 border-brand-purple pb-1"
+                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
                         href="soluciones-ciberseguridad.html">Ciberseguridad</a>
                 </nav>
 
@@ -219,7 +222,7 @@
                 <div class="text-center mb-16">
                     <h2 class="text-4xl md:text-5xl font-black mb-4 text-brand-dark">Conoce Tus Enemigos <br><span
                             class="text-brand-red text-3xl md:text-4xl">Niveles de Riesgo Explicados</span></h2>
-                    <p class="text-slate-600 text-lg max-w-2xl mx-auto">Pasa el cursor por cada nivel para descubrir las
+                    <p class="text-slate-800 text-lg max-w-2xl mx-auto">Pasa el cursor por cada nivel para descubrir las
                         amenazas comunes que acechan a las instituciones y empresas hoy en día.</p>
                 </div>
 
@@ -239,12 +242,12 @@
                             <h3
                                 class="text-2xl font-black text-slate-800 mb-2 group-hover:text-green-600 transition-colors">
                                 Nivel 1: Básico</h3>
-                            <p class="text-slate-500 font-medium uppercase tracking-widest text-sm mb-6">Ataques
+                            <p class="text-slate-800 font-medium uppercase tracking-widest text-sm mb-6">Ataques
                                 Oportunistas</p>
 
                             <!-- Default state -->
                             <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
-                                <p class="text-slate-600">Ataques no dirigidos que buscan vulnerabilidades fáciles de
+                                <p class="text-slate-800">Ataques no dirigidos que buscan vulnerabilidades fáciles de
                                     explotar en sistemas desactualizados o usuarios desprevenidos.</p>
                                 <div class="mt-8 flex items-center gap-2 text-green-600 font-bold text-sm">
                                     <span>Pasa el cursor para ver detalles</span>
@@ -259,7 +262,7 @@
                                         <span class="material-symbols-outlined text-green-500 mt-0.5">warning</span>
                                         <div>
                                             <strong class="text-slate-800 block text-sm">Phishing Masivo</strong>
-                                            <span class="text-slate-600 text-sm">Correos electrónicos falsos buscando
+                                            <span class="text-slate-800 text-sm">Correos electrónicos falsos buscando
                                                 contraseñas.</span>
                                         </div>
                                     </li>
@@ -267,7 +270,7 @@
                                         <span class="material-symbols-outlined text-green-500 mt-0.5">warning</span>
                                         <div>
                                             <strong class="text-slate-800 block text-sm">Malware Común</strong>
-                                            <span class="text-slate-600 text-sm">Virus descargados accidentalmente que
+                                            <span class="text-slate-800 text-sm">Virus descargados accidentalmente que
                                                 ralentizan equipos.</span>
                                         </div>
                                     </li>
@@ -290,12 +293,12 @@
                             <h3
                                 class="text-2xl font-black text-slate-800 mb-2 group-hover:text-amber-600 transition-colors">
                                 Nivel 2: Severo</h3>
-                            <p class="text-slate-500 font-medium uppercase tracking-widest text-sm mb-6">Amenazas
+                            <p class="text-slate-800 font-medium uppercase tracking-widest text-sm mb-6">Amenazas
                                 Dirigidas</p>
 
                             <!-- Default state -->
                             <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
-                                <p class="text-slate-600">Ataques específicos diseñados para robar bases de datos,
+                                <p class="text-slate-800">Ataques específicos diseñados para robar bases de datos,
                                     credenciales de administrador o alterar información importante.</p>
                                 <div class="mt-8 flex items-center gap-2 text-amber-600 font-bold text-sm">
                                     <span>Pasa el cursor para ver detalles</span>
@@ -310,7 +313,7 @@
                                         <span class="material-symbols-outlined text-amber-500 mt-0.5">warning</span>
                                         <div>
                                             <strong class="text-slate-800 block text-sm">Spear Phishing</strong>
-                                            <span class="text-slate-600 text-sm">Engaños adaptados con datos reales de
+                                            <span class="text-slate-800 text-sm">Engaños adaptados con datos reales de
                                                 la institución.</span>
                                         </div>
                                     </li>
@@ -318,7 +321,7 @@
                                         <span class="material-symbols-outlined text-amber-500 mt-0.5">warning</span>
                                         <div>
                                             <strong class="text-slate-800 block text-sm">Fuerza Bruta</strong>
-                                            <span class="text-slate-600 text-sm">Intentos repetidos para adivinar
+                                            <span class="text-slate-800 text-sm">Intentos repetidos para adivinar
                                                 contraseñas débiles.</span>
                                         </div>
                                     </li>
@@ -341,12 +344,12 @@
                             <h3
                                 class="text-2xl font-black text-slate-800 mb-2 group-hover:text-brand-red transition-colors">
                                 Nivel 3: Crítico</h3>
-                            <p class="text-slate-500 font-medium uppercase tracking-widest text-sm mb-6">Compromiso
+                            <p class="text-slate-800 font-medium uppercase tracking-widest text-sm mb-6">Compromiso
                                 Total</p>
 
                             <!-- Default state -->
                             <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
-                                <p class="text-slate-600">Secuestro total de sistemas, robo y exposición de datos
+                                <p class="text-slate-800">Secuestro total de sistemas, robo y exposición de datos
                                     financieros o personales de alumnos, paralizando la operación.</p>
                                 <div class="mt-8 flex items-center gap-2 text-brand-red font-bold text-sm">
                                     <span>Pasa el cursor para ver detalles</span>
@@ -361,7 +364,7 @@
                                         <span class="material-symbols-outlined text-brand-red mt-0.5">warning</span>
                                         <div>
                                             <strong class="text-slate-800 block text-sm">Ransomware</strong>
-                                            <span class="text-slate-600 text-sm">Encriptan tus datos y exigen rescates
+                                            <span class="text-slate-800 text-sm">Encriptan tus datos y exigen rescates
                                                 millonarios.</span>
                                         </div>
                                     </li>
@@ -369,7 +372,7 @@
                                         <span class="material-symbols-outlined text-brand-red mt-0.5">warning</span>
                                         <div>
                                             <strong class="text-slate-800 block text-sm">Ataques DDoS</strong>
-                                            <span class="text-slate-600 text-sm">Sobrecarga de servidores dejando
+                                            <span class="text-slate-800 text-sm">Sobrecarga de servidores dejando
                                                 inoperable el sistema.</span>
                                         </div>
                                     </li>
@@ -394,7 +397,7 @@
                                 Preventiva</span>
                             <h2 class="text-4xl lg:text-5xl font-black text-slate-800 mt-2 mb-6">4 Prácticas que salvan
                                 datos.</h2>
-                            <p class="text-slate-600 text-lg leading-relaxed">
+                            <p class="text-slate-800 text-lg leading-relaxed">
                                 La ciberseguridad no es solo tecnología, es cultura. Implementar hábitos saludables de
                                 seguridad digital en su personal es la primera y mejor defensa existente.
                             </p>
@@ -410,7 +413,7 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-lg">Higiene de Contraseñas</h4>
-                                    <p class="text-slate-600 text-sm mt-1">Usa frases o contraseñas mayores a 12
+                                    <p class="text-slate-800 text-sm mt-1">Usa frases o contraseñas mayores a 12
                                         caracteres, nunca repetidas entre servicios. Activa Autenticación de Dos
                                         Factores (2FA).</p>
                                 </div>
@@ -424,7 +427,7 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-lg">Verificar Remitentes</h4>
-                                    <p class="text-slate-600 text-sm mt-1">Si un correo solicita "urgencia" en un pago o
+                                    <p class="text-slate-800 text-sm mt-1">Si un correo solicita "urgencia" en un pago o
                                         restablecer cuenta, detente. Confirma por teléfono antes de hacer clic.</p>
                                 </div>
                             </div>
@@ -437,7 +440,7 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-lg">Actualizaciones Inmediatas</h4>
-                                    <p class="text-slate-600 text-sm mt-1">Los ciberdelincuentes aprovechan fallos
+                                    <p class="text-slate-800 text-sm mt-1">Los ciberdelincuentes aprovechan fallos
                                         conocidos. Mantén SO y software siempre en su última versión.</p>
                                 </div>
                             </div>
@@ -450,7 +453,7 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-lg">Cuidado con Wi-Fi Público</h4>
-                                    <p class="text-slate-600 text-sm mt-1">Nunca accedas a sistemas escolares
+                                    <p class="text-slate-800 text-sm mt-1">Nunca accedas a sistemas escolares
                                         corporativos usando redes públicas sin una VPN empresarial certificada.</p>
                                 </div>
                             </div>
@@ -464,17 +467,17 @@
                         </div>
                         <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
                             alt="Cybersecurity Server Room"
-                            class="rounded-3xl shadow-2xl w-full object-cover h-[600px] border border-slate-200">
+                            class="rounded-3xl shadow-2xl w-full object-cover h-[300px] sm:h-[400px] lg:h-[600px] border border-slate-200">
                         <!-- Floating Badge -->
                         <div
-                            class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-4 animate-bounce hover:animate-none">
+                            class="absolute -bottom-4 left-4 sm:-bottom-6 sm:-left-6 bg-white p-4 sm:p-6 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2 sm:gap-4 animate-bounce hover:animate-none">
                             <div
                                 class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
                                 <span class="material-symbols-outlined">gpp_good</span>
                             </div>
                             <div>
                                 <p class="font-black text-xl text-slate-800">100%</p>
-                                <p class="text-xs text-slate-500 font-bold uppercase">Datos Seguros</p>
+                                <p class="text-xs text-slate-800 font-bold uppercase">Datos Seguros</p>
                             </div>
                         </div>
                     </div>
@@ -501,120 +504,58 @@
     </main>
 
     <!-- Footer Area (Retained from existing structure) -->
-    <footer class="bg-primary text-white pt-24 pb-12 relative overflow-hidden">
-        <div
-            class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-purple/50 to-transparent">
-        </div>
+    <footer class="bg-brand-dark text-white pt-24 pb-12">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-                <div>
-                    <img src="public/images/logo-volckan.png" alt="Tecno Volckánica"
-                        class="h-10 w-auto mb-6 brightness-0 invert">
-                    <p class="text-slate-400 text-sm leading-relaxed max-w-xs">Creamos tecnología de vanguardia para la
-                        seguridad física y digital de las instituciones en Latinoamérica.</p>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-8">
+                        <img src="public/images/logo-volckan.png" alt="Tecno Volckánica"
+                            class="h-10 w-auto object-contain brightness-0 invert">
+                    </div>
+                    <p class="text-slate-400 max-w-sm mb-10 font-medium">Líderes en tecnología de automatización,
+                        desarrollo y seguridad para Centroamérica. Optimizando lo que más importa con innovación constante.</p>
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">share</span>
+                        </div>
+                        <div
+                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">public</span>
+                        </div>
+                    </div>
                 </div>
                 <div>
-                    <h4 class="font-black mb-6 text-xl text-white">Soluciones</h4>
-                    <ul class="space-y-4">
-                        <li><a href="soluciones-parqueos.html"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2"><span
-                                    class="material-symbols-outlined text-sm">local_parking</span> Parqueos
-                                Digitales</a>
-                            <a href="soluciones-modulo-ventas.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">point_of_sale</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Módulo de Ventas</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Cero Fricción</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-tiendas.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">storefront</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-blue-600 transition-colors">Admin. de Tiendas</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Sincronización Omnicanal</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-personal.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">groups</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-green-600 transition-colors">Control de Personal</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Gestión de Equipos</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-nutricion.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">favorite</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-pink-600 transition-colors">Nutrición de Clientes</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Post-Venta Activa</span>
-                                </div>
-                            </a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">storefront</span> Botón Seguro para
-                                Comercios</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">precision_manufacturing</span>
-                                Automatizaciones para Empresas</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">shield_lock</span> Capacitaciones en
-                                Ciberseguridad</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">handshake</span> Alianzas Estratégicas</a>
-                        </li>
+                    <h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">SOLUCIONES</h5>
+                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
+                        <li><a class="hover:text-white transition-colors" href="soluciones-sosqr.html">Sistema SOSQR</a></li>
+                        <li><a class="hover:text-white transition-colors" href="soluciones-parqueos.html">Parqueos Digitales</a></li>
+                        <li><a class="hover:text-white transition-colors" href="soluciones-modulo-ventas.html">Módulo de Ventas</a></li>
+                        <li><a class="hover:text-white transition-colors cursor-default opacity-70" href="#">Automatización de Procesos</a></li>
+                        <li><a class="hover:text-white transition-colors cursor-default opacity-70" href="#">Consultoría de Sistemas</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-black mb-6 text-xl text-white">Legal</h4>
-                    <ul class="space-y-4">
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors">Aviso de
-                                Privacidad</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors">Términos y
-                                Condiciones</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-black mb-6 text-xl text-white">Contacto Directo</h4>
-                    <ul class="space-y-4">
-                        <li class="flex flex-col gap-1 text-slate-400">
-                            <span class="text-xs uppercase tracking-wider font-bold text-slate-500">Ventas</span>
-                            <a href="mailto:tecnovolckanica@gmail.com"
-                                class="hover:text-brand-yellow font-medium transition-colors flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[1rem]">mail</span>
-                                tecnovolckanica@gmail.com
-                            </a>
+                    <h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">CONTACTO</h5>
+                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-brand-purple text-lg">mail</span>
+                            <a href="mailto:tecnovolckanica@gmail.com" class="hover:text-white transition-colors">tecnovolckanica@gmail.com</a>
                         </li>
-                        <li class="flex flex-col gap-1 text-slate-400 mt-4">
-                            <span class="text-xs uppercase tracking-wider font-bold text-slate-500">Soporte
-                                24/7</span>
-                            <a href="tel:+50231097191"
-                                class="hover:text-brand-yellow font-medium transition-colors flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[1rem]">support_agent</span>
-                                +502 3109-7191
-                            </a>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-brand-purple text-lg">phone</span>
+                            <a href="tel:+50231097191" class="hover:text-white transition-colors">+502 3109-7191</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="pt-8 border-t border-white/10 text-center flex flex-col items-center gap-4">
-                <p class="text-slate-500 text-sm font-medium">© 2026 Tecno Volckánica. Todos los derechos reservados.
-                    Ciudad de Guatemala.</p>
+            <div
+                class="pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8 text-xs font-bold text-slate-800 uppercase tracking-widest">
+                <p>© 2024 Tecno Volckánica. Todos los derechos reservados.</p>
+                <div class="flex gap-10">
+                    <a class="hover:text-white transition-colors" href="#">Aviso de Privacidad</a>
+                    <a class="hover:text-white transition-colors" href="#">Términos de Servicio</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -630,7 +571,7 @@
                     <img src="public/images/logo-volckan.png" alt="Tecno Volckánica" class="h-10 w-auto">
                 </a>
                 <button id="mobile-menu-close"
-                    class="w-10 h-10 rounded-full bg-slate-100 hover:bg-red-50 flex items-center justify-center text-slate-500 hover:text-brand-red transition-all">
+                    class="w-10 h-10 rounded-full bg-slate-100 hover:bg-red-50 flex items-center justify-center text-slate-800 hover:text-brand-red transition-all">
                     <span class="material-symbols-outlined text-xl">close</span>
                 </button>
             </div>
@@ -787,14 +728,14 @@
             <div
                 class="bg-white p-6 pb-4 border-b border-slate-100 flex justify-between items-start shrink-0 rounded-t-3xl">
                 <div class="flex items-center gap-4">
-                    <img src="public/images/logo-sosqr.png" alt="Tecno Volckánica" class="h-10 sm:h-12 w-auto object-contain">
+                    <img src="public/images/logo-sosqr.png" alt="SOSQR" class="h-10 sm:h-12 w-auto object-contain">
                     <div>
                         <h3 class="font-display font-black text-xl sm:text-2xl text-slate-800">Agendar Demo</h3>
-                        <p class="text-slate-500 text-xs sm:text-sm mt-1">Nuestros asesores se pondran en contacto</p>
+                        <p class="text-slate-800 text-xs sm:text-sm mt-1">Transforma la seguridad escolar</p>
                     </div>
                 </div>
                 <button id="demo-modal-close"
-                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-500 hover:text-slate-800 -mt-1 -mr-1">
+                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-800 hover:text-slate-800 -mt-1 -mr-1">
                     <span class="material-symbols-outlined text-xl">close</span>
                 </button>
             </div>
@@ -813,8 +754,8 @@
 
                     <!-- Institution -->
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1.5"
-                            for="demo-institution">Empresa/Institución <span class="text-brand-red">*</span></label>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-institution">Institución
+                            Educativa <span class="text-brand-red">*</span></label>
                         <input type="text" id="demo-institution" required
                             class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
                     </div>
@@ -827,7 +768,7 @@
                         <div class="relative flex items-center">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                                 <span class="text-lg mr-2 leading-none">🇬🇹</span>
-                                <span class="text-slate-600 font-bold border-r border-slate-200 pr-3 mr-1">+502</span>
+                                <span class="text-slate-800 font-bold border-r border-slate-200 pr-3 mr-1">+502</span>
                             </div>
                             <input type="tel" id="demo-contact" required
                                 class="w-full pl-[100px] pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700 font-medium tracking-wider">
@@ -865,7 +806,7 @@
                     <!-- Botón de Envío -->
                     <button type="submit" id="demo-submit-btn"
                         class="w-full mt-4 bg-brand-red text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 hover:bg-orange-600 hover:shadow-xl hover:-translate-y-0.5 transition-all flex justify-center items-center gap-2">
-                        <span>Solicitar Auditoría</span>
+                        <span>Solicitar Demo</span>
                         <span class="material-symbols-outlined text-lg">send</span>
                     </button>
 

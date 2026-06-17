@@ -28,8 +28,6 @@
                         "navy": "#0A1128",
                         "accent-orange": "#dc2626",
                         "accent-yellow": "#facc15",
-                        "accent-blue": "#0A1128",
-                        "background-alt": "#f8fafc"
                     },
                     fontFamily: {
                         "sans": ["Inter", "sans-serif"],
@@ -38,21 +36,13 @@
                     borderRadius: {
                         "card": "24px",
                     },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
-                    }
                 },
             },
         }
     </script>
+    
     <style type="text/tailwindcss">
+
         @layer base {
             body { @apply font-sans bg-white text-slate-900; }
             h1, h2, h3, h4 { @apply font-heading uppercase tracking-tight; }
@@ -60,12 +50,12 @@
         .card-shadow {
             box-shadow: 0 10px 40px -10px rgba(0, 82, 255, 0.1);
         }
-        
-        /* Stats Animation */
-        .stat-card:hover .stat-icon {
-            @apply scale-110 rotate-12 transition-transform duration-300;
+        .icon-3d {
+            filter: drop-shadow(4px 4px 0px rgba(255, 215, 0, 0.4));
         }
-    </style>
+    
+</style>
+    
     <style>
         body {
             font-family: "Space Grotesk", sans-serif;
@@ -97,51 +87,52 @@
                                 class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
                         </button>
 
+                        <!-- Contenedor del Dropdown (Light Theme Update) -->
                         <div
                             class="absolute left-0 mt-6 w-64 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
                             <div class="py-2">
                                 <a href="soluciones-sosqr.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors">
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors">
                                     <div
                                         class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red">
                                         <span class="material-symbols-outlined text-base">emergency</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="font-bold text-slate-800 text-sm">Sistema SOSQR</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Alertas escolares</span>
+                                        <span class="font-bold text-brand-dark text-sm">Sistema SOSQR</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Alertas escolares</span>
                                     </div>
                                 </a>
                                 <a href="soluciones-parqueos.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
                                     <div
                                         class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple">
                                         <span class="material-symbols-outlined text-base">local_parking</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="font-bold text-slate-800 text-sm">Parqueos Digitales</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Control de acceso</span>
+                                        <span class="font-bold text-brand-dark text-sm">Parqueos Digitales</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Control de acceso</span>
                                     </div>
                                 </a>
-                                <a href="soluciones-modulo-ventas.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
-                                    <div class="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow">
-                                        <span class="material-symbols-outlined text-base">point_of_sale</span>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-brand-dark text-sm">Módulo de Ventas</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Cero Fricción</span>
-                                    </div>
-                                </a>
-                                <a href="soluciones-modulo-tiendas.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
-                                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                                        <span class="material-symbols-outlined text-base">storefront</span>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-brand-dark text-sm">Admin. de Tiendas</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Sincronización Omnicanal</span>
-                                    </div>
-                                </a>
+                            <a href="soluciones-modulo-ventas.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">point_of_sale</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Módulo de Ventas</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Cero Fricción</span>
+                                </div>
+                            </a>
+                            <a href="soluciones-modulo-tiendas.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">storefront</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-blue-600 transition-colors">Admin. de Tiendas</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Sincronización Omnicanal</span>
+                                </div>
+                            </a>
                             <a href="soluciones-modulo-personal.html"
                                 class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
                                 <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
@@ -166,7 +157,7 @@
                         </div>
                     </div>
 
-                    <a class="font-bold text-sm uppercase text-brand-purple transition-colors border-b-2 border-brand-purple pb-1"
+                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
                         href="soluciones-automatizaciones.html">Automatizaciones</a>
                     <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
                         href="soluciones-ciberseguridad.html">Ciberseguridad</a>
@@ -213,7 +204,7 @@
                         Módulo de <span class="text-brand-purple relative inline-block">Ventas<div class="absolute bottom-1 left-0 w-full h-3 bg-brand-yellow/30 -z-10 transform -skew-x-12"></div></span>
                     </h1>
 
-                    <p class="text-xl text-slate-600 font-medium leading-relaxed max-w-lg">
+                    <p class="text-xl text-slate-800 font-medium leading-relaxed max-w-lg">
                         Prospección y Seguimiento Inteligente. Asegura que ningún cliente potencial se quede en el olvido, acelerando el tiempo de respuesta desde el primer contacto hasta el cierre.
                     </p>
 
@@ -229,12 +220,12 @@
                     <div class="absolute inset-0 bg-gradient-to-tr from-brand-purple/20 to-brand-red/20 rounded-[3rem] transform rotate-3 scale-105"></div>
                     <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sales Tracking" class="relative z-10 w-full h-full object-cover rounded-[3rem] shadow-2xl border-4 border-white">
                     
-                    <div class="absolute -right-6 top-1/4 bg-white p-4 rounded-xl shadow-xl border border-slate-100 flex items-center gap-3 z-20">
+                    <div class="absolute -right-2 sm:-right-6 top-1/4 bg-white p-4 rounded-xl shadow-xl border border-slate-100 flex items-center gap-3 z-20">
                         <div class="w-10 h-10 rounded-full bg-green-100 flex justify-center items-center text-green-600">
                             <span class="material-symbols-outlined">timer</span>
                         </div>
                         <div>
-                            <p class="text-xs uppercase text-slate-500 font-bold">Tiempo de Respuesta</p>
+                            <p class="text-xs uppercase text-slate-800 font-bold">Tiempo de Respuesta</p>
                             <p class="text-sm font-black text-slate-800">&lt; 5 Minutos</p>
                         </div>
                     </div>
@@ -247,7 +238,7 @@
             <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-16 max-w-3xl mx-auto">
                     <h2 class="text-3xl md:text-5xl font-black text-slate-800 mb-6 uppercase">Multiplica la <span class="text-brand-purple">Conversión</span></h2>
-                    <p class="text-slate-600 text-lg">Responde a los clientes cuando el interés está al máximo. El sistema no deja que ninguna oportunidad se pierda en el buzón.</p>
+                    <p class="text-slate-800 text-lg">Responde a los clientes cuando el interés está al máximo. El sistema no deja que ninguna oportunidad se pierda en el buzón.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -256,7 +247,7 @@
                             <span class="material-symbols-outlined text-3xl">contact_mail</span>
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-2">1. Captación</h3>
-                        <p class="text-slate-600 text-sm">El usuario llena formulario en Web, Ads o WhatsApp.</p>
+                        <p class="text-slate-800 text-sm">El usuario llena formulario en Web, Ads o WhatsApp.</p>
                     </div>
 
                     <div class="stat-card group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-red hover:bg-white transition-all duration-300 shadow-sm hover:-translate-y-2 text-center">
@@ -264,7 +255,7 @@
                             <span class="material-symbols-outlined text-3xl">dataset</span>
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-2">2. Asignación</h3>
-                        <p class="text-slate-600 text-sm">Creación en CRM (HubSpot/Pipedrive) automáticamente.</p>
+                        <p class="text-slate-800 text-sm">Creación en CRM (HubSpot/Pipedrive) automáticamente.</p>
                     </div>
 
                     <div class="stat-card group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-yellow hover:bg-white transition-all duration-300 shadow-sm hover:-translate-y-2 text-center">
@@ -272,7 +263,7 @@
                             <span class="material-symbols-outlined text-3xl">notifications_active</span>
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-2">3. Alerta</h3>
-                        <p class="text-slate-600 text-sm">Notificación inmediata a ventas por Slack o WhatsApp.</p>
+                        <p class="text-slate-800 text-sm">Notificación inmediata a ventas por Slack o WhatsApp.</p>
                     </div>
 
                     <div class="stat-card group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-purple hover:bg-white transition-all duration-300 shadow-sm hover:-translate-y-2 text-center">
@@ -280,11 +271,211 @@
                             <span class="material-symbols-outlined text-3xl">alarm_on</span>
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-2">4. Recordatorio</h3>
-                        <p class="text-slate-600 text-sm">Alerta de escalamiento si no hay actualización en 24h.</p>
+                        <p class="text-slate-800 text-sm">Alerta de escalamiento si no hay actualización en 24h.</p>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- =============== SECCION SIMULADOR DE VENTAS =============== -->
+        <section id="simulador-ventas" class="py-20 bg-slate-50 border-y border-slate-200 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <!-- Header -->
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/10 text-brand-purple text-xs font-bold w-fit uppercase tracking-wider mb-4">
+                        <span class="material-symbols-outlined text-sm font-bold">bolt</span>
+                        Simulación en Vivo
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-800 mb-4 uppercase">Simulador de <span class="text-brand-purple">Lead a Cierre</span></h2>
+                    <p class="text-slate-800 text-lg font-medium">Mira cómo el sistema automatiza la captación, asignación en CRM y alertas de Telegram con reloj de escalamiento en segundos.</p>
+                </div>
+
+                <!-- Simulation Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                    
+                    <!-- PASO 1: Formulario de Captación -->
+                    <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-xl flex flex-col justify-between relative group hover:border-brand-purple/30 transition-all duration-300">
+                        <div>
+                            <div class="flex items-center justify-between mb-8">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple font-black">1</div>
+                                    <h3 class="font-heading font-black text-slate-800 text-lg">Captura de Prospecto</h3>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold uppercase">Web Form</span>
+                            </div>
+                            
+                            <form id="ventas-sim-form" class="space-y-4" onsubmit="event.preventDefault(); submitVentasSimLead();">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1" for="vsim-name">Nombre Completo</label>
+                                    <input type="text" id="vsim-name" required placeholder="Ej. Carlos Mendoza"
+                                        class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-800 text-sm font-medium">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1" for="vsim-company">Empresa / Negocio</label>
+                                    <input type="text" id="vsim-company" required placeholder="Ej. Distribuidora El Sol"
+                                        class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-800 text-sm font-medium">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1" for="vsim-phone">Teléfono (WhatsApp)</label>
+                                    <div class="relative flex items-center">
+                                        <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                                            <span class="text-base mr-1">🇬🇹</span>
+                                            <span class="text-slate-800 font-bold border-r border-slate-200 pr-2 mr-1 text-sm">+502</span>
+                                        </div>
+                                        <input type="tel" id="vsim-phone" required placeholder="4567 8901" pattern="[0-9]{4}\s?[0-9]{4}"
+                                            class="w-full pl-[85px] pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-800 font-bold tracking-wider text-sm">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1" for="vsim-product">Servicio de Interés</label>
+                                    <select id="vsim-product" required
+                                        class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-800 text-sm font-medium appearance-none">
+                                        <option value="Módulo de Ventas" selected>Módulo de Ventas Automatizado</option>
+                                        <option value="Sistema SOSQR">Sistema de Alertas SOSQR</option>
+                                        <option value="Parqueos Digitales">Control de Parqueos Digitales</option>
+                                        <option value="Automatización de Procesos">Automatización de Procesos</option>
+                                    </select>
+                                </div>
+                                <button type="submit" id="vsim-submit-btn"
+                                    class="w-full bg-brand-purple hover:bg-purple-800 text-white py-3.5 rounded-xl font-bold text-sm uppercase tracking-wider shadow-lg shadow-purple-500/20 transition-all duration-300 flex justify-center items-center gap-2 mt-6">
+                                    <span>Enviar Lead</span>
+                                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- PASO 2: Visualización en CRM -->
+                    <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-xl flex flex-col justify-between relative group hover:border-brand-red/30 transition-all duration-300">
+                        <div class="h-full flex flex-col">
+                            <div class="flex items-center justify-between mb-8">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-red/10 flex items-center justify-center text-brand-red font-black">2</div>
+                                    <h3 class="font-heading font-black text-slate-800 text-lg">Pipeline CRM (En Vivo)</h3>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold uppercase">Pipeline</span>
+                            </div>
+                            
+                            <!-- CRM Kanban Simulation -->
+                            <div class="grid grid-cols-2 gap-4 flex-grow">
+                                <!-- Columna Nuevos -->
+                                <div class="bg-slate-50 rounded-2xl p-3 flex flex-col gap-3 border border-slate-150 min-h-[300px]">
+                                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                                        <span class="text-[11px] font-black text-slate-800 uppercase tracking-wider">Nuevos Leads</span>
+                                        <span id="crm-count-nuevos" class="w-4 h-4 rounded-full bg-brand-red text-white flex items-center justify-center text-[9px] font-bold">1</span>
+                                    </div>
+                                    <div id="crm-col-nuevos" class="flex flex-col gap-3 flex-grow overflow-y-auto">
+                                        <!-- Card Inicial -->
+                                        <div id="vsim-card-inicial" class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm text-xs flex flex-col gap-1.5 transition-all duration-300">
+                                            <div class="flex justify-between items-center">
+                                                <span class="font-black text-slate-800">Juan Pérez</span>
+                                                <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-brand-yellow/20 text-brand-yellow font-bold uppercase">Demo</span>
+                                            </div>
+                                            <p class="text-slate-800 font-medium text-[10px]">Pepsi Guatemala</p>
+                                            <p class="text-[9px] text-slate-800 font-bold bg-slate-100 px-1.5 py-0.5 rounded w-fit">Parqueos Digitales</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Columna Contactados -->
+                                <div class="bg-slate-50 rounded-2xl p-3 flex flex-col gap-3 border border-slate-150 min-h-[300px]">
+                                    <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                                        <span class="text-[11px] font-black text-slate-800 uppercase tracking-wider">En Contacto</span>
+                                        <span id="crm-count-contacto" class="w-4 h-4 rounded-full bg-brand-purple text-white flex items-center justify-center text-[9px] font-bold">0</span>
+                                    </div>
+                                    <div id="crm-col-contacto" class="flex flex-col gap-3 flex-grow overflow-y-auto">
+                                        <!-- Cards contactados van aquí -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PASO 3: Telegram Alertas & Reloj -->
+                    <div class="bg-slate-900 rounded-3xl p-8 border border-slate-800 shadow-2xl flex flex-col justify-between text-white relative group">
+                        <div class="flex flex-col h-full justify-between gap-6">
+                            
+                            <!-- Telegram UI -->
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center text-white">
+                                            <span class="material-symbols-outlined text-lg">telegram</span>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-heading font-black text-white text-sm tracking-wide uppercase">Telegram Alerts</h3>
+                                            <p class="text-[10px] text-blue-400 font-bold">VOLCKAN BOT 🟢 ONLINE</p>
+                                        </div>
+                                    </div>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-ping"></span>
+                                </div>
+
+                                <!-- Chat Feed -->
+                                <div id="vsim-telegram-chat" class="bg-slate-950/80 rounded-2xl p-4 border border-slate-800 font-mono text-[11px] leading-normal text-slate-300 min-h-[160px] flex flex-col gap-3 overflow-y-auto">
+                                    <div class="text-center text-slate-800 text-[9px] border-b border-slate-900 pb-2">HOY — SIMULACIÓN INICIADA</div>
+                                    <div class="text-slate-400">🤖 Esperando envíos de formulario en Paso 1...</div>
+                                </div>
+                            </div>
+
+                            <!-- Reloj de Escalamiento -->
+                            <div class="bg-slate-950 rounded-2xl p-4 border border-slate-800 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-brand-red/20 text-brand-red flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-xl">alarm</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] uppercase text-slate-800 font-bold tracking-wider">Límite de Atención</p>
+                                        <p class="text-xs font-bold text-slate-300">Escalamiento Nivel 2</p>
+                                    </div>
+                                </div>
+                                <div id="vsim-countdown" class="text-xl font-mono font-black text-brand-red tracking-wider">
+                                    24:00:00
+                                </div>
+                            </div>
+
+                            <!-- Advisor Action Button -->
+                            <button id="vsim-advisor-btn" onclick="triggerAdvisorContact();" disabled
+                                class="w-full bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-white py-3.5 rounded-xl font-bold text-sm uppercase tracking-wider border border-slate-700 transition-all flex justify-center items-center gap-2">
+                                <span class="material-symbols-outlined text-lg">support_agent</span>
+                                <span>Simular Contacto de Asesor</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Pop-up Exito Simulación -->
+        <div id="vsim-success-popup" style="display:none;" class="fixed inset-0 z-[9999] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl text-center transform scale-95 transition-all duration-300 flex flex-col gap-5 border border-slate-100">
+                <div class="w-16 h-16 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto text-3xl">
+                    <span class="material-symbols-outlined text-4xl">check_circle</span>
+                </div>
+                <div>
+                    <h3 class="font-heading font-black text-slate-800 text-2xl mb-2">¡SIMULACIÓN COMPLETADA!</h3>
+                    <p class="text-slate-800 text-sm leading-relaxed">
+                        ¡Increíble! El prospecto fue registrado en el CRM, la alerta se lanzó por Telegram en milisegundos y el asesor lo contactó deteniendo la alerta crítica a tiempo.
+                    </p>
+                </div>
+                <div class="flex flex-col gap-3 mt-4">
+                    <button onclick="document.getElementById('vsim-success-popup').style.display='none';"
+                        class="w-full bg-brand-purple hover:bg-purple-800 text-white font-bold py-3.5 rounded-xl text-sm uppercase tracking-wider transition-colors shadow-lg">
+                        Entendido, Continuar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            @keyframes vsimSlideIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-slide-in {
+                animation: vsimSlideIn 0.3s ease-out forwards;
+            }
+        </style>
 
         <!-- CTA Final -->
         <section class="py-20 bg-brand-dark relative overflow-hidden">
@@ -299,120 +490,58 @@
     </main>
 
     <!-- Footer Area (Retained from existing structure) -->
-    <footer class="bg-primary text-white pt-24 pb-12 relative overflow-hidden">
-        <div
-            class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-purple/50 to-transparent">
-        </div>
+    <footer class="bg-brand-dark text-white pt-24 pb-12">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-                <div>
-                    <img src="public/images/logo-volckan.png" alt="Tecno Volckánica"
-                        class="h-10 w-auto mb-6 brightness-0 invert">
-                    <p class="text-slate-400 text-sm leading-relaxed max-w-xs">Creamos tecnología de vanguardia para la
-                        seguridad física y digital de las instituciones en Latinoamérica.</p>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-8">
+                        <img src="public/images/logo-volckan.png" alt="Tecno Volckánica"
+                            class="h-10 w-auto object-contain brightness-0 invert">
+                    </div>
+                    <p class="text-slate-400 max-w-sm mb-10 font-medium">Líderes en tecnología de automatización,
+                        desarrollo y seguridad para Centroamérica. Optimizando lo que más importa con innovación constante.</p>
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">share</span>
+                        </div>
+                        <div
+                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">public</span>
+                        </div>
+                    </div>
                 </div>
                 <div>
-                    <h4 class="font-black mb-6 text-xl text-white">Soluciones</h4>
-                    <ul class="space-y-4">
-                        <li><a href="soluciones-parqueos.html"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2"><span
-                                    class="material-symbols-outlined text-sm">local_parking</span> Parqueos
-                                Digitales</a>
-                            <a href="soluciones-modulo-ventas.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">point_of_sale</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Módulo de Ventas</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Cero Fricción</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-tiendas.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">storefront</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-blue-600 transition-colors">Admin. de Tiendas</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Sincronización Omnicanal</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-personal.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">groups</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-green-600 transition-colors">Control de Personal</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Gestión de Equipos</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-nutricion.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">favorite</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-pink-600 transition-colors">Nutrición de Clientes</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Post-Venta Activa</span>
-                                </div>
-                            </a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">storefront</span> Botón Seguro para
-                                Comercios</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">precision_manufacturing</span>
-                                Automatizaciones para Empresas</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">shield_lock</span> Capacitaciones en
-                                Ciberseguridad</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">handshake</span> Alianzas Estratégicas</a>
-                        </li>
+                    <h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">SOLUCIONES</h5>
+                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
+                        <li><a class="hover:text-white transition-colors" href="soluciones-sosqr.html">Sistema SOSQR</a></li>
+                        <li><a class="hover:text-white transition-colors" href="soluciones-parqueos.html">Parqueos Digitales</a></li>
+                        <li><a class="hover:text-white transition-colors" href="soluciones-modulo-ventas.html">Módulo de Ventas</a></li>
+                        <li><a class="hover:text-white transition-colors cursor-default opacity-70" href="#">Automatización de Procesos</a></li>
+                        <li><a class="hover:text-white transition-colors cursor-default opacity-70" href="#">Consultoría de Sistemas</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-black mb-6 text-xl text-white">Legal</h4>
-                    <ul class="space-y-4">
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors">Aviso de
-                                Privacidad</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors">Términos y
-                                Condiciones</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-black mb-6 text-xl text-white">Contacto Directo</h4>
-                    <ul class="space-y-4">
-                        <li class="flex flex-col gap-1 text-slate-400">
-                            <span class="text-xs uppercase tracking-wider font-bold text-slate-500">Ventas</span>
-                            <a href="mailto:tecnovolckanica@gmail.com"
-                                class="hover:text-brand-yellow font-medium transition-colors flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[1rem]">mail</span>
-                                tecnovolckanica@gmail.com
-                            </a>
+                    <h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">CONTACTO</h5>
+                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-brand-purple text-lg">mail</span>
+                            <a href="mailto:tecnovolckanica@gmail.com" class="hover:text-white transition-colors">tecnovolckanica@gmail.com</a>
                         </li>
-                        <li class="flex flex-col gap-1 text-slate-400 mt-4">
-                            <span class="text-xs uppercase tracking-wider font-bold text-slate-500">Soporte
-                                24/7</span>
-                            <a href="tel:+50231097191"
-                                class="hover:text-brand-yellow font-medium transition-colors flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[1rem]">support_agent</span>
-                                +502 3109-7191
-                            </a>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-brand-purple text-lg">phone</span>
+                            <a href="tel:+50231097191" class="hover:text-white transition-colors">+502 3109-7191</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="pt-8 border-t border-white/10 text-center flex flex-col items-center gap-4">
-                <p class="text-slate-500 text-sm font-medium">© 2026 Tecno Volckánica. Todos los derechos reservados.
-                    Ciudad de Guatemala.</p>
+            <div
+                class="pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8 text-xs font-bold text-slate-800 uppercase tracking-widest">
+                <p>© 2024 Tecno Volckánica. Todos los derechos reservados.</p>
+                <div class="flex gap-10">
+                    <a class="hover:text-white transition-colors" href="#">Aviso de Privacidad</a>
+                    <a class="hover:text-white transition-colors" href="#">Términos de Servicio</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -428,7 +557,7 @@
                     <img src="public/images/logo-volckan.png" alt="Tecno Volckánica" class="h-10 w-auto">
                 </a>
                 <button id="mobile-menu-close"
-                    class="w-10 h-10 rounded-full bg-slate-100 hover:bg-red-50 flex items-center justify-center text-slate-500 hover:text-brand-red transition-all">
+                    class="w-10 h-10 rounded-full bg-slate-100 hover:bg-red-50 flex items-center justify-center text-slate-800 hover:text-brand-red transition-all">
                     <span class="material-symbols-outlined text-xl">close</span>
                 </button>
             </div>
@@ -585,14 +714,14 @@
             <div
                 class="bg-white p-6 pb-4 border-b border-slate-100 flex justify-between items-start shrink-0 rounded-t-3xl">
                 <div class="flex items-center gap-4">
-                    <img src="public/images/logo-sosqr.png" alt="Tecno Volckánica" class="h-10 sm:h-12 w-auto object-contain">
+                    <img src="public/images/logo-sosqr.png" alt="SOSQR" class="h-10 sm:h-12 w-auto object-contain">
                     <div>
                         <h3 class="font-display font-black text-xl sm:text-2xl text-slate-800">Agendar Demo</h3>
-                        <p class="text-slate-500 text-xs sm:text-sm mt-1">Nuestros asesores se pondran en contacto</p>
+                        <p class="text-slate-800 text-xs sm:text-sm mt-1">Transforma la seguridad escolar</p>
                     </div>
                 </div>
                 <button id="demo-modal-close"
-                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-500 hover:text-slate-800 -mt-1 -mr-1">
+                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-800 hover:text-slate-800 -mt-1 -mr-1">
                     <span class="material-symbols-outlined text-xl">close</span>
                 </button>
             </div>
@@ -611,8 +740,8 @@
 
                     <!-- Institution -->
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1.5"
-                            for="demo-institution">Empresa/Institución <span class="text-brand-red">*</span></label>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-institution">Institución
+                            Educativa <span class="text-brand-red">*</span></label>
                         <input type="text" id="demo-institution" required
                             class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
                     </div>
@@ -625,7 +754,7 @@
                         <div class="relative flex items-center">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                                 <span class="text-lg mr-2 leading-none">🇬🇹</span>
-                                <span class="text-slate-600 font-bold border-r border-slate-200 pr-3 mr-1">+502</span>
+                                <span class="text-slate-800 font-bold border-r border-slate-200 pr-3 mr-1">+502</span>
                             </div>
                             <input type="tel" id="demo-contact" required
                                 class="w-full pl-[100px] pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700 font-medium tracking-wider">
@@ -663,7 +792,7 @@
                     <!-- Botón de Envío -->
                     <button type="submit" id="demo-submit-btn"
                         class="w-full mt-4 bg-brand-red text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 hover:bg-orange-600 hover:shadow-xl hover:-translate-y-0.5 transition-all flex justify-center items-center gap-2">
-                        <span>Solicitar Auditoría</span>
+                        <span>Solicitar Demo</span>
                         <span class="material-symbols-outlined text-lg">send</span>
                     </button>
 
@@ -846,6 +975,190 @@
                 }
             });
         });
+    </script>
+
+    <!-- LOGICA DEL SIMULADOR DE VENTAS (Aislada al final de la página) -->
+    <script>
+        let countdownTimer = null;
+        let currentLeadData = null;
+        let secondsRemaining = 24 * 3600;
+
+        function formatTime(secs) {
+            const hours = Math.floor(secs / 3600);
+            const minutes = Math.floor((secs % 3600) / 60);
+            const seconds = secs % 60;
+            return [
+                hours.toString().padStart(2, '0'),
+                minutes.toString().padStart(2, '0'),
+                seconds.toString().padStart(2, '0')
+            ].join(':');
+        }
+
+        function submitVentasSimLead() {
+            const nameInput = document.getElementById('vsim-name');
+            const companyInput = document.getElementById('vsim-company');
+            const phoneInput = document.getElementById('vsim-phone');
+            const productInput = document.getElementById('vsim-product');
+            const submitBtn = document.getElementById('vsim-submit-btn');
+
+            if (!nameInput.value || !companyInput.value || !phoneInput.value) {
+                return;
+            }
+
+            currentLeadData = {
+                name: nameInput.value.trim(),
+                company: companyInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                product: productInput.value
+            };
+
+            nameInput.disabled = true;
+            companyInput.disabled = true;
+            phoneInput.disabled = true;
+            productInput.disabled = true;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span>Procesando...</span><span class="material-symbols-outlined text-lg animate-spin">sync</span>`;
+
+            setTimeout(() => {
+                const crmColNuevos = document.getElementById('crm-col-nuevos');
+                const crmCountNuevos = document.getElementById('crm-count-nuevos');
+
+                const newCard = document.createElement('div');
+                newCard.id = 'vsim-dynamic-card';
+                newCard.className = 'bg-white p-3 rounded-xl border border-slate-200 shadow-sm text-xs flex flex-col gap-1.5 transform translate-y-4 opacity-0 transition-all duration-500';
+                newCard.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="font-black text-slate-800">${currentLeadData.name}</span>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-brand-red/10 text-brand-red font-bold uppercase tracking-wider animate-pulse">Nuevo</span>
+                    </div>
+                    <p class="text-slate-800 font-medium text-[10px]">${currentLeadData.company}</p>
+                    <p class="text-[9px] text-slate-800 font-bold bg-slate-100 px-1.5 py-0.5 rounded w-fit">${currentLeadData.product}</p>
+                `;
+                
+                crmColNuevos.appendChild(newCard);
+                
+                setTimeout(() => {
+                    newCard.classList.remove('translate-y-4', 'opacity-0');
+                }, 50);
+
+                crmCountNuevos.textContent = parseInt(crmCountNuevos.textContent) + 1;
+
+                const telegramChat = document.getElementById('vsim-telegram-chat');
+                const alertMsg = document.createElement('div');
+                alertMsg.className = 'bg-blue-500/10 border-l-4 border-blue-500 p-2.5 rounded text-[10px] font-mono text-slate-200 animate-slide-in';
+                alertMsg.innerHTML = `
+                    <span class="text-blue-400 font-bold">🤖 ALERTA DE NUEVO LEAD DETECTADO:</span><br>
+                    👤 <span class="font-bold text-white">Nombre:</span> ${currentLeadData.name}<br>
+                    🏢 <span class="font-bold text-white">Empresa:</span> ${currentLeadData.company}<br>
+                    📞 <span class="font-bold text-white">Teléfono:</span> +502 ${currentLeadData.phone}<br>
+                    📦 <span class="font-bold text-white">Servicio:</span> ${currentLeadData.product}<br>
+                    ⏰ <span class="text-brand-red font-bold animate-pulse">ALERTA DE ESCALAMIENTO EN PROCESO (24H)</span>
+                `;
+                telegramChat.appendChild(alertMsg);
+                telegramChat.scrollTop = telegramChat.scrollHeight;
+
+                secondsRemaining = 24 * 3600;
+                document.getElementById('vsim-countdown').textContent = formatTime(secondsRemaining);
+                document.getElementById('vsim-countdown').classList.remove('text-slate-800');
+                document.getElementById('vsim-countdown').classList.add('text-brand-red');
+                
+                if (countdownTimer) clearInterval(countdownTimer);
+                countdownTimer = setInterval(() => {
+                    if (secondsRemaining > 0) {
+                        secondsRemaining -= 1;
+                        document.getElementById('vsim-countdown').textContent = formatTime(secondsRemaining);
+                    } else {
+                        clearInterval(countdownTimer);
+                    }
+                }, 1000);
+
+                const advisorBtn = document.getElementById('vsim-advisor-btn');
+                advisorBtn.disabled = false;
+                advisorBtn.classList.remove('bg-slate-800', 'border-slate-700');
+                advisorBtn.classList.add('bg-brand-red', 'hover:bg-red-700', 'border-transparent', 'shadow-lg', 'shadow-red-500/20');
+
+                submitBtn.innerHTML = `<span>Lead Enviado</span><span class="material-symbols-outlined text-lg">check_circle</span>`;
+                submitBtn.classList.remove('bg-brand-purple', 'hover:bg-purple-800');
+                submitBtn.classList.add('bg-green-600');
+            }, 1200);
+        }
+
+        function triggerAdvisorContact() {
+            if (!currentLeadData) return;
+
+            if (countdownTimer) clearInterval(countdownTimer);
+
+            const countdownEl = document.getElementById('vsim-countdown');
+            countdownEl.classList.remove('text-brand-red');
+            countdownEl.classList.add('text-green-500');
+
+            const dynamicCard = document.getElementById('vsim-dynamic-card');
+            const crmColNuevos = document.getElementById('crm-col-nuevos');
+            const crmColContacto = document.getElementById('crm-col-contacto');
+            const crmCountNuevos = document.getElementById('crm-count-nuevos');
+            const crmCountContacto = document.getElementById('crm-count-contacto');
+
+            if (dynamicCard) {
+                dynamicCard.classList.add('opacity-0', 'scale-90');
+                
+                setTimeout(() => {
+                    crmColNuevos.removeChild(dynamicCard);
+                    crmCountNuevos.textContent = Math.max(0, parseInt(crmCountNuevos.textContent) - 1);
+
+                    const contactCard = document.createElement('div');
+                    contactCard.className = 'bg-white p-3 rounded-xl border border-slate-200 shadow-sm text-xs flex flex-col gap-1.5 transition-all duration-300 opacity-0 scale-90';
+                    contactCard.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <span class="font-black text-slate-800">${currentLeadData.name}</span>
+                            <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-brand-purple/20 text-brand-purple font-bold uppercase tracking-wider">En Contacto</span>
+                        </div>
+                        <p class="text-slate-800 font-medium text-[10px]">${currentLeadData.company}</p>
+                        <p class="text-[9px] text-slate-800 font-bold bg-slate-100 px-1.5 py-0.5 rounded w-fit">${currentLeadData.product}</p>
+                    `;
+                    crmColContacto.appendChild(contactCard);
+                    crmCountContacto.textContent = parseInt(crmCountContacto.textContent) + 1;
+
+                    setTimeout(() => {
+                        contactCard.classList.remove('opacity-0', 'scale-90');
+                    }, 50);
+                }, 300);
+            }
+
+            const telegramChat = document.getElementById('vsim-telegram-chat');
+            const responseMsg = document.createElement('div');
+            responseMsg.className = 'bg-green-500/10 border-l-4 border-green-500 p-2.5 rounded text-[10px] font-mono text-slate-200 mt-2 animate-slide-in';
+            responseMsg.innerHTML = `
+                <span class="text-green-400 font-bold">✅ ASESOR ASIGNADO ACTIVO:</span><br>
+                👤 Prospecto <span class="font-bold text-white">${currentLeadData.name}</span> contactado con éxito.<br>
+                ⏱️ Reloj de escalamiento <span class="text-green-400 font-bold">DETENIDO</span>.
+            `;
+            telegramChat.appendChild(responseMsg);
+            telegramChat.scrollTop = telegramChat.scrollHeight;
+
+            const advisorBtn = document.getElementById('vsim-advisor-btn');
+            advisorBtn.disabled = true;
+            advisorBtn.classList.add('bg-slate-800', 'border-slate-700');
+            advisorBtn.classList.remove('bg-brand-red', 'hover:bg-red-700', 'border-transparent', 'shadow-lg', 'shadow-red-500/20');
+
+            setTimeout(() => {
+                const popup = document.getElementById('vsim-success-popup');
+                popup.style.display = 'flex';
+                
+                setTimeout(() => {
+                    document.getElementById('ventas-sim-form').reset();
+                    document.getElementById('vsim-name').disabled = false;
+                    document.getElementById('vsim-company').disabled = false;
+                    document.getElementById('vsim-phone').disabled = false;
+                    document.getElementById('vsim-product').disabled = false;
+                    
+                    const submitBtn = document.getElementById('vsim-submit-btn');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = `<span>Enviar Lead</span><span class="material-symbols-outlined text-lg">arrow_forward</span>`;
+                    submitBtn.classList.add('bg-brand-purple', 'hover:bg-purple-800');
+                    submitBtn.classList.remove('bg-green-600');
+                }, 1000);
+            }, 600);
+        }
     </script>
 </body>
 

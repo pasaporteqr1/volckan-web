@@ -28,8 +28,6 @@
                         "navy": "#0A1128",
                         "accent-orange": "#dc2626",
                         "accent-yellow": "#facc15",
-                        "accent-blue": "#0A1128",
-                        "background-alt": "#f8fafc"
                     },
                     fontFamily: {
                         "sans": ["Inter", "sans-serif"],
@@ -38,21 +36,13 @@
                     borderRadius: {
                         "card": "24px",
                     },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
-                    }
                 },
             },
         }
     </script>
+    
     <style type="text/tailwindcss">
+
         @layer base {
             body { @apply font-sans bg-white text-slate-900; }
             h1, h2, h3, h4 { @apply font-heading uppercase tracking-tight; }
@@ -60,12 +50,12 @@
         .card-shadow {
             box-shadow: 0 10px 40px -10px rgba(0, 82, 255, 0.1);
         }
-        
-        /* Stats Animation */
-        .stat-card:hover .stat-icon {
-            @apply scale-110 rotate-12 transition-transform duration-300;
+        .icon-3d {
+            filter: drop-shadow(4px 4px 0px rgba(255, 215, 0, 0.4));
         }
-    </style>
+    
+</style>
+    
     <style>
         body {
             font-family: "Space Grotesk", sans-serif;
@@ -97,51 +87,52 @@
                                 class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
                         </button>
 
+                        <!-- Contenedor del Dropdown (Light Theme Update) -->
                         <div
                             class="absolute left-0 mt-6 w-64 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
                             <div class="py-2">
                                 <a href="soluciones-sosqr.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors">
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors">
                                     <div
                                         class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red">
                                         <span class="material-symbols-outlined text-base">emergency</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="font-bold text-slate-800 text-sm">Sistema SOSQR</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Alertas escolares</span>
+                                        <span class="font-bold text-brand-dark text-sm">Sistema SOSQR</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Alertas escolares</span>
                                     </div>
                                 </a>
                                 <a href="soluciones-parqueos.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
                                     <div
                                         class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple">
                                         <span class="material-symbols-outlined text-base">local_parking</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="font-bold text-slate-800 text-sm">Parqueos Digitales</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Control de acceso</span>
+                                        <span class="font-bold text-brand-dark text-sm">Parqueos Digitales</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Control de acceso</span>
                                     </div>
                                 </a>
-                                <a href="soluciones-modulo-ventas.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
-                                    <div class="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow">
-                                        <span class="material-symbols-outlined text-base">point_of_sale</span>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-brand-dark text-sm">Módulo de Ventas</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Cero Fricción</span>
-                                    </div>
-                                </a>
-                                <a href="soluciones-modulo-tiendas.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-600 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
-                                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                                        <span class="material-symbols-outlined text-base">storefront</span>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-brand-dark text-sm">Admin. de Tiendas</span>
-                                        <span class="text-xs text-slate-500 mt-0.5">Sincronización Omnicanal</span>
-                                    </div>
-                                </a>
+                            <a href="soluciones-modulo-ventas.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">point_of_sale</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Módulo de Ventas</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Cero Fricción</span>
+                                </div>
+                            </a>
+                            <a href="soluciones-modulo-tiendas.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">storefront</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-blue-600 transition-colors">Admin. de Tiendas</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Sincronización Omnicanal</span>
+                                </div>
+                            </a>
                             <a href="soluciones-modulo-personal.html"
                                 class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
                                 <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
@@ -166,7 +157,7 @@
                         </div>
                     </div>
 
-                    <a class="font-bold text-sm uppercase text-brand-purple transition-colors border-b-2 border-brand-purple pb-1"
+                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
                         href="soluciones-automatizaciones.html">Automatizaciones</a>
                     <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
                         href="soluciones-ciberseguridad.html">Ciberseguridad</a>
@@ -213,7 +204,7 @@
                         Control de <span class="text-green-600 relative inline-block">Personal<div class="absolute bottom-1 left-0 w-full h-3 bg-brand-yellow/30 -z-10 transform -skew-x-12"></div></span>
                     </h1>
 
-                    <p class="text-xl text-slate-600 font-medium leading-relaxed max-w-lg">
+                    <p class="text-xl text-slate-800 font-medium leading-relaxed max-w-lg">
                         Facilita la vida a Recursos Humanos automatizando procesos repetitivos desde que entra un nuevo empleado hasta el control de sus actividades diarias y nómina.
                     </p>
 
@@ -229,12 +220,12 @@
                     <div class="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-brand-red/20 rounded-[3rem] transform rotate-3 scale-105"></div>
                     <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Gestión de Equipos" class="relative z-10 w-full h-full object-cover rounded-[3rem] shadow-2xl border-4 border-white">
                     
-                    <div class="absolute -right-6 top-1/4 bg-white p-4 rounded-xl shadow-xl border border-slate-100 flex items-center gap-3 z-20">
+                    <div class="absolute -right-2 sm:-right-6 top-1/4 bg-white p-4 rounded-xl shadow-xl border border-slate-100 flex items-center gap-3 z-20">
                         <div class="w-10 h-10 rounded-full bg-brand-purple/10 flex justify-center items-center text-brand-purple">
                             <span class="material-symbols-outlined">how_to_reg</span>
                         </div>
                         <div>
-                            <p class="text-xs uppercase text-slate-500 font-bold">Estado</p>
+                            <p class="text-xs uppercase text-slate-800 font-bold">Estado</p>
                             <p class="text-sm font-black text-slate-800">Contratado Ok</p>
                         </div>
                     </div>
@@ -247,7 +238,7 @@
             <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-16 max-w-3xl mx-auto">
                     <h2 class="text-3xl md:text-5xl font-black text-slate-800 mb-6 uppercase">Menos Carga <span class="text-green-600">Administrativa</span></h2>
-                    <p class="text-slate-600 text-lg">Mejora la experiencia del empleado desde su primer día y elimina horas de carga de datos manual en la nómina.</p>
+                    <p class="text-slate-800 text-lg">Mejora la experiencia del empleado desde su primer día y elimina horas de carga de datos manual en la nómina.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -256,7 +247,7 @@
                             <span class="material-symbols-outlined text-3xl">fact_check</span>
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-2">1. Onboarding</h3>
-                        <p class="text-slate-600 text-sm">RR.HH. marca candidato como "Contratado" en Notion o Airtable.</p>
+                        <p class="text-slate-800 text-sm">RR.HH. marca candidato como "Contratado" en Notion o Airtable.</p>
                     </div>
 
                     <div class="stat-card group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-purple hover:bg-white transition-all duration-300 shadow-sm hover:-translate-y-2 text-center">
@@ -264,7 +255,7 @@
                             <span class="material-symbols-outlined text-3xl">mark_email_read</span>
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-2">2. Provisión</h3>
-                        <p class="text-slate-600 text-sm">Creación de correo corporativo, accesos y envío de manual de bienvenida automático.</p>
+                        <p class="text-slate-800 text-sm">Creación de correo corporativo, accesos y envío de manual de bienvenida automático.</p>
                     </div>
 
                     <div class="stat-card group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-yellow hover:bg-white transition-all duration-300 shadow-sm hover:-translate-y-2 text-center">
@@ -272,7 +263,7 @@
                             <span class="material-symbols-outlined text-3xl">co_present</span>
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-2">3. Asistencia</h3>
-                        <p class="text-slate-600 text-sm">Empleados registran entradas, salidas o vacaciones vía bot de WhatsApp o formulario web.</p>
+                        <p class="text-slate-800 text-sm">Empleados registran entradas, salidas o vacaciones vía bot de WhatsApp o formulario web.</p>
                     </div>
 
                     <div class="stat-card group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-red hover:bg-white transition-all duration-300 shadow-sm hover:-translate-y-2 text-center">
@@ -280,7 +271,7 @@
                             <span class="material-symbols-outlined text-3xl">payments</span>
                         </div>
                         <h3 class="text-xl font-black text-slate-800 mb-2">4. Nómina</h3>
-                        <p class="text-slate-600 text-sm">Los datos se consolidan automáticamente en una hoja de cálculo con horas extras y días libres.</p>
+                        <p class="text-slate-800 text-sm">Los datos se consolidan automáticamente en una hoja de cálculo con horas extras y días libres.</p>
                     </div>
                 </div>
             </div>
@@ -299,120 +290,58 @@
     </main>
 
     <!-- Footer Area (Retained from existing structure) -->
-    <footer class="bg-primary text-white pt-24 pb-12 relative overflow-hidden">
-        <div
-            class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-purple/50 to-transparent">
-        </div>
+    <footer class="bg-brand-dark text-white pt-24 pb-12">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-                <div>
-                    <img src="public/images/logo-volckan.png" alt="Tecno Volckánica"
-                        class="h-10 w-auto mb-6 brightness-0 invert">
-                    <p class="text-slate-400 text-sm leading-relaxed max-w-xs">Creamos tecnología de vanguardia para la
-                        seguridad física y digital de las instituciones en Latinoamérica.</p>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-8">
+                        <img src="public/images/logo-volckan.png" alt="Tecno Volckánica"
+                            class="h-10 w-auto object-contain brightness-0 invert">
+                    </div>
+                    <p class="text-slate-400 max-w-sm mb-10 font-medium">Líderes en tecnología de automatización,
+                        desarrollo y seguridad para Centroamérica. Optimizando lo que más importa con innovación constante.</p>
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">share</span>
+                        </div>
+                        <div
+                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">public</span>
+                        </div>
+                    </div>
                 </div>
                 <div>
-                    <h4 class="font-black mb-6 text-xl text-white">Soluciones</h4>
-                    <ul class="space-y-4">
-                        <li><a href="soluciones-parqueos.html"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2"><span
-                                    class="material-symbols-outlined text-sm">local_parking</span> Parqueos
-                                Digitales</a>
-                            <a href="soluciones-modulo-ventas.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">point_of_sale</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Módulo de Ventas</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Cero Fricción</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-tiendas.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">storefront</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-blue-600 transition-colors">Admin. de Tiendas</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Sincronización Omnicanal</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-personal.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">groups</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-green-600 transition-colors">Control de Personal</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Gestión de Equipos</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-nutricion.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">favorite</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-pink-600 transition-colors">Nutrición de Clientes</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Post-Venta Activa</span>
-                                </div>
-                            </a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">storefront</span> Botón Seguro para
-                                Comercios</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">precision_manufacturing</span>
-                                Automatizaciones para Empresas</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">shield_lock</span> Capacitaciones en
-                                Ciberseguridad</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors flex items-center gap-2 cursor-default opacity-70"><span
-                                    class="material-symbols-outlined text-sm">handshake</span> Alianzas Estratégicas</a>
-                        </li>
+                    <h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">SOLUCIONES</h5>
+                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
+                        <li><a class="hover:text-white transition-colors" href="soluciones-sosqr.html">Sistema SOSQR</a></li>
+                        <li><a class="hover:text-white transition-colors" href="soluciones-parqueos.html">Parqueos Digitales</a></li>
+                        <li><a class="hover:text-white transition-colors" href="soluciones-modulo-ventas.html">Módulo de Ventas</a></li>
+                        <li><a class="hover:text-white transition-colors cursor-default opacity-70" href="#">Automatización de Procesos</a></li>
+                        <li><a class="hover:text-white transition-colors cursor-default opacity-70" href="#">Consultoría de Sistemas</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-black mb-6 text-xl text-white">Legal</h4>
-                    <ul class="space-y-4">
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors">Aviso de
-                                Privacidad</a></li>
-                        <li><a href="#"
-                                class="text-slate-400 hover:text-brand-yellow font-medium transition-colors">Términos y
-                                Condiciones</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-black mb-6 text-xl text-white">Contacto Directo</h4>
-                    <ul class="space-y-4">
-                        <li class="flex flex-col gap-1 text-slate-400">
-                            <span class="text-xs uppercase tracking-wider font-bold text-slate-500">Ventas</span>
-                            <a href="mailto:tecnovolckanica@gmail.com"
-                                class="hover:text-brand-yellow font-medium transition-colors flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[1rem]">mail</span>
-                                tecnovolckanica@gmail.com
-                            </a>
+                    <h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">CONTACTO</h5>
+                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-brand-purple text-lg">mail</span>
+                            <a href="mailto:tecnovolckanica@gmail.com" class="hover:text-white transition-colors">tecnovolckanica@gmail.com</a>
                         </li>
-                        <li class="flex flex-col gap-1 text-slate-400 mt-4">
-                            <span class="text-xs uppercase tracking-wider font-bold text-slate-500">Soporte
-                                24/7</span>
-                            <a href="tel:+50231097191"
-                                class="hover:text-brand-yellow font-medium transition-colors flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[1rem]">support_agent</span>
-                                +502 3109-7191
-                            </a>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-brand-purple text-lg">phone</span>
+                            <a href="tel:+50231097191" class="hover:text-white transition-colors">+502 3109-7191</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="pt-8 border-t border-white/10 text-center flex flex-col items-center gap-4">
-                <p class="text-slate-500 text-sm font-medium">© 2026 Tecno Volckánica. Todos los derechos reservados.
-                    Ciudad de Guatemala.</p>
+            <div
+                class="pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8 text-xs font-bold text-slate-800 uppercase tracking-widest">
+                <p>© 2024 Tecno Volckánica. Todos los derechos reservados.</p>
+                <div class="flex gap-10">
+                    <a class="hover:text-white transition-colors" href="#">Aviso de Privacidad</a>
+                    <a class="hover:text-white transition-colors" href="#">Términos de Servicio</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -428,7 +357,7 @@
                     <img src="public/images/logo-volckan.png" alt="Tecno Volckánica" class="h-10 w-auto">
                 </a>
                 <button id="mobile-menu-close"
-                    class="w-10 h-10 rounded-full bg-slate-100 hover:bg-red-50 flex items-center justify-center text-slate-500 hover:text-brand-red transition-all">
+                    class="w-10 h-10 rounded-full bg-slate-100 hover:bg-red-50 flex items-center justify-center text-slate-800 hover:text-brand-red transition-all">
                     <span class="material-symbols-outlined text-xl">close</span>
                 </button>
             </div>
@@ -585,14 +514,14 @@
             <div
                 class="bg-white p-6 pb-4 border-b border-slate-100 flex justify-between items-start shrink-0 rounded-t-3xl">
                 <div class="flex items-center gap-4">
-                    <img src="public/images/logo-sosqr.png" alt="Tecno Volckánica" class="h-10 sm:h-12 w-auto object-contain">
+                    <img src="public/images/logo-sosqr.png" alt="SOSQR" class="h-10 sm:h-12 w-auto object-contain">
                     <div>
                         <h3 class="font-display font-black text-xl sm:text-2xl text-slate-800">Agendar Demo</h3>
-                        <p class="text-slate-500 text-xs sm:text-sm mt-1">Nuestros asesores se pondran en contacto</p>
+                        <p class="text-slate-800 text-xs sm:text-sm mt-1">Transforma la seguridad escolar</p>
                     </div>
                 </div>
                 <button id="demo-modal-close"
-                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-500 hover:text-slate-800 -mt-1 -mr-1">
+                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-800 hover:text-slate-800 -mt-1 -mr-1">
                     <span class="material-symbols-outlined text-xl">close</span>
                 </button>
             </div>
@@ -611,8 +540,8 @@
 
                     <!-- Institution -->
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-1.5"
-                            for="demo-institution">Empresa/Institución <span class="text-brand-red">*</span></label>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-institution">Institución
+                            Educativa <span class="text-brand-red">*</span></label>
                         <input type="text" id="demo-institution" required
                             class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
                     </div>
@@ -625,7 +554,7 @@
                         <div class="relative flex items-center">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                                 <span class="text-lg mr-2 leading-none">🇬🇹</span>
-                                <span class="text-slate-600 font-bold border-r border-slate-200 pr-3 mr-1">+502</span>
+                                <span class="text-slate-800 font-bold border-r border-slate-200 pr-3 mr-1">+502</span>
                             </div>
                             <input type="tel" id="demo-contact" required
                                 class="w-full pl-[100px] pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700 font-medium tracking-wider">
@@ -663,7 +592,7 @@
                     <!-- Botón de Envío -->
                     <button type="submit" id="demo-submit-btn"
                         class="w-full mt-4 bg-brand-red text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 hover:bg-orange-600 hover:shadow-xl hover:-translate-y-0.5 transition-all flex justify-center items-center gap-2">
-                        <span>Solicitar Auditoría</span>
+                        <span>Solicitar Demo</span>
                         <span class="material-symbols-outlined text-lg">send</span>
                     </button>
 
