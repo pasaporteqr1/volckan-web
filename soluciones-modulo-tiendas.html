@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Ciberseguridad | Grupo Volckan</title>
+    <title>Administración de Tiendas | Grupo Volckan</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
@@ -38,6 +38,16 @@
                     borderRadius: {
                         "card": "24px",
                     },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
                 },
             },
         }
@@ -50,8 +60,10 @@
         .card-shadow {
             box-shadow: 0 10px 40px -10px rgba(0, 82, 255, 0.1);
         }
-        .icon-3d {
-            filter: drop-shadow(4px 4px 0px rgba(255, 215, 0, 0.4));
+        
+        /* Stats Animation */
+        .stat-card:hover .stat-icon {
+            @apply scale-110 rotate-12 transition-transform duration-300;
         }
     </style>
     <style>
@@ -64,6 +76,7 @@
 </head>
 
 <body class="antialiased font-sans bg-white text-slate-900 flex flex-col min-h-screen">
+    <!-- Header -->
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="flex items-center justify-between h-24">
@@ -133,9 +146,9 @@
                         </div>
                     </div>
 
-                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
-                        href="soluciones-automatizaciones.html">Automatizaciones</a>
                     <a class="font-bold text-sm uppercase text-brand-purple transition-colors border-b-2 border-brand-purple pb-1"
+                        href="soluciones-automatizaciones.html">Automatizaciones</a>
+                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
                         href="soluciones-ciberseguridad.html">Ciberseguridad</a>
                 </nav>
 
@@ -157,327 +170,112 @@
         </div>
     </header>
 
-    <main class="flex-grow">
+        <main class="flex-grow">
         <!-- Hero Section -->
-        <section class="relative bg-slate-900 text-white overflow-hidden py-24 lg:py-32">
-            <!-- Background Elements -->
+        <section class="relative bg-background-alt overflow-hidden py-20 lg:py-32">
+            <!-- Background Decoration -->
             <div class="absolute inset-0 z-0">
-                <div class="absolute inset-0 bg-brand-purple/20 mix-blend-multiply"></div>
-                <!-- Abstract tech grid background -->
-                <div class="absolute inset-0 opacity-20"
-                    style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 32px 32px;">
+                <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-brand-purple/10 to-transparent">
                 </div>
-                <div
-                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-purple rounded-full blur-[120px] opacity-40 animate-pulse">
+                <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-brand-purple/10 rounded-full blur-[100px] animate-pulse-slow">
                 </div>
             </div>
 
-            <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
-                <div
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-purple/50 bg-brand-purple/10 text-brand-purple mb-8 backdrop-blur-sm">
-                    <span class="material-symbols-outlined text-sm">shield_person</span>
-                    <span class="text-sm font-bold uppercase tracking-wider text-white">Centro de Inteligencia
-                        Digital</span>
-                </div>
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight tracking-tight uppercase">
-                    Ciber<span class="text-brand-purple">seguridad</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-12 font-medium">
-                    Protege tus activos digitales. Comprende las amenazas modernas y descubre cómo nuestra
-                    infraestructura segura blindar tu institución.
-                </p>
-                <button
-                    class="agendar-demo-btn bg-brand-purple hover:bg-brand-red text-white font-bold text-lg rounded-full px-12 py-4 transition-all shadow-[0_0_30px_rgba(107,33,168,0.5)] hover:shadow-[0_0_40px_rgba(220,38,38,0.6)] hover:-translate-y-1">
-                    Análisis de Riesgo Gratuito
-                </button>
-            </div>
-        </section>
+            <div class="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Text Content -->
+                <div class="flex flex-col gap-8">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-purple/20 bg-brand-purple/10 text-brand-purple w-fit">
+                        <span class="material-symbols-outlined text-sm font-bold">storefront</span>
+                        <span class="text-sm font-bold uppercase tracking-widest text-slate-800">Sincronización Omnicanal</span>
+                    </div>
 
-        <!-- Nivel de Riesgo Interactivo -->
-        <section class="py-24 bg-slate-50">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-black mb-4 text-brand-dark">Conoce Tus Enemigos <br><span
-                            class="text-brand-red text-3xl md:text-4xl">Niveles de Riesgo Explicados</span></h2>
-                    <p class="text-slate-600 text-lg max-w-2xl mx-auto">Pasa el cursor por cada nivel para descubrir las
-                        amenazas comunes que acechan a las instituciones y empresas hoy en día.</p>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] text-brand-dark uppercase tracking-tight">
+                        Administración de <span class="text-brand-purple relative inline-block">Tiendas<div class="absolute bottom-1 left-0 w-full h-3 bg-brand-yellow/30 -z-10 transform -skew-x-12"></div></span>
+                    </h1>
+
+                    <p class="text-xl text-slate-600 font-medium leading-relaxed max-w-lg">
+                        Ideal para empresas que venden en físico y online (Shopify, WooCommerce). Sincroniza inventario, facturación electrónica y órdenes de compra en tiempo real.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button class="agendar-demo-btn flex-1 sm:flex-none uppercase tracking-widest font-bold text-sm bg-brand-red hover:bg-orange-600 text-white rounded-full px-8 py-4 transition-all shadow-lg hover:shadow-brand-red/30 hover:-translate-y-1">
+                            Solicitar Demo
+                        </button>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-                    <!-- Riesgo Bajo -->
-                    <div
-                        class="group relative bg-white rounded-3xl p-8 border border-green-100 hover:border-green-500 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-[400px]">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-green-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <!-- Visual -->
+                <div class="relative lg:h-[500px] flex items-center justify-center animate-float">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-purple/20 to-brand-red/20 rounded-[3rem] transform rotate-3 scale-105"></div>
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Tiendas y POS" class="relative z-10 w-full h-full object-cover rounded-[3rem] shadow-2xl border-4 border-white">
+                    
+                    <div class="absolute -right-6 top-1/4 bg-white p-4 rounded-xl shadow-xl border border-slate-100 flex items-center gap-3 z-20">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex justify-center items-center text-blue-600">
+                            <span class="material-symbols-outlined">sync</span>
                         </div>
-                        <div class="relative z-10 flex flex-col h-full">
-                            <div
-                                class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-6 text-green-600 group-hover:scale-110 transition-transform duration-500">
-                                <span class="material-symbols-outlined text-3xl">security</span>
-                            </div>
-                            <h3
-                                class="text-2xl font-black text-slate-800 mb-2 group-hover:text-green-600 transition-colors">
-                                Nivel 1: Básico</h3>
-                            <p class="text-slate-500 font-medium uppercase tracking-widest text-sm mb-6">Ataques
-                                Oportunistas</p>
-
-                            <!-- Default state -->
-                            <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
-                                <p class="text-slate-600">Ataques no dirigidos que buscan vulnerabilidades fáciles de
-                                    explotar en sistemas desactualizados o usuarios desprevenidos.</p>
-                                <div class="mt-8 flex items-center gap-2 text-green-600 font-bold text-sm">
-                                    <span>Pasa el cursor para ver detalles</span>
-                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </div>
-                            </div>
-                            <!-- Hover state -->
-                            <div
-                                class="absolute top-48 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                                <ul class="space-y-4">
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-green-500 mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Phishing Masivo</strong>
-                                            <span class="text-slate-600 text-sm">Correos electrónicos falsos buscando
-                                                contraseñas.</span>
-                                        </div>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-green-500 mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Malware Común</strong>
-                                            <span class="text-slate-600 text-sm">Virus descargados accidentalmente que
-                                                ralentizan equipos.</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div>
+                            <p class="text-xs uppercase text-slate-500 font-bold">Estado de Inventario</p>
+                            <p class="text-sm font-black text-slate-800">Sincronizado 100%</p>
                         </div>
                     </div>
-
-                    <!-- Riesgo Medio -->
-                    <div
-                        class="group relative bg-white rounded-3xl p-8 border border-amber-100 hover:border-amber-500 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-[400px]">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-amber-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                        <div class="relative z-10 flex flex-col h-full">
-                            <div
-                                class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center mb-6 text-amber-600 group-hover:scale-110 transition-transform duration-500">
-                                <span class="material-symbols-outlined text-3xl">vpn_key_alert</span>
-                            </div>
-                            <h3
-                                class="text-2xl font-black text-slate-800 mb-2 group-hover:text-amber-600 transition-colors">
-                                Nivel 2: Severo</h3>
-                            <p class="text-slate-500 font-medium uppercase tracking-widest text-sm mb-6">Amenazas
-                                Dirigidas</p>
-
-                            <!-- Default state -->
-                            <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
-                                <p class="text-slate-600">Ataques específicos diseñados para robar bases de datos,
-                                    credenciales de administrador o alterar información importante.</p>
-                                <div class="mt-8 flex items-center gap-2 text-amber-600 font-bold text-sm">
-                                    <span>Pasa el cursor para ver detalles</span>
-                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </div>
-                            </div>
-                            <!-- Hover state -->
-                            <div
-                                class="absolute top-48 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                                <ul class="space-y-4">
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-amber-500 mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Spear Phishing</strong>
-                                            <span class="text-slate-600 text-sm">Engaños adaptados con datos reales de
-                                                la institución.</span>
-                                        </div>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-amber-500 mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Fuerza Bruta</strong>
-                                            <span class="text-slate-600 text-sm">Intentos repetidos para adivinar
-                                                contraseñas débiles.</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Riesgo Alto -->
-                    <div
-                        class="group relative bg-white rounded-3xl p-8 border border-brand-red/20 hover:border-brand-red shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-[400px]">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-red-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                        <div class="relative z-10 flex flex-col h-full">
-                            <div
-                                class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-6 text-brand-red group-hover:scale-110 transition-transform duration-500">
-                                <span class="material-symbols-outlined text-3xl">bug_report</span>
-                            </div>
-                            <h3
-                                class="text-2xl font-black text-slate-800 mb-2 group-hover:text-brand-red transition-colors">
-                                Nivel 3: Crítico</h3>
-                            <p class="text-slate-500 font-medium uppercase tracking-widest text-sm mb-6">Compromiso
-                                Total</p>
-
-                            <!-- Default state -->
-                            <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
-                                <p class="text-slate-600">Secuestro total de sistemas, robo y exposición de datos
-                                    financieros o personales de alumnos, paralizando la operación.</p>
-                                <div class="mt-8 flex items-center gap-2 text-brand-red font-bold text-sm">
-                                    <span>Pasa el cursor para ver detalles</span>
-                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </div>
-                            </div>
-                            <!-- Hover state -->
-                            <div
-                                class="absolute top-48 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                                <ul class="space-y-4">
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-brand-red mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Ransomware</strong>
-                                            <span class="text-slate-600 text-sm">Encriptan tus datos y exigen rescates
-                                                millonarios.</span>
-                                        </div>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-brand-red mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Ataques DDoS</strong>
-                                            <span class="text-slate-600 text-sm">Sobrecarga de servidores dejando
-                                                inoperable el sistema.</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- Mejores Prácticas -->
-        <section class="py-24 bg-white border-t border-slate-100">
+        <!-- Stats/Benefits Section -->
+        <section id="stats" class="py-24 bg-white">
             <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-800 mb-6 uppercase">Adiós a la <span class="text-brand-red">Doble Venta</span></h2>
+                    <p class="text-slate-600 text-lg">Ahorra incontables horas de trabajo manual en contabilidad al final del día automatizando las ventas desde su origen hasta la factura.</p>
+                </div>
 
-                    <!-- Text Content -->
-                    <div class="w-full lg:w-1/2">
-                        <div class="mb-8">
-                            <span class="text-brand-purple font-bold uppercase tracking-widest text-sm">Educación
-                                Preventiva</span>
-                            <h2 class="text-4xl lg:text-5xl font-black text-slate-800 mt-2 mb-6">4 Prácticas que salvan
-                                datos.</h2>
-                            <p class="text-slate-600 text-lg leading-relaxed">
-                                La ciberseguridad no es solo tecnología, es cultura. Implementar hábitos saludables de
-                                seguridad digital en su personal es la primera y mejor defensa existente.
-                            </p>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="stat-card group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-purple hover:bg-white transition-all duration-300 shadow-sm hover:-translate-y-2 text-center">
+                        <div class="mx-auto w-16 h-16 rounded-2xl bg-brand-purple text-white flex justify-center items-center mb-6">
+                            <span class="material-symbols-outlined text-3xl">point_of_sale</span>
                         </div>
-
-                        <div class="space-y-6">
-                            <!-- Tip 1 -->
-                            <div
-                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-brand-purple/10 text-brand-purple flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined font-bold">password</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Higiene de Contraseñas</h4>
-                                    <p class="text-slate-600 text-sm mt-1">Usa frases o contraseñas mayores a 12
-                                        caracteres, nunca repetidas entre servicios. Activa Autenticación de Dos
-                                        Factores (2FA).</p>
-                                </div>
-                            </div>
-                            <!-- Tip 2 -->
-                            <div
-                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined font-bold">policy</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Verificar Remitentes</h4>
-                                    <p class="text-slate-600 text-sm mt-1">Si un correo solicita "urgencia" en un pago o
-                                        restablecer cuenta, detente. Confirma por teléfono antes de hacer clic.</p>
-                                </div>
-                            </div>
-                            <!-- Tip 3 -->
-                            <div
-                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined font-bold">update</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Actualizaciones Inmediatas</h4>
-                                    <p class="text-slate-600 text-sm mt-1">Los ciberdelincuentes aprovechan fallos
-                                        conocidos. Mantén SO y software siempre en su última versión.</p>
-                                </div>
-                            </div>
-                            <!-- Tip 4 -->
-                            <div
-                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-brand-dark/10 text-brand-dark flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined font-bold">wifi_off</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Cuidado con Wi-Fi Público</h4>
-                                    <p class="text-slate-600 text-sm mt-1">Nunca accedas a sistemas escolares
-                                        corporativos usando redes públicas sin una VPN empresarial certificada.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <h3 class="text-xl font-black text-slate-800 mb-2">1. Venta</h3>
+                        <p class="text-slate-600 text-sm">Registro de transacción inmediata, ya sea en e-commerce o punto físico.</p>
                     </div>
 
-                    <!-- Visual / Image -->
-                    <div class="w-full lg:w-1/2 relative">
-                        <div
-                            class="absolute inset-0 bg-brand-purple/10 rounded-full blur-[80px] -z-10 transform translate-x-10 translate-y-10">
+                    <div class="stat-card group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-red hover:bg-white transition-all duration-300 shadow-sm hover:-translate-y-2 text-center">
+                        <div class="mx-auto w-16 h-16 rounded-2xl bg-brand-red text-white flex justify-center items-center mb-6">
+                            <span class="material-symbols-outlined text-3xl">inventory_2</span>
                         </div>
-                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                            alt="Cybersecurity Server Room"
-                            class="rounded-3xl shadow-2xl w-full object-cover h-[600px] border border-slate-200">
-                        <!-- Floating Badge -->
-                        <div
-                            class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-4 animate-bounce hover:animate-none">
-                            <div
-                                class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
-                                <span class="material-symbols-outlined">gpp_good</span>
-                            </div>
-                            <div>
-                                <p class="font-black text-xl text-slate-800">100%</p>
-                                <p class="text-xs text-slate-500 font-bold uppercase">Datos Seguros</p>
-                            </div>
-                        </div>
+                        <h3 class="text-xl font-black text-slate-800 mb-2">2. Inventario</h3>
+                        <p class="text-slate-600 text-sm">Actualización del stock en tiempo real global para evitar vender sin unidades.</p>
                     </div>
 
+                    <div class="stat-card group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-yellow hover:bg-white transition-all duration-300 shadow-sm hover:-translate-y-2 text-center">
+                        <div class="mx-auto w-16 h-16 rounded-2xl bg-brand-yellow text-slate-800 flex justify-center items-center mb-6">
+                            <span class="material-symbols-outlined text-3xl">receipt_long</span>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-800 mb-2">3. Facturación</h3>
+                        <p class="text-slate-600 text-sm">Conexión con facturación electrónica y envío automático al cliente.</p>
+                    </div>
+
+                    <div class="stat-card group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-brand-purple hover:bg-white transition-all duration-300 shadow-sm hover:-translate-y-2 text-center">
+                        <div class="mx-auto w-16 h-16 rounded-2xl bg-slate-800 text-white flex justify-center items-center mb-6">
+                            <span class="material-symbols-outlined text-3xl">local_shipping</span>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-800 mb-2">4. Re-Stock</h3>
+                        <p class="text-slate-600 text-sm">Generación de orden de compra borrador al alcanzar mínimos de inventario.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- CTA Final -->
         <section class="py-20 bg-brand-dark relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-r from-brand-purple/20 to-transparent"></div>
             <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-                <h2 class="text-3xl md:text-5xl font-black text-white mb-6">¿Tu institución está realmente protegida?
-                </h2>
-                <p class="text-slate-300 text-lg mb-10">No esperes a un ataque para descubrir tus vulnerabilidades.
-                    Solicita una auditoría demo y conoce nuestras soluciones integrales (Cloud & On-Premise).</p>
-                <button
-                    class="agendar-demo-btn bg-brand-red text-white py-4 px-10 rounded-full font-bold text-lg uppercase tracking-widest hover:bg-white hover:text-brand-red transition-all shadow-lg hover:shadow-2xl">
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-6">Integra tu negocio hoy mismo.</h2>
+                <p class="text-slate-300 text-lg mb-10">Conecta tu tienda física con tus plataformas online y escala tu operación sin fricción.</p>
+                <button class="agendar-demo-btn bg-brand-purple hover:bg-brand-red text-white py-4 px-10 rounded-full font-bold text-lg uppercase tracking-widest transition-all shadow-lg hover:-translate-y-1">
                     Agendar Auditoría Gratuita
                 </button>
             </div>
         </section>
-
     </main>
 
     <!-- Footer Area (Retained from existing structure) -->
