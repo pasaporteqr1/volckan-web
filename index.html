@@ -428,43 +428,395 @@
                 </div>
             </div>
         </section>
-        <section class="py-32 bg-slate-50">
+        <section class="py-32 bg-slate-50 relative overflow-hidden" id="sectors">
+            <!-- Decorative gradient blur -->
+            <div class="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(107,33,168,0.2)_0%,transparent_50%)]"></div>
+            
+            <style>
+                @keyframes fadeInSector {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .animate-fade-sector {
+                    animation: fadeInSector 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                }
+                .scrollbar-none::-webkit-scrollbar {
+                    display: none;
+                }
+                .scrollbar-none {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            </style>
+
             <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-black text-brand-dark uppercase tracking-tight">Especialización por Sector</h2>
-                    <p class="text-slate-600 font-medium mt-3">Diseñamos soluciones adaptadas a la naturaleza de cada organización</p>
-                    <div class="h-1 w-16 bg-brand-red mx-auto mt-4 rounded-full"></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="h-[400px] rounded-card overflow-hidden relative group shadow-md hover:shadow-xl transition-all duration-300">
-                        <img alt="Automatización industrial y de empresas"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAik_LqdjsnjWsifQBec_LRKVqZSrBL4UXp32K-cZgSDEiX9Vx5jP6duvqt_yff_Z1LCpisdFuluoimTUyAR-d3vD5UG_VLoZa68O8IX469VOygKlXhMjdKwbd39Z6XERsyJu5ZmLGY-zz43Pu5Ca5qLkSZjQkpLwqBAOCvVUdg68XF3u1LH4T1z-dEjRR8SfnZWIIS_4-edCPr4UY5mSj0m1lw3xzhNpe7XcBBfyUxZWDxHclHcaG-b7e_Ij3lUDJPR0RY105qWX2N" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/30 to-transparent flex flex-col justify-end p-10">
-                            <span class="text-brand-yellow font-black text-xs uppercase tracking-widest mb-2">Sector Corporativo</span>
-                            <h4 class="text-white text-3xl font-black mb-2">Empresas e Industrias</h4>
-                            <p class="text-slate-300 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Automatización logística, integración ERP y paneles analíticos que potencian la productividad.
-                            </p>
-                        </div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-red/10 text-brand-red font-bold text-xs tracking-wider uppercase mb-4 border border-brand-red/10">
+                        Especialización
                     </div>
-                    <div class="h-[400px] rounded-card overflow-hidden relative group shadow-md hover:shadow-xl transition-all duration-300">
-                        <img alt="Sistemas inteligentes para instituciones y organizaciones"
-                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpj8izCKB2-P88wP2fnG_RnywhsnuDZnwOs1NcvdncVRmzi1U7Ron9nS6pfCNQa1O7NXOaZXDkAqFidZHFd37t0Sgw9Kdxa9eBWVjUHNn9zmqG1QVyDoTJUSkJN2PoNDQfHfMwB0l-97FiM27hEWNvQRg1CE1vpfpY09bTxA7ND9f0bO6H4_I24Q8umivlAx3PqZ5n2MA1jT0_eagQ1_nRsYDa4DMTesN6CuEHQLN5VavsZhfUWiQLwZB8HLASaDugjcjOomId8Dfv" />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/30 to-transparent flex flex-col justify-end p-10">
-                            <span class="text-brand-yellow font-black text-xs uppercase tracking-widest mb-2">Sector Institucional</span>
-                            <h4 class="text-white text-3xl font-black mb-2">Instituciones y Organizaciones</h4>
-                            <p class="text-slate-300 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                Digitalización administrativa, plataformas web para usuarios y control de acceso inteligente.
-                            </p>
+                    <h2 class="text-3xl md:text-5xl font-black text-brand-dark uppercase tracking-tight">Especialización por Sector</h2>
+                    <p class="text-slate-600 font-medium mt-3 max-w-2xl mx-auto">
+                        Diseñamos soluciones personalizadas que se adaptan a las necesidades, escala y flujos específicos de cada tipo de organización.
+                    </p>
+                    <div class="h-1.5 w-16 bg-brand-purple mx-auto mt-6 rounded-full"></div>
+                </div>
+
+                <!-- Interactive Tab Layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-10 items-start">
+                    
+                    <!-- Tabs Column (Left on desktop) -->
+                    <div class="flex flex-row lg:flex-col gap-3 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 scrollbar-none shrink-0" role="tablist">
+                        
+                        <!-- Tab 1: Educación -->
+                        <button onclick="switchSector('educacion')" id="tab-educacion" class="sector-tab flex items-center gap-4 px-6 py-5 rounded-2xl border border-brand-purple bg-brand-dark text-white shadow-xl shadow-brand-dark/15 text-left transition-all duration-300 w-full shrink-0 lg:shrink cursor-pointer" role="tab" aria-selected="true">
+                            <div class="tab-icon-wrapper w-10 h-10 rounded-xl flex items-center justify-center transition-colors bg-brand-purple/20 text-brand-purple">
+                                <span class="material-symbols-outlined text-xl">school</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm leading-none uppercase tracking-wide">Educación</h4>
+                                <span class="text-[11px] opacity-75 font-semibold block mt-1">Colegios y Universidades</span>
+                            </div>
+                        </button>
+
+                        <!-- Tab 2: Empresas -->
+                        <button onclick="switchSector('empresas')" id="tab-empresas" class="sector-tab flex items-center gap-4 px-6 py-5 rounded-2xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 text-left transition-all duration-300 w-full shrink-0 lg:shrink cursor-pointer" role="tab" aria-selected="false">
+                            <div class="tab-icon-wrapper w-10 h-10 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center transition-colors">
+                                <span class="material-symbols-outlined text-xl">corporate_fare</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm leading-none uppercase tracking-wide">Empresas</h4>
+                                <span class="text-[11px] opacity-75 font-semibold block mt-1">Logística e Industria</span>
+                            </div>
+                        </button>
+
+                        <!-- Tab 3: Instituciones -->
+                        <button onclick="switchSector('instituciones')" id="tab-instituciones" class="sector-tab flex items-center gap-4 px-6 py-5 rounded-2xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 text-left transition-all duration-300 w-full shrink-0 lg:shrink cursor-pointer" role="tab" aria-selected="false">
+                            <div class="tab-icon-wrapper w-10 h-10 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center transition-colors">
+                                <span class="material-symbols-outlined text-xl">account_balance</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm leading-none uppercase tracking-wide">Instituciones</h4>
+                                <span class="text-[11px] opacity-75 font-semibold block mt-1">Entidades y ONGs</span>
+                            </div>
+                        </button>
+
+                        <!-- Tab 4: Pymes -->
+                        <button onclick="switchSector('pymes')" id="tab-pymes" class="sector-tab flex items-center gap-4 px-6 py-5 rounded-2xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 text-left transition-all duration-300 w-full shrink-0 lg:shrink cursor-pointer" role="tab" aria-selected="false">
+                            <div class="tab-icon-wrapper w-10 h-10 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center transition-colors">
+                                <span class="material-symbols-outlined text-xl">store</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm leading-none uppercase tracking-wide">Pequeñas Empresas</h4>
+                                <span class="text-[11px] opacity-75 font-semibold block mt-1">Comercios y Pymes</span>
+                            </div>
+                        </button>
+
+                        <!-- Tab 5: Emprendamientos -->
+                        <button onclick="switchSector('emprendimientos')" id="tab-emprendimientos" class="sector-tab flex items-center gap-4 px-6 py-5 rounded-2xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 text-left transition-all duration-300 w-full shrink-0 lg:shrink cursor-pointer" role="tab" aria-selected="false">
+                            <div class="tab-icon-wrapper w-10 h-10 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center transition-colors">
+                                <span class="material-symbols-outlined text-xl">rocket_launch</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm leading-none uppercase tracking-wide">Emprendamientos</h4>
+                                <span class="text-[11px] opacity-75 font-semibold block mt-1">Startups e Ideas</span>
+                            </div>
+                        </button>
+
+                    </div>
+
+                    <!-- Details Box (Right on desktop) -->
+                    <div class="relative bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 min-h-[460px] flex flex-col justify-between overflow-hidden">
+                        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-brand-purple/5 rounded-full blur-3xl pointer-events-none"></div>
+
+                        <!-- 1. Educación -->
+                        <div id="content-educacion" class="sector-content flex flex-col justify-between h-full space-y-8 animate-fade-sector">
+                            <div>
+                                <div class="flex items-center gap-3 mb-6">
+                                    <span class="px-3 py-1 rounded-full bg-brand-purple/10 text-brand-purple text-xs font-bold uppercase tracking-wider">Sector Educación</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                                    <span class="text-xs text-slate-500 font-bold">Colegios, Universidades y Academias</span>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-black text-brand-dark mb-4 uppercase leading-tight">Control y Alertas Escolares de Próxima Generación</h3>
+                                <p class="text-slate-600 text-base leading-relaxed mb-6 font-medium">
+                                    Optimizamos la seguridad física y los registros diarios en centros educativos. A través de códigos QR integrados con notificaciones redundantes inmediatas (SMS, Telegram), permitimos a directivos y padres de familia mantener comunicación constante sobre asistencia y emergencias críticas.
+                                </p>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-purple mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Identificación QR inteligente para alumnos y personal</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-purple mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Bitácoras digitales de acceso y registro de visitantes</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-purple mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Protocolos automatizados de alerta inmediata</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-purple mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Portales móviles interactivos para padres de familia</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple shrink-0">
+                                        <span class="material-symbols-outlined">verified_user</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-2xl font-black text-brand-dark leading-none">100%</span>
+                                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Seguro y Redundante</span>
+                                    </div>
+                                </div>
+                                <a href="soluciones-sosqr.html" class="w-full sm:w-auto px-8 py-3.5 bg-brand-purple hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors text-center shadow-md shadow-brand-purple/20">
+                                    Conocer SOSQR
+                                </a>
+                            </div>
                         </div>
+
+                        <!-- 2. Empresas -->
+                        <div id="content-empresas" class="sector-content hidden flex-col justify-between h-full space-y-8 animate-fade-sector">
+                            <div>
+                                <div class="flex items-center gap-3 mb-6">
+                                    <span class="px-3 py-1 rounded-full bg-brand-red/10 text-brand-red text-xs font-bold uppercase tracking-wider">Sector Empresas</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                                    <span class="text-xs text-slate-500 font-bold">Medianas y Grandes Corporaciones</span>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-black text-brand-dark mb-4 uppercase leading-tight">Integración de Sistemas y Automatización Logística</h3>
+                                <p class="text-slate-600 text-base leading-relaxed mb-6 font-medium">
+                                    Potenciamos la productividad corporativa conectando múltiples sucursales en tiempo real. Analizamos flujos de trabajo actuales y desarrollamos APIs personalizadas que vinculan inventarios, bases de datos y dashboards ejecutivos de toma de decisiones.
+                                </p>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-red mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Integración omnicanal de flujos logísticos y bodegas</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-red mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Reportes y analítica de rendimiento para gerencia</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-red mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Conexión con software legado mediante APIs seguras</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-red mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Control de accesos automatizado para personal</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-brand-red/10 flex items-center justify-center text-brand-red shrink-0">
+                                        <span class="material-symbols-outlined">trending_up</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-2xl font-black text-brand-dark leading-none">+40%</span>
+                                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Eficiencia Operativa</span>
+                                    </div>
+                                </div>
+                                <a href="https://wa.me/50231097191" target="_blank" class="w-full sm:w-auto px-8 py-3.5 bg-brand-red hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors text-center shadow-md shadow-brand-red/20">
+                                    Cotizar Integración
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 3. Instituciones -->
+                        <div id="content-instituciones" class="sector-content hidden flex-col justify-between h-full space-y-8 animate-fade-sector">
+                            <div>
+                                <div class="flex items-center gap-3 mb-6">
+                                    <span class="px-3 py-1 rounded-full bg-brand-purple/10 text-brand-purple text-xs font-bold uppercase tracking-wider">Sector Instituciones</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                                    <span class="text-xs text-slate-500 font-bold">Entidades Públicas y Organizaciones</span>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-black text-brand-dark mb-4 uppercase leading-tight">Digitalización de Trámites y Control de Parqueos</h3>
+                                <p class="text-slate-600 text-base leading-relaxed mb-6 font-medium">
+                                    Brindamos herramientas robustas para ONGs y organizaciones con alta afluencia ciudadana. Creamos sistemas interactivos para gestión de turnos, portales web institucionales de autoservicio y control inteligente de parqueos con facturación automatizada.
+                                </p>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-purple mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Parqueos con barreras automáticas e identificación de vehículos</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-purple mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Portales web para trámites y solicitudes en línea</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-purple mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Gestión automatizada de colas y atención al ciudadano</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-purple mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Reportería de accesos y auditorías de seguridad</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple shrink-0">
+                                        <span class="material-symbols-outlined">local_parking</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-2xl font-black text-brand-dark leading-none">99.9%</span>
+                                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Disponibilidad de Acceso</span>
+                                    </div>
+                                </div>
+                                <a href="soluciones-parqueos.html" class="w-full sm:w-auto px-8 py-3.5 bg-brand-purple hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors text-center shadow-md shadow-brand-purple/20">
+                                    Ver Parqueos Digitales
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 4. Pymes -->
+                        <div id="content-pymes" class="sector-content hidden flex-col justify-between h-full space-y-8 animate-fade-sector">
+                            <div>
+                                <div class="flex items-center gap-3 mb-6">
+                                    <span class="px-3 py-1 rounded-full bg-brand-yellow/20 text-brand-dark text-xs font-bold uppercase tracking-wider">Pequeñas Empresas</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                                    <span class="text-xs text-slate-500 font-bold">Comercios, Clínicas y Servicios Locales</span>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-black text-brand-dark mb-4 uppercase leading-tight">Digitalización de Ventas y Nutrición de Clientes</h3>
+                                <p class="text-slate-600 text-base leading-relaxed mb-6 font-medium">
+                                    Llevamos tecnología de alta gama al comercio local. Te ayudamos a implementar módulos de cobro y facturación sencillos y sin fricción (POS), sincronizar inventarios pequeños y automatizar campañas de seguimiento y nutrición para tus clientes habituales.
+                                </p>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-yellow mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Sistemas de facturación simplificada en la nube</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-yellow mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Módulos de punto de venta (POS) rápidos</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-yellow mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Fidelización post-venta automatizada por WhatsApp/Email</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-yellow mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Control básico de inventario accesible desde el celular</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-brand-yellow/10 flex items-center justify-center text-brand-yellow shrink-0">
+                                        <span class="material-symbols-outlined">point_of_sale</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-2xl font-black text-brand-dark leading-none">Cero</span>
+                                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Fricción al Cobrar</span>
+                                    </div>
+                                </div>
+                                <a href="soluciones-modulo-ventas.html" class="w-full sm:w-auto px-8 py-3.5 bg-brand-yellow text-brand-dark font-black text-xs uppercase tracking-wider rounded-xl hover:bg-slate-800 hover:text-white transition-colors text-center shadow-md">
+                                    Ver Módulo de Ventas
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 5. Emprendamientos -->
+                        <div id="content-emprendimientos" class="sector-content hidden flex-col justify-between h-full space-y-8 animate-fade-sector">
+                            <div>
+                                <div class="flex items-center gap-3 mb-6">
+                                    <span class="px-3 py-1 rounded-full bg-brand-red/10 text-brand-red text-xs font-bold uppercase tracking-wider">Sector Emprendimientos</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+                                    <span class="text-xs text-slate-500 font-bold">Startups y Nuevas Ideas de Negocio</span>
+                                </div>
+                                <h3 class="text-2xl md:text-3xl font-black text-brand-dark mb-4 uppercase leading-tight">Desarrollo Rápido de MVP y Embudos de Captación</h3>
+                                <p class="text-slate-600 text-base leading-relaxed mb-6 font-medium">
+                                    Aceleramos el lanzamiento de tu startup. Diseñamos Productos Mínimos Viables (MVP) robustos y de bajo costo mensual, y configuramos flujos automatizados de captura y nutrición de leads integrados directamente con tu CRM para empezar a vender de inmediato.
+                                </p>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-red mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Lanzamiento ágil de MVPs para validación de mercado</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-red mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Páginas de aterrizaje enfocadas en altas conversiones</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-red mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Integraciones directas con CRMs y herramientas de marketing</p>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-brand-red mt-0.5 text-xl font-bold">check_circle</span>
+                                        <p class="text-slate-700 text-sm font-bold">Arquitectura en la nube escalable y de bajo costo</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-brand-red/10 flex items-center justify-center text-brand-red shrink-0">
+                                        <span class="material-symbols-outlined">rocket_launch</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-2xl font-black text-brand-dark leading-none">Ágil</span>
+                                        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Construcción y Despliegue</span>
+                                    </div>
+                                </div>
+                                <a href="https://wa.me/50231097191" target="_blank" class="w-full sm:w-auto px-8 py-3.5 bg-brand-dark hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors text-center shadow-md">
+                                    Despegar Startup
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
             </div>
         </section>
+
+        <script>
+            function switchSector(sectorId) {
+                // Hide all contents
+                document.querySelectorAll('.sector-content').forEach(el => {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                });
+                // Show active content
+                const activeContent = document.getElementById('content-' + sectorId);
+                if (activeContent) {
+                    activeContent.classList.remove('hidden');
+                    activeContent.classList.add('flex');
+                }
+
+                // Reset all tabs
+                const tabs = ['educacion', 'empresas', 'instituciones', 'pymes', 'emprendimientos'];
+                tabs.forEach(tab => {
+                    const tabEl = document.getElementById('tab-' + tab);
+                    if (tabEl) {
+                        tabEl.setAttribute('aria-selected', 'false');
+                        tabEl.className = "sector-tab flex items-center gap-4 px-6 py-5 rounded-2xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300 text-left transition-all duration-300 w-full shrink-0 lg:shrink cursor-pointer";
+                        
+                        const iconWrapper = tabEl.querySelector('.tab-icon-wrapper');
+                        if (iconWrapper) {
+                            iconWrapper.className = "tab-icon-wrapper w-10 h-10 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center transition-colors";
+                        }
+                    }
+                });
+
+                // Set active tab
+                const activeTab = document.getElementById('tab-' + sectorId);
+                if (activeTab) {
+                    activeTab.setAttribute('aria-selected', 'true');
+                    activeTab.className = "sector-tab flex items-center gap-4 px-6 py-5 rounded-2xl border border-brand-purple bg-brand-dark text-white shadow-xl shadow-brand-dark/15 text-left transition-all duration-300 w-full shrink-0 lg:shrink cursor-pointer";
+                    
+                    const iconWrapper = activeTab.querySelector('.tab-icon-wrapper');
+                    if (iconWrapper) {
+                        let colorClass = "bg-brand-purple/20 text-brand-purple";
+                        if (sectorId === 'empresas' || sectorId === 'emprendimientos') {
+                            colorClass = "bg-brand-red/20 text-brand-red";
+                        } else if (sectorId === 'pymes') {
+                            colorClass = "bg-brand-yellow/20 text-brand-yellow";
+                        }
+                        iconWrapper.className = `tab-icon-wrapper w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${colorClass}`;
+                    }
+                }
+            }
+        </script>
 
     </main>
     <footer class="bg-brand-dark text-white pt-24 pb-12">
