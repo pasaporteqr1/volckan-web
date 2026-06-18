@@ -200,8 +200,8 @@
                         <span class="text-sm font-bold uppercase tracking-widest text-slate-800">Sincronización Omnicanal</span>
                     </div>
 
-                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] text-brand-dark uppercase tracking-tight">
-                        Administración de <span class="text-brand-purple relative inline-block">Tiendas<div class="absolute bottom-1 left-0 w-full h-3 bg-brand-yellow/30 -z-10 transform -skew-x-12"></div></span>
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] text-brand-dark uppercase tracking-tight">
+                        Administración<br class="sm:hidden"> de <span class="text-brand-purple relative inline-block">Tiendas<div class="absolute bottom-1 left-0 w-full h-3 bg-brand-yellow/30 -z-10 transform -skew-x-12"></div></span>
                     </h1>
 
                     <p class="text-xl text-slate-800 font-medium leading-relaxed max-w-lg">
@@ -274,6 +274,392 @@
                         <p class="text-slate-800 text-sm">Generación de orden de compra borrador al alcanzar mínimos de inventario.</p>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             SIMULADOR INTERACTIVO: ADMINISTRACIÓN DE TIENDAS
+             ===================================================== -->
+        <section id="store-simulator" class="py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
+            <!-- Background decorations -->
+            <div class="absolute top-0 right-0 w-80 h-80 bg-brand-purple/5 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px]"></div>
+
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <!-- Section Header -->
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-200 bg-blue-50 text-blue-600 mb-6">
+                        <span class="material-symbols-outlined text-sm">play_circle</span>
+                        <span class="text-sm font-bold uppercase tracking-widest">Simulador Interactivo</span>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-800 mb-6 uppercase">Experimenta el <span class="text-brand-purple">Flujo Completo</span></h2>
+                    <p class="text-slate-600 text-lg">Vive en tiempo real cómo una venta actualiza el inventario, genera la factura electrónica y dispara una orden de reabastecimiento automática.</p>
+                </div>
+
+                <!-- Simulator Container -->
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+
+                    <!-- Progress Steps Bar -->
+                    <div class="bg-slate-50 border-b border-slate-200 px-4 sm:px-8 py-5">
+                        <div class="flex items-center justify-between max-w-2xl mx-auto">
+                            <!-- Step 1 -->
+                            <div class="flex flex-col items-center gap-1.5 group" id="tsim-step-indicator-1">
+                                <div class="w-10 h-10 rounded-full bg-brand-purple text-white flex items-center justify-center text-sm font-black transition-all shadow-lg shadow-brand-purple/30">
+                                    <span class="material-symbols-outlined text-lg">point_of_sale</span>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-purple">Venta</span>
+                            </div>
+                            <div class="flex-1 h-1 bg-slate-200 mx-1 sm:mx-2 rounded-full overflow-hidden"><div id="tsim-progress-1" class="h-full bg-slate-300 rounded-full transition-all duration-700 w-0"></div></div>
+                            <!-- Step 2 -->
+                            <div class="flex flex-col items-center gap-1.5" id="tsim-step-indicator-2">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center text-sm font-black transition-all">
+                                    <span class="material-symbols-outlined text-lg">inventory_2</span>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Stock</span>
+                            </div>
+                            <div class="flex-1 h-1 bg-slate-200 mx-1 sm:mx-2 rounded-full overflow-hidden"><div id="tsim-progress-2" class="h-full bg-slate-300 rounded-full transition-all duration-700 w-0"></div></div>
+                            <!-- Step 3 -->
+                            <div class="flex flex-col items-center gap-1.5" id="tsim-step-indicator-3">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center text-sm font-black transition-all">
+                                    <span class="material-symbols-outlined text-lg">receipt_long</span>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Factura</span>
+                            </div>
+                            <div class="flex-1 h-1 bg-slate-200 mx-1 sm:mx-2 rounded-full overflow-hidden"><div id="tsim-progress-3" class="h-full bg-slate-300 rounded-full transition-all duration-700 w-0"></div></div>
+                            <!-- Step 4 -->
+                            <div class="flex flex-col items-center gap-1.5" id="tsim-step-indicator-4">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center text-sm font-black transition-all">
+                                    <span class="material-symbols-outlined text-lg">local_shipping</span>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Re-Stock</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panels Container -->
+                    <div class="relative min-h-[900px] sm:min-h-[700px] lg:min-h-[520px]">
+
+                        <!-- ======================== PANEL 1: POS SALE ======================== -->
+                        <div id="tsim-panel-1" class="absolute inset-0 p-5 sm:p-8 transition-all duration-500 opacity-100 translate-x-0">
+                            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                                <!-- Left: POS Terminal -->
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-800 mb-1 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-brand-purple">point_of_sale</span>
+                                        Terminal Punto de Venta
+                                    </h3>
+                                    <p class="text-slate-500 text-sm mb-6">Registra la venta de un producto disponible en la tienda.</p>
+
+                                    <!-- Product Cards Grid -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                                        <label class="tsim-product-card cursor-pointer">
+                                            <input type="radio" name="tsim-product" value="laptop" class="hidden" checked>
+                                            <div class="border-2 border-brand-purple bg-brand-purple/5 rounded-xl p-4 transition-all hover:shadow-md">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-12 h-12 rounded-lg bg-brand-purple/10 flex items-center justify-center">
+                                                        <span class="material-symbols-outlined text-2xl text-brand-purple">laptop_mac</span>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-black text-sm text-slate-800">Laptop Pro 15"</p>
+                                                        <p class="text-xs text-slate-500">Q12,500.00 · Stock: <span class="tsim-stock-display font-bold text-green-600">8</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="tsim-product-card cursor-pointer">
+                                            <input type="radio" name="tsim-product" value="monitor" class="hidden">
+                                            <div class="border-2 border-slate-200 rounded-xl p-4 transition-all hover:shadow-md hover:border-slate-300">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center">
+                                                        <span class="material-symbols-outlined text-2xl text-blue-600">desktop_windows</span>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-black text-sm text-slate-800">Monitor 27" 4K</p>
+                                                        <p class="text-xs text-slate-500">Q4,200.00 · Stock: <span class="tsim-stock-display font-bold text-green-600">3</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="tsim-product-card cursor-pointer">
+                                            <input type="radio" name="tsim-product" value="teclado" class="hidden">
+                                            <div class="border-2 border-slate-200 rounded-xl p-4 transition-all hover:shadow-md hover:border-slate-300">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-12 h-12 rounded-lg bg-green-50 flex items-center justify-center">
+                                                        <span class="material-symbols-outlined text-2xl text-green-600">keyboard</span>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-black text-sm text-slate-800">Teclado Mecánico</p>
+                                                        <p class="text-xs text-slate-500">Q850.00 · Stock: <span class="tsim-stock-display font-bold text-orange-500">2</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="tsim-product-card cursor-pointer">
+                                            <input type="radio" name="tsim-product" value="audifonos" class="hidden">
+                                            <div class="border-2 border-slate-200 rounded-xl p-4 transition-all hover:shadow-md hover:border-slate-300">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-12 h-12 rounded-lg bg-pink-50 flex items-center justify-center">
+                                                        <span class="material-symbols-outlined text-2xl text-pink-600">headphones</span>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-black text-sm text-slate-800">Audífonos BT Pro</p>
+                                                        <p class="text-xs text-slate-500">Q1,350.00 · Stock: <span class="tsim-stock-display font-bold text-green-600">15</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Right: Customer & Qty -->
+                                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100">
+                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-600 mb-4 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-base">person</span>
+                                        Datos del Cliente
+                                    </h4>
+                                    <div class="space-y-3">
+                                        <input type="text" id="tsim-client-name" placeholder="Nombre del cliente" value="María López" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 outline-none text-sm font-medium">
+                                        <input type="text" id="tsim-client-nit" placeholder="NIT para factura" value="1234567-8" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 outline-none text-sm font-medium">
+                                        <input type="email" id="tsim-client-email" placeholder="Correo electrónico" value="maria@empresa.com" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 outline-none text-sm font-medium">
+                                        <div class="flex items-center gap-3">
+                                            <label class="text-sm font-bold text-slate-600">Cantidad:</label>
+                                            <div class="flex items-center bg-white rounded-xl border border-slate-200 overflow-hidden">
+                                                <button id="tsim-qty-minus" class="px-3 py-2 text-slate-400 hover:text-brand-purple hover:bg-slate-50 transition-colors font-bold text-lg">−</button>
+                                                <span id="tsim-qty" class="px-4 py-2 font-black text-brand-dark text-lg min-w-[40px] text-center">1</span>
+                                                <button id="tsim-qty-plus" class="px-3 py-2 text-slate-400 hover:text-brand-purple hover:bg-slate-50 transition-colors font-bold text-lg">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 p-4 bg-white rounded-xl border border-dashed border-slate-300">
+                                        <div class="flex justify-between text-sm"><span class="text-slate-500">Producto:</span><span id="tsim-summary-product" class="font-bold text-slate-800">Laptop Pro 15"</span></div>
+                                        <div class="flex justify-between text-sm mt-1"><span class="text-slate-500">Subtotal:</span><span id="tsim-summary-subtotal" class="font-bold text-slate-800">Q12,500.00</span></div>
+                                        <div class="flex justify-between text-sm mt-1"><span class="text-slate-500">IVA (12%):</span><span id="tsim-summary-iva" class="font-bold text-slate-800">Q1,500.00</span></div>
+                                        <div class="border-t border-slate-200 mt-2 pt-2 flex justify-between"><span class="font-black text-brand-dark">TOTAL:</span><span id="tsim-summary-total" class="font-black text-brand-purple text-lg">Q14,000.00</span></div>
+                                    </div>
+                                    <button id="tsim-register-sale-btn" class="w-full mt-4 bg-brand-purple text-white py-3.5 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-brand-red transition-all shadow-lg hover:shadow-brand-red/30 hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">shopping_cart_checkout</span>
+                                        <span>Registrar Venta</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ======================== PANEL 2: STOCK UPDATE ======================== -->
+                        <div id="tsim-panel-2" class="absolute inset-0 p-5 sm:p-8 transition-all duration-500 opacity-0 translate-x-full pointer-events-none">
+                            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                                <!-- Left: Inventory Table -->
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-800 mb-1 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-brand-red">inventory_2</span>
+                                        Inventario en Tiempo Real
+                                    </h3>
+                                    <p class="text-slate-500 text-sm mb-6">El stock se actualiza instantáneamente en todos los canales.</p>
+
+                                    <div class="bg-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                                        <div class="bg-slate-900 px-5 py-3 flex items-center gap-2">
+                                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                            <span class="ml-3 text-slate-400 text-xs font-mono">inventory_sync.log</span>
+                                        </div>
+                                        <div class="p-4 font-mono text-xs space-y-1.5 text-slate-300" id="tsim-stock-log">
+                                            <p class="text-green-400">✓ Conexión con base de datos establecida</p>
+                                            <p class="text-green-400">✓ Canales sincronizados: Tienda física, Shopify, WooCommerce</p>
+                                            <p class="text-slate-500">--- Esperando transacción ---</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right: Stock Cards -->
+                                <div>
+                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-600 mb-4 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-base">monitoring</span>
+                                        Estado de Stock Global
+                                    </h4>
+                                    <div class="space-y-3" id="tsim-stock-cards">
+                                        <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 transition-all" id="tsim-stock-card-laptop">
+                                            <div class="w-10 h-10 rounded-lg bg-brand-purple/10 flex items-center justify-center"><span class="material-symbols-outlined text-brand-purple">laptop_mac</span></div>
+                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Laptop Pro 15"</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-green-500 rounded-full transition-all duration-1000" style="width:80%" id="tsim-bar-laptop"></div></div><span class="text-xs font-black text-slate-600" id="tsim-stock-val-laptop">8/10</span></div></div>
+                                        </div>
+                                        <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 transition-all" id="tsim-stock-card-monitor">
+                                            <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center"><span class="material-symbols-outlined text-blue-600">desktop_windows</span></div>
+                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Monitor 27" 4K</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-orange-500 rounded-full transition-all duration-1000" style="width:30%" id="tsim-bar-monitor"></div></div><span class="text-xs font-black text-slate-600" id="tsim-stock-val-monitor">3/10</span></div></div>
+                                        </div>
+                                        <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 transition-all" id="tsim-stock-card-teclado">
+                                            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center"><span class="material-symbols-outlined text-green-600">keyboard</span></div>
+                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Teclado Mecánico</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-red-500 rounded-full transition-all duration-1000" style="width:20%" id="tsim-bar-teclado"></div></div><span class="text-xs font-black text-slate-600" id="tsim-stock-val-teclado">2/10</span></div></div>
+                                        </div>
+                                        <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 transition-all" id="tsim-stock-card-audifonos">
+                                            <div class="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center"><span class="material-symbols-outlined text-pink-600">headphones</span></div>
+                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Audífonos BT Pro</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-green-500 rounded-full transition-all duration-1000" style="width:100%" id="tsim-bar-audifonos"></div></div><span class="text-xs font-black text-slate-600" id="tsim-stock-val-audifonos">15/15</span></div></div>
+                                        </div>
+                                    </div>
+                                    <button id="tsim-continue-to-invoice" class="hidden w-full mt-5 bg-brand-yellow text-slate-900 py-3.5 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-yellow-400 transition-all shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">receipt_long</span>
+                                        <span>Generar Factura Electrónica</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ======================== PANEL 3: ELECTRONIC INVOICE ======================== -->
+                        <div id="tsim-panel-3" class="absolute inset-0 p-5 sm:p-8 transition-all duration-500 opacity-0 translate-x-full pointer-events-none">
+                            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                                <!-- Left: Invoice Preview -->
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-800 mb-1 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-brand-yellow">receipt_long</span>
+                                        Factura Electrónica
+                                    </h3>
+                                    <p class="text-slate-500 text-sm mb-6">Factura generada automáticamente y enviada al cliente.</p>
+
+                                    <div class="bg-white rounded-2xl border-2 border-slate-200 shadow-lg overflow-hidden" id="tsim-invoice-doc">
+                                        <div class="bg-brand-purple p-5 text-white">
+                                            <div class="flex justify-between items-start">
+                                                <div>
+                                                    <h4 class="font-black text-lg">FACTURA ELECTRÓNICA</h4>
+                                                    <p class="text-purple-200 text-xs mt-1">Tecno Volckánica S.A.</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-xs text-purple-200">No. Serie</p>
+                                                    <p class="font-mono font-black text-sm" id="tsim-invoice-number">FEL-2026-00847</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-5 space-y-4">
+                                            <div class="grid grid-cols-2 gap-4 text-xs">
+                                                <div><span class="text-slate-400 block">Cliente:</span><span class="font-bold text-slate-800" id="tsim-inv-client">---</span></div>
+                                                <div><span class="text-slate-400 block">NIT:</span><span class="font-bold text-slate-800" id="tsim-inv-nit">---</span></div>
+                                                <div><span class="text-slate-400 block">Fecha:</span><span class="font-bold text-slate-800" id="tsim-inv-date">---</span></div>
+                                                <div><span class="text-slate-400 block">UUID:</span><span class="font-mono font-bold text-slate-800 text-[10px]" id="tsim-inv-uuid">---</span></div>
+                                            </div>
+                                            <table class="w-full text-xs">
+                                                <thead><tr class="border-b border-slate-200 text-slate-400 uppercase"><th class="pb-2 text-left">Producto</th><th class="pb-2 text-center">Cant.</th><th class="pb-2 text-right">Precio</th><th class="pb-2 text-right">Total</th></tr></thead>
+                                                <tbody id="tsim-inv-items"></tbody>
+                                            </table>
+                                            <div class="border-t border-slate-200 pt-3 space-y-1 text-xs">
+                                                <div class="flex justify-between"><span class="text-slate-400">Subtotal:</span><span class="font-bold" id="tsim-inv-subtotal">---</span></div>
+                                                <div class="flex justify-between"><span class="text-slate-400">IVA (12%):</span><span class="font-bold" id="tsim-inv-iva">---</span></div>
+                                                <div class="flex justify-between text-base border-t border-slate-200 pt-2 mt-1"><span class="font-black text-brand-dark">TOTAL:</span><span class="font-black text-brand-purple" id="tsim-inv-total">---</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-green-50 border-t-2 border-green-200 px-5 py-3 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-green-600 text-base">verified</span>
+                                            <span class="text-xs font-bold text-green-700">Certificada por SAT Guatemala · FEL Activa</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right: Email Sent Animation -->
+                                <div>
+                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-600 mb-4 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-base">forward_to_inbox</span>
+                                        Envío al Cliente
+                                    </h4>
+                                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100" id="tsim-email-preview">
+                                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-slate-200">
+                                            <div class="w-10 h-10 rounded-full bg-brand-purple flex items-center justify-center text-white">
+                                                <span class="material-symbols-outlined text-lg">mail</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-sm text-slate-800">Correo enviado</p>
+                                                <p class="text-xs text-slate-400" id="tsim-email-to">Para: ---</p>
+                                            </div>
+                                            <span class="ml-auto material-symbols-outlined text-green-500 text-2xl hidden" id="tsim-email-check">check_circle</span>
+                                        </div>
+                                        <div class="bg-white rounded-xl p-4 border border-slate-200 text-xs space-y-2">
+                                            <p class="font-bold text-slate-800">Asunto: Su Factura Electrónica - <span id="tsim-email-inv-num">FEL-2026-00847</span></p>
+                                            <p class="text-slate-500">Estimado/a <span id="tsim-email-client-name" class="font-bold">Cliente</span>,</p>
+                                            <p class="text-slate-500">Adjuntamos su factura electrónica correspondiente a su compra reciente. El documento ya fue certificado ante SAT Guatemala.</p>
+                                            <div class="flex items-center gap-2 mt-3 p-2.5 bg-slate-50 rounded-lg border border-dashed border-slate-300">
+                                                <span class="material-symbols-outlined text-brand-red text-lg">picture_as_pdf</span>
+                                                <span class="font-bold text-slate-600" id="tsim-email-pdf-name">FEL-2026-00847.pdf</span>
+                                                <span class="text-slate-400 text-[10px] ml-auto">124 KB</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button id="tsim-continue-to-restock" class="hidden w-full mt-5 bg-slate-800 text-white py-3.5 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-slate-700 transition-all shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">local_shipping</span>
+                                        <span>Verificar Re-Stock</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ======================== PANEL 4: RESTOCK ORDER ======================== -->
+                        <div id="tsim-panel-4" class="absolute inset-0 p-5 sm:p-8 transition-all duration-500 opacity-0 translate-x-full pointer-events-none">
+                            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                                <!-- Left: Stock Alert -->
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-800 mb-1 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-orange-500">local_shipping</span>
+                                        Alerta de Re-Abastecimiento
+                                    </h3>
+                                    <p class="text-slate-500 text-sm mb-6">Se detectaron productos bajo el mínimo de inventario.</p>
+
+                                    <!-- Alert Card -->
+                                    <div class="bg-orange-50 border-2 border-orange-200 rounded-2xl p-5 mb-5" id="tsim-restock-alert">
+                                        <div class="flex items-center gap-3 mb-4">
+                                            <div class="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center animate-pulse">
+                                                <span class="material-symbols-outlined text-white text-xl">warning</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-black text-orange-800">Stock Bajo Detectado</p>
+                                                <p class="text-xs text-orange-600">Los siguientes productos alcanzaron su mínimo.</p>
+                                            </div>
+                                        </div>
+                                        <div class="space-y-2" id="tsim-restock-items-list">
+                                            <!-- Filled dynamically -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Notification Terminal -->
+                                    <div class="bg-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                                        <div class="bg-slate-900 px-5 py-3 flex items-center gap-2">
+                                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                            <span class="ml-3 text-slate-400 text-xs font-mono">restock_engine.log</span>
+                                        </div>
+                                        <div class="p-4 font-mono text-xs space-y-1.5 text-slate-300" id="tsim-restock-log">
+                                            <p class="text-yellow-400">⚠ Verificando niveles de inventario...</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right: Purchase Order -->
+                                <div>
+                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-600 mb-4 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-base">description</span>
+                                        Orden de Compra Generada
+                                    </h4>
+                                    <div class="bg-white rounded-2xl border-2 border-dashed border-slate-300 p-5" id="tsim-purchase-order">
+                                        <div class="flex justify-between items-start mb-5">
+                                            <div>
+                                                <h5 class="font-black text-base text-slate-800">ORDEN DE COMPRA</h5>
+                                                <p class="text-[10px] text-slate-400 font-mono mt-0.5" id="tsim-po-number">OC-2026-00312</p>
+                                            </div>
+                                            <span class="text-[10px] px-2.5 py-1 rounded-full bg-yellow-100 text-yellow-700 font-bold uppercase tracking-wider" id="tsim-po-status">Borrador</span>
+                                        </div>
+                                        <div class="space-y-3" id="tsim-po-items">
+                                            <!-- Filled dynamically -->
+                                        </div>
+                                        <div class="border-t border-slate-200 mt-4 pt-4">
+                                            <div class="flex justify-between text-sm"><span class="text-slate-400">Total Estimado:</span><span class="font-black text-brand-purple" id="tsim-po-total">---</span></div>
+                                            <div class="flex justify-between text-xs mt-1"><span class="text-slate-400">Proveedor sugerido:</span><span class="font-bold text-slate-600">TechDistributor GT</span></div>
+                                        </div>
+                                    </div>
+
+                                    <button id="tsim-restart-btn" class="hidden w-full mt-5 bg-brand-purple text-white py-3.5 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-brand-red transition-all shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                        <span class="material-symbols-outlined text-lg">replay</span>
+                                        <span>Reiniciar Simulación</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- /Panels Container -->
+                </div><!-- /Simulator Container -->
             </div>
         </section>
 
@@ -776,6 +1162,576 @@
             });
         });
     </script>
+
+    <!-- LOGICA DEL SIMULADOR DE TIENDAS (Aislada al final de la página) -->
+    <script>
+    (function() {
+        // ==========================================
+        // PRODUCT CATALOG DATA
+        // ==========================================
+        const PRODUCTS = {
+            laptop: { name: 'Laptop Pro 15"', price: 12500, stock: 8, max: 10, icon: 'laptop_mac', minThreshold: 3 },
+            monitor: { name: 'Monitor 27" 4K', price: 4200, stock: 3, max: 10, icon: 'desktop_windows', minThreshold: 3 },
+            teclado: { name: 'Teclado Mecánico', price: 850, stock: 2, max: 10, icon: 'keyboard', minThreshold: 3 },
+            audifonos: { name: 'Audífonos BT Pro', price: 1350, stock: 15, max: 15, icon: 'headphones', minThreshold: 5 }
+        };
+
+        let currentProduct = 'laptop';
+        let qty = 1;
+        let saleData = null;
+        let currentStep = 1;
+
+        // ==========================================
+        // UTILITY FUNCTIONS
+        // ==========================================
+        function formatQ(num) {
+            return 'Q' + num.toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+                const r = Math.random() * 16 | 0;
+                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            });
+        }
+
+        function generateInvoiceNumber() {
+            return 'FEL-2026-' + String(Math.floor(Math.random() * 90000) + 10000).padStart(5, '0');
+        }
+
+        function generatePONumber() {
+            return 'OC-2026-' + String(Math.floor(Math.random() * 9000) + 1000).padStart(5, '0');
+        }
+
+        function getStockColor(stock, max) {
+            const pct = stock / max;
+            if (pct <= 0.2) return 'red';
+            if (pct <= 0.4) return 'orange';
+            return 'green';
+        }
+
+        function addLogLine(containerId, text, color = 'slate-300') {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const p = document.createElement('p');
+            p.className = `text-${color}`;
+            p.textContent = text;
+            p.style.opacity = '0';
+            p.style.transform = 'translateY(5px)';
+            p.style.transition = 'all 0.3s ease';
+            container.appendChild(p);
+            requestAnimationFrame(() => {
+                p.style.opacity = '1';
+                p.style.transform = 'translateY(0)';
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // ==========================================
+        // PANEL NAVIGATION
+        // ==========================================
+        function activateStep(stepNum) {
+            currentStep = stepNum;
+            for (let i = 1; i <= 4; i++) {
+                const panel = document.getElementById(`tsim-panel-${i}`);
+                const indicator = document.getElementById(`tsim-step-indicator-${i}`);
+                const indicatorCircle = indicator?.querySelector('div');
+                const indicatorLabel = indicator?.querySelector('span:last-child');
+
+                if (i < stepNum) {
+                    // Completed step
+                    panel.classList.add('opacity-0', '-translate-x-full', 'pointer-events-none');
+                    panel.classList.remove('opacity-100', 'translate-x-0', 'translate-x-full');
+                    if (indicatorCircle) {
+                        indicatorCircle.className = 'w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center text-sm font-black transition-all shadow-lg shadow-green-500/30';
+                        indicatorCircle.innerHTML = '<span class="material-symbols-outlined text-lg">check</span>';
+                    }
+                    if (indicatorLabel) indicatorLabel.className = 'text-[10px] font-bold uppercase tracking-wider text-green-600';
+                } else if (i === stepNum) {
+                    // Current step
+                    panel.classList.remove('opacity-0', 'translate-x-full', '-translate-x-full', 'pointer-events-none');
+                    panel.classList.add('opacity-100', 'translate-x-0');
+                    const colors = { 1: 'brand-purple', 2: 'brand-red', 3: 'brand-yellow', 4: 'slate-800' };
+                    const icons = { 1: 'point_of_sale', 2: 'inventory_2', 3: 'receipt_long', 4: 'local_shipping' };
+                    if (indicatorCircle) {
+                        indicatorCircle.className = `w-10 h-10 rounded-full bg-${colors[i]} text-white flex items-center justify-center text-sm font-black transition-all shadow-lg shadow-${colors[i]}/30`;
+                        indicatorCircle.innerHTML = `<span class="material-symbols-outlined text-lg">${icons[i]}</span>`;
+                    }
+                    if (indicatorLabel) indicatorLabel.className = `text-[10px] font-bold uppercase tracking-wider text-${colors[i]}`;
+                } else {
+                    // Future step
+                    panel.classList.add('opacity-0', 'translate-x-full', 'pointer-events-none');
+                    panel.classList.remove('opacity-100', 'translate-x-0', '-translate-x-full');
+                    if (indicatorCircle) {
+                        indicatorCircle.className = 'w-10 h-10 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center text-sm font-black transition-all';
+                        const icons = { 1: 'point_of_sale', 2: 'inventory_2', 3: 'receipt_long', 4: 'local_shipping' };
+                        indicatorCircle.innerHTML = `<span class="material-symbols-outlined text-lg">${icons[i]}</span>`;
+                    }
+                    if (indicatorLabel) indicatorLabel.className = 'text-[10px] font-bold uppercase tracking-wider text-slate-400';
+                }
+
+                // Progress bars
+                if (i < stepNum) {
+                    const bar = document.getElementById(`tsim-progress-${i}`);
+                    if (bar) bar.style.width = '100%';
+                    if (bar) bar.className = 'h-full bg-green-500 rounded-full transition-all duration-700 w-full';
+                }
+            }
+        }
+
+        // ==========================================
+        // UPDATE SUMMARY ON PRODUCT/QTY CHANGE
+        // ==========================================
+        function updateSummary() {
+            const p = PRODUCTS[currentProduct];
+            const subtotal = p.price * qty;
+            const iva = subtotal * 0.12;
+            const total = subtotal + iva;
+
+            const summaryProduct = document.getElementById('tsim-summary-product');
+            const summarySubtotal = document.getElementById('tsim-summary-subtotal');
+            const summaryIva = document.getElementById('tsim-summary-iva');
+            const summaryTotal = document.getElementById('tsim-summary-total');
+
+            if (summaryProduct) summaryProduct.textContent = p.name;
+            if (summarySubtotal) summarySubtotal.textContent = formatQ(subtotal);
+            if (summaryIva) summaryIva.textContent = formatQ(iva);
+            if (summaryTotal) summaryTotal.textContent = formatQ(total);
+        }
+
+        // ==========================================
+        // PRODUCT RADIO CARD SELECTION
+        // ==========================================
+        function setupProductCards() {
+            document.querySelectorAll('.tsim-product-card input[name="tsim-product"]').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    currentProduct = radio.value;
+                    qty = 1;
+                    document.getElementById('tsim-qty').textContent = '1';
+
+                    // Update card visuals
+                    document.querySelectorAll('.tsim-product-card > div').forEach(card => {
+                        card.classList.remove('border-brand-purple', 'bg-brand-purple/5');
+                        card.classList.add('border-slate-200');
+                    });
+                    radio.closest('.tsim-product-card').querySelector('div').classList.remove('border-slate-200');
+                    radio.closest('.tsim-product-card').querySelector('div').classList.add('border-brand-purple', 'bg-brand-purple/5');
+
+                    updateSummary();
+                });
+            });
+        }
+
+        // ==========================================
+        // QUANTITY CONTROLS
+        // ==========================================
+        function setupQtyControls() {
+            const qtyEl = document.getElementById('tsim-qty');
+            document.getElementById('tsim-qty-minus')?.addEventListener('click', () => {
+                if (qty > 1) { qty--; qtyEl.textContent = qty; updateSummary(); }
+            });
+            document.getElementById('tsim-qty-plus')?.addEventListener('click', () => {
+                const p = PRODUCTS[currentProduct];
+                if (qty < p.stock) { qty++; qtyEl.textContent = qty; updateSummary(); }
+            });
+        }
+
+        // ==========================================
+        // STEP 1 → STEP 2: REGISTER SALE → UPDATE STOCK
+        // ==========================================
+        function handleRegisterSale() {
+            const btn = document.getElementById('tsim-register-sale-btn');
+            if (!btn) return;
+
+            btn.addEventListener('click', () => {
+                const p = PRODUCTS[currentProduct];
+                const clientName = document.getElementById('tsim-client-name')?.value || 'Cliente';
+                const clientNit = document.getElementById('tsim-client-nit')?.value || 'CF';
+                const clientEmail = document.getElementById('tsim-client-email')?.value || 'cliente@email.com';
+
+                saleData = {
+                    product: currentProduct,
+                    productName: p.name,
+                    price: p.price,
+                    qty: qty,
+                    subtotal: p.price * qty,
+                    iva: p.price * qty * 0.12,
+                    total: p.price * qty * 1.12,
+                    clientName,
+                    clientNit,
+                    clientEmail
+                };
+
+                // Disable button
+                btn.disabled = true;
+                btn.innerHTML = '<span>Procesando...</span><span class="material-symbols-outlined text-lg animate-spin">sync</span>';
+
+                // Update product stock
+                PRODUCTS[currentProduct].stock -= qty;
+
+                setTimeout(() => {
+                    activateStep(2);
+                    animateStockUpdate();
+                }, 800);
+            });
+        }
+
+        // ==========================================
+        // STEP 2: ANIMATE STOCK UPDATE
+        // ==========================================
+        function animateStockUpdate() {
+            const log = document.getElementById('tsim-stock-log');
+            if (log) {
+                // Clear waiting line
+                const waiting = log.querySelector('.text-slate-500');
+                if (waiting) waiting.remove();
+            }
+
+            const steps = [
+                { delay: 300, text: `▶ Venta registrada: ${saleData.qty}x ${saleData.productName}`, color: 'blue-400' },
+                { delay: 800, text: `⟳ Actualizando stock local: ${saleData.productName}...`, color: 'yellow-400' },
+                { delay: 1500, text: `✓ Stock actualizado: ${PRODUCTS[saleData.product].stock}/${PRODUCTS[saleData.product].max} unidades`, color: 'green-400' },
+                { delay: 2200, text: '⟳ Sincronizando Shopify...', color: 'yellow-400' },
+                { delay: 2800, text: '✓ Shopify sincronizado correctamente', color: 'green-400' },
+                { delay: 3200, text: '⟳ Sincronizando WooCommerce...', color: 'yellow-400' },
+                { delay: 3800, text: '✓ WooCommerce sincronizado correctamente', color: 'green-400' },
+                { delay: 4300, text: '✓ Todos los canales actualizados', color: 'green-400' },
+            ];
+
+            steps.forEach(step => {
+                setTimeout(() => addLogLine('tsim-stock-log', step.text, step.color), step.delay);
+            });
+
+            // Animate stock bars
+            setTimeout(() => {
+                Object.keys(PRODUCTS).forEach(key => {
+                    const p = PRODUCTS[key];
+                    const bar = document.getElementById(`tsim-bar-${key}`);
+                    const val = document.getElementById(`tsim-stock-val-${key}`);
+                    const card = document.getElementById(`tsim-stock-card-${key}`);
+
+                    if (bar) {
+                        const pct = (p.stock / p.max) * 100;
+                        const color = getStockColor(p.stock, p.max);
+                        bar.style.width = `${pct}%`;
+                        bar.className = `h-full bg-${color}-500 rounded-full transition-all duration-1000`;
+                    }
+                    if (val) val.textContent = `${p.stock}/${p.max}`;
+
+                    // Highlight changed product
+                    if (key === saleData.product && card) {
+                        card.classList.add('ring-2', 'ring-brand-red', 'bg-red-50/30');
+                        setTimeout(() => card.classList.remove('ring-2', 'ring-brand-red', 'bg-red-50/30'), 2000);
+                    }
+                });
+            }, 1500);
+
+            // Show continue button
+            setTimeout(() => {
+                const btn = document.getElementById('tsim-continue-to-invoice');
+                if (btn) {
+                    btn.classList.remove('hidden');
+                    btn.classList.add('flex');
+                }
+            }, 4500);
+        }
+
+        // ==========================================
+        // STEP 2 → STEP 3: GENERATE INVOICE
+        // ==========================================
+        function handleContinueToInvoice() {
+            document.getElementById('tsim-continue-to-invoice')?.addEventListener('click', () => {
+                activateStep(3);
+                setTimeout(animateInvoice, 400);
+            });
+        }
+
+        function animateInvoice() {
+            const invNumber = generateInvoiceNumber();
+            const uuid = generateUUID();
+            const today = new Date().toLocaleDateString('es-GT', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Fill invoice fields
+            const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+            setEl('tsim-invoice-number', invNumber);
+            setEl('tsim-inv-client', saleData.clientName);
+            setEl('tsim-inv-nit', saleData.clientNit);
+            setEl('tsim-inv-date', today);
+            setEl('tsim-inv-uuid', uuid);
+            setEl('tsim-inv-subtotal', formatQ(saleData.subtotal));
+            setEl('tsim-inv-iva', formatQ(saleData.iva));
+            setEl('tsim-inv-total', formatQ(saleData.total));
+
+            // Fill items table
+            const tbody = document.getElementById('tsim-inv-items');
+            if (tbody) {
+                tbody.innerHTML = `<tr class="border-b border-slate-100">
+                    <td class="py-2 font-medium text-slate-800">${saleData.productName}</td>
+                    <td class="py-2 text-center">${saleData.qty}</td>
+                    <td class="py-2 text-right">${formatQ(saleData.price)}</td>
+                    <td class="py-2 text-right font-bold">${formatQ(saleData.subtotal)}</td>
+                </tr>`;
+            }
+
+            // Animate email preview
+            setTimeout(() => {
+                setEl('tsim-email-to', `Para: ${saleData.clientEmail}`);
+                setEl('tsim-email-inv-num', invNumber);
+                setEl('tsim-email-client-name', saleData.clientName);
+                setEl('tsim-email-pdf-name', `${invNumber}.pdf`);
+
+                const emailCheck = document.getElementById('tsim-email-check');
+                if (emailCheck) {
+                    emailCheck.classList.remove('hidden');
+                    emailCheck.style.animation = 'pulse 1s ease-in-out';
+                }
+            }, 1200);
+
+            // Show continue button
+            setTimeout(() => {
+                const btn = document.getElementById('tsim-continue-to-restock');
+                if (btn) {
+                    btn.classList.remove('hidden');
+                    btn.classList.add('flex');
+                }
+            }, 2000);
+        }
+
+        // ==========================================
+        // STEP 3 → STEP 4: RESTOCK ORDER
+        // ==========================================
+        function handleContinueToRestock() {
+            document.getElementById('tsim-continue-to-restock')?.addEventListener('click', () => {
+                activateStep(4);
+                setTimeout(animateRestock, 400);
+            });
+        }
+
+        function animateRestock() {
+            // Find products below threshold
+            const lowStockProducts = [];
+            Object.keys(PRODUCTS).forEach(key => {
+                const p = PRODUCTS[key];
+                if (p.stock <= p.minThreshold) {
+                    lowStockProducts.push({ key, ...p });
+                }
+            });
+
+            // Fill restock items list
+            const listEl = document.getElementById('tsim-restock-items-list');
+            if (listEl) {
+                listEl.innerHTML = '';
+                lowStockProducts.forEach((p, i) => {
+                    setTimeout(() => {
+                        const item = document.createElement('div');
+                        item.className = 'flex items-center justify-between bg-white p-3 rounded-xl border border-orange-200 transform translate-y-2 opacity-0 transition-all duration-300';
+                        item.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-orange-500">${p.icon}</span>
+                                <span class="font-bold text-sm text-slate-800">${p.name}</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-black text-red-600">${p.stock} uds</span>
+                                <span class="text-xs text-slate-400"> / mín: ${p.minThreshold}</span>
+                            </div>
+                        `;
+                        listEl.appendChild(item);
+                        requestAnimationFrame(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        });
+                    }, i * 300);
+                });
+            }
+
+            // Animate log
+            const logSteps = [
+                { delay: 500, text: '▶ Escaneando niveles de inventario...', color: 'blue-400' },
+                { delay: 1200, text: `⚠ ${lowStockProducts.length} producto(s) bajo mínimo detectado(s)`, color: 'yellow-400' },
+                { delay: 2000, text: '⟳ Generando orden de compra borrador...', color: 'yellow-400' },
+                { delay: 3000, text: '✓ Orden de compra generada exitosamente', color: 'green-400' },
+                { delay: 3500, text: '✓ Notificación enviada al departamento de compras', color: 'green-400' },
+            ];
+
+            logSteps.forEach(step => {
+                setTimeout(() => addLogLine('tsim-restock-log', step.text, step.color), step.delay);
+            });
+
+            // Fill Purchase Order
+            setTimeout(() => {
+                const poItems = document.getElementById('tsim-po-items');
+                const poNumber = document.getElementById('tsim-po-number');
+                const poTotal = document.getElementById('tsim-po-total');
+                const poStatus = document.getElementById('tsim-po-status');
+
+                if (poNumber) poNumber.textContent = generatePONumber();
+
+                let totalPO = 0;
+                if (poItems) {
+                    poItems.innerHTML = '';
+                    lowStockProducts.forEach(p => {
+                        const orderQty = p.max - p.stock;
+                        const orderCost = orderQty * p.price * 0.7; // Wholesale price
+                        totalPO += orderCost;
+
+                        const row = document.createElement('div');
+                        row.className = 'flex items-center justify-between p-3 bg-slate-50 rounded-lg text-xs';
+                        row.innerHTML = `
+                            <div>
+                                <p class="font-bold text-slate-800">${p.name}</p>
+                                <p class="text-slate-400 mt-0.5">Solicitar: ${orderQty} unidades</p>
+                            </div>
+                            <span class="font-black text-slate-700">${formatQ(orderCost)}</span>
+                        `;
+                        poItems.appendChild(row);
+                    });
+                }
+
+                if (poTotal) poTotal.textContent = formatQ(totalPO);
+
+                // Animate status change
+                setTimeout(() => {
+                    if (poStatus) {
+                        poStatus.textContent = 'Enviada';
+                        poStatus.className = 'text-[10px] px-2.5 py-1 rounded-full bg-green-100 text-green-700 font-bold uppercase tracking-wider';
+                    }
+
+                    // Show restart button
+                    const restartBtn = document.getElementById('tsim-restart-btn');
+                    if (restartBtn) {
+                        restartBtn.classList.remove('hidden');
+                        restartBtn.classList.add('flex');
+                    }
+                }, 1500);
+            }, 3200);
+        }
+
+        // ==========================================
+        // RESTART SIMULATION
+        // ==========================================
+        function handleRestart() {
+            document.getElementById('tsim-restart-btn')?.addEventListener('click', () => {
+                // Reset product data
+                PRODUCTS.laptop.stock = 8;
+                PRODUCTS.monitor.stock = 3;
+                PRODUCTS.teclado.stock = 2;
+                PRODUCTS.audifonos.stock = 15;
+
+                currentProduct = 'laptop';
+                qty = 1;
+                saleData = null;
+
+                // Reset Step 1 UI
+                document.getElementById('tsim-qty').textContent = '1';
+                const saleBtn = document.getElementById('tsim-register-sale-btn');
+                if (saleBtn) {
+                    saleBtn.disabled = false;
+                    saleBtn.innerHTML = '<span class="material-symbols-outlined text-lg">shopping_cart_checkout</span><span>Registrar Venta</span>';
+                }
+
+                // Reset product card selection
+                document.querySelectorAll('.tsim-product-card > div').forEach(card => {
+                    card.classList.remove('border-brand-purple', 'bg-brand-purple/5');
+                    card.classList.add('border-slate-200');
+                });
+                const firstCard = document.querySelector('.tsim-product-card:first-child > div');
+                if (firstCard) {
+                    firstCard.classList.remove('border-slate-200');
+                    firstCard.classList.add('border-brand-purple', 'bg-brand-purple/5');
+                }
+                const firstRadio = document.querySelector('.tsim-product-card:first-child input');
+                if (firstRadio) firstRadio.checked = true;
+
+                // Reset stock displays in product cards
+                const stockDisplays = document.querySelectorAll('.tsim-stock-display');
+                const stockValues = [8, 3, 2, 15];
+                const stockColors = ['green-600', 'green-600', 'orange-500', 'green-600'];
+                stockDisplays.forEach((el, i) => {
+                    if (el) {
+                        el.textContent = stockValues[i];
+                        el.className = `tsim-stock-display font-bold text-${stockColors[i]}`;
+                    }
+                });
+
+                // Reset stock bars
+                const barData = { laptop: { pct: 80, color: 'green' }, monitor: { pct: 30, color: 'orange' }, teclado: { pct: 20, color: 'red' }, audifonos: { pct: 100, color: 'green' } };
+                Object.keys(barData).forEach(key => {
+                    const bar = document.getElementById(`tsim-bar-${key}`);
+                    const val = document.getElementById(`tsim-stock-val-${key}`);
+                    const card = document.getElementById(`tsim-stock-card-${key}`);
+                    if (bar) { bar.style.width = `${barData[key].pct}%`; bar.className = `h-full bg-${barData[key].color}-500 rounded-full transition-all duration-1000`; }
+                    if (val) val.textContent = `${PRODUCTS[key].stock}/${PRODUCTS[key].max}`;
+                    if (card) card.classList.remove('ring-2', 'ring-brand-red', 'bg-red-50/30');
+                });
+
+                // Reset logs
+                const stockLog = document.getElementById('tsim-stock-log');
+                if (stockLog) stockLog.innerHTML = '<p class="text-green-400">✓ Conexión con base de datos establecida</p><p class="text-green-400">✓ Canales sincronizados: Tienda física, Shopify, WooCommerce</p><p class="text-slate-500">--- Esperando transacción ---</p>';
+
+                const restockLog = document.getElementById('tsim-restock-log');
+                if (restockLog) restockLog.innerHTML = '<p class="text-yellow-400">⚠ Verificando niveles de inventario...</p>';
+
+                // Reset invoice
+                ['tsim-inv-client','tsim-inv-nit','tsim-inv-date','tsim-inv-uuid','tsim-inv-subtotal','tsim-inv-iva','tsim-inv-total'].forEach(id => {
+                    const el = document.getElementById(id); if (el) el.textContent = '---';
+                });
+                const tbody = document.getElementById('tsim-inv-items');
+                if (tbody) tbody.innerHTML = '';
+
+                // Reset email
+                const emailCheck = document.getElementById('tsim-email-check');
+                if (emailCheck) emailCheck.classList.add('hidden');
+                const emailTo = document.getElementById('tsim-email-to');
+                if (emailTo) emailTo.textContent = 'Para: ---';
+
+                // Reset restock
+                const restockList = document.getElementById('tsim-restock-items-list');
+                if (restockList) restockList.innerHTML = '';
+                const poItems = document.getElementById('tsim-po-items');
+                if (poItems) poItems.innerHTML = '';
+                const poTotal = document.getElementById('tsim-po-total');
+                if (poTotal) poTotal.textContent = '---';
+                const poStatus = document.getElementById('tsim-po-status');
+                if (poStatus) {
+                    poStatus.textContent = 'Borrador';
+                    poStatus.className = 'text-[10px] px-2.5 py-1 rounded-full bg-yellow-100 text-yellow-700 font-bold uppercase tracking-wider';
+                }
+
+                // Hide all continue buttons
+                ['tsim-continue-to-invoice', 'tsim-continue-to-restock', 'tsim-restart-btn'].forEach(id => {
+                    const btn = document.getElementById(id);
+                    if (btn) { btn.classList.add('hidden'); btn.classList.remove('flex'); }
+                });
+
+                // Reset progress bars
+                for (let i = 1; i <= 3; i++) {
+                    const bar = document.getElementById(`tsim-progress-${i}`);
+                    if (bar) { bar.style.width = '0'; bar.className = 'h-full bg-slate-300 rounded-full transition-all duration-700 w-0'; }
+                }
+
+                // Reset summary
+                updateSummary();
+
+                // Navigate back to step 1
+                activateStep(1);
+            });
+        }
+
+        // ==========================================
+        // INIT
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            setupProductCards();
+            setupQtyControls();
+            handleRegisterSale();
+            handleContinueToInvoice();
+            handleContinueToRestock();
+            handleRestart();
+            updateSummary();
+        });
+    })();
+    </script>
+
 </body>
 
 </html>
