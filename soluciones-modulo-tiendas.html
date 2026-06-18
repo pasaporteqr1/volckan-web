@@ -41,6 +41,7 @@
         }
     </script>
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -164,10 +165,10 @@
                 </nav>
 
                 <div class="flex items-center gap-4">
-                    <a href="https://wa.me/50231097191" target="_blank"
-                        class="hidden sm:block bg-brand-purple text-white px-8 py-3 rounded-full font-bold text-sm hover:-translate-y-1 hover:bg-brand-red transition-all duration-300 shadow-lg shadow-brand-purple/30 hover:shadow-brand-red/40 relative overflow-hidden group">
+                    <a href="https://wa.me/50246741239" target="_blank"
+                        class="hidden sm:block bg-green-500 text-white px-8 py-3 rounded-full font-bold text-sm hover:-translate-y-1 hover:bg-green-600 transition-all duration-300 shadow-lg shadow-green-500/30 hover:shadow-green-600/40 relative overflow-hidden group">
                         <span class="relative z-10 flex items-center justify-center gap-2">
-                            CONTACTO
+                            <span class="material-symbols-outlined text-lg">chat</span> WHATSAPP
                         </span>
                         <div
                             class="absolute inset-0 h-full w-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded-full pointer-events-none">
@@ -293,7 +294,7 @@
                         <span class="text-sm font-bold uppercase tracking-widest">Simulador Interactivo</span>
                     </div>
                     <h2 class="text-3xl md:text-5xl font-black text-slate-800 mb-6 uppercase">Experimenta el <span class="text-brand-purple">Flujo Completo</span></h2>
-                    <p class="text-slate-600 text-lg">Vive en tiempo real cómo una venta actualiza el inventario, genera la factura electrónica y dispara una orden de reabastecimiento automática.</p>
+                    <p class="text-slate-800 text-lg">Vive en tiempo real cómo una venta actualiza el inventario, genera la factura electrónica y dispara una orden de reabastecimiento automática.</p>
                 </div>
 
                 <!-- Simulator Container -->
@@ -348,7 +349,7 @@
                                         <span class="material-symbols-outlined text-brand-purple">point_of_sale</span>
                                         Terminal Punto de Venta
                                     </h3>
-                                    <p class="text-slate-500 text-sm mb-6">Registra la venta de un producto disponible en la tienda.</p>
+                                    <p class="text-slate-800 text-sm mb-6">Registra la venta de un producto disponible en la tienda.</p>
 
                                     <!-- Product Cards Grid -->
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
@@ -361,7 +362,7 @@
                                                     </div>
                                                     <div>
                                                         <p class="font-black text-sm text-slate-800">Laptop Pro 15"</p>
-                                                        <p class="text-xs text-slate-500">Q12,500.00 · Stock: <span class="tsim-stock-display font-bold text-green-600">8</span></p>
+                                                        <p class="text-xs text-slate-800">Q12,500.00 · Stock: <span class="tsim-stock-display font-bold text-green-600">8</span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -375,7 +376,7 @@
                                                     </div>
                                                     <div>
                                                         <p class="font-black text-sm text-slate-800">Monitor 27" 4K</p>
-                                                        <p class="text-xs text-slate-500">Q4,200.00 · Stock: <span class="tsim-stock-display font-bold text-green-600">3</span></p>
+                                                        <p class="text-xs text-slate-800">Q4,200.00 · Stock: <span class="tsim-stock-display font-bold text-green-600">3</span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -389,7 +390,7 @@
                                                     </div>
                                                     <div>
                                                         <p class="font-black text-sm text-slate-800">Teclado Mecánico</p>
-                                                        <p class="text-xs text-slate-500">Q850.00 · Stock: <span class="tsim-stock-display font-bold text-orange-500">2</span></p>
+                                                        <p class="text-xs text-slate-800">Q850.00 · Stock: <span class="tsim-stock-display font-bold text-orange-500">2</span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -403,7 +404,7 @@
                                                     </div>
                                                     <div>
                                                         <p class="font-black text-sm text-slate-800">Audífonos BT Pro</p>
-                                                        <p class="text-xs text-slate-500">Q1,350.00 · Stock: <span class="tsim-stock-display font-bold text-green-600">15</span></p>
+                                                        <p class="text-xs text-slate-800">Q1,350.00 · Stock: <span class="tsim-stock-display font-bold text-green-600">15</span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -413,7 +414,7 @@
 
                                 <!-- Right: Customer & Qty -->
                                 <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100">
-                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-600 mb-4 flex items-center gap-2">
+                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-800 mb-4 flex items-center gap-2">
                                         <span class="material-symbols-outlined text-base">person</span>
                                         Datos del Cliente
                                     </h4>
@@ -422,7 +423,7 @@
                                         <input type="text" id="tsim-client-nit" placeholder="NIT para factura" value="1234567-8" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 outline-none text-sm font-medium">
                                         <input type="email" id="tsim-client-email" placeholder="Correo electrónico" value="maria@empresa.com" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 outline-none text-sm font-medium">
                                         <div class="flex items-center gap-3">
-                                            <label class="text-sm font-bold text-slate-600">Cantidad:</label>
+                                            <label class="text-sm font-bold text-slate-800">Cantidad:</label>
                                             <div class="flex items-center bg-white rounded-xl border border-slate-200 overflow-hidden">
                                                 <button id="tsim-qty-minus" class="px-3 py-2 text-slate-400 hover:text-brand-purple hover:bg-slate-50 transition-colors font-bold text-lg">−</button>
                                                 <span id="tsim-qty" class="px-4 py-2 font-black text-brand-dark text-lg min-w-[40px] text-center">1</span>
@@ -431,9 +432,9 @@
                                         </div>
                                     </div>
                                     <div class="mt-5 p-4 bg-white rounded-xl border border-dashed border-slate-300">
-                                        <div class="flex justify-between text-sm"><span class="text-slate-500">Producto:</span><span id="tsim-summary-product" class="font-bold text-slate-800">Laptop Pro 15"</span></div>
-                                        <div class="flex justify-between text-sm mt-1"><span class="text-slate-500">Subtotal:</span><span id="tsim-summary-subtotal" class="font-bold text-slate-800">Q12,500.00</span></div>
-                                        <div class="flex justify-between text-sm mt-1"><span class="text-slate-500">IVA (12%):</span><span id="tsim-summary-iva" class="font-bold text-slate-800">Q1,500.00</span></div>
+                                        <div class="flex justify-between text-sm"><span class="text-slate-800">Producto:</span><span id="tsim-summary-product" class="font-bold text-slate-800">Laptop Pro 15"</span></div>
+                                        <div class="flex justify-between text-sm mt-1"><span class="text-slate-800">Subtotal:</span><span id="tsim-summary-subtotal" class="font-bold text-slate-800">Q12,500.00</span></div>
+                                        <div class="flex justify-between text-sm mt-1"><span class="text-slate-800">IVA (12%):</span><span id="tsim-summary-iva" class="font-bold text-slate-800">Q1,500.00</span></div>
                                         <div class="border-t border-slate-200 mt-2 pt-2 flex justify-between"><span class="font-black text-brand-dark">TOTAL:</span><span id="tsim-summary-total" class="font-black text-brand-purple text-lg">Q14,000.00</span></div>
                                     </div>
                                     <button id="tsim-register-sale-btn" class="w-full mt-4 bg-brand-purple text-white py-3.5 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-brand-red transition-all shadow-lg hover:shadow-brand-red/30 hover:-translate-y-0.5 flex items-center justify-center gap-2">
@@ -453,7 +454,7 @@
                                         <span class="material-symbols-outlined text-brand-red">inventory_2</span>
                                         Inventario en Tiempo Real
                                     </h3>
-                                    <p class="text-slate-500 text-sm mb-6">El stock se actualiza instantáneamente en todos los canales.</p>
+                                    <p class="text-slate-800 text-sm mb-6">El stock se actualiza instantáneamente en todos los canales.</p>
 
                                     <div class="bg-slate-800 rounded-2xl overflow-hidden shadow-xl">
                                         <div class="bg-slate-900 px-5 py-3 flex items-center gap-2">
@@ -465,33 +466,33 @@
                                         <div class="p-4 font-mono text-xs space-y-1.5 text-slate-300" id="tsim-stock-log">
                                             <p class="text-green-400">✓ Conexión con base de datos establecida</p>
                                             <p class="text-green-400">✓ Canales sincronizados: Tienda física, Shopify, WooCommerce</p>
-                                            <p class="text-slate-500">--- Esperando transacción ---</p>
+                                            <p class="text-slate-800">--- Esperando transacción ---</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Right: Stock Cards -->
                                 <div>
-                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-600 mb-4 flex items-center gap-2">
+                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-800 mb-4 flex items-center gap-2">
                                         <span class="material-symbols-outlined text-base">monitoring</span>
                                         Estado de Stock Global
                                     </h4>
                                     <div class="space-y-3" id="tsim-stock-cards">
                                         <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 transition-all" id="tsim-stock-card-laptop">
                                             <div class="w-10 h-10 rounded-lg bg-brand-purple/10 flex items-center justify-center"><span class="material-symbols-outlined text-brand-purple">laptop_mac</span></div>
-                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Laptop Pro 15"</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-green-500 rounded-full transition-all duration-1000" style="width:80%" id="tsim-bar-laptop"></div></div><span class="text-xs font-black text-slate-600" id="tsim-stock-val-laptop">8/10</span></div></div>
+                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Laptop Pro 15"</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-green-500 rounded-full transition-all duration-1000" style="width:80%" id="tsim-bar-laptop"></div></div><span class="text-xs font-black text-slate-800" id="tsim-stock-val-laptop">8/10</span></div></div>
                                         </div>
                                         <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 transition-all" id="tsim-stock-card-monitor">
                                             <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center"><span class="material-symbols-outlined text-blue-600">desktop_windows</span></div>
-                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Monitor 27" 4K</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-orange-500 rounded-full transition-all duration-1000" style="width:30%" id="tsim-bar-monitor"></div></div><span class="text-xs font-black text-slate-600" id="tsim-stock-val-monitor">3/10</span></div></div>
+                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Monitor 27" 4K</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-orange-500 rounded-full transition-all duration-1000" style="width:30%" id="tsim-bar-monitor"></div></div><span class="text-xs font-black text-slate-800" id="tsim-stock-val-monitor">3/10</span></div></div>
                                         </div>
                                         <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 transition-all" id="tsim-stock-card-teclado">
                                             <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center"><span class="material-symbols-outlined text-green-600">keyboard</span></div>
-                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Teclado Mecánico</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-red-500 rounded-full transition-all duration-1000" style="width:20%" id="tsim-bar-teclado"></div></div><span class="text-xs font-black text-slate-600" id="tsim-stock-val-teclado">2/10</span></div></div>
+                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Teclado Mecánico</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-red-500 rounded-full transition-all duration-1000" style="width:20%" id="tsim-bar-teclado"></div></div><span class="text-xs font-black text-slate-800" id="tsim-stock-val-teclado">2/10</span></div></div>
                                         </div>
                                         <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 transition-all" id="tsim-stock-card-audifonos">
                                             <div class="w-10 h-10 rounded-lg bg-pink-50 flex items-center justify-center"><span class="material-symbols-outlined text-pink-600">headphones</span></div>
-                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Audífonos BT Pro</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-green-500 rounded-full transition-all duration-1000" style="width:100%" id="tsim-bar-audifonos"></div></div><span class="text-xs font-black text-slate-600" id="tsim-stock-val-audifonos">15/15</span></div></div>
+                                            <div class="flex-1"><p class="font-bold text-sm text-slate-800">Audífonos BT Pro</p><div class="flex items-center gap-2 mt-1"><div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-green-500 rounded-full transition-all duration-1000" style="width:100%" id="tsim-bar-audifonos"></div></div><span class="text-xs font-black text-slate-800" id="tsim-stock-val-audifonos">15/15</span></div></div>
                                         </div>
                                     </div>
                                     <button id="tsim-continue-to-invoice" class="hidden w-full mt-5 bg-brand-yellow text-slate-900 py-3.5 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-yellow-400 transition-all shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2">
@@ -511,7 +512,7 @@
                                         <span class="material-symbols-outlined text-brand-yellow">receipt_long</span>
                                         Factura Electrónica
                                     </h3>
-                                    <p class="text-slate-500 text-sm mb-6">Factura generada automáticamente y enviada al cliente.</p>
+                                    <p class="text-slate-800 text-sm mb-6">Factura generada automáticamente y enviada al cliente.</p>
 
                                     <div class="bg-white rounded-2xl border-2 border-slate-200 shadow-lg overflow-hidden" id="tsim-invoice-doc">
                                         <div class="bg-brand-purple p-5 text-white">
@@ -552,7 +553,7 @@
 
                                 <!-- Right: Email Sent Animation -->
                                 <div>
-                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-600 mb-4 flex items-center gap-2">
+                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-800 mb-4 flex items-center gap-2">
                                         <span class="material-symbols-outlined text-base">forward_to_inbox</span>
                                         Envío al Cliente
                                     </h4>
@@ -569,11 +570,11 @@
                                         </div>
                                         <div class="bg-white rounded-xl p-4 border border-slate-200 text-xs space-y-2">
                                             <p class="font-bold text-slate-800">Asunto: Su Factura Electrónica - <span id="tsim-email-inv-num">FEL-2026-00847</span></p>
-                                            <p class="text-slate-500">Estimado/a <span id="tsim-email-client-name" class="font-bold">Cliente</span>,</p>
-                                            <p class="text-slate-500">Adjuntamos su factura electrónica correspondiente a su compra reciente. El documento ya fue certificado ante SAT Guatemala.</p>
+                                            <p class="text-slate-800">Estimado/a <span id="tsim-email-client-name" class="font-bold">Cliente</span>,</p>
+                                            <p class="text-slate-800">Adjuntamos su factura electrónica correspondiente a su compra reciente. El documento ya fue certificado ante SAT Guatemala.</p>
                                             <div class="flex items-center gap-2 mt-3 p-2.5 bg-slate-50 rounded-lg border border-dashed border-slate-300">
                                                 <span class="material-symbols-outlined text-brand-red text-lg">picture_as_pdf</span>
-                                                <span class="font-bold text-slate-600" id="tsim-email-pdf-name">FEL-2026-00847.pdf</span>
+                                                <span class="font-bold text-slate-800" id="tsim-email-pdf-name">FEL-2026-00847.pdf</span>
                                                 <span class="text-slate-400 text-[10px] ml-auto">124 KB</span>
                                             </div>
                                         </div>
@@ -595,7 +596,7 @@
                                         <span class="material-symbols-outlined text-orange-500">local_shipping</span>
                                         Alerta de Re-Abastecimiento
                                     </h3>
-                                    <p class="text-slate-500 text-sm mb-6">Se detectaron productos bajo el mínimo de inventario.</p>
+                                    <p class="text-slate-800 text-sm mb-6">Se detectaron productos bajo el mínimo de inventario.</p>
 
                                     <!-- Alert Card -->
                                     <div class="bg-orange-50 border-2 border-orange-200 rounded-2xl p-5 mb-5" id="tsim-restock-alert">
@@ -629,7 +630,7 @@
 
                                 <!-- Right: Purchase Order -->
                                 <div>
-                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-600 mb-4 flex items-center gap-2">
+                                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-800 mb-4 flex items-center gap-2">
                                         <span class="material-symbols-outlined text-base">description</span>
                                         Orden de Compra Generada
                                     </h4>
@@ -646,7 +647,7 @@
                                         </div>
                                         <div class="border-t border-slate-200 mt-4 pt-4">
                                             <div class="flex justify-between text-sm"><span class="text-slate-400">Total Estimado:</span><span class="font-black text-brand-purple" id="tsim-po-total">---</span></div>
-                                            <div class="flex justify-between text-xs mt-1"><span class="text-slate-400">Proveedor sugerido:</span><span class="font-bold text-slate-600">TechDistributor GT</span></div>
+                                            <div class="flex justify-between text-xs mt-1"><span class="text-slate-400">Proveedor sugerido:</span><span class="font-bold text-slate-800">TechDistributor GT</span></div>
                                         </div>
                                     </div>
 
@@ -1383,7 +1384,7 @@
             const log = document.getElementById('tsim-stock-log');
             if (log) {
                 // Clear waiting line
-                const waiting = log.querySelector('.text-slate-500');
+                const waiting = log.querySelector('.text-slate-800');
                 if (waiting) waiting.remove();
             }
 
@@ -1666,7 +1667,7 @@
 
                 // Reset logs
                 const stockLog = document.getElementById('tsim-stock-log');
-                if (stockLog) stockLog.innerHTML = '<p class="text-green-400">✓ Conexión con base de datos establecida</p><p class="text-green-400">✓ Canales sincronizados: Tienda física, Shopify, WooCommerce</p><p class="text-slate-500">--- Esperando transacción ---</p>';
+                if (stockLog) stockLog.innerHTML = '<p class="text-green-400">✓ Conexión con base de datos establecida</p><p class="text-green-400">✓ Canales sincronizados: Tienda física, Shopify, WooCommerce</p><p class="text-slate-800">--- Esperando transacción ---</p>';
 
                 const restockLog = document.getElementById('tsim-restock-log');
                 if (restockLog) restockLog.innerHTML = '<p class="text-yellow-400">⚠ Verificando niveles de inventario...</p>';
