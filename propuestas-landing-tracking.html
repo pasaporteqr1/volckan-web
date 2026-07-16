@@ -43,6 +43,7 @@
             },
         }
     </script>
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -442,11 +443,21 @@
                             </div>
                         </div>
 
-                        <!-- Logs updates -->
-                        <div>
-                            <span class="text-xs text-slate-400 font-bold uppercase block mb-4">Bitácora de Eventos (Historial)</span>
-                            <div id="tracking-logs" class="space-y-3 font-mono text-xs max-h-48 overflow-y-auto bg-slate-950 p-4 rounded-xl border border-slate-700">
-                                <!-- Dynamically loaded logs -->
+                        <!-- Controls for simulation (Interactive advance) -->
+                        <div class="mt-8 pt-6 border-t border-slate-700/80 flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <p class="text-xs text-slate-400 font-medium">
+                                <span class="text-brand-yellow font-bold">Modo Demo Activo:</span> Puedes avanzar o retroceder el estado para simular el proceso interactivo.
+                            </p>
+                            <div class="flex gap-3 w-full sm:w-auto">
+                                <button id="btn-prev-step" class="flex-1 sm:flex-none px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                                    Retroceder
+                                </button>
+                                <button id="btn-next-step" class="flex-1 sm:flex-none px-4 py-2.5 bg-brand-purple hover:bg-brand-red text-white rounded-lg text-xs font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                                    Avanzar Estado
+                                </button>
+                                <button id="btn-reset-step" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-bold transition-colors">
+                                    Reiniciar
+                                </button>
                             </div>
                         </div>
 
@@ -970,6 +981,28 @@
                 }
             });
 
+            
+
+            // Accordion toggle for Propuestas
+            propuestasBtn.addEventListener('click', () => {
+                const isOpen = propuestasMenu.classList.contains('max-h-[800px]');
+                const card = propuestasBtn.closest('div.rounded-xl');
+
+                if (isOpen) {
+                    propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                    propuestasMenu.classList.add('max-h-0', 'opacity-0');
+                    propuestasIcon.classList.remove('rotate-180');
+                    card.classList.remove('bg-white', 'shadow-md');
+                    card.classList.add('bg-slate-50/80');
+                } else {
+                    propuestasMenu.classList.remove('max-h-0', 'opacity-0');
+                    propuestasMenu.classList.add('max-h-[800px]', 'opacity-100');
+                    propuestasIcon.classList.add('rotate-180');
+                    card.classList.remove('bg-slate-50/80');
+                    card.classList.add('bg-white', 'shadow-md');
+                }
+            });
+
             // ==========================================
             // LOGICA DEL SIMULADOR DE TRACKING
             // ==========================================
@@ -1018,20 +1051,11 @@
                 }
             };
 
-            function showTrackingResult(code, data) {
-                // Set text info
-                projectTitle.textContent = data.title;
-                projectDate.textContent = data.date;
+            let currentSimulatedCode = null;
+            let currentSimulatedStep = 1;
+            let initialSimulatedStep = 1;
 
-                // Load logs
-                trackingLogs.innerHTML = '';
-                data.logs.forEach(log => {
-                    const logEl = document.createElement('div');
-                    logEl.className = 'flex gap-2 border-b border-slate-800 pb-2';
-                    logEl.innerHTML = `<span class="text-brand-yellow font-bold">${log.time}</span> <span class="text-slate-300">- ${log.text}</span>`;
-                    trackingLogs.appendChild(logEl);
-                });
-
+            function updateTimelineVisuals(step) {
                 // Clear styling for all steps first
                 for (let i = 1; i <= 5; i++) {
                     const stepEl = document.getElementById(`step-${i}`);
@@ -1052,17 +1076,16 @@
                     const textEl = stepEl.querySelector('h4');
                     const descEl = stepEl.querySelector('p');
 
-                    if (i < data.step) {
+                    if (i < step) {
                         // Completed step
                         stepEl.classList.add('completed');
                         iconEl.className = 'step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-400 flex items-center justify-center text-xs font-bold z-10 transition-colors';
                         textEl.className = 'font-bold text-sm uppercase text-green-400';
                         descEl.className = 'text-xs text-slate-300 mt-0.5';
-                    } else if (i === data.step) {
+                    } else if (i === step) {
                         // Active/Current step
                         stepEl.classList.add('active');
                         if (i === 5) {
-                            // Completed project is represented by green too
                             iconEl.className = 'step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-400 flex items-center justify-center text-xs font-bold z-10 transition-colors';
                             textEl.className = 'font-bold text-sm uppercase text-green-400';
                         } else {
@@ -1073,12 +1096,50 @@
                     }
                 }
 
+                // Enable/disable buttons based on step bounds
+                document.getElementById('btn-prev-step').disabled = (step === 1);
+                document.getElementById('btn-next-step').disabled = (step === 5);
+            }
+
+            function showTrackingResult(code, data) {
+                // Set text info
+                projectTitle.textContent = data.title;
+                projectDate.textContent = data.date;
+
+                // Set simulated steps state
+                currentSimulatedCode = code;
+                currentSimulatedStep = data.step;
+                initialSimulatedStep = data.step;
+
+                // Update timeline layout
+                updateTimelineVisuals(currentSimulatedStep);
+
                 // Reveal container
                 trackingResult.classList.remove('hidden');
                 
                 // Smooth scroll to results
                 trackingResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
+
+            // Controls for interactive simulation
+            document.getElementById('btn-prev-step').addEventListener('click', () => {
+                if (currentSimulatedStep > 1) {
+                    currentSimulatedStep--;
+                    updateTimelineVisuals(currentSimulatedStep);
+                }
+            });
+
+            document.getElementById('btn-next-step').addEventListener('click', () => {
+                if (currentSimulatedStep < 5) {
+                    currentSimulatedStep++;
+                    updateTimelineVisuals(currentSimulatedStep);
+                }
+            });
+
+            document.getElementById('btn-reset-step').addEventListener('click', () => {
+                currentSimulatedStep = initialSimulatedStep;
+                updateTimelineVisuals(currentSimulatedStep);
+            });
 
             searchBtn.addEventListener('click', () => {
                 let code = trackingInput.value.trim().toUpperCase();
