@@ -45,6 +45,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -157,6 +158,34 @@
                                     <span class="text-xs text-slate-400 mt-0.5">Post-Venta Activa</span>
                                 </div>
                             </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Menú Desplegable: Propuestas -->
+                    <div class="relative group">
+                        <button
+                            class="font-bold text-sm uppercase hover:text-brand-purple transition-colors inline-flex items-center gap-1">
+                            Propuestas
+                            <span
+                                class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+                        </button>
+
+                        <!-- Contenedor del Dropdown -->
+                        <div
+                            class="absolute left-0 mt-6 w-72 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
+                            <div class="py-2">
+                                <a href="propuestas-landing-tracking.html"
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                        <span class="material-symbols-outlined text-base">analytics</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-brand-dark text-sm">Landing + Tracking</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Seguimiento de gestiones</span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -770,6 +799,40 @@
                     </div>
                 </div>
 
+                <!-- Propuestas (Accordion) -->
+                <div class="rounded-xl bg-slate-50/80 border-l-4 border-brand-yellow overflow-hidden transition-all">
+                    <button id="mobile-propuestas-btn"
+                        class="w-full flex items-center gap-4 px-5 py-4 hover:bg-slate-100 transition-all group">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-brand-yellow/10 flex items-center justify-center text-brand-yellow transition-colors group-hover:bg-brand-yellow group-hover:text-white">
+                            <span class="material-symbols-outlined text-xl">description</span>
+                        </div>
+                        <span
+                            class="font-bold text-sm uppercase tracking-wider text-brand-dark flex-grow text-left">Propuestas</span>
+                        <span id="mobile-propuestas-icon"
+                            class="material-symbols-outlined text-slate-400 transition-transform duration-300 text-xl">expand_more</span>
+                    </button>
+
+                    <!-- Submenu -->
+                    <div id="mobile-propuestas-menu"
+                        class="overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out">
+                        <div class="px-4 pb-4 pt-1 flex flex-col gap-2">
+                            <a href="propuestas-landing-tracking.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div
+                                    class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">analytics</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span
+                                        class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Landing + Tracking</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Gestiones y solicitudes</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Automatizaciones -->
                 <a href="soluciones-automatizaciones.html"
                     class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
@@ -923,6 +986,10 @@
             const solucionesMenu = document.getElementById('mobile-soluciones-menu');
             const solucionesIcon = document.getElementById('mobile-soluciones-icon');
 
+            const propuestasBtn = document.getElementById('mobile-propuestas-btn');
+            const propuestasMenu = document.getElementById('mobile-propuestas-menu');
+            const propuestasIcon = document.getElementById('mobile-propuestas-icon');
+
             function openMenu() {
                 mobileMenu.classList.remove('translate-x-full');
                 document.body.style.overflow = 'hidden';
@@ -931,37 +998,87 @@
             function closeMenu() {
                 mobileMenu.classList.add('translate-x-full');
                 document.body.style.overflow = '';
-                solucionesMenu.classList.remove('max-h-[300px]', 'opacity-100');
+                // Reset accordion when closing menu
+                solucionesMenu.classList.remove('max-h-[800px]', 'opacity-100');
                 solucionesMenu.classList.add('max-h-0', 'opacity-0');
                 solucionesIcon.classList.remove('rotate-180');
                 solucionesBtn.closest('div.rounded-xl').classList.remove('bg-white', 'shadow-md');
                 solucionesBtn.closest('div.rounded-xl').classList.add('bg-slate-50/80');
+
+                propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                propuestasMenu.classList.add('max-h-0', 'opacity-0');
+                propuestasIcon.classList.remove('rotate-180');
+                propuestasBtn.closest('div.rounded-xl').classList.remove('bg-white', 'shadow-md');
+                propuestasBtn.closest('div.rounded-xl').classList.add('bg-slate-50/80');
             }
 
             mobileMenuBtn.addEventListener('click', openMenu);
             mobileMenuClose.addEventListener('click', closeMenu);
 
+            // Close menu when clicking nav links
             mobileMenu.querySelectorAll('nav a').forEach(link => {
                 link.addEventListener('click', closeMenu);
             });
 
+            // Accordion toggle for Soluciones
             solucionesBtn.addEventListener('click', () => {
-                const isOpen = solucionesMenu.classList.contains('max-h-[300px]');
+                const isOpen = solucionesMenu.classList.contains('max-h-[800px]');
                 const card = solucionesBtn.closest('div.rounded-xl');
 
                 if (isOpen) {
-                    solucionesMenu.classList.remove('max-h-[300px]', 'opacity-100');
+                    solucionesMenu.classList.remove('max-h-[800px]', 'opacity-100');
                     solucionesMenu.classList.add('max-h-0', 'opacity-0');
                     solucionesIcon.classList.remove('rotate-180');
                     card.classList.remove('bg-white', 'shadow-md');
                     card.classList.add('bg-slate-50/80');
                 } else {
                     solucionesMenu.classList.remove('max-h-0', 'opacity-0');
-                    solucionesMenu.classList.add('max-h-[300px]', 'opacity-100');
+                    solucionesMenu.classList.add('max-h-[800px]', 'opacity-100');
                     solucionesIcon.classList.add('rotate-180');
                     card.classList.remove('bg-slate-50/80');
                     card.classList.add('bg-white', 'shadow-md');
                 }
+            });
+
+            // Accordion toggle for Propuestas
+            propuestasBtn.addEventListener('click', () => {
+                const isOpen = propuestasMenu.classList.contains('max-h-[800px]');
+                const card = propuestasBtn.closest('div.rounded-xl');
+
+                if (isOpen) {
+                    propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                    propuestasMenu.classList.add('max-h-0', 'opacity-0');
+                    propuestasIcon.classList.remove('rotate-180');
+                    card.classList.remove('bg-white', 'shadow-md');
+                    card.classList.add('bg-slate-50/80');
+                } else {
+                    propuestasMenu.classList.remove('max-h-0', 'opacity-0');
+                    propuestasMenu.classList.add('max-h-[800px]', 'opacity-100');
+                    propuestasIcon.classList.add('rotate-180');
+                    card.classList.remove('bg-slate-50/80');
+                    card.classList.add('bg-white', 'shadow-md');
+                }
+            });
+
+            // ==========================================
+            // LOGICA DEL MODAL "AGENDAR DEMO"
+            // ==========================================
+            const demoModal = document.getElementById('demo-modal');
+            const demoBtns = document.querySelectorAll('.agendar-demo-btn'); // Necesitaremos agregar esta clase a los botones
+            const demoModalClose = document.getElementById('demo-modal-close');
+            const demoForm = document.getElementById('demo-form');
+            const demoSubmitBtn = document.getElementById('demo-submit-btn');
+            const demoFeedback = document.getElementById('demo-feedback');
+
+            // Abrir Modal
+            demoBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); // Por si es etiqueta <a>
+                    demoModal.classList.remove('opacity-0', 'pointer-events-none');
+                    demoModal.querySelector('div').classList.remove('scale-95');
+                    demoModal.querySelector('div').classList.add('scale-100');
+                    document.body.style.overflow = 'hidden';
+                });
             });
 
             // ==========================================

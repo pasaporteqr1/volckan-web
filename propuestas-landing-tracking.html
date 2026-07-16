@@ -4,11 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Ciberseguridad | Tecno Volckánica</title>
+    <title>Landing Page + Módulo de Tracking — Tecno Volckánica</title>
+    <meta name="description"
+        content="Optimiza la captación y seguimiento de solicitudes de organizaciones y empresas con nuestro módulo de tracking interactivo en tiempo real.">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
         rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
@@ -40,12 +43,6 @@
             },
         }
     </script>
-    
-    
-    
-    
-    
-    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -66,11 +63,22 @@
             font-family: "Space Grotesk", sans-serif;
             color: #0a192f;
         }
+        .timeline-step {
+            transition: all 0.3s ease;
+        }
+        .timeline-step.active .step-icon {
+            box-shadow: 0 0 15px rgba(107, 33, 168, 0.5);
+        }
+        .timeline-step.completed .step-icon {
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+        }
     </style>
     <link rel="stylesheet" href="./src/styles/main.css" type="text/tailwindcss" />
 </head>
 
 <body class="antialiased font-sans bg-white text-slate-900 flex flex-col min-h-screen">
+    
+    <!-- Placeholder Header -->
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="flex items-center justify-between h-24">
@@ -215,328 +223,319 @@
 
     <main class="flex-grow">
         <!-- Hero Section -->
-        <section class="relative bg-slate-900 text-white overflow-hidden py-24 lg:py-32">
-            <!-- Background Elements -->
-            <div class="absolute inset-0 z-0">
-                <div class="absolute inset-0 bg-brand-purple/20 mix-blend-multiply"></div>
-                <!-- Abstract tech grid background -->
-                <div class="absolute inset-0 opacity-20"
-                    style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 32px 32px;">
-                </div>
-                <div
-                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-purple rounded-full blur-[120px] opacity-40 animate-pulse">
-                </div>
-            </div>
+        <section class="relative pt-20 pb-24 overflow-hidden bg-slate-50 border-b border-slate-100">
+            <!-- Decorative blur backgrounds -->
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 -z-10 bg-brand-purple/5 rounded-full blur-[120px] pointer-events-none"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-[450px] h-[450px] -z-10 bg-brand-yellow/5 rounded-full blur-[150px] pointer-events-none"></div>
+            <div class="absolute inset-0 -z-20 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-40"></div>
 
-            <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
-                <div
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-purple/50 bg-brand-purple/10 text-brand-purple mb-8 backdrop-blur-sm">
-                    <span class="material-symbols-outlined text-sm">shield_person</span>
-                    <span class="text-sm font-bold uppercase tracking-wider text-white">Centro de Inteligencia
-                        Digital</span>
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    
+                    <div class="flex flex-col gap-8">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-yellow/30 bg-brand-yellow/10 text-brand-dark w-fit">
+                            <span class="material-symbols-outlined text-sm font-bold animate-pulse text-brand-purple">location_searching</span>
+                            <span class="text-xs font-bold uppercase tracking-widest">Seguimiento en Tiempo Real</span>
+                        </div>
+
+                        <h1 class="text-4xl md:text-6xl font-black leading-[1.05] text-brand-dark uppercase tracking-tight">
+                            Landing Page + <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple via-brand-red to-brand-yellow">Módulo de Tracking</span>
+                        </h1>
+
+                        <p class="text-lg text-slate-800 font-medium leading-relaxed">
+                            Diseñamos landing pages orientadas a la conversión, equipadas con un potente módulo de seguimiento para que las organizaciones y empresas puedan visualizar el avance de sus solicitudes con total transparencia.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#simulador" 
+                               class="flex-1 sm:flex-none flex items-center justify-center gap-2 uppercase tracking-widest font-bold text-sm bg-brand-purple hover:bg-brand-red text-white rounded-full px-8 py-4 transition-all shadow-lg hover:shadow-brand-purple/20 hover:-translate-y-0.5">
+                                Probar Simulador <span class="material-symbols-outlined text-lg">barcode_reader</span>
+                            </a>
+                            <a href="#caracteristicas" 
+                               class="flex-1 sm:flex-none flex items-center justify-center gap-2 uppercase tracking-widest font-bold text-sm bg-white border-2 border-slate-200 hover:border-brand-purple text-brand-dark rounded-full px-8 py-4 transition-all">
+                                Características <span class="material-symbols-outlined text-brand-purple text-lg">arrow_downward</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Visual Mockup -->
+                    <div class="relative lg:h-[500px] flex items-center justify-center animate-float">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-brand-yellow/20 to-brand-purple/20 rounded-[3rem] transform -rotate-2 scale-105"></div>
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Tracking Analytics" 
+                             class="relative z-10 w-full h-full object-cover rounded-[3rem] shadow-2xl border-4 border-white">
+                        
+                        <!-- Floating metrics widget -->
+                        <div class="absolute -left-6 bottom-10 bg-white p-5 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-4 z-20">
+                            <div class="w-12 h-12 rounded-xl bg-green-100 flex justify-center items-center text-green-600">
+                                <span class="material-symbols-outlined text-2xl">check_circle</span>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-800 uppercase font-bold">Solicitud Completada</p>
+                                <p class="text-sm font-black text-brand-dark">Código VLK-2026-A48</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight tracking-tight uppercase">
-                    Ciber<span class="text-brand-purple">seguridad</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-12 font-medium">
-                    Protege tus activos digitales. Comprende las amenazas modernas y descubre cómo nuestra
-                    infraestructura segura blindar tu institución.
-                </p>
-                <button
-                    class="agendar-demo-btn bg-brand-purple hover:bg-brand-red text-white font-bold text-lg rounded-full px-12 py-4 transition-all shadow-[0_0_30px_rgba(107,33,168,0.5)] hover:shadow-[0_0_40px_rgba(220,38,38,0.6)] hover:-translate-y-1">
-                    Análisis de Riesgo Gratuito
-                </button>
             </div>
         </section>
 
-        <!-- Nivel de Riesgo Interactivo -->
-        <section class="py-24 bg-slate-50">
+        <!-- El Concepto: ¿Cómo Funciona? -->
+        <section class="py-24 bg-white">
             <div class="max-w-7xl mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-black mb-4 text-brand-dark">Conoce Tus Enemigos <br><span
-                            class="text-brand-red text-3xl md:text-4xl">Niveles de Riesgo Explicados</span></h2>
-                    <p class="text-slate-800 text-lg max-w-2xl mx-auto">Pasa el cursor por cada nivel para descubrir las
-                        amenazas comunes que acechan a las instituciones y empresas hoy en día.</p>
+                <div class="text-center max-w-3xl mx-auto mb-20">
+                    <span class="text-brand-purple font-bold uppercase tracking-widest text-xs">Flujo Inteligente</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-brand-dark uppercase tracking-tight mt-3 mb-6">Optimiza el Flujo de Solicitudes</h2>
+                    <p class="text-lg text-slate-800 font-medium">
+                        Elimina la incertidumbre y las llamadas de consulta constantes. Nuestro ecosistema integra la captura de datos con el rastreo inmediato del estado de la gestión.
+                    </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-                    <!-- Riesgo Bajo -->
-                    <div
-                        class="group relative bg-white rounded-3xl p-8 border border-green-100 hover:border-green-500 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-[400px]">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-green-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                        <div class="relative z-10 flex flex-col h-full">
-                            <div
-                                class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-6 text-green-600 group-hover:scale-110 transition-transform duration-500">
-                                <span class="material-symbols-outlined text-3xl">security</span>
-                            </div>
-                            <h3
-                                class="text-2xl font-black text-slate-800 mb-2 group-hover:text-green-600 transition-colors">
-                                Nivel 1: Básico</h3>
-                            <p class="text-slate-800 font-medium uppercase tracking-widest text-sm mb-6">Ataques
-                                Oportunistas</p>
-
-                            <!-- Default state -->
-                            <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
-                                <p class="text-slate-800">Ataques no dirigidos que buscan vulnerabilidades fáciles de
-                                    explotar en sistemas desactualizados o usuarios desprevenidos.</p>
-                                <div class="mt-8 flex items-center gap-2 text-green-600 font-bold text-sm">
-                                    <span>Pasa el cursor para ver detalles</span>
-                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </div>
-                            </div>
-                            <!-- Hover state -->
-                            <div
-                                class="absolute top-48 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                                <ul class="space-y-4">
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-green-500 mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Phishing Masivo</strong>
-                                            <span class="text-slate-800 text-sm">Correos electrónicos falsos buscando
-                                                contraseñas.</span>
-                                        </div>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-green-500 mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Malware Común</strong>
-                                            <span class="text-slate-800 text-sm">Virus descargados accidentalmente que
-                                                ralentizan equipos.</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <!-- Step 1 -->
+                    <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 relative group hover:bg-white hover:border-brand-purple hover:shadow-xl transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-brand-purple/10 text-brand-purple flex items-center justify-center mb-6 font-bold text-lg font-mono">1</div>
+                        <h3 class="font-bold text-xl text-brand-dark mb-3">Captación Inteligente</h3>
+                        <p class="text-slate-800 text-sm leading-relaxed font-medium">
+                            El cliente o socio ingresa la información a través de una landing page optimizada y de carga ultra veloz.
+                        </p>
                     </div>
 
-                    <!-- Riesgo Medio -->
-                    <div
-                        class="group relative bg-white rounded-3xl p-8 border border-amber-100 hover:border-amber-500 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-[400px]">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-amber-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                        <div class="relative z-10 flex flex-col h-full">
-                            <div
-                                class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center mb-6 text-amber-600 group-hover:scale-110 transition-transform duration-500">
-                                <span class="material-symbols-outlined text-3xl">vpn_key_alert</span>
-                            </div>
-                            <h3
-                                class="text-2xl font-black text-slate-800 mb-2 group-hover:text-amber-600 transition-colors">
-                                Nivel 2: Severo</h3>
-                            <p class="text-slate-800 font-medium uppercase tracking-widest text-sm mb-6">Amenazas
-                                Dirigidas</p>
-
-                            <!-- Default state -->
-                            <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
-                                <p class="text-slate-800">Ataques específicos diseñados para robar bases de datos,
-                                    credenciales de administrador o alterar información importante.</p>
-                                <div class="mt-8 flex items-center gap-2 text-amber-600 font-bold text-sm">
-                                    <span>Pasa el cursor para ver detalles</span>
-                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </div>
-                            </div>
-                            <!-- Hover state -->
-                            <div
-                                class="absolute top-48 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                                <ul class="space-y-4">
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-amber-500 mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Spear Phishing</strong>
-                                            <span class="text-slate-800 text-sm">Engaños adaptados con datos reales de
-                                                la institución.</span>
-                                        </div>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-amber-500 mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Fuerza Bruta</strong>
-                                            <span class="text-slate-800 text-sm">Intentos repetidos para adivinar
-                                                contraseñas débiles.</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <!-- Step 2 -->
+                    <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 relative group hover:bg-white hover:border-brand-red hover:shadow-xl transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center mb-6 font-bold text-lg font-mono">2</div>
+                        <h3 class="font-bold text-xl text-brand-dark mb-3">Asignación de Código Único</h3>
+                        <p class="text-slate-800 text-sm leading-relaxed font-medium">
+                            El sistema genera un código de tracking dinámico en tiempo real que se envía instantáneamente por correo o Telegram.
+                        </p>
                     </div>
 
-                    <!-- Riesgo Alto -->
-                    <div
-                        class="group relative bg-white rounded-3xl p-8 border border-brand-red/20 hover:border-brand-red shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer h-[400px]">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-red-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        </div>
-                        <div class="relative z-10 flex flex-col h-full">
-                            <div
-                                class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-6 text-brand-red group-hover:scale-110 transition-transform duration-500">
-                                <span class="material-symbols-outlined text-3xl">bug_report</span>
-                            </div>
-                            <h3
-                                class="text-2xl font-black text-slate-800 mb-2 group-hover:text-brand-red transition-colors">
-                                Nivel 3: Crítico</h3>
-                            <p class="text-slate-800 font-medium uppercase tracking-widest text-sm mb-6">Compromiso
-                                Total</p>
-
-                            <!-- Default state -->
-                            <div class="transition-opacity duration-300 group-hover:opacity-0 absolute top-48">
-                                <p class="text-slate-800">Secuestro total de sistemas, robo y exposición de datos
-                                    financieros o personales de alumnos, paralizando la operación.</p>
-                                <div class="mt-8 flex items-center gap-2 text-brand-red font-bold text-sm">
-                                    <span>Pasa el cursor para ver detalles</span>
-                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </div>
-                            </div>
-                            <!-- Hover state -->
-                            <div
-                                class="absolute top-48 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                                <ul class="space-y-4">
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-brand-red mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Ransomware</strong>
-                                            <span class="text-slate-800 text-sm">Encriptan tus datos y exigen rescates
-                                                millonarios.</span>
-                                        </div>
-                                    </li>
-                                    <li class="flex items-start gap-3">
-                                        <span class="material-symbols-outlined text-brand-red mt-0.5">warning</span>
-                                        <div>
-                                            <strong class="text-slate-800 block text-sm">Ataques DDoS</strong>
-                                            <span class="text-slate-800 text-sm">Sobrecarga de servidores dejando
-                                                inoperable el sistema.</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <!-- Step 3 -->
+                    <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 relative group hover:bg-white hover:border-brand-yellow hover:shadow-xl transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-brand-yellow/25 text-slate-800 flex items-center justify-center mb-6 font-bold text-lg font-mono">3</div>
+                        <h3 class="font-bold text-xl text-brand-dark mb-3">Seguimiento Interactivo</h3>
+                        <p class="text-slate-800 text-sm leading-relaxed font-medium">
+                            Los solicitantes consultan el progreso en la web, viendo una línea de tiempo actualizada con cada cambio que decida la administración.
+                        </p>
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- Mejores Prácticas -->
-        <section class="py-24 bg-white border-t border-slate-100">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-col lg:flex-row gap-16 items-center">
+        <!-- Simulador Interactivo de Tracking -->
+        <section id="simulador" class="py-24 bg-slate-900 text-white relative overflow-hidden">
+            <!-- Background grids -->
+            <div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(rgba(255,255,255,.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.2) 1px, transparent 1px); background-size: 40px 40px;"></div>
+            
+            <div class="max-w-5xl mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-yellow/30 bg-brand-yellow/10 text-brand-yellow text-xs font-bold uppercase tracking-widest mb-4">
+                        <span class="material-symbols-outlined text-sm">terminal</span>
+                        <span>Widget en Tiempo Real</span>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-white mb-6">Simulador de Rastreo</h2>
+                    <p class="text-slate-300 max-w-2xl mx-auto font-medium">
+                        Prueba nuestro simulador ingresando uno de los códigos de demostración: <br>
+                        <span class="font-bold text-brand-yellow bg-white/10 px-3 py-1 rounded-md text-sm mt-3 inline-block">A48</span>
+                        <span class="font-bold text-brand-yellow bg-white/10 px-3 py-1 rounded-md text-sm mt-3 inline-block">B12</span>
+                        <span class="font-bold text-brand-yellow bg-white/10 px-3 py-1 rounded-md text-sm mt-3 inline-block">C35</span>
+                    </p>
+                </div>
 
-                    <!-- Text Content -->
-                    <div class="w-full lg:w-1/2">
-                        <div class="mb-8">
-                            <span class="text-brand-purple font-bold uppercase tracking-widest text-sm">Educación
-                                Preventiva</span>
-                            <h2 class="text-4xl lg:text-5xl font-black text-slate-800 mt-2 mb-6">4 Prácticas que salvan
-                                datos.</h2>
-                            <p class="text-slate-800 text-lg leading-relaxed">
-                                La ciberseguridad no es solo tecnología, es cultura. Implementar hábitos saludables de
-                                seguridad digital en su personal es la primera y mejor defensa existente.
-                            </p>
+                <!-- Input search widget -->
+                <div class="max-w-2xl mx-auto bg-slate-800/80 backdrop-blur-md rounded-3xl p-8 border border-slate-700 shadow-2xl relative">
+                    <div class="flex flex-col sm:flex-row gap-4 items-center">
+                        <div class="relative w-full">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+                            <input type="text" id="tracking-code-input" placeholder="Ingrese el código de tracking (Ej. VLK-2026-A48)..." 
+                                   class="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-950/60 border border-slate-700 text-white font-mono placeholder-slate-500 focus:outline-none focus:border-brand-purple focus:ring-1 focus:ring-brand-purple text-base">
                         </div>
+                        <button id="search-tracking-btn" 
+                                class="w-full sm:w-auto px-8 py-4 bg-brand-red hover:bg-orange-600 transition-colors rounded-2xl font-bold uppercase tracking-wider text-xs whitespace-nowrap">
+                            Consultar Estado
+                        </button>
+                    </div>
 
-                        <div class="space-y-6">
-                            <!-- Tip 1 -->
-                            <div
-                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-brand-purple/10 text-brand-purple flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined font-bold">password</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Higiene de Contraseñas</h4>
-                                    <p class="text-slate-800 text-sm mt-1">Usa frases o contraseñas mayores a 12
-                                        caracteres, nunca repetidas entre servicios. Activa Autenticación de Dos
-                                        Factores (2FA).</p>
-                                </div>
-                            </div>
-                            <!-- Tip 2 -->
-                            <div
-                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined font-bold">policy</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Verificar Remitentes</h4>
-                                    <p class="text-slate-800 text-sm mt-1">Si un correo solicita "urgencia" en un pago o
-                                        restablecer cuenta, detente. Confirma por teléfono antes de hacer clic.</p>
-                                </div>
-                            </div>
-                            <!-- Tip 3 -->
-                            <div
-                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined font-bold">update</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Actualizaciones Inmediatas</h4>
-                                    <p class="text-slate-800 text-sm mt-1">Los ciberdelincuentes aprovechan fallos
-                                        conocidos. Mantén SO y software siempre en su última versión.</p>
-                                </div>
-                            </div>
-                            <!-- Tip 4 -->
-                            <div
-                                class="flex gap-4 items-start p-4 hover:bg-slate-50 rounded-2xl transition-colors border border-transparent hover:border-slate-100">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-brand-dark/10 text-brand-dark flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined font-bold">wifi_off</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Cuidado con Wi-Fi Público</h4>
-                                    <p class="text-slate-800 text-sm mt-1">Nunca accedas a sistemas escolares
-                                        corporativos usando redes públicas sin una VPN empresarial certificada.</p>
-                                </div>
-                            </div>
+                    <!-- Error State -->
+                    <div id="tracking-error" class="hidden mt-6 bg-red-500/10 border border-red-500/30 text-red-400 p-5 rounded-2xl flex items-start gap-3">
+                        <span class="material-symbols-outlined text-xl flex-shrink-0">error</span>
+                        <div>
+                            <p class="font-bold text-sm">Código no registrado</p>
+                            <p class="text-xs text-slate-300 mt-1">Por favor ingrese uno de los códigos de prueba autorizados para la simulación: A48, B12 o C35.</p>
                         </div>
                     </div>
 
-                    <!-- Visual / Image -->
-                    <div class="w-full lg:w-1/2 relative">
-                        <div
-                            class="absolute inset-0 bg-brand-purple/10 rounded-full blur-[80px] -z-10 transform translate-x-10 translate-y-10">
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                            alt="Cybersecurity Server Room"
-                            class="rounded-3xl shadow-2xl w-full object-cover h-[300px] sm:h-[400px] lg:h-[600px] border border-slate-200">
-                        <!-- Floating Badge -->
-                        <div
-                            class="absolute -bottom-4 left-4 sm:-bottom-6 sm:-left-6 bg-white p-4 sm:p-6 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2 sm:gap-4 animate-bounce hover:animate-none">
-                            <div
-                                class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
-                                <span class="material-symbols-outlined">gpp_good</span>
+                    <!-- Result Container -->
+                    <div id="tracking-result" class="hidden mt-10 border-t border-slate-700/80 pt-8">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-slate-950/40 p-6 rounded-2xl border border-slate-700">
+                            <div>
+                                <span class="text-xs text-slate-400 font-bold uppercase block mb-1">Nombre del Trámite / Proyecto</span>
+                                <h3 id="project-title" class="font-black text-xl text-white tracking-tight uppercase">---</h3>
                             </div>
                             <div>
-                                <p class="font-black text-xl text-slate-800">100%</p>
-                                <p class="text-xs text-slate-800 font-bold uppercase">Datos Seguros</p>
+                                <span class="text-xs text-slate-400 font-bold uppercase block mb-1">Última Actualización</span>
+                                <span id="project-date" class="font-mono text-sm bg-brand-purple/20 text-brand-yellow border border-brand-purple/30 px-3 py-1 rounded-lg">---</span>
                             </div>
                         </div>
-                    </div>
 
+                        <!-- Timeline -->
+                        <div class="mb-10">
+                            <span class="text-xs text-slate-400 font-bold uppercase block mb-6">Estado de la Gestión</span>
+                            <div class="flex flex-col gap-6 relative pl-8 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-700">
+                                
+                                <!-- Step 1 -->
+                                <div id="step-1" class="timeline-step flex gap-4 relative">
+                                    <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
+                                        1
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm uppercase text-slate-400">Solicitud Ingresada</h4>
+                                        <p class="text-xs text-slate-800 mt-0.5">El formulario ha sido guardado exitosamente en nuestra nube.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2 -->
+                                <div id="step-2" class="timeline-step flex gap-4 relative">
+                                    <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
+                                        2
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm uppercase text-slate-400">Evaluación de Viabilidad</h4>
+                                        <p class="text-xs text-slate-800 mt-0.5">Mesa técnica analiza los requerimientos y alcances del proyecto.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3 -->
+                                <div id="step-3" class="timeline-step flex gap-4 relative">
+                                    <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
+                                        3
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm uppercase text-slate-400">Propuesta Autorizada</h4>
+                                        <p class="text-xs text-slate-800 mt-0.5">Se firma y aprueba el alcance, presupuesto e inicio formal.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4 -->
+                                <div id="step-4" class="timeline-step flex gap-4 relative">
+                                    <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
+                                        4
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm uppercase text-slate-400">En Desarrollo e Integración</h4>
+                                        <p class="text-xs text-slate-800 mt-0.5">Nuestros ingenieros programan, conectan APIs y despliegan servicios.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 5 -->
+                                <div id="step-5" class="timeline-step flex gap-4 relative">
+                                    <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
+                                        5
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm uppercase text-slate-400">Entrega y Cierre</h4>
+                                        <p class="text-xs text-slate-800 mt-0.5">Portal publicado y transferido con credenciales y guías finales.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Logs updates -->
+                        <div>
+                            <span class="text-xs text-slate-400 font-bold uppercase block mb-4">Bitácora de Eventos (Historial)</span>
+                            <div id="tracking-logs" class="space-y-3 font-mono text-xs max-h-48 overflow-y-auto bg-slate-950 p-4 rounded-xl border border-slate-700">
+                                <!-- Dynamically loaded logs -->
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA Final -->
-        <section class="py-20 bg-brand-dark relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-r from-brand-purple/20 to-transparent"></div>
+        <!-- Características del Módulo -->
+        <section id="caracteristicas" class="py-24 bg-white border-t border-slate-100">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-20">
+                    <span class="text-brand-purple font-bold uppercase tracking-widest text-xs">Características Clave</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-brand-dark uppercase tracking-tight mt-3 mb-6">Lo que Incluye la Solución</h2>
+                    <p class="text-lg text-slate-800 font-medium">
+                        Todo lo necesario para brindar una comunicación fluida y un canal digital transparente y automatizado.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <!-- Feature 1 -->
+                    <div class="flex gap-5 p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:border-brand-purple/20 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-purple/10 flex justify-center items-center text-brand-purple flex-shrink-0">
+                            <span class="material-symbols-outlined text-2xl">mail</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-brand-dark mb-2">Generación Automática de Email</h3>
+                            <p class="text-slate-800 text-sm leading-relaxed font-medium">
+                                El cliente recibe un correo con el enlace directo a su código de tracking inmediatamente al completar el formulario de la landing page.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="flex gap-5 p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:border-brand-purple/20 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-purple/10 flex justify-center items-center text-brand-purple flex-shrink-0">
+                            <span class="material-symbols-outlined text-2xl">send_and_archive</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-brand-dark mb-2">Alertas Telegram para Administradores</h3>
+                            <p class="text-slate-800 text-sm leading-relaxed font-medium">
+                                Recibe notificaciones automáticas en el chat de tu organización para atender y evaluar las propuestas entrantes sin retraso.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="flex gap-5 p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:border-brand-purple/20 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-purple/10 flex justify-center items-center text-brand-purple flex-shrink-0">
+                            <span class="material-symbols-outlined text-2xl">database</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-brand-dark mb-2">Backend Google Sheets / Firebase</h3>
+                            <p class="text-slate-800 text-sm leading-relaxed font-medium">
+                                Los datos de tracking se sincronizan en hojas de cálculo compartidas o bases de datos ligeras para que actualices los estados de manera súper ágil.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="flex gap-5 p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:border-brand-purple/20 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-purple/10 flex justify-center items-center text-brand-purple flex-shrink-0">
+                            <span class="material-symbols-outlined text-2xl">bar_chart</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-xl text-brand-dark mb-2">Panel Analítico de Tiempos</h3>
+                            <p class="text-slate-800 text-sm leading-relaxed font-medium">
+                                Evalúa los tiempos promedio de respuesta en cada fase, detecta los cuellos de botella y optimiza las gestiones de tu empresa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 bg-slate-50 relative overflow-hidden border-t border-slate-200">
             <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-                <h2 class="text-3xl md:text-5xl font-black text-white mb-6">¿Tu institución está realmente protegida?
-                </h2>
-                <p class="text-slate-300 text-lg mb-10">No esperes a un ataque para descubrir tus vulnerabilidades.
-                    Solicita una auditoría demo y conoce nuestras soluciones integrales (Cloud & On-Premise).</p>
+                <h2 class="text-3xl md:text-5xl font-black text-brand-dark mb-6">¿Quieres implementar este módulo en tu empresa?</h2>
+                <p class="text-slate-800 text-lg mb-10">Agenda una sesión con nuestro equipo de automatización para diseñar la landing page y el módulo de tracking a la medida de tus necesidades.</p>
                 <button
-                    class="agendar-demo-btn bg-brand-red text-white py-4 px-10 rounded-full font-bold text-lg uppercase tracking-widest hover:bg-white hover:text-brand-red transition-all shadow-lg hover:shadow-2xl">
-                    Agendar Auditoría Gratuita
+                    class="agendar-demo-btn bg-brand-purple hover:bg-brand-red text-white py-4 px-10 rounded-full font-bold text-lg uppercase tracking-widest transition-all shadow-lg hover:shadow-2xl hover:-translate-y-1">
+                    Agendar Reunión Gratuita
                 </button>
             </div>
         </section>
-
     </main>
 
-    <!-- Footer Area (Retained from existing structure) -->
+    <!-- Placeholder Footer -->
     <footer class="bg-brand-dark text-white pt-24 pb-12">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
@@ -991,124 +990,163 @@
                     document.body.style.overflow = 'hidden';
                 });
             });
-
-            // ==========================================
-            // LOGICA DEL MODAL "AGENDAR DEMO"
-            // ==========================================
-            const demoModal = document.getElementById('demo-modal');
-            const demoBtns = document.querySelectorAll('.agendar-demo-btn');
-            const demoModalClose = document.getElementById('demo-modal-close');
-            const demoForm = document.getElementById('demo-form');
-            const demoSubmitBtn = document.getElementById('demo-submit-btn');
-            const demoFeedback = document.getElementById('demo-feedback');
-
-            // Abrir Modal
-            demoBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    demoModal.classList.remove('opacity-0', 'pointer-events-none');
-                    demoModal.querySelector('div').classList.remove('scale-95');
-                    demoModal.querySelector('div').classList.add('scale-100');
-                    document.body.style.overflow = 'hidden';
-                });
-            });
-
-            // Cerrar Modal
-            function closeDemoModal() {
-                demoModal.classList.add('opacity-0', 'pointer-events-none');
-                demoModal.querySelector('div').classList.remove('scale-100');
-                demoModal.querySelector('div').classList.add('scale-95');
-                document.body.style.overflow = '';
-                setTimeout(() => {
-                    demoForm.reset();
-                    demoFeedback.classList.add('hidden');
-                    demoSubmitBtn.disabled = false;
-                    demoSubmitBtn.innerHTML = `<span>Solicitar Auditoría</span><span class="material-symbols-outlined text-lg">send</span>`;
-                }, 300);
             }
 
-            demoModalClose.addEventListener('click', closeDemoModal);
-
-            // Cerrar clicando fuera
-            demoModal.addEventListener('click', (e) => {
-                if (e.target === demoModal) {
-                    closeDemoModal();
-                }
-            });
-
-            // Enviar formulario (Integración Telegram)
-            demoForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                // --- CONFIGURACIÓN DE GOOGLE SHEETS ---
-                const SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwQzKSvHpgHnAOXBheG9fxSdZ9_jPGCkAaAVKU6kUi5aOzptK_EuVThN4Xb-XH4Yl_X/exec';
-
-                if (SCRIPT_WEB_APP_URL === 'REEMPLAZAR_POR_URL_DE_GOOGLE_SCRIPT') {
-                    demoFeedback.classList.remove('hidden', 'bg-red-50', 'text-brand-red');
-                    demoFeedback.classList.add('bg-green-50', 'text-green-600');
-                    demoFeedback.textContent = '¡Modo de prueba! Configura la URL del Web App de Google para enviar datos reales.';
-                    return;
-                }
-
-                const name = document.getElementById('demo-name').value;
-                const institution = document.getElementById('demo-institution').value;
-                const contactValue = document.getElementById('demo-contact').value;
-                const onlyDigits = contactValue.replace(/\D/g, '');
-
-                if (onlyDigits.length < 8) {
-                    demoFeedback.classList.remove('hidden', 'bg-green-100', 'text-green-800');
-                    demoFeedback.classList.add('bg-red-100', 'text-red-800');
-                    demoFeedback.innerHTML = `<p>Por favor, ingrese un número de teléfono válido (mínimo 8 dígitos).</p>`;
-                    return;
-                }
-
-                const finalPhone = onlyDigits.slice(-8);
-                const date = document.getElementById('demo-date').value;
-                const time = document.getElementById('demo-time').value;
-
-                demoSubmitBtn.disabled = true;
-                demoSubmitBtn.innerHTML = `<span>Enviando...</span><span class="material-symbols-outlined text-lg animate-spin">sync</span>`;
-                demoFeedback.classList.add('hidden');
-
-                try {
-                    const response = await fetch(SCRIPT_WEB_APP_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            nombre: name,
-                            institucion: institution,
-                            contacto: finalPhone,
-                            fechaDeseada: date,
-                            horario: time
-                        })
-                    });
-
-                    if (response.ok) {
-                        demoFeedback.classList.remove('hidden', 'bg-red-50', 'text-brand-red');
-                        demoFeedback.classList.add('bg-green-50', 'text-green-600');
-                        demoFeedback.textContent = '¡Solicitud enviada! Nos contactaremos contigo pronto.';
-                        demoSubmitBtn.innerHTML = `<span>¡Enviado!</span><span class="material-symbols-outlined text-lg">check_circle</span>`;
-                        demoSubmitBtn.classList.remove('bg-brand-red', 'hover:bg-orange-600');
-                        demoSubmitBtn.classList.add('bg-green-600', 'hover:bg-green-700');
-
-                        setTimeout(() => {
-                            closeDemoModal();
-                            setTimeout(() => {
-                                demoSubmitBtn.classList.add('bg-brand-red', 'hover:bg-orange-600');
-                                demoSubmitBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
-                            }, 500);
-                        }, 2500);
+            if (propuestasBtn) {
+                propuestasBtn.addEventListener('click', () => {
+                    const isOpen = propuestasMenu.classList.contains('max-h-[800px]');
+                    const card = propuestasBtn.closest('div.rounded-xl');
+                    if (isOpen) {
+                        propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                        propuestasMenu.classList.add('max-h-0', 'opacity-0');
+                        propuestasIcon.classList.remove('rotate-180');
+                        card.classList.remove('bg-white', 'shadow-md');
+                        card.classList.add('bg-slate-50/80');
                     } else {
-                        throw new Error('Error en Google Script');
+                        propuestasMenu.classList.remove('max-h-0', 'opacity-0');
+                        propuestasMenu.classList.add('max-h-[800px]', 'opacity-100');
+                        propuestasIcon.classList.add('rotate-180');
+                        card.classList.remove('bg-slate-50/80');
+                        card.classList.add('bg-white', 'shadow-md');
                     }
-                } catch (error) {
-                    console.error(error);
-                    demoFeedback.classList.remove('hidden', 'bg-green-50', 'text-green-600');
-                    demoFeedback.classList.add('bg-red-50', 'text-brand-red');
-                    demoFeedback.textContent = 'Ocurrió un error. Por favor intenta de nuevo.';
-                    demoSubmitBtn.disabled = false;
-                    demoSubmitBtn.innerHTML = `<span>Solicitar Auditoría</span><span class="material-symbols-outlined text-lg">send</span>`;
+                });
+            }
+
+            // ==========================================
+            // LOGICA DEL SIMULADOR DE TRACKING
+            // ==========================================
+            const trackingInput = document.getElementById('tracking-code-input');
+            const searchBtn = document.getElementById('search-tracking-btn');
+            const trackingResult = document.getElementById('tracking-result');
+            const trackingError = document.getElementById('tracking-error');
+
+            const projectTitle = document.getElementById('project-title');
+            const projectDate = document.getElementById('project-date');
+            const trackingLogs = document.getElementById('tracking-logs');
+
+            const mockData = {
+                'VLK-2026-A48': {
+                    step: 5,
+                    title: 'Portal Social - Club de Leones',
+                    desc: 'Despliegue y configuración final del portal institucional en producción.',
+                    date: '15/07/2026',
+                    logs: [
+                        { time: '16/07/2026 09:00', text: 'Proyecto completado y publicado en servidor final.' },
+                        { time: '14/07/2026 14:30', text: 'Pruebas de pasarela de pago aprobadas.' },
+                        { time: '10/07/2026 11:00', text: 'Desarrollo de módulos e interfaces completado.' },
+                        { time: '05/07/2026 08:30', text: 'Evaluación y aprobación de requerimientos iniciales.' }
+                    ]
+                },
+                'VLK-2026-B12': {
+                    step: 2,
+                    title: 'Módulo de Prevención Escolar - SOSQR',
+                    desc: 'Evaluación técnica de infraestructura y diseño del flujo de alertas escolares.',
+                    date: 'En progreso',
+                    logs: [
+                        { time: '16/07/2026 11:15', text: 'Reunión de coordinación técnica con equipo de desarrollo.' },
+                        { time: '15/07/2026 08:00', text: 'Solicitud recibida y asignada a mesa de evaluación.' }
+                    ]
+                },
+                'VLK-2026-C35': {
+                    step: 4,
+                    title: 'Integración ERP & Reservas - Multicar',
+                    desc: 'Desarrollo del módulo de base de datos Firebase y pasarela de agendamiento.',
+                    date: 'En progreso',
+                    logs: [
+                        { time: '16/07/2026 07:45', text: 'Integración con base de datos Firebase en progreso.' },
+                        { time: '12/07/2026 15:00', text: 'Estructuración de vistas y diseño UI aprobado.' },
+                        { time: '08/07/2026 10:00', text: 'Solicitud aprobada y plan de trabajo iniciado.' }
+                    ]
+                }
+            };
+
+            function showTrackingResult(code, data) {
+                // Set text info
+                projectTitle.textContent = data.title;
+                projectDate.textContent = data.date;
+
+                // Load logs
+                trackingLogs.innerHTML = '';
+                data.logs.forEach(log => {
+                    const logEl = document.createElement('div');
+                    logEl.className = 'flex gap-2 border-b border-slate-800 pb-2';
+                    logEl.innerHTML = `<span class="text-brand-yellow font-bold">${log.time}</span> <span class="text-slate-300">- ${log.text}</span>`;
+                    trackingLogs.appendChild(logEl);
+                });
+
+                // Clear styling for all steps first
+                for (let i = 1; i <= 5; i++) {
+                    const stepEl = document.getElementById(`step-${i}`);
+                    const iconEl = stepEl.querySelector('.step-icon');
+                    const textEl = stepEl.querySelector('h4');
+                    const descEl = stepEl.querySelector('p');
+
+                    stepEl.classList.remove('active', 'completed');
+                    iconEl.className = 'step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors';
+                    textEl.className = 'font-bold text-sm uppercase text-slate-400';
+                    descEl.className = 'text-xs text-slate-800 mt-0.5';
+                }
+
+                // Update styling up to the current step
+                for (let i = 1; i <= 5; i++) {
+                    const stepEl = document.getElementById(`step-${i}`);
+                    const iconEl = stepEl.querySelector('.step-icon');
+                    const textEl = stepEl.querySelector('h4');
+                    const descEl = stepEl.querySelector('p');
+
+                    if (i < data.step) {
+                        // Completed step
+                        stepEl.classList.add('completed');
+                        iconEl.className = 'step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-400 flex items-center justify-center text-xs font-bold z-10 transition-colors';
+                        textEl.className = 'font-bold text-sm uppercase text-green-400';
+                        descEl.className = 'text-xs text-slate-300 mt-0.5';
+                    } else if (i === data.step) {
+                        // Active/Current step
+                        stepEl.classList.add('active');
+                        if (i === 5) {
+                            // Completed project is represented by green too
+                            iconEl.className = 'step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-400 flex items-center justify-center text-xs font-bold z-10 transition-colors';
+                            textEl.className = 'font-bold text-sm uppercase text-green-400';
+                        } else {
+                            iconEl.className = 'step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-brand-purple text-white border-2 border-brand-purple flex items-center justify-center text-xs font-bold z-10 transition-colors';
+                            textEl.className = 'font-bold text-sm uppercase text-brand-yellow';
+                        }
+                        descEl.className = 'text-xs text-white mt-0.5 font-medium';
+                    }
+                }
+
+                // Reveal container
+                trackingResult.classList.remove('hidden');
+                
+                // Smooth scroll to results
+                trackingResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            searchBtn.addEventListener('click', () => {
+                let code = trackingInput.value.trim().toUpperCase();
+                if (!code) return;
+
+                // Auto prepend VLK-2026- if they entered A48, B12 or C35
+                if (code === 'A48' || code === 'B12' || code === 'C35') {
+                    code = 'VLK-2026-' + code;
+                }
+
+                if (mockData[code]) {
+                    trackingError.classList.add('hidden');
+                    showTrackingResult(code, mockData[code]);
+                } else {
+                    trackingResult.classList.add('hidden');
+                    trackingError.classList.remove('hidden');
                 }
             });
+
+            // Enter key search
+            trackingInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    searchBtn.click();
+                }
+            });
+
         });
     </script>
 </body>
