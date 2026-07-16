@@ -43,6 +43,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -219,10 +220,10 @@
                     </p>
 
                     <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                        <button
-                            class="agendar-demo-btn flex-1 sm:flex-none uppercase tracking-widest font-bold text-sm bg-brand-red hover:bg-orange-600 text-white rounded-full px-8 py-4 transition-all shadow-lg hover:shadow-brand-red/30 hover:-translate-y-1">
-                            Auditoría de Procesos
-                        </button>
+                        <a href="#proyectos-reales"
+                            class="flex-1 sm:flex-none flex items-center justify-center uppercase tracking-widest font-bold text-sm bg-brand-red hover:bg-orange-600 text-white rounded-full px-8 py-4 transition-all shadow-lg hover:shadow-brand-red/30 hover:-translate-y-1 text-center">
+                            Ver proyectos reales
+                        </a>
                         <a href="#stats"
                             class="flex-1 sm:flex-none flex items-center justify-center gap-2 uppercase tracking-widest font-bold text-sm bg-white border-2 border-slate-200 hover:border-brand-purple text-brand-dark rounded-full px-8 py-4 transition-all">
                             Ver Impacto <span class="material-symbols-outlined text-brand-purple">arrow_downward</span>
@@ -444,6 +445,180 @@
                                 <p class="text-green-400 font-mono text-sm">Tiempo total de ejecución: <strong
                                         class="text-white">0.342s</strong></p>
                             </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Proyectos Reales -->
+        <section id="proyectos-reales" class="py-24 bg-white relative overflow-hidden border-t border-slate-100">
+            <!-- Decorative blur backgrounds -->
+            <div class="absolute top-1/4 right-0 w-96 h-96 -z-10 bg-brand-purple/5 rounded-full blur-[120px] pointer-events-none"></div>
+            <div class="absolute bottom-1/4 left-0 w-96 h-96 -z-10 bg-brand-yellow/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-20">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-purple/20 bg-brand-purple/5 text-brand-purple text-xs font-bold uppercase tracking-widest mb-6">
+                        <span class="material-symbols-outlined text-sm font-bold">workspace_premium</span>
+                        <span>Casos de Éxito</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-brand-dark uppercase tracking-tight mb-6">
+                        Proyectos reales que <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple via-brand-red to-brand-yellow">hemos construido</span>
+                    </h2>
+                    <p class="text-lg text-slate-800 leading-relaxed font-medium">
+                        Creamos plataformas robustas, escalables y con alto impacto visual. Explora algunos de los sistemas y portales web que hemos implementado con éxito para nuestros socios comerciales.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    
+                    <!-- Proyecto 1: SOSQR -->
+                    <div class="group bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:border-brand-red/20 transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2">
+                        <div class="relative h-64 overflow-hidden bg-slate-950 flex-shrink-0">
+                            <!-- Overlay gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1582139329536-e7284fece509?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 alt="SOSQR Guatemala" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
+                            <!-- Floating Badge -->
+                            <div class="absolute top-6 left-6 z-20 bg-brand-red text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                                Prevención y Seguridad
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">emergency</span>
+                                </div>
+                                <h3 class="font-bold text-2xl text-brand-dark uppercase tracking-tight">SOSQR Guatemala</h3>
+                            </div>
+                            <p class="text-slate-800 font-medium text-sm leading-relaxed mb-6 flex-grow">
+                                Ecosistema tecnológico integral para alerta escolar y familiar. A través de códigos QR únicos vinculados a estudiantes o personas mayores, envía notificaciones de emergencia instantáneas a familiares y centros educativos en milisegundos.
+                            </p>
+                            <!-- Technical tags -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">QR Code IoT</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Telegram API</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Google Sheets DB</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Real-time alerts</span>
+                            </div>
+                            <a href="https://sosqrgt.com/" target="_blank" 
+                               class="inline-flex items-center justify-center gap-2 w-full py-3.5 bg-brand-dark hover:bg-brand-red text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors shadow-sm group-hover:shadow-md">
+                                Visitar Plataforma <span class="material-symbols-outlined text-sm">open_in_new</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 2: Club de Leones Quetzaltenango -->
+                    <div class="group bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:border-brand-purple/20 transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2">
+                        <div class="relative h-64 overflow-hidden bg-slate-950 flex-shrink-0">
+                            <!-- Overlay gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Club de Leones Quetzaltenango" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
+                            <!-- Floating Badge -->
+                            <div class="absolute top-6 left-6 z-20 bg-brand-purple text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                                Portal Social & Comunitario
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">diversity_1</span>
+                                </div>
+                                <h3 class="font-bold text-2xl text-brand-dark uppercase tracking-tight">Club de Leones Quetzaltenango</h3>
+                            </div>
+                            <p class="text-slate-800 font-medium text-sm leading-relaxed mb-6 flex-grow">
+                                Plataforma web moderna para la coordinación y difusión de programas sociales, recaudación de donaciones y gestión de actividades comunitarias en el occidente de Guatemala. Permite visibilizar campañas de salud y voluntariado.
+                            </p>
+                            <!-- Technical tags -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">ReactJS</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Tailwind CSS</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">React Router</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Autogestionable</span>
+                            </div>
+                            <a href="https://clubdeleonesquetzaltenango.org/" target="_blank" 
+                               class="inline-flex items-center justify-center gap-2 w-full py-3.5 bg-brand-dark hover:bg-brand-purple text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors shadow-sm group-hover:shadow-md">
+                                Visitar Portal <span class="material-symbols-outlined text-sm">open_in_new</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 3: Multicar AutoSpa -->
+                    <div class="group bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:border-brand-purple/20 transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2">
+                        <div class="relative h-64 overflow-hidden bg-slate-950 flex-shrink-0">
+                            <!-- Overlay gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Multicar AutoSpa Premium" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
+                            <!-- Floating Badge -->
+                            <div class="absolute top-6 left-6 z-20 bg-blue-600 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                                Web App Comercial
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">local_car_wash</span>
+                                </div>
+                                <h3 class="font-bold text-2xl text-brand-dark uppercase tracking-tight">Multicar AutoSpa</h3>
+                            </div>
+                            <p class="text-slate-800 font-medium text-sm leading-relaxed mb-6 flex-grow">
+                                Aplicación web comercial de reservas y cotización de servicios premium de detallado y estética automotriz en Xela. Optimiza el agendamiento y la visualización de los paquetes de alta gama para los clientes con una experiencia de flujo ágil.
+                            </p>
+                            <!-- Technical tags -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Firebase Hosting</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Tailwind CSS</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Dynamic Booking</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">SPA Architecture</span>
+                            </div>
+                            <a href="https://multicar-xela-app.web.app/" target="_blank" 
+                               class="inline-flex items-center justify-center gap-2 w-full py-3.5 bg-brand-dark hover:bg-blue-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors shadow-sm group-hover:shadow-md">
+                                Abrir Aplicación <span class="material-symbols-outlined text-sm">open_in_new</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 4: Lluvia de Ideas -->
+                    <div class="group bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:border-brand-yellow/30 transition-all duration-500 flex flex-col h-full transform hover:-translate-y-2">
+                        <div class="relative h-64 overflow-hidden bg-slate-950 flex-shrink-0">
+                            <!-- Overlay gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Portal Lluvia de Ideas" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
+                            <!-- Floating Badge -->
+                            <div class="absolute top-6 left-6 z-20 bg-brand-yellow text-slate-900 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                                Portal Educativo E-Commerce
+                            </div>
+                        </div>
+                        <div class="p-8 flex flex-col flex-grow">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">school</span>
+                                </div>
+                                <h3 class="font-bold text-2xl text-brand-dark uppercase tracking-tight">Lluvia de Ideas</h3>
+                            </div>
+                            <p class="text-slate-800 font-medium text-sm leading-relaxed mb-6 flex-grow">
+                                Plataforma didáctica interactiva orientada a la educación. Cuenta con un catálogo interactivo de recursos escolares digitales, aplicaciones interactivas integradas y pasarelas de pago automatizadas para la adquisición directa de material.
+                            </p>
+                            <!-- Technical tags -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Vite / React</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">E-Commerce API</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Pasarela de Pagos</span>
+                                <span class="bg-slate-50 text-slate-800 text-xs font-bold px-3 py-1 rounded-lg border border-slate-100">Interactive Canvas</span>
+                            </div>
+                            <a href="https://lluviadeideasgt.com/" target="_blank" 
+                               class="inline-flex items-center justify-center gap-2 w-full py-3.5 bg-brand-dark hover:bg-brand-yellow hover:text-slate-900 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors shadow-sm group-hover:shadow-md">
+                                Explorar Portal <span class="material-symbols-outlined text-sm">open_in_new</span>
+                            </a>
                         </div>
                     </div>
 
