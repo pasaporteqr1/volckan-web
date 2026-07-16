@@ -50,6 +50,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -665,7 +666,172 @@
                     Agendar Reunión Gratuita
                 </button>
             </div>
-        </section>
+    <!-- Ecosystem Detail Modal -->
+    <div id="eco-simulator-modal" class="fixed inset-0 z-[90] bg-slate-900/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-2xl shadow-2xl p-6 md:p-8 transform scale-95 transition-transform duration-300 relative text-white">
+            
+            <!-- Modal Close Button -->
+            <button id="eco-simulator-modal-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="border-b border-slate-800 pb-4 mb-6">
+                <h3 id="eco-modal-title" class="font-black text-xl tracking-tight uppercase text-brand-yellow">---</h3>
+                <p id="eco-modal-subtitle" class="text-xs text-slate-400 mt-1">Simulación interactiva en tiempo real</p>
+            </div>
+
+            <!-- Modal Contents -->
+            <div id="eco-modal-body">
+                
+                <!-- Email View -->
+                <div id="eco-modal-view-email" class="hidden space-y-4">
+                    <div class="bg-slate-950 rounded-2xl border border-slate-800 p-6 max-w-md mx-auto relative overflow-hidden shadow-inner">
+                        <!-- Top status bar of phone -->
+                        <div class="flex justify-between items-center text-[10px] text-slate-800 font-mono mb-4 border-b border-slate-900/50 pb-2">
+                            <span>Volckan Mail Client</span>
+                            <span class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[10px]">wifi</span>
+                                <span class="material-symbols-outlined text-[10px]">battery_full</span>
+                                <span>09:41 AM</span>
+                            </span>
+                        </div>
+                        <div class="space-y-2 text-xs font-mono text-slate-300">
+                            <div class="flex border-b border-slate-900/50 pb-2"><span class="text-slate-800 font-bold w-16">De:</span> <span class="text-brand-purple">notificaciones@volckan.com</span></div>
+                            <div class="flex border-b border-slate-900/50 pb-2"><span class="text-slate-800 font-bold w-16">Para:</span> <span id="eco-m-email-to">cliente@organizacion.org</span></div>
+                            <div class="flex border-b border-slate-900/50 pb-2"><span class="text-slate-800 font-bold w-16">Asunto:</span> <span id="eco-m-email-subject" class="text-brand-yellow font-bold">---</span></div>
+                        </div>
+                        <div class="mt-6 text-sm text-slate-200 font-sans leading-relaxed border-t border-slate-900/50 pt-4" id="eco-m-email-body">
+                            ---
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telegram View -->
+                <div id="eco-modal-view-telegram" class="hidden space-y-4">
+                    <div class="bg-slate-950 rounded-2xl border border-slate-800 max-w-md mx-auto overflow-hidden shadow-2xl flex flex-col h-[350px]">
+                        <!-- Telegram App Header -->
+                        <div class="bg-[#17212b] p-4 border-b border-slate-850 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-sky-500 flex items-center justify-center text-white font-bold text-sm">V</div>
+                            <div>
+                                <h4 class="font-bold text-sm text-white leading-tight">Volckan Admin Alerts</h4>
+                                <span class="text-[10px] text-sky-400">bot activo</span>
+                            </div>
+                        </div>
+                        <!-- Chat Message Body -->
+                        <div class="flex-grow p-4 overflow-y-auto space-y-4 bg-[#0e1621] flex flex-col justify-end">
+                            <div class="flex flex-col gap-1 max-w-[85%] bg-[#182533] p-3 rounded-2xl rounded-tl-none border border-slate-800 self-start text-xs font-mono text-slate-300">
+                                <span class="text-[10px] text-sky-400 font-bold">VolckanBot 🤖</span>
+                                <p id="eco-m-telegram-body" class="whitespace-pre-line">---</p>
+                                <span class="text-[8px] text-slate-800 self-end mt-1">09:41</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Sheets View -->
+                <div id="eco-modal-view-sheets" class="hidden space-y-4">
+                    <div class="bg-slate-950 rounded-2xl border border-slate-800 p-4 overflow-x-auto shadow-inner">
+                        <!-- Spreadsheet simulation header -->
+                        <div class="flex items-center gap-3 border-b border-slate-800 pb-3 mb-4">
+                            <div class="w-3.5 h-3.5 bg-green-600 rounded"></div>
+                            <span class="text-xs font-bold text-slate-300 font-mono">Volckan_Tracking_DB.xlsx</span>
+                        </div>
+                        <table class="w-full text-xs font-mono text-left text-slate-300 border-collapse">
+                            <thead>
+                                <tr class="bg-slate-900 border-b border-slate-800 text-slate-800 uppercase tracking-wider text-[10px]">
+                                    <th class="p-2 border border-slate-800">Fila</th>
+                                    <th class="p-2 border border-slate-800">Código</th>
+                                    <th class="p-2 border border-slate-800">Proyecto</th>
+                                    <th class="p-2 border border-slate-800">Estado Sync</th>
+                                    <th class="p-2 border border-slate-800">Último Update</th>
+                                </tr>
+                            </thead>
+                            <tbody id="eco-m-sheets-tbody">
+                                <tr class="border-b border-slate-800 text-slate-800">
+                                    <td class="p-2 border border-slate-800">1</td>
+                                    <td class="p-2 border border-slate-800">VLK-2026-A01</td>
+                                    <td class="p-2 border border-slate-800">Multicar ERP</td>
+                                    <td class="p-2 border border-slate-800">Entregado</td>
+                                    <td class="p-2 border border-slate-800">12/07/2026</td>
+                                </tr>
+                                <tr id="eco-m-sheets-active-row" class="transition-colors duration-500">
+                                    <td class="p-2 border border-slate-800">2</td>
+                                    <td id="eco-m-sheets-code" class="p-2 border border-slate-800 text-brand-yellow">---</td>
+                                    <td id="eco-m-sheets-project" class="p-2 border border-slate-800">---</td>
+                                    <td id="eco-m-sheets-status" class="p-2 border border-slate-800 font-bold">---</td>
+                                    <td class="p-2 border border-slate-800">Hoy</td>
+                                </tr>
+                                <tr class="border-b border-slate-800 text-slate-800">
+                                    <td class="p-2 border border-slate-800">3</td>
+                                    <td class="p-2 border border-slate-800">VLK-2026-X99</td>
+                                    <td class="p-2 border border-slate-800">SOSQR Alerts</td>
+                                    <td class="p-2 border border-slate-800">Evaluación</td>
+                                    <td class="p-2 border border-slate-800">14/07/2026</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Analytics View -->
+                <div id="eco-modal-view-analytics" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="text-[10px] text-slate-800 uppercase font-bold block mb-1">Rendimiento Operativo</span>
+                            <span id="eco-m-analytics-perf" class="text-xl font-black text-white">---</span>
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="text-[10px] text-slate-800 uppercase font-bold block mb-1">Tiempo de Respuesta</span>
+                            <span id="eco-m-analytics-time" class="text-sm font-mono text-brand-yellow">---</span>
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="text-[10px] text-slate-800 uppercase font-bold block mb-1">Tasa de Acierto API</span>
+                            <span class="text-sm font-mono text-green-400 font-bold">99.98%</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950 p-6 rounded-xl border border-slate-800">
+                        <div class="flex justify-between text-xs text-slate-400 font-bold uppercase mb-2">
+                            <span>Progreso General de la Gestión</span>
+                            <span id="eco-m-analytics-prog-text">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden">
+                            <div id="eco-m-analytics-prog-bar" class="bg-gradient-to-r from-brand-purple to-brand-yellow h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <span class="text-xs text-slate-400 font-bold uppercase block mb-3">Distribución de Tiempos Estimados</span>
+                        <div class="grid grid-cols-5 gap-2 items-end h-28 pt-4">
+                            <div class="flex flex-col items-center gap-1.5 h-full justify-end">
+                                <div class="w-full bg-brand-purple/40 rounded-t h-[20%]"></div>
+                                <span class="text-[8px] text-slate-800">P1</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1.5 h-full justify-end">
+                                <div class="w-full bg-brand-purple/60 rounded-t h-[40%]"></div>
+                                <span class="text-[8px] text-slate-800">P2</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1.5 h-full justify-end">
+                                <div class="w-full bg-brand-purple/80 rounded-t h-[60%]"></div>
+                                <span class="text-[8px] text-slate-800">P3</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1.5 h-full justify-end">
+                                <div class="w-full bg-brand-purple rounded-t h-[80%]"></div>
+                                <span class="text-[8px] text-slate-800">P4</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1.5 h-full justify-end">
+                                <div class="w-full bg-brand-yellow rounded-t h-[100%]"></div>
+                                <span class="text-[8px] text-slate-800">P5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
     </main>
 
     <!-- Placeholder Footer -->
