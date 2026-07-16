@@ -50,6 +50,8 @@
     
     
     
+    
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -1642,6 +1644,50 @@
                     card.classList.add('bg-white', 'shadow-md');
                 }
             });
+
+            // Accordion toggle for Propuestas
+            propuestasBtn.addEventListener('click', () => {
+                const isOpen = propuestasMenu.classList.contains('max-h-[800px]');
+                const card = propuestasBtn.closest('div.rounded-xl');
+
+                if (isOpen) {
+                    propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                    propuestasMenu.classList.add('max-h-0', 'opacity-0');
+                    propuestasIcon.classList.remove('rotate-180');
+                    card.classList.remove('bg-white', 'shadow-md');
+                    card.classList.add('bg-slate-50/80');
+                } else {
+                    propuestasMenu.classList.remove('max-h-0', 'opacity-0');
+                    propuestasMenu.classList.add('max-h-[800px]', 'opacity-100');
+                    propuestasIcon.classList.add('rotate-180');
+                    card.classList.remove('bg-slate-50/80');
+                    card.classList.add('bg-white', 'shadow-md');
+                }
+            });
+
+            
+
+            // Accordion toggle for Propuestas
+            propuestasBtn.addEventListener('click', () => {
+                const isOpen = propuestasMenu.classList.contains('max-h-[800px]');
+                const card = propuestasBtn.closest('div.rounded-xl');
+
+                if (isOpen) {
+                    propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                    propuestasMenu.classList.add('max-h-0', 'opacity-0');
+                    propuestasIcon.classList.remove('rotate-180');
+                    card.classList.remove('bg-white', 'shadow-md');
+                    card.classList.add('bg-slate-50/80');
+                } else {
+                    propuestasMenu.classList.remove('max-h-0', 'opacity-0');
+                    propuestasMenu.classList.add('max-h-[800px]', 'opacity-100');
+                    propuestasIcon.classList.add('rotate-180');
+                    card.classList.remove('bg-slate-50/80');
+                    card.classList.add('bg-white', 'shadow-md');
+                }
+            });
+
+            
 
             // Accordion toggle for Propuestas
             propuestasBtn.addEventListener('click', () => {
