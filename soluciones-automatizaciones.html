@@ -46,6 +46,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -1084,6 +1085,47 @@
                     card.classList.remove('bg-slate-50/80');
                     card.classList.add('bg-white', 'shadow-md');
                 }
+            });
+
+            // Accordion toggle for Propuestas
+            propuestasBtn.addEventListener('click', () => {
+                const isOpen = propuestasMenu.classList.contains('max-h-[800px]');
+                const card = propuestasBtn.closest('div.rounded-xl');
+
+                if (isOpen) {
+                    propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                    propuestasMenu.classList.add('max-h-0', 'opacity-0');
+                    propuestasIcon.classList.remove('rotate-180');
+                    card.classList.remove('bg-white', 'shadow-md');
+                    card.classList.add('bg-slate-50/80');
+                } else {
+                    propuestasMenu.classList.remove('max-h-0', 'opacity-0');
+                    propuestasMenu.classList.add('max-h-[800px]', 'opacity-100');
+                    propuestasIcon.classList.add('rotate-180');
+                    card.classList.remove('bg-slate-50/80');
+                    card.classList.add('bg-white', 'shadow-md');
+                }
+            });
+
+            // ==========================================
+            // LOGICA DEL MODAL "AGENDAR DEMO"
+            // ==========================================
+            const demoModal = document.getElementById('demo-modal');
+            const demoBtns = document.querySelectorAll('.agendar-demo-btn'); // Necesitaremos agregar esta clase a los botones
+            const demoModalClose = document.getElementById('demo-modal-close');
+            const demoForm = document.getElementById('demo-form');
+            const demoSubmitBtn = document.getElementById('demo-submit-btn');
+            const demoFeedback = document.getElementById('demo-feedback');
+
+            // Abrir Modal
+            demoBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); // Por si es etiqueta <a>
+                    demoModal.classList.remove('opacity-0', 'pointer-events-none');
+                    demoModal.querySelector('div').classList.remove('scale-95');
+                    demoModal.querySelector('div').classList.add('scale-100');
+                    document.body.style.overflow = 'hidden';
+                });
             });
 
             // Accordion toggle for Propuestas
