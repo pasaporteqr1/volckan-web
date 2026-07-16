@@ -48,6 +48,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -390,63 +391,169 @@
                             </div>
                         </div>
 
-                        <!-- Timeline -->
-                        <div class="mb-10">
-                            <span class="text-xs text-slate-400 font-bold uppercase block mb-6">Estado de la Gestión</span>
-                            <div class="flex flex-col gap-6 relative pl-8 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-700">
-                                
-                                <!-- Step 1 -->
-                                <div id="step-1" class="timeline-step flex gap-4 relative">
-                                    <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
-                                        1
+                        <!-- Grid layout: Left is Timeline, Right is Ecosystem Simulator -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10 items-stretch">
+                            <!-- Left: Timeline -->
+                            <div class="bg-slate-800/40 p-6 rounded-3xl border border-slate-700 flex flex-col justify-between">
+                                <div>
+                                    <span class="text-xs text-slate-400 font-bold uppercase block mb-6">Estado de la Gestión</span>
+                                    <div class="flex flex-col gap-6 relative pl-8 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-700">
+                                        <!-- Step 1 -->
+                                        <div id="step-1" class="timeline-step flex gap-4 relative">
+                                            <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
+                                                1
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-sm uppercase text-slate-400">Solicitud Ingresada</h4>
+                                                <p class="text-xs text-slate-800 mt-0.5">El formulario ha sido guardado exitosamente en nuestra nube.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Step 2 -->
+                                        <div id="step-2" class="timeline-step flex gap-4 relative">
+                                            <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
+                                                2
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-sm uppercase text-slate-400">Evaluación de Viabilidad</h4>
+                                                <p class="text-xs text-slate-800 mt-0.5">Mesa técnica analiza los requerimientos y alcances del proyecto.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Step 3 -->
+                                        <div id="step-3" class="timeline-step flex gap-4 relative">
+                                            <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
+                                                3
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-sm uppercase text-slate-400">Propuesta Autorizada</h4>
+                                                <p class="text-xs text-slate-800 mt-0.5">Se firma y aprueba el alcance, presupuesto e inicio formal.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Step 4 -->
+                                        <div id="step-4" class="timeline-step flex gap-4 relative">
+                                            <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
+                                                4
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-sm uppercase text-slate-400">En Desarrollo e Integración</h4>
+                                                <p class="text-xs text-slate-800 mt-0.5">Nuestros ingenieros programan, conectan APIs y despliegan servicios.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Step 5 -->
+                                        <div id="step-5" class="timeline-step flex gap-4 relative">
+                                            <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
+                                                5
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-sm uppercase text-slate-400">Entrega y Cierre</h4>
+                                                <p class="text-xs text-slate-800 mt-0.5">Portal publicado y transferido con credenciales y guías finales.</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 class="font-bold text-sm uppercase text-slate-400">Solicitud Ingresada</h4>
-                                        <p class="text-xs text-slate-800 mt-0.5">El formulario ha sido guardado exitosamente en nuestra nube.</p>
+                                </div>
+                            </div>
+
+                            <!-- Right: Ecosystem Simulator -->
+                            <div class="bg-slate-800/40 p-6 rounded-3xl border border-slate-700 flex flex-col gap-6">
+                                <div class="flex items-center justify-between border-b border-slate-700/80 pb-4">
+                                    <span class="text-xs text-slate-400 font-bold uppercase block">Ecosistema Volckan en Acción</span>
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-500/10 text-green-400 border border-green-500/20">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-ping"></span>
+                                        Simulando
+                                    </span>
+                                </div>
+
+                                <!-- Email Widget -->
+                                <div id="eco-email-widget" class="bg-slate-900/80 rounded-2xl border border-slate-700/60 p-4 transition-all duration-300 transform hover:scale-[1.01] hover:border-brand-purple/40">
+                                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-brand-purple text-lg">mail</span>
+                                            <span class="text-xs font-bold text-slate-300 uppercase tracking-wide">Email del Cliente</span>
+                                        </div>
+                                        <span id="eco-email-badge" class="text-[9px] font-bold text-slate-800 uppercase">Enviado</span>
+                                    </div>
+                                    <div class="text-[11px] font-mono space-y-1 text-slate-300">
+                                        <div><span class="text-slate-800 font-bold">De:</span> <span id="eco-email-from">notificaciones@volckan.com</span></div>
+                                        <div><span class="text-slate-800 font-bold">Para:</span> <span id="eco-email-to">cliente@organizacion.org</span></div>
+                                        <div><span class="text-slate-800 font-bold">Asunto:</span> <span id="eco-email-subject" class="text-brand-yellow font-bold">---</span></div>
+                                        <p id="eco-email-body" class="mt-2 text-slate-400 text-xs font-sans leading-relaxed border-t border-slate-800 pt-2">---</p>
                                     </div>
                                 </div>
 
-                                <!-- Step 2 -->
-                                <div id="step-2" class="timeline-step flex gap-4 relative">
-                                    <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
-                                        2
+                                <!-- Telegram Widget -->
+                                <div id="eco-telegram-widget" class="bg-slate-900/80 rounded-2xl border border-slate-700/60 p-4 transition-all duration-300 transform hover:scale-[1.01] hover:border-sky-500/40">
+                                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-sky-400 text-lg">send</span>
+                                            <span class="text-xs font-bold text-slate-300 uppercase tracking-wide">Notificación Telegram Admin</span>
+                                        </div>
+                                        <span class="text-[9px] font-bold text-sky-400 uppercase">Telegram Bot 🤖</span>
                                     </div>
-                                    <div>
-                                        <h4 class="font-bold text-sm uppercase text-slate-400">Evaluación de Viabilidad</h4>
-                                        <p class="text-xs text-slate-800 mt-0.5">Mesa técnica analiza los requerimientos y alcances del proyecto.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Step 3 -->
-                                <div id="step-3" class="timeline-step flex gap-4 relative">
-                                    <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
-                                        3
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-sm uppercase text-slate-400">Propuesta Autorizada</h4>
-                                        <p class="text-xs text-slate-800 mt-0.5">Se firma y aprueba el alcance, presupuesto e inicio formal.</p>
+                                    <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 text-xs font-mono text-slate-300 leading-relaxed whitespace-pre-line" id="eco-telegram-body">
+                                        ---
                                     </div>
                                 </div>
 
-                                <!-- Step 4 -->
-                                <div id="step-4" class="timeline-step flex gap-4 relative">
-                                    <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
-                                        4
+                                <!-- Google Sheets Sync Widget -->
+                                <div id="eco-sheets-widget" class="bg-slate-900/80 rounded-2xl border border-slate-700/60 p-4 transition-all duration-300 transform hover:scale-[1.01] hover:border-green-500/40">
+                                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-green-400 text-lg">table_rows</span>
+                                            <span class="text-xs font-bold text-slate-300 uppercase tracking-wide">Backend: Google Sheets Sync</span>
+                                        </div>
+                                        <span class="text-[9px] font-bold text-green-400 uppercase">Google Sheets API</span>
                                     </div>
-                                    <div>
-                                        <h4 class="font-bold text-sm uppercase text-slate-400">En Desarrollo e Integración</h4>
-                                        <p class="text-xs text-slate-800 mt-0.5">Nuestros ingenieros programan, conectan APIs y despliegan servicios.</p>
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full text-[10px] font-mono text-left text-slate-300 border-collapse">
+                                            <thead>
+                                                <tr class="border-b border-slate-800 text-slate-800 uppercase tracking-wider">
+                                                    <th class="pb-1.5 font-bold">Código</th>
+                                                    <th class="pb-1.5 font-bold">Proyecto</th>
+                                                    <th class="pb-1.5 font-bold">Estado Sync</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr id="eco-sheets-row" class="transition-colors duration-500">
+                                                    <td id="eco-sheets-code" class="py-2 text-brand-yellow">---</td>
+                                                    <td id="eco-sheets-project" class="py-2">---</td>
+                                                    <td id="eco-sheets-status" class="py-2 font-bold">---</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
-                                <!-- Step 5 -->
-                                <div id="step-5" class="timeline-step flex gap-4 relative">
-                                    <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors">
-                                        5
+                                <!-- Analytics / Tiempos Widget -->
+                                <div id="eco-analytics-widget" class="bg-slate-900/80 rounded-2xl border border-slate-700/60 p-4 transition-all duration-300 transform hover:scale-[1.01] hover:border-brand-yellow/40">
+                                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                                        <div class="flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-brand-yellow text-lg">analytics</span>
+                                            <span class="text-xs font-bold text-slate-300 uppercase tracking-wide">Panel Analítico de Tiempos</span>
+                                        </div>
+                                        <span class="text-[9px] font-bold text-brand-yellow uppercase">Métricas</span>
                                     </div>
-                                    <div>
-                                        <h4 class="font-bold text-sm uppercase text-slate-400">Entrega y Cierre</h4>
-                                        <p class="text-xs text-slate-800 mt-0.5">Portal publicado y transferido con credenciales y guías finales.</p>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="bg-slate-950/40 p-2.5 rounded-xl border border-slate-800/80">
+                                            <span class="text-[9px] text-slate-800 uppercase font-bold block mb-1">Rendimiento</span>
+                                            <span id="eco-analytics-perf" class="text-sm font-black text-white">---</span>
+                                        </div>
+                                        <div class="bg-slate-950/40 p-2.5 rounded-xl border border-slate-800/80">
+                                            <span class="text-[9px] text-slate-800 uppercase font-bold block mb-1">Tiempo de Respuesta</span>
+                                            <span id="eco-analytics-time" class="text-xs font-mono text-brand-yellow">---</span>
+                                        </div>
+                                    </div>
+                                    <!-- Progress bar general -->
+                                    <div class="mt-3">
+                                        <div class="flex justify-between text-[9px] text-slate-800 uppercase font-bold mb-1">
+                                            <span>Progreso General</span>
+                                            <span id="eco-analytics-prog-text">0%</span>
+                                        </div>
+                                        <div class="w-full bg-slate-950 rounded-full h-1.5 overflow-hidden">
+                                            <div id="eco-analytics-prog-bar" class="bg-gradient-to-r from-brand-purple to-brand-yellow h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -1045,6 +1152,132 @@
             let currentSimulatedStep = 1;
             let initialSimulatedStep = 1;
 
+            // Ecosystem Elements
+            const ecoEmailSubject = document.getElementById('eco-email-subject');
+            const ecoEmailBody = document.getElementById('eco-email-body');
+            const ecoTelegramBody = document.getElementById('eco-telegram-body');
+            const ecoSheetsRow = document.getElementById('eco-sheets-row');
+            const ecoSheetsCode = document.getElementById('eco-sheets-code');
+            const ecoSheetsProject = document.getElementById('eco-sheets-project');
+            const ecoSheetsStatus = document.getElementById('eco-sheets-status');
+            const ecoAnalyticsPerf = document.getElementById('eco-analytics-perf');
+            const ecoAnalyticsTime = document.getElementById('eco-analytics-time');
+            const ecoAnalyticsProgText = document.getElementById('eco-analytics-prog-text');
+            const ecoAnalyticsProgBar = document.getElementById('eco-analytics-prog-bar');
+
+            function getEcosystemMockData(step, code, projectTitleVal) {
+                const stepDetails = {
+                    1: {
+                        email: {
+                            subject: `✅ Recibimos tu propuesta - Código: ${code}`,
+                            body: `Hola. Recibimos tu propuesta de automatización para "${projectTitleVal}". Tus datos han sido guardados en el sistema y se ha iniciado el proceso de seguimiento con el código único ${code}.`
+                        },
+                        telegram: `🤖 <strong>VolckanBot Alert</strong>:\n Nueva propuesta ingresada\n📂 <strong>Proyecto:</strong> ${projectTitleVal}\n🔑 <strong>Código:</strong> ${code}\n⏰ <strong>Estado:</strong> Guardado en nube.`,
+                        sheets: {
+                            status: 'Ingresada (Paso 1)',
+                            bgClass: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30'
+                        },
+                        analytics: {
+                            perf: 'ÓPTIMO',
+                            time: '0.02 segundos',
+                            progress: 20
+                        }
+                    },
+                    2: {
+                        email: {
+                            subject: `🔍 Evaluación en curso - Código: ${code}`,
+                            body: `Hola. Informamos que nuestro equipo técnico y de diseño está evaluando la viabilidad de la propuesta "${projectTitleVal}" para afinar la cotización y plan de trabajo.`
+                        },
+                        telegram: `🤖 <strong>VolckanBot Alert</strong>:\n Mesa técnica asignada\n📂 <strong>Proyecto:</strong> ${projectTitleVal}\n🔧 <strong>Estado:</strong> Analizando viabilidad técnica.`,
+                        sheets: {
+                            status: 'Evaluación (Paso 2)',
+                            bgClass: 'bg-blue-500/10 text-blue-400 border-blue-500/30'
+                        },
+                        analytics: {
+                            perf: 'EN CURSO',
+                            time: '24h estimadas',
+                            progress: 40
+                        }
+                    },
+                    3: {
+                        email: {
+                            subject: `🎉 Propuesta Autorizada - Código: ${code}`,
+                            body: `¡Buenas noticias! La propuesta "${projectTitleVal}" ha sido formalmente autorizada y aprobada por ambas partes. Pasará directamente al equipo de ingeniería para iniciar el desarrollo.`
+                        },
+                        telegram: `🤖 <strong>VolckanBot Alert</strong>:\n ✅ propuesta autorizada\n📂 <strong>Proyecto:</strong> ${projectTitleVal}\n💼 <strong>Estado:</strong> Firma y alcance aprobados.`,
+                        sheets: {
+                            status: 'Autorizado (Paso 3)',
+                            bgClass: 'bg-green-500/10 text-green-400 border-green-500/30'
+                        },
+                        analytics: {
+                            perf: 'APROBADO',
+                            time: '2 días en fase',
+                            progress: 60
+                        }
+                    },
+                    4: {
+                        email: {
+                            subject: `⚡ Desarrollo en progreso - Código: ${code}`,
+                            body: `Hola. Te informamos que nuestros programadores se encuentran codificando el frontend, vinculando la base de datos Firebase/Google Sheets y realizando pruebas en "${projectTitleVal}".`
+                        },
+                        telegram: `🤖 <strong>VolckanBot Alert</strong>:\n ⚡ Programación en progreso\n📂 <strong>Proyecto:</strong> ${projectTitleVal}\n💻 <strong>Estado:</strong> Escribiendo código e integrando APIs.`,
+                        sheets: {
+                            status: 'Desarrollo (Paso 4)',
+                            bgClass: 'bg-orange-500/10 text-orange-400 border-orange-500/30'
+                        },
+                        analytics: {
+                            perf: 'ACTIVO',
+                            time: '6 días de desarrollo',
+                            progress: 80
+                        }
+                    },
+                    5: {
+                        email: {
+                            subject: `🏁 ¡Tu proyecto está listo! - Código: ${code}`,
+                            body: `¡Hola! Tu proyecto "${projectTitleVal}" ha sido finalizado con éxito. Ya puedes ingresar con tus credenciales enviadas y revisar el manual de usuario adjunto.`
+                        },
+                        telegram: `🤖 <strong>VolckanBot Alert</strong>:\n 🏆 Proyecto finalizado y entregado\n📂 <strong>Proyecto:</strong> ${projectTitleVal}\n🔑 <strong>Código:</strong> ${code}\n🚀 <strong>Estado:</strong> Credenciales enviadas.`,
+                        sheets: {
+                            status: 'Entregado (Paso 5)',
+                            bgClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                        },
+                        analytics: {
+                            perf: 'COMPLETADO',
+                            time: '8 días totales',
+                            progress: 100
+                        }
+                    }
+                };
+                return stepDetails[step];
+            }
+
+            function updateEcosystemVisuals(step) {
+                if (!currentSimulatedCode) return;
+                const data = mockData[currentSimulatedCode];
+                if (!data) return;
+
+                const eco = getEcosystemMockData(step, currentSimulatedCode, data.title);
+
+                // Update Email
+                ecoEmailSubject.textContent = eco.email.subject;
+                ecoEmailBody.textContent = eco.email.body;
+
+                // Update Telegram
+                ecoTelegramBody.innerHTML = eco.telegram;
+
+                // Update Sheets Table
+                ecoSheetsCode.textContent = currentSimulatedCode;
+                ecoSheetsProject.textContent = data.title;
+                ecoSheetsStatus.textContent = eco.sheets.status;
+                ecoSheetsRow.className = `transition-colors duration-500 ${eco.sheets.bgClass}`;
+
+                // Update Analytics
+                ecoAnalyticsPerf.textContent = eco.analytics.perf;
+                ecoAnalyticsTime.textContent = eco.analytics.time;
+                ecoAnalyticsProgText.textContent = `${eco.analytics.progress}%`;
+                ecoAnalyticsProgBar.style.width = `${eco.analytics.progress}%`;
+            }
+
             function updateTimelineVisuals(step) {
                 // Clear styling for all steps first
                 for (let i = 1; i <= 5; i++) {
@@ -1089,6 +1322,9 @@
                 // Enable/disable buttons based on step bounds
                 document.getElementById('btn-prev-step').disabled = (step === 1);
                 document.getElementById('btn-next-step').disabled = (step === 5);
+
+                // Update simulated ecosystem outputs
+                updateEcosystemVisuals(step);
             }
 
             function showTrackingResult(code, data) {
