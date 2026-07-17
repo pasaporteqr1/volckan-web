@@ -23,3 +23,7 @@ test_mcp.py
 .vscode/
 .idea/
 .DS_Store
+
+# Agent local configurations (contains credentials)
+.agent/
+
