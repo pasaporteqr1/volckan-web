@@ -408,8 +408,8 @@
                                                 1
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-sm uppercase text-slate-400">Solicitud Ingresada</h4>
-                                                <p class="text-xs text-slate-300 mt-0.5">El formulario ha sido guardado exitosamente en nuestra nube.</p>
+                                                <h4 class="font-bold text-sm uppercase text-slate-400">Solicitud de Apoyo Ingresada</h4>
+                                                <p class="text-xs text-slate-300 mt-0.5">Se registra el proyecto de apoyo social solicitado y se le asigna el código único.</p>
                                             </div>
                                         </div>
 
@@ -419,8 +419,8 @@
                                                 2
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-sm uppercase text-slate-400">Evaluación de Viabilidad</h4>
-                                                <p class="text-xs text-slate-300 mt-0.5">Mesa técnica analiza los requerimientos y alcances del proyecto.</p>
+                                                <h4 class="font-bold text-sm uppercase text-slate-400">Evaluación de Viabilidad Social</h4>
+                                                <p class="text-xs text-slate-300 mt-0.5">El comité evalúa el alcance, el beneficio comunitario y la viabilidad del proyecto.</p>
                                             </div>
                                         </div>
 
@@ -430,8 +430,8 @@
                                                 3
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-sm uppercase text-slate-400">Propuesta Autorizada</h4>
-                                                <p class="text-xs text-slate-300 mt-0.5">Se firma y aprueba el alcance, presupuesto e inicio formal.</p>
+                                                <h4 class="font-bold text-sm uppercase text-slate-400">Proyecto Social Autorizado</h4>
+                                                <p class="text-xs text-slate-300 mt-0.5">Aprobación formal de la planificación, asignación de recursos y convenios.</p>
                                             </div>
                                         </div>
 
@@ -442,7 +442,7 @@
                                             </div>
                                             <div>
                                                 <h4 class="font-bold text-sm uppercase text-slate-400">En Gestión y Ejecución</h4>
-                                                <p class="text-xs text-slate-300 mt-0.5">El equipo coordina las tareas operativas e hitos de avance administrativo.</p>
+                                                <p class="text-xs text-slate-300 mt-0.5">Coordinación de los hitos administrativos y puesta en marcha del plan de apoyo.</p>
                                             </div>
                                         </div>
 
@@ -1328,13 +1328,13 @@
             // Friendly Step details for client-centric simulation
             const friendlyStepDetails = {
                 1: {
-                    badge: 'Fase 1: Solicitud Ingresada',
-                    title: '¡Recibido con éxito!',
-                    desc: 'El cliente o socio completa el formulario en la landing page y el sistema genera inmediatamente un código de tracking y notifica a las partes.',
+                    badge: 'Fase 1: Solicitud de Apoyo Ingresada',
+                    title: '¡Solicitud Registrada!',
+                    desc: 'El cliente o institución ingresa la solicitud para el proyecto de apoyo social. El sistema la registra formalmente, asignando un código único y notificando a las áreas operativas.',
                     bullets: [
-                        { icon: 'mail', text: 'Se envía un correo automático con el enlace y código de seguimiento al cliente.' },
-                        { icon: 'send_and_archive', text: 'Se notifica al equipo técnico por Telegram para iniciar la revisión.' },
-                        { icon: 'database', text: 'La solicitud se escribe instantáneamente en la base de datos de control.' }
+                        { icon: 'mail', text: 'Se envía un correo automático al solicitante confirmando el registro.' },
+                        { icon: 'send_and_archive', text: 'Se notifica al comité de proyectos sociales para iniciar el análisis.' },
+                        { icon: 'database', text: 'Se inscribe la propuesta en la bitácora administrativa de gestión social.' }
                     ],
                     previewData: (code, titleVal) => {
                         const emailTo = document.getElementById('preview-email-to');
@@ -1346,29 +1346,29 @@
                     }
                 },
                 2: {
-                    badge: 'Fase 2: Evaluación de Viabilidad',
-                    title: 'Análisis de Requerimientos',
-                    desc: 'Nuestro equipo técnico y de diseño revisa el alcance y los requerimientos especificados en el formulario para asegurar que la solución propuesta sea 100% viable.',
+                    badge: 'Fase 2: Evaluación de Impacto',
+                    title: 'Estudio de Impacto Social',
+                    desc: 'Nuestro equipo administrativo y del área social evalúa la solicitud, el alcance comunitario, la disponibilidad de recursos y la viabilidad del proyecto de apoyo solicitado.',
                     bullets: [
-                        { icon: 'diversity_3', text: 'Mesa de operaciones asigna al analista de sistemas encargado.' },
-                        { icon: 'comment', text: 'Telegram emite alertas de coordinación interna sobre el avance.' },
-                        { icon: 'calendar_month', text: 'Se calendarizan las sesiones de diseño de la interfaz.' }
+                        { icon: 'diversity_3', text: 'Se asigna un coordinador administrativo y un analista del proyecto.' },
+                        { icon: 'comment', text: 'Notificaciones internas coordinan las mesas de trabajo del comité.' },
+                        { icon: 'calendar_month', text: 'Se estructura el cronograma operacional y la estimación del impacto.' }
                     ],
                     previewData: (code, titleVal) => {
                         const telegramText = document.getElementById('preview-telegram-text');
                         if (telegramText) {
-                            telegramText.innerHTML = `🔍 <strong>Evaluación Técnica Iniciada</strong><br>📂 <strong>Proyecto:</strong> ${titleVal}<br>🔑 <strong>Código:</strong> ${code}<br>🔧 <strong>Mesa asignada:</strong> Ingeniería de Sistemas`;
+                            telegramText.innerHTML = `🔍 <strong>Evaluación Social Iniciada</strong><br>📂 <strong>Proyecto:</strong> ${titleVal}<br>🔑 <strong>Código:</strong> ${code}<br>🔧 <strong>Asignado a:</strong> Comité de Gestión Social`;
                         }
                     }
                 },
                 3: {
-                    badge: 'Fase 3: Propuesta Autorizada',
-                    title: 'Alcance y Plan Aprobado',
-                    desc: 'Una vez acordados el presupuesto y los plazos, la propuesta es autorizada de forma digital, lo que habilita la fase de ingeniería y programación activa.',
+                    badge: 'Fase 3: Proyecto Autorizado',
+                    title: 'Convenios y Recursos Aprobados',
+                    desc: 'Tras completar la evaluación y acordar los plazos, el proyecto de apoyo social es autorizado formalmente por las partes, habilitando la fase de ejecución y la bitácora de control.',
                     bullets: [
-                        { icon: 'edit_document', text: 'Se firma y aprueba el alcance técnico del proyecto.' },
-                        { icon: 'table_rows', text: 'La base de datos (Google Sheets) actualiza el estado a "Autorizado".' },
-                        { icon: 'speed', text: 'El panel de control inicia la medición activa de tiempos de desarrollo.' }
+                        { icon: 'edit_document', text: 'Firma formal del convenio de colaboración y alcance del proyecto.' },
+                        { icon: 'table_rows', text: 'Actualización automática en la base de datos de control social a "Autorizado".' },
+                        { icon: 'speed', text: 'Activación del panel de monitoreo de plazos y cumplimiento de metas.' }
                     ],
                     previewData: (code, titleVal) => {
                         const sheetsCode = document.getElementById('preview-sheets-code');
@@ -1381,8 +1381,8 @@
                 },
                 4: {
                     badge: 'Fase 4: Trámite en Gestión Activa',
-                    title: 'Gestión y Ejecución',
-                    desc: 'El trámite o propuesta se encuentra en ejecución operativa activa, donde el equipo administrativo coordina las tareas, gestiona los recursos y valida el avance del proceso paso a paso.',
+                    title: 'Gestión y Puesta en Marcha',
+                    desc: 'El proyecto social entra en fase de ejecución operativa y coordinación administrativa activa. El equipo monitorea el avance general y valida el cumplimiento de las metas paso a paso.',
                     bullets: [
                         { icon: 'assignment', text: 'Asignación de tareas operativas y control administrativo del flujo.' },
                         { icon: 'trending_up', text: 'Monitoreo del cumplimiento de los hitos y plazos establecidos.' },
