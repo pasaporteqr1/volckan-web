@@ -354,7 +354,7 @@
                 </div>
 
                 <!-- Input search widget -->
-                <div class="max-w-2xl mx-auto bg-slate-800/80 backdrop-blur-md rounded-3xl p-8 border border-slate-700 shadow-2xl relative">
+                <div class="max-w-2xl mx-auto bg-slate-800/80 backdrop-blur-md rounded-3xl p-5 sm:p-8 border border-slate-700 shadow-2xl relative">
                     <div class="flex flex-col sm:flex-row gap-4 items-center">
                         <div class="relative w-full">
                             <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
@@ -398,7 +398,7 @@
                         <!-- Full Width Timeline with Button to open Simulation Modal -->
                         <div class="mb-10">
                             <!-- Timeline Card -->
-                            <div class="bg-slate-800/40 p-6 sm:p-8 rounded-3xl border border-slate-700/80 flex flex-col justify-between max-w-4xl mx-auto shadow-xl">
+                            <div class="bg-slate-800/40 p-4 sm:p-8 rounded-3xl border border-slate-700/80 flex flex-col justify-between max-w-4xl mx-auto shadow-xl">
                                 <div>
                                     <span class="text-xs text-slate-400 font-bold uppercase block mb-6">Estado de la Gestión</span>
                                     <div class="flex flex-col gap-6 relative pl-8 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-700">
@@ -557,7 +557,7 @@
 
         <!-- Ecosystem Detail Modal -->
         <div id="eco-simulator-modal" class="fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
-            <div class="bg-white border border-slate-100 rounded-3xl w-full max-w-5xl shadow-2xl p-6 md:p-8 transform scale-95 transition-transform duration-300 relative text-slate-900 max-h-[95vh] flex flex-col">
+            <div class="bg-white border border-slate-100 rounded-3xl w-full max-w-5xl shadow-2xl p-4 sm:p-6 md:p-8 transform scale-95 transition-transform duration-300 relative text-slate-900 max-h-[95vh] flex flex-col">
                 
                 <!-- Modal Close Button -->
                 <button id="eco-simulator-modal-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 transition-colors z-20">
@@ -612,7 +612,7 @@
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 p-1 items-stretch">
                         
                         <!-- Left Side: Friendly explanation (6 cols) -->
-                        <div class="lg:col-span-6 flex flex-col justify-between bg-slate-50 rounded-2xl border border-slate-100 p-6 sm:p-8">
+                        <div class="lg:col-span-6 flex flex-col justify-between bg-slate-50 rounded-2xl border border-slate-100 p-4 sm:p-6 md:p-8">
                             <div class="space-y-6">
                                 <!-- Step Badge and Title -->
                                 <div>
@@ -650,7 +650,7 @@
                         </div>
 
                         <!-- Right Side: Clean Mockup of the Primary Output (6 cols) -->
-                        <div class="lg:col-span-6 flex flex-col justify-center items-stretch bg-slate-950 rounded-2xl p-6 sm:p-8 relative overflow-hidden border border-slate-900 shadow-2xl min-h-[350px]">
+                        <div class="lg:col-span-6 flex flex-col justify-center items-stretch bg-slate-950 rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-hidden border border-slate-900 shadow-2xl min-h-[280px] sm:min-h-[320px] md:min-h-[350px]">
                             <!-- Subtle glow background -->
                             <div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-purple/20 rounded-full blur-3xl pointer-events-none"></div>
                             
@@ -819,14 +819,14 @@
                     <div class="text-xs font-medium text-slate-500 font-mono">
                         Fase Actual: <span id="eco-modal-step-number" class="text-brand-purple font-bold">Paso 1 de 5</span>
                     </div>
-                    <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
-                        <button id="btn-modal-prev-step" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider">
+                    <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                        <button id="btn-modal-prev-step" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[10px] sm:text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider">
                             Anterior
                         </button>
-                        <button id="btn-modal-next-step" class="px-4 py-2.5 bg-brand-purple hover:bg-brand-red text-white rounded-lg text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider font-bold">
+                        <button id="btn-modal-next-step" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-brand-purple hover:bg-brand-red text-white rounded-lg text-[10px] sm:text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider font-bold">
                             Siguiente
                         </button>
-                        <button id="btn-modal-close-footer" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 rounded-lg text-xs font-bold transition-all uppercase tracking-wider font-mono">
+                        <button id="btn-modal-close-footer" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 rounded-lg text-[10px] sm:text-xs font-bold transition-all uppercase tracking-wider font-mono">
                             Cerrar
                         </button>
                     </div>
