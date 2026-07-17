@@ -441,8 +441,8 @@
                                                 4
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-sm uppercase text-slate-400">En Desarrollo e Integración</h4>
-                                                <p class="text-xs text-slate-300 mt-0.5">Nuestros ingenieros programan, conectan APIs y despliegan servicios.</p>
+                                                <h4 class="font-bold text-sm uppercase text-slate-400">En Gestión y Ejecución</h4>
+                                                <p class="text-xs text-slate-300 mt-0.5">El equipo coordina las tareas operativas e hitos de avance administrativo.</p>
                                             </div>
                                         </div>
 
@@ -598,7 +598,7 @@
                         </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="4">
                             <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">4</div>
-                            <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Desarrollo</span>
+                            <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Gestión</span>
                         </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="5">
                             <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">5</div>
@@ -749,30 +749,30 @@
                                 <p class="text-[10px] text-slate-400 italic text-center mt-2">La base de datos se actualiza sin intervención manual.</p>
                             </div>
 
-                            <!-- Step 4 Preview: Development Metrics -->
+                            <!-- Step 4 Preview: Management Progress -->
                             <div id="step-preview-4" class="step-preview-pane hidden flex flex-col h-full justify-between">
                                 <div class="mb-4">
                                     <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-4 flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-orange-400"></span> VISTA PREVIA: REGISTRO DE RENDIMIENTO
+                                        <span class="w-2 h-2 rounded-full bg-orange-400"></span> VISTA PREVIA: TABLERO DE GESTIÓN
                                     </span>
                                     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 text-white shadow-xl space-y-4">
                                         <div class="flex justify-between items-center text-[10px] text-slate-500 font-mono border-b border-slate-850 pb-2">
-                                            <span>SLA METRICS & METAS</span>
-                                            <span>Mesa de Tiempos</span>
+                                            <span>HITOS & METAS</span>
+                                            <span>Bitácora Operativa</span>
                                         </div>
                                         <div class="grid grid-cols-2 gap-3">
                                             <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
-                                                <span class="text-[8px] text-slate-500 block uppercase mb-1">Rendimiento Operativo</span>
-                                                <span id="preview-metrics-perf" class="text-xs font-bold text-white uppercase">Súper Óptimo</span>
+                                                <span class="text-[8px] text-slate-500 block uppercase mb-1">Estado Operativo</span>
+                                                <span id="preview-metrics-perf" class="text-xs font-bold text-white uppercase">Activo</span>
                                             </div>
                                             <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
-                                                <span class="text-[8px] text-slate-500 block uppercase mb-1">Tiempo de Respuesta</span>
-                                                <span id="preview-metrics-time" class="text-xs font-bold text-brand-yellow font-mono">24h estimadas</span>
+                                                <span class="text-[8px] text-slate-500 block uppercase mb-1">Tiempo Transcurrido</span>
+                                                <span id="preview-metrics-time" class="text-xs font-bold text-brand-yellow font-mono">6 días transcurridos</span>
                                             </div>
                                         </div>
                                         <div class="space-y-1">
                                             <div class="flex justify-between text-[9px] text-slate-400 font-bold uppercase">
-                                                <span>Avance del Desarrollo</span>
+                                                <span>Avance de la Gestión</span>
                                                 <span id="preview-metrics-progress-text">80%</span>
                                             </div>
                                             <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden border border-slate-800">
@@ -781,7 +781,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p class="text-[10px] text-slate-400 italic text-center mt-2">Métricas e indicadores en tiempo real de la velocidad de desarrollo.</p>
+                                <p class="text-[10px] text-slate-400 italic text-center mt-2">Métricas e indicadores en tiempo real de la ejecución de la gestión.</p>
                             </div>
 
                             <!-- Step 5 Preview: Success Completion -->
@@ -1380,13 +1380,13 @@
                     }
                 },
                 4: {
-                    badge: 'Fase 4: Desarrollo e Integración',
-                    title: 'Programación de Sistemas',
-                    desc: 'Nuestros desarrolladores codifican los módulos, integran las APIs especificadas, configuran las bases de datos y realizan pruebas exhaustivas de usabilidad.',
+                    badge: 'Fase 4: Trámite en Gestión Activa',
+                    title: 'Gestión y Ejecución',
+                    desc: 'El trámite o propuesta se encuentra en ejecución operativa activa, donde el equipo administrativo coordina las tareas, gestiona los recursos y valida el avance del proceso paso a paso.',
                     bullets: [
-                        { icon: 'code', text: 'Escritura activa de código y maquetación de vistas.' },
-                        { icon: 'api', text: 'Conexión de APIs de notificaciones (Email / Telegram).' },
-                        { icon: 'monitoring', text: 'El SLA y porcentaje de avance suben dinámicamente al 80%.' }
+                        { icon: 'assignment', text: 'Asignación de tareas operativas y control administrativo del flujo.' },
+                        { icon: 'trending_up', text: 'Monitoreo del cumplimiento de los hitos y plazos establecidos.' },
+                        { icon: 'analytics', text: 'El avance general del trámite se actualiza al 80% en el tablero de control.' }
                     ],
                     previewData: (code, titleVal) => {
                         const metricsPerf = document.getElementById('preview-metrics-perf');
@@ -1394,7 +1394,7 @@
                         const metricsProgText = document.getElementById('preview-metrics-progress-text');
                         const metricsProgBar = document.getElementById('preview-metrics-progress-bar');
                         if (metricsPerf) metricsPerf.textContent = 'ACTIVO';
-                        if (metricsTime) metricsTime.textContent = '6 días en desarrollo';
+                        if (metricsTime) metricsTime.textContent = '6 días transcurridos';
                         if (metricsProgText) metricsProgText.textContent = '80%';
                         if (metricsProgBar) metricsProgBar.style.width = '80%';
                     }
