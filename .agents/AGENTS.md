@@ -9,7 +9,7 @@ To ensure we deploy code to the correct repository under the correct credentials
 - **Git User Email**: `pasaportealacultura@gmail.com`
 - **Repository Remote URL**: `https://github.com/pasaporteqr1/volckan-web.git`
 - **Authentication**: Authentication uses the Personal Access Token (PAT) configured in the Git origin remote URL. Do not change the remote URL unless explicitly instructed.
-- **Production Branch**: `main` (pushes to `origin/main` automatically deploy to the live website on GitHub Pages).
+- **Production Branch**: `main` (pushes to `origin/main` automatically deploy to the live website on GitHub Pages). Always push to `origin/main` immediately after committing any successful change.
 
 ## External Services & Integrations
 These are the production parameters and credentials extracted from the codebase (e.g., from `google-apps-script-codigo.js`):
