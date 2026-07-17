@@ -556,188 +556,277 @@
         </section>
 
         <!-- Ecosystem Detail Modal -->
-        <div id="eco-simulator-modal" class="fixed inset-0 z-[90] bg-slate-950/90 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
-            <div class="bg-slate-900 border border-slate-700/80 rounded-3xl w-full max-w-5xl shadow-2xl p-6 md:p-8 transform scale-95 transition-transform duration-300 relative text-white max-h-[95vh] flex flex-col">
+        <div id="eco-simulator-modal" class="fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+            <div class="bg-white border border-slate-100 rounded-3xl w-full max-w-5xl shadow-2xl p-6 md:p-8 transform scale-95 transition-transform duration-300 relative text-slate-900 max-h-[95vh] flex flex-col">
                 
                 <!-- Modal Close Button -->
-                <button id="eco-simulator-modal-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white transition-colors z-20">
+                <button id="eco-simulator-modal-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 transition-colors z-20">
                     <span class="material-symbols-outlined">close</span>
                 </button>
 
                 <!-- Modal Header -->
-                <div class="border-b border-slate-800 pb-4 mb-6 shrink-0 pr-12">
+                <div class="border-b border-slate-200 pb-4 mb-6 shrink-0 pr-12">
                     <div class="flex items-center gap-2">
-                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-500/10 text-green-400 border border-green-500/20">
-                            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-ping"></span>
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-500/10 text-green-600 border border-green-500/20">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping"></span>
                             Simulación Activa
                         </span>
-                        <h3 class="font-black text-lg sm:text-xl tracking-tight uppercase text-brand-yellow">Ecosistema Volckan en Tiempo Real</h3>
+                        <h3 class="font-black text-lg sm:text-xl tracking-tight uppercase text-brand-purple">Simulación de Flujo Automatizado</h3>
                     </div>
-                    <p id="eco-modal-subtitle" class="text-xs text-slate-400 mt-1 font-medium">Observa cómo interactúan y se actualizan automáticamente las integraciones de tu propuesta paso a paso.</p>
+                    <p id="eco-modal-subtitle" class="text-xs text-slate-500 mt-1 font-medium">Visualiza el recorrido y las integraciones automáticas de tu propuesta paso a paso de forma simple.</p>
                 </div>
 
                 <!-- Steps Progress Bar Inside Modal -->
                 <div class="mb-6 shrink-0 px-2">
                     <div class="flex justify-between items-center relative">
                         <!-- Progress Line -->
-                        <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-slate-800 -z-10"></div>
+                        <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-slate-100 -z-10"></div>
                         <div id="eco-modal-progress-line" class="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-brand-purple to-brand-yellow -z-10 transition-all duration-500" style="width: 0%"></div>
 
                         <!-- Steps Dots -->
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="1">
-                            <div class="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:border-brand-purple transition-all font-mono">1</div>
-                            <span class="text-[9px] font-bold text-slate-800 group-hover:text-slate-300 hidden md:block uppercase tracking-wider">Ingresada</span>
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">1</div>
+                            <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Ingresada</span>
                         </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="2">
-                            <div class="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:border-brand-purple transition-all font-mono">2</div>
-                            <span class="text-[9px] font-bold text-slate-800 group-hover:text-slate-300 hidden md:block uppercase tracking-wider">Evaluación</span>
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">2</div>
+                            <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Evaluación</span>
                         </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="3">
-                            <div class="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:border-brand-purple transition-all font-mono">3</div>
-                            <span class="text-[9px] font-bold text-slate-800 group-hover:text-slate-300 hidden md:block uppercase tracking-wider">Autorizada</span>
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">3</div>
+                            <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Autorizada</span>
                         </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="4">
-                            <div class="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:border-brand-purple transition-all font-mono">4</div>
-                            <span class="text-[9px] font-bold text-slate-800 group-hover:text-slate-300 hidden md:block uppercase tracking-wider">Desarrollo</span>
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">4</div>
+                            <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Desarrollo</span>
                         </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="5">
-                            <div class="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:border-brand-purple transition-all font-mono">5</div>
-                            <span class="text-[9px] font-bold text-slate-800 group-hover:text-slate-300 hidden md:block uppercase tracking-wider">Entregada</span>
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">5</div>
+                            <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Entregada</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Modal Content (Grid Layout with 4 Channels) -->
+                <!-- Modal Content: Friendly step-by-step layout -->
                 <div class="flex-grow overflow-y-auto pr-1">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-1">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 p-1 items-stretch">
                         
-                        <!-- Channel 1: Email Client -->
-                        <div class="bg-slate-950 rounded-2xl border border-slate-800 p-5 flex flex-col shadow-inner min-h-[260px]">
-                            <div class="flex justify-between items-center text-[10px] text-slate-800 font-mono mb-3 border-b border-slate-900 pb-2">
-                                <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-xs text-brand-purple">mail</span>EMAIL EN TIEMPO REAL</span>
-                                <span>Volckan Mail Client</span>
-                            </div>
-                            <div class="space-y-1.5 text-[11px] font-mono text-slate-300">
-                                <div class="flex border-b border-slate-900/60 pb-1.5"><span class="text-slate-800 font-bold w-14">De:</span> <span class="text-brand-purple">notificaciones@volckan.com</span></div>
-                                <div class="flex border-b border-slate-900/60 pb-1.5"><span class="text-slate-800 font-bold w-14">Para:</span> <span id="eco-m-email-to" class="text-slate-200 font-bold">cliente@organizacion.org</span></div>
-                                <div class="flex border-b border-slate-900/60 pb-1.5"><span class="text-slate-800 font-bold w-14">Asunto:</span> <span id="eco-m-email-subject" class="text-brand-yellow font-bold">---</span></div>
-                            </div>
-                            <div class="mt-4 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed border-t border-slate-900 pt-3 flex-grow overflow-y-auto max-h-[140px] scrollbar-thin" id="eco-m-email-body">
-                                ---
-                            </div>
-                        </div>
-
-                        <!-- Channel 2: Telegram Bot -->
-                        <div class="bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden shadow-2xl flex flex-col min-h-[260px]">
-                            <div class="bg-[#17212b] p-3.5 border-b border-slate-850 flex items-center gap-3 shrink-0">
-                                <div class="w-8 h-8 rounded-full bg-sky-500 flex items-center justify-center text-white font-bold text-xs font-mono">V</div>
+                        <!-- Left Side: Friendly explanation (6 cols) -->
+                        <div class="lg:col-span-6 flex flex-col justify-between bg-slate-50 rounded-2xl border border-slate-100 p-6 sm:p-8">
+                            <div class="space-y-6">
+                                <!-- Step Badge and Title -->
                                 <div>
-                                    <h4 class="font-bold text-xs text-white leading-tight">Volckan Admin Alerts</h4>
-                                    <span class="text-[9px] text-sky-400 block font-mono">bot de alertas activo</span>
+                                    <span id="friendly-step-badge" class="inline-block text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-brand-purple/10 text-brand-purple rounded-md mb-3">
+                                        Paso 1: Solicitud Ingresada
+                                    </span>
+                                    <h3 id="friendly-step-title" class="text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight">
+                                        ¡Recibido con éxito!
+                                    </h3>
+                                </div>
+
+                                <!-- Friendly Description -->
+                                <p id="friendly-step-desc" class="text-slate-700 text-sm sm:text-base leading-relaxed font-medium">
+                                    Cuando completas el formulario, el sistema captura tus requerimientos y crea un registro único. Recibes un correo de confirmación y nuestro equipo de desarrollo es alertado en segundos.
+                                </p>
+
+                                <!-- What happens behind the scenes? (Visual items list) -->
+                                <div class="space-y-4 pt-4 border-t border-slate-200">
+                                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">¿Qué automatizaciones se activan?</h4>
+                                    
+                                    <ul class="space-y-3" id="friendly-automation-list">
+                                        <li class="flex items-center gap-3 text-xs sm:text-sm font-semibold text-slate-800">
+                                            <span class="w-6 h-6 rounded-full bg-brand-purple/10 text-brand-purple flex items-center justify-center material-symbols-outlined text-xs">mail</span>
+                                            <span>Envío instantáneo de correo de confirmación con tu código de seguimiento.</span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="flex-grow p-4 overflow-y-auto bg-[#0e1621] flex flex-col justify-end min-h-[140px]">
-                                <div class="flex flex-col gap-1 max-w-[90%] bg-[#182533] p-3 rounded-2xl rounded-tl-none border border-slate-850 self-start text-xs font-mono text-slate-300">
-                                    <span class="text-[9px] text-sky-400 font-bold">VolckanBot 🤖</span>
-                                    <p id="eco-m-telegram-body" class="whitespace-pre-line leading-relaxed">---</p>
-                                    <span class="text-[8.5px] text-slate-800 self-end mt-1 font-mono">09:41 AM</span>
-                                </div>
+
+                            <!-- Tech status summary (simple and elegant info badge) -->
+                            <div class="mt-8 pt-4 border-t border-slate-200 flex items-center gap-3 text-xs text-slate-500 font-medium font-mono">
+                                <span class="material-symbols-outlined text-sm text-brand-purple">verified</span>
+                                <span>Procesado por el Servidor de Integración Volckan.</span>
                             </div>
                         </div>
 
-                        <!-- Channel 3: Google Sheets API -->
-                        <div class="bg-slate-950 rounded-2xl border border-slate-800 p-5 shadow-inner flex flex-col justify-between min-h-[240px]">
-                            <div class="flex justify-between items-center text-[10px] text-slate-800 font-mono mb-3 border-b border-slate-900 pb-2">
-                                <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-xs text-green-400">table_rows</span>BASE DE DATOS EN LA NUBE</span>
-                                <span>Google Sheets API v4</span>
+                        <!-- Right Side: Clean Mockup of the Primary Output (6 cols) -->
+                        <div class="lg:col-span-6 flex flex-col justify-center items-stretch bg-slate-950 rounded-2xl p-6 sm:p-8 relative overflow-hidden border border-slate-900 shadow-2xl min-h-[350px]">
+                            <!-- Subtle glow background -->
+                            <div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-purple/20 rounded-full blur-3xl pointer-events-none"></div>
+                            
+                            <!-- Step 1 Preview: Beautiful Email Notification -->
+                            <div id="step-preview-1" class="step-preview-pane flex flex-col h-full justify-between">
+                                <div class="mb-4">
+                                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-4 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-brand-purple"></span> VISTA PREVIA: CORREO ENVIADO
+                                    </span>
+                                    <div class="bg-white rounded-xl p-5 text-slate-800 shadow-xl border border-slate-100 font-sans">
+                                        <div class="border-b border-slate-100 pb-3 mb-3 text-xs space-y-1">
+                                            <p><span class="font-bold text-slate-400">De:</span> notificaciones@volckan.com</p>
+                                            <p><span class="font-bold text-slate-400">Para:</span> <span id="preview-email-to" class="font-bold text-slate-800">cliente@empresa.com</span></p>
+                                        </div>
+                                        <h4 class="font-bold text-sm text-brand-purple mb-2">¡Propuesta Recibida!</h4>
+                                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                            Hola, hemos recibido tu propuesta para el proyecto <strong id="preview-email-project">---</strong>. Ya está asignada a evaluación técnica.
+                                        </p>
+                                        <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-center mb-4">
+                                            <span class="text-[10px] text-slate-400 uppercase font-black tracking-wider block mb-1">Tu código de tracking</span>
+                                            <span id="preview-email-code" class="font-mono font-bold text-sm text-brand-red">VLK-2026-A48</span>
+                                        </div>
+                                        <button class="w-full py-2 bg-brand-purple text-white text-xs font-bold rounded-lg uppercase tracking-wider hover:bg-brand-red transition-colors pointer-events-none">
+                                            Seguir mi propuesta
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-[10px] text-slate-400 italic text-center mt-2">El cliente recibe esto en su bandeja de entrada al instante.</p>
                             </div>
-                            <div class="overflow-x-auto flex-grow max-h-[160px] scrollbar-thin">
-                                <table class="w-full text-xs font-mono text-left text-slate-300 border-collapse">
-                                    <thead>
-                                        <tr class="bg-slate-900/60 border-b border-slate-850 text-slate-800 uppercase tracking-wider text-[9px]">
-                                            <th class="p-2 border border-slate-900">Fila</th>
-                                            <th class="p-2 border border-slate-900">Código</th>
-                                            <th class="p-2 border border-slate-900">Proyecto</th>
-                                            <th class="p-2 border border-slate-900">Estado Sync</th>
-                                            <th class="p-2 border border-slate-900">Último Update</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="border-b border-slate-900 text-slate-800">
-                                            <td class="p-2 border border-slate-900">1</td>
-                                            <td class="p-2 border border-slate-900">VLK-2026-A01</td>
-                                            <td class="p-2 border border-slate-900">Multicar ERP</td>
-                                            <td class="p-2 border border-slate-900">Entregado</td>
-                                            <td class="p-2 border border-slate-900">12/07/2026</td>
-                                        </tr>
-                                        <tr id="eco-m-sheets-active-row" class="transition-colors duration-500">
-                                            <td class="p-2 border border-slate-900">2</td>
-                                            <td id="eco-m-sheets-code" class="p-2 border border-slate-900 text-brand-yellow font-bold">---</td>
-                                            <td id="eco-m-sheets-project" class="p-2 border border-slate-900 font-bold">---</td>
-                                            <td id="eco-m-sheets-status" class="p-2 border border-slate-900 font-bold">---</td>
-                                            <td class="p-2 border border-slate-900">Hoy</td>
-                                        </tr>
-                                        <tr class="border-b border-slate-900 text-slate-800">
-                                            <td class="p-2 border border-slate-900">3</td>
-                                            <td class="p-2 border border-slate-900">VLK-2026-X99</td>
-                                            <td class="p-2 border border-slate-900">SOSQR Alerts</td>
-                                            <td class="p-2 border border-slate-900">Evaluación</td>
-                                            <td class="p-2 border border-slate-900">14/07/2026</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
 
-                        <!-- Channel 4: Analytics Dashboard -->
-                        <div class="bg-slate-950 rounded-2xl border border-slate-800 p-5 shadow-inner flex flex-col gap-4 min-h-[240px]">
-                            <div class="flex justify-between items-center text-[10px] text-slate-800 font-mono mb-1 border-b border-slate-900 pb-2">
-                                <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-xs text-brand-yellow">analytics</span>METRICAS & LOGS ANALITICOS</span>
-                                <span>Mesa de Tiempos</span>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3 shrink-0">
-                                <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
-                                    <span class="text-[8.5px] text-slate-800 uppercase font-bold block mb-1">Rendimiento Operativo</span>
-                                    <span id="eco-m-analytics-perf" class="text-sm font-black text-white">---</span>
+                            <!-- Step 2 Preview: Telegram Admin Notification -->
+                            <div id="step-preview-2" class="step-preview-pane hidden flex flex-col h-full justify-between">
+                                <div class="mb-4">
+                                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-4 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-sky-400"></span> VISTA PREVIA: ALERTA INTERNA TELEGRAM
+                                    </span>
+                                    <div class="bg-[#0e1621] rounded-xl overflow-hidden shadow-xl border border-slate-800 font-sans">
+                                        <div class="bg-[#17212b] p-3 flex items-center gap-2 border-b border-slate-800">
+                                            <div class="w-7 h-7 rounded-full bg-sky-500 flex items-center justify-center text-white font-black text-xs">V</div>
+                                            <div>
+                                                <h5 class="font-bold text-xs text-white">Volckan Operations Bot</h5>
+                                                <span class="text-[8px] text-sky-400 block font-mono">activo</span>
+                                            </div>
+                                        </div>
+                                        <div class="p-4 bg-[#0e1621]">
+                                            <div class="bg-[#182533] p-3.5 rounded-xl rounded-tl-none border border-slate-800 max-w-[90%] text-[11px] font-mono text-slate-300 space-y-2 leading-relaxed">
+                                                <span class="text-[9px] text-sky-400 font-bold block">Volckan Alert Bot 🤖</span>
+                                                <p id="preview-telegram-text">
+                                                    🔍 <strong>Evaluación Técnica Iniciada</strong><br>
+                                                    📂 <strong>Proyecto:</strong> ---<br>
+                                                    🔑 <strong>Código:</strong> ---<br>
+                                                    🔧 <strong>Mesa asignada:</strong> Ingeniería de Sistemas
+                                                </p>
+                                                <span class="text-[8px] text-slate-500 block text-right mt-1">Hace un momento</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
-                                    <span class="text-[8.5px] text-slate-800 uppercase font-bold block mb-1">Tiempo de Respuesta</span>
-                                    <span id="eco-m-analytics-time" class="text-xs font-mono text-brand-yellow font-bold">---</span>
-                                </div>
+                                <p class="text-[10px] text-slate-400 italic text-center mt-2">Alerta inmediata en el canal de Telegram de nuestro equipo operacional.</p>
                             </div>
-                            <!-- Progress bar larger -->
-                            <div class="shrink-0">
-                                <div class="flex justify-between text-[9px] text-slate-400 font-bold uppercase mb-1 font-mono">
-                                    <span>Progreso General</span>
-                                    <span id="eco-m-analytics-prog-text">0%</span>
+
+                            <!-- Step 3 Preview: Authorized Sheet Record -->
+                            <div id="step-preview-3" class="step-preview-pane hidden flex flex-col h-full justify-between">
+                                <div class="mb-4">
+                                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-4 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-green-500"></span> VISTA PREVIA: BASE DE DATOS CENTRALIZADA
+                                    </span>
+                                    <div class="bg-white rounded-xl p-4 shadow-xl border border-slate-100 overflow-x-auto">
+                                        <div class="flex items-center gap-2 text-[10px] font-bold text-green-700 bg-green-50 px-2 py-1 rounded-md mb-3 w-fit">
+                                            <span class="material-symbols-outlined text-xs">table_rows</span>
+                                            <span>Google Sheets API Sync</span>
+                                        </div>
+                                        <table class="w-full text-[10px] font-sans text-left border-collapse">
+                                            <thead>
+                                                <tr class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200">
+                                                    <th class="p-2">Código</th>
+                                                    <th class="p-2">Proyecto</th>
+                                                    <th class="p-2 text-center">Estado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="border-b border-slate-100 text-slate-400">
+                                                    <td class="p-2 font-mono">VLK-2026-X99</td>
+                                                    <td class="p-2">SOSQR Alerts</td>
+                                                    <td class="p-2 text-center"><span class="bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded text-[8px]">Terminado</span></td>
+                                                </tr>
+                                                <tr class="bg-brand-purple/5 text-slate-900 font-bold border-b border-slate-200">
+                                                    <td id="preview-sheets-code" class="p-2 font-mono text-brand-purple">VLK-2026-A48</td>
+                                                    <td id="preview-sheets-project" class="p-2">---</td>
+                                                    <td class="p-2 text-center"><span id="preview-sheets-status" class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-[8px] border border-green-200 font-bold">Autorizado</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                                <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
-                                    <div id="eco-m-analytics-prog-bar" class="bg-gradient-to-r from-brand-purple to-brand-yellow h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                <p class="text-[10px] text-slate-400 italic text-center mt-2">La base de datos se actualiza sin intervención manual.</p>
+                            </div>
+
+                            <!-- Step 4 Preview: Development Metrics -->
+                            <div id="step-preview-4" class="step-preview-pane hidden flex flex-col h-full justify-between">
+                                <div class="mb-4">
+                                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-4 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-orange-400"></span> VISTA PREVIA: REGISTRO DE RENDIMIENTO
+                                    </span>
+                                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 text-white shadow-xl space-y-4">
+                                        <div class="flex justify-between items-center text-[10px] text-slate-500 font-mono border-b border-slate-850 pb-2">
+                                            <span>SLA METRICS & METAS</span>
+                                            <span>Mesa de Tiempos</span>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
+                                                <span class="text-[8px] text-slate-500 block uppercase mb-1">Rendimiento Operativo</span>
+                                                <span id="preview-metrics-perf" class="text-xs font-bold text-white uppercase">Súper Óptimo</span>
+                                            </div>
+                                            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
+                                                <span class="text-[8px] text-slate-500 block uppercase mb-1">Tiempo de Respuesta</span>
+                                                <span id="preview-metrics-time" class="text-xs font-bold text-brand-yellow font-mono">24h estimadas</span>
+                                            </div>
+                                        </div>
+                                        <div class="space-y-1">
+                                            <div class="flex justify-between text-[9px] text-slate-400 font-bold uppercase">
+                                                <span>Avance del Desarrollo</span>
+                                                <span id="preview-metrics-progress-text">80%</span>
+                                            </div>
+                                            <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden border border-slate-800">
+                                                <div id="preview-metrics-progress-bar" class="bg-gradient-to-r from-brand-purple to-brand-yellow h-full transition-all duration-500" style="width: 80%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <p class="text-[10px] text-slate-400 italic text-center mt-2">Métricas e indicadores en tiempo real de la velocidad de desarrollo.</p>
                             </div>
-                            <!-- Micro phase chart -->
-                            <div class="flex items-center gap-2 text-[9px] text-slate-400 font-mono bg-slate-900/20 p-2 rounded-lg border border-slate-900">
-                                <span class="material-symbols-outlined text-xs text-slate-800">info</span>
-                                <span>Simulado mediante temporizadores de API en servidor Volckan.</span>
+
+                            <!-- Step 5 Preview: Success Completion -->
+                            <div id="step-preview-5" class="step-preview-pane hidden flex flex-col h-full justify-between">
+                                <div class="mb-4">
+                                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-4 flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> VISTA PREVIA: ENTREGA Y CIERRE
+                                    </span>
+                                    <div class="bg-white rounded-xl p-6 text-slate-800 shadow-xl border border-slate-100 text-center space-y-4 font-sans">
+                                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                                            <span class="material-symbols-outlined text-2xl font-bold">verified_user</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-sm text-slate-900">¡Proyecto Entregado!</h4>
+                                            <p class="text-xs text-slate-500 mt-1 max-w-[200px] mx-auto leading-relaxed">
+                                                El cliente recibe sus credenciales finales de administrador y el manual de usuario de forma automatizada.
+                                            </p>
+                                        </div>
+                                        <div class="bg-slate-50 border border-slate-100 rounded-lg py-2 px-3 text-xs font-medium text-slate-700 flex justify-between items-center font-mono">
+                                            <span>SLA de Entrega:</span>
+                                            <span class="text-emerald-600 font-bold">8 días totales</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-[10px] text-slate-400 italic text-center mt-2">El cliente tiene el control total de su nueva plataforma.</p>
                             </div>
+                            
                         </div>
 
                     </div>
                 </div>
 
                 <!-- Modal Footer (Interactive Controls) -->
-                <div class="border-t border-slate-800 pt-4 mt-6 shrink-0 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <div class="text-xs font-medium text-slate-400 font-mono">
-                        Paso Actual: <span id="eco-modal-step-number" class="text-brand-yellow font-bold">Paso 1 de 5</span>
+                <div class="border-t border-slate-200 pt-4 mt-6 shrink-0 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div class="text-xs font-medium text-slate-500 font-mono">
+                        Fase Actual: <span id="eco-modal-step-number" class="text-brand-purple font-bold">Paso 1 de 5</span>
                     </div>
                     <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
-                        <button id="btn-modal-prev-step" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider">
+                        <button id="btn-modal-prev-step" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider">
                             Anterior
                         </button>
                         <button id="btn-modal-next-step" class="px-4 py-2.5 bg-brand-purple hover:bg-brand-red text-white rounded-lg text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider font-bold">
                             Siguiente
                         </button>
-                        <button id="btn-modal-close-footer" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded-lg text-xs font-bold transition-all uppercase tracking-wider font-mono">
+                        <button id="btn-modal-close-footer" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 rounded-lg text-xs font-bold transition-all uppercase tracking-wider font-mono">
                             Cerrar
                         </button>
                     </div>
@@ -1236,106 +1325,100 @@
             let currentSimulatedStep = 1;
             let initialSimulatedStep = 1;
 
-            // Ecosystem Elements
-            const ecoEmailSubject = document.getElementById('eco-email-subject');
-            const ecoEmailBody = document.getElementById('eco-email-body');
-            const ecoTelegramBody = document.getElementById('eco-telegram-body');
-            const ecoSheetsRow = document.getElementById('eco-sheets-row');
-            const ecoSheetsCode = document.getElementById('eco-sheets-code');
-            const ecoSheetsProject = document.getElementById('eco-sheets-project');
-            const ecoSheetsStatus = document.getElementById('eco-sheets-status');
-            const ecoAnalyticsPerf = document.getElementById('eco-analytics-perf');
-            const ecoAnalyticsTime = document.getElementById('eco-analytics-time');
-            const ecoAnalyticsProgText = document.getElementById('eco-analytics-prog-text');
-            const ecoAnalyticsProgBar = document.getElementById('eco-analytics-prog-bar');
-
-            function getEcosystemMockData(step, code, projectTitleVal) {
-                const stepDetails = {
-                    1: {
-                        email: {
-                            subject: `✅ Recibimos tu propuesta - Código: ${code}`,
-                            body: `Hola. Recibimos tu propuesta de automatización para "${projectTitleVal}". Tus datos han sido guardados en el sistema y se ha iniciado el proceso de seguimiento con el código único ${code}.`
-                        },
-                        telegram: `🤖 <strong>VolckanBot Alert</strong>:\n Nueva propuesta ingresada\n📂 <strong>Proyecto:</strong> ${projectTitleVal}\n🔑 <strong>Código:</strong> ${code}\n⏰ <strong>Estado:</strong> Guardado en nube.`,
-                        sheets: {
-                            status: 'Ingresada (Paso 1)',
-                            bgClass: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30'
-                        },
-                        analytics: {
-                            perf: 'ÓPTIMO',
-                            time: '0.02 segundos',
-                            progress: 20
-                        }
-                    },
-                    2: {
-                        email: {
-                            subject: `🔍 Evaluación en curso - Código: ${code}`,
-                            body: `Hola. Informamos que nuestro equipo técnico y de diseño está evaluando la viabilidad de la propuesta "${projectTitleVal}" para afinar la cotización y plan de trabajo.`
-                        },
-                        telegram: `🤖 <strong>VolckanBot Alert</strong>:\n Mesa técnica asignada\n📂 <strong>Proyecto:</strong> ${projectTitleVal}\n🔧 <strong>Estado:</strong> Analizando viabilidad técnica.`,
-                        sheets: {
-                            status: 'Evaluación (Paso 2)',
-                            bgClass: 'bg-blue-500/10 text-blue-400 border-blue-500/30'
-                        },
-                        analytics: {
-                            perf: 'EN CURSO',
-                            time: '24h estimadas',
-                            progress: 40
-                        }
-                    },
-                    3: {
-                        email: {
-                            subject: `🎉 Propuesta Autorizada - Código: ${code}`,
-                            body: `¡Buenas noticias! La propuesta "${projectTitleVal}" ha sido formalmente autorizada y aprobada por ambas partes. Pasará directamente al equipo de ingeniería para iniciar el desarrollo.`
-                        },
-                        telegram: `🤖 <strong>VolckanBot Alert</strong>:\n ✅ propuesta autorizada\n📂 <strong>Proyecto:</strong> ${projectTitleVal}\n💼 <strong>Estado:</strong> Firma y alcance aprobados.`,
-                        sheets: {
-                            status: 'Autorizado (Paso 3)',
-                            bgClass: 'bg-green-500/10 text-green-400 border-green-500/30'
-                        },
-                        analytics: {
-                            perf: 'APROBADO',
-                            time: '2 días en fase',
-                            progress: 60
-                        }
-                    },
-                    4: {
-                        email: {
-                            subject: `⚡ Desarrollo en progreso - Código: ${code}`,
-                            body: `Hola. Te informamos que nuestros programadores se encuentran codificando el frontend, vinculando la base de datos Firebase/Google Sheets y realizando pruebas en "${projectTitleVal}".`
-                        },
-                        telegram: `🤖 <strong>VolckanBot Alert</strong>:\n ⚡ Programación en progreso\n📂 <strong>Proyecto:</strong> ${projectTitleVal}\n💻 <strong>Estado:</strong> Escribiendo código e integrando APIs.`,
-                        sheets: {
-                            status: 'Desarrollo (Paso 4)',
-                            bgClass: 'bg-orange-500/10 text-orange-400 border-orange-500/30'
-                        },
-                        analytics: {
-                            perf: 'ACTIVO',
-                            time: '6 días de desarrollo',
-                            progress: 80
-                        }
-                    },
-                    5: {
-                        email: {
-                            subject: `🏁 ¡Tu proyecto está listo! - Código: ${code}`,
-                            body: `¡Hola! Tu proyecto "${projectTitleVal}" ha sido finalizado con éxito. Ya puedes ingresar con tus credenciales enviadas y revisar el manual de usuario adjunto.`
-                        },
-                        telegram: `🤖 <strong>VolckanBot Alert</strong>:\n 🏆 Proyecto finalizado y entregado\n📂 <strong>Proyecto:</strong> ${projectTitleVal}\n🔑 <strong>Código:</strong> ${code}\n🚀 <strong>Estado:</strong> Credenciales enviadas.`,
-                        sheets: {
-                            status: 'Entregado (Paso 5)',
-                            bgClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-                        },
-                        analytics: {
-                            perf: 'COMPLETADO',
-                            time: '8 días totales',
-                            progress: 100
+            // Friendly Step details for client-centric simulation
+            const friendlyStepDetails = {
+                1: {
+                    badge: 'Fase 1: Solicitud Ingresada',
+                    title: '¡Recibido con éxito!',
+                    desc: 'El cliente o socio completa el formulario en la landing page y el sistema genera inmediatamente un código de tracking y notifica a las partes.',
+                    bullets: [
+                        { icon: 'mail', text: 'Se envía un correo automático con el enlace y código de seguimiento al cliente.' },
+                        { icon: 'send_and_archive', text: 'Se notifica al equipo técnico por Telegram para iniciar la revisión.' },
+                        { icon: 'database', text: 'La solicitud se escribe instantáneamente en la base de datos de control.' }
+                    ],
+                    previewData: (code, titleVal) => {
+                        const emailTo = document.getElementById('preview-email-to');
+                        const emailProject = document.getElementById('preview-email-project');
+                        const emailCode = document.getElementById('preview-email-code');
+                        if (emailTo) emailTo.textContent = 'contacto@' + titleVal.toLowerCase().replace(/[^a-z0-9]/g, '') + '.org';
+                        if (emailProject) emailProject.textContent = titleVal;
+                        if (emailCode) emailCode.textContent = code;
+                    }
+                },
+                2: {
+                    badge: 'Fase 2: Evaluación de Viabilidad',
+                    title: 'Análisis de Requerimientos',
+                    desc: 'Nuestro equipo técnico y de diseño revisa el alcance y los requerimientos especificados en el formulario para asegurar que la solución propuesta sea 100% viable.',
+                    bullets: [
+                        { icon: 'diversity_3', text: 'Mesa de operaciones asigna al analista de sistemas encargado.' },
+                        { icon: 'comment', text: 'Telegram emite alertas de coordinación interna sobre el avance.' },
+                        { icon: 'calendar_month', text: 'Se calendarizan las sesiones de diseño de la interfaz.' }
+                    ],
+                    previewData: (code, titleVal) => {
+                        const telegramText = document.getElementById('preview-telegram-text');
+                        if (telegramText) {
+                            telegramText.innerHTML = `🔍 <strong>Evaluación Técnica Iniciada</strong><br>📂 <strong>Proyecto:</strong> ${titleVal}<br>🔑 <strong>Código:</strong> ${code}<br>🔧 <strong>Mesa asignada:</strong> Ingeniería de Sistemas`;
                         }
                     }
-                };
-                return stepDetails[step];
-            }
+                },
+                3: {
+                    badge: 'Fase 3: Propuesta Autorizada',
+                    title: 'Alcance y Plan Aprobado',
+                    desc: 'Una vez acordados el presupuesto y los plazos, la propuesta es autorizada de forma digital, lo que habilita la fase de ingeniería y programación activa.',
+                    bullets: [
+                        { icon: 'edit_document', text: 'Se firma y aprueba el alcance técnico del proyecto.' },
+                        { icon: 'table_rows', text: 'La base de datos (Google Sheets) actualiza el estado a "Autorizado".' },
+                        { icon: 'speed', text: 'El panel de control inicia la medición activa de tiempos de desarrollo.' }
+                    ],
+                    previewData: (code, titleVal) => {
+                        const sheetsCode = document.getElementById('preview-sheets-code');
+                        const sheetsProject = document.getElementById('preview-sheets-project');
+                        const sheetsStatus = document.getElementById('preview-sheets-status');
+                        if (sheetsCode) sheetsCode.textContent = code;
+                        if (sheetsProject) sheetsProject.textContent = titleVal;
+                        if (sheetsStatus) sheetsStatus.textContent = 'Autorizado';
+                    }
+                },
+                4: {
+                    badge: 'Fase 4: Desarrollo e Integración',
+                    title: 'Programación de Sistemas',
+                    desc: 'Nuestros desarrolladores codifican los módulos, integran las APIs especificadas, configuran las bases de datos y realizan pruebas exhaustivas de usabilidad.',
+                    bullets: [
+                        { icon: 'code', text: 'Escritura activa de código y maquetación de vistas.' },
+                        { icon: 'api', text: 'Conexión de APIs de notificaciones (Email / Telegram).' },
+                        { icon: 'monitoring', text: 'El SLA y porcentaje de avance suben dinámicamente al 80%.' }
+                    ],
+                    previewData: (code, titleVal) => {
+                        const metricsPerf = document.getElementById('preview-metrics-perf');
+                        const metricsTime = document.getElementById('preview-metrics-time');
+                        const metricsProgText = document.getElementById('preview-metrics-progress-text');
+                        const metricsProgBar = document.getElementById('preview-metrics-progress-bar');
+                        if (metricsPerf) metricsPerf.textContent = 'ACTIVO';
+                        if (metricsTime) metricsTime.textContent = '6 días en desarrollo';
+                        if (metricsProgText) metricsProgText.textContent = '80%';
+                        if (metricsProgBar) metricsProgBar.style.width = '80%';
+                    }
+                },
+                5: {
+                    badge: 'Fase 5: Entrega y Cierre',
+                    title: '¡Plataforma Lista!',
+                    desc: 'El desarrollo se completa exitosamente. Se realiza el despliegue al servidor final de producción, se generan las credenciales administrativas y se entregan las guías de uso.',
+                    bullets: [
+                        { icon: 'rocket_launch', text: 'Despliegue final de la landing page y el módulo en el servidor del cliente.' },
+                        { icon: 'mail', text: 'Se envían automáticamente las credenciales finales de administrador.' },
+                        { icon: 'verified', text: 'Se registra la entrega final en la bitácora operacional (SLA total: 8 días).' }
+                    ],
+                    previewData: (code, titleVal) => {
+                        // Final step success display
+                    }
+                }
+            };
 
-            // Modal Elements
+            let currentSimulatedCode = null;
+            let currentSimulatedStep = 1;
+            let initialSimulatedStep = 1;
+
+            // Modal Controls
             const ecoModal = document.getElementById('eco-simulator-modal');
             const ecoModalCloseBtn = document.getElementById('eco-simulator-modal-close');
             const ecoModalCloseFooter = document.getElementById('btn-modal-close-footer');
@@ -1345,54 +1428,52 @@
             const modalProgressLine = document.getElementById('eco-modal-progress-line');
             const modalStepNumberText = document.getElementById('eco-modal-step-number');
 
-            // Modal Fields
-            const ecoMEmailTo = document.getElementById('eco-m-email-to');
-            const ecoMEmailSubject = document.getElementById('eco-m-email-subject');
-            const ecoMEmailBody = document.getElementById('eco-m-email-body');
-            const ecoMTelegramBody = document.getElementById('eco-m-telegram-body');
-            const ecoMSheetsCode = document.getElementById('eco-m-sheets-code');
-            const ecoMSheetsProject = document.getElementById('eco-m-sheets-project');
-            const ecoMSheetsStatus = document.getElementById('eco-m-sheets-status');
-            const ecoMSheetsActiveRow = document.getElementById('eco-m-sheets-active-row');
-            const ecoMAnalyticsPerf = document.getElementById('eco-m-analytics-perf');
-            const ecoMAnalyticsTime = document.getElementById('eco-m-analytics-time');
-            const ecoMAnalyticsProgText = document.getElementById('eco-m-analytics-prog-text');
-            const ecoMAnalyticsProgBar = document.getElementById('eco-m-analytics-prog-bar');
-
             function updateEcosystemVisuals(step) {
                 if (!currentSimulatedCode) return;
                 const data = mockData[currentSimulatedCode];
                 if (!data) return;
 
-                const eco = getEcosystemMockData(step, currentSimulatedCode, data.title);
+                const friendly = friendlyStepDetails[step];
+                if (!friendly) return;
 
-                // Update Email
-                if (ecoMEmailTo) ecoMEmailTo.textContent = 'contacto@' + data.title.toLowerCase().replace(/[^a-z0-9]/g, '') + '.org';
-                if (ecoMEmailSubject) ecoMEmailSubject.textContent = eco.email.subject;
-                if (ecoMEmailBody) ecoMEmailBody.textContent = eco.email.body;
+                // Update Left Column (Friendly Descriptions)
+                const badgeEl = document.getElementById('friendly-step-badge');
+                const titleEl = document.getElementById('friendly-step-title');
+                const descEl = document.getElementById('friendly-step-desc');
+                const listEl = document.getElementById('friendly-automation-list');
 
-                // Update Telegram
-                if (ecoMTelegramBody) ecoMTelegramBody.innerHTML = eco.telegram;
+                if (badgeEl) badgeEl.textContent = friendly.badge;
+                if (titleEl) titleEl.textContent = friendly.title;
+                if (descEl) descEl.textContent = friendly.desc;
 
-                // Update Sheets Table
-                if (ecoMSheetsCode) ecoMSheetsCode.textContent = currentSimulatedCode;
-                if (ecoMSheetsProject) ecoMSheetsProject.textContent = data.title;
-                if (ecoMSheetsStatus) ecoMSheetsStatus.textContent = eco.sheets.status;
-                if (ecoMSheetsActiveRow) ecoMSheetsActiveRow.className = `transition-colors duration-500 ${eco.sheets.bgClass}`;
+                if (listEl) {
+                    listEl.innerHTML = '';
+                    friendly.bullets.forEach(bullet => {
+                        const li = document.createElement('li');
+                        li.className = 'flex items-center gap-3 text-xs sm:text-sm font-semibold text-slate-700';
+                        li.innerHTML = `
+                            <span class="w-6 h-6 rounded-full bg-brand-purple/10 text-brand-purple flex items-center justify-center material-symbols-outlined text-xs">${bullet.icon}</span>
+                            <span>${bullet.text}</span>
+                        `;
+                        listEl.appendChild(li);
+                    });
+                }
 
-                // Update Analytics
-                if (ecoMAnalyticsPerf) ecoMAnalyticsPerf.textContent = eco.analytics.perf;
-                if (ecoMAnalyticsTime) ecoMAnalyticsTime.textContent = eco.analytics.time;
-                
-                const progText = document.querySelector('#eco-m-analytics-prog-text') || ecoMAnalyticsProgText;
-                if (progText) progText.textContent = `${eco.analytics.progress}%`;
-                if (ecoMAnalyticsProgBar) ecoMAnalyticsProgBar.style.width = `${eco.analytics.progress}%`;
+                // Update Right Column Previews
+                const previewPanes = document.querySelectorAll('.step-preview-pane');
+                previewPanes.forEach(pane => pane.classList.add('hidden'));
+
+                const activePane = document.getElementById(`step-preview-${step}`);
+                if (activePane) activePane.classList.remove('hidden');
+
+                // Update active pane dynamic preview data
+                friendly.previewData(currentSimulatedCode, data.title);
             }
 
             function updateModalTimelineVisuals(step) {
                 if (!modalStepDots || modalStepDots.length === 0) return;
                 
-                // Update dots styling
+                // Update dots styling to match light theme modal
                 modalStepDots.forEach((dot, index) => {
                     const stepNum = index + 1;
                     const innerCircle = dot.querySelector('div');
@@ -1400,16 +1481,16 @@
 
                     if (stepNum < step) {
                         // Completed
-                        if (innerCircle) innerCircle.className = 'w-8 h-8 rounded-full bg-green-500 text-white border-2 border-green-450 flex items-center justify-center text-xs font-bold font-mono transition-colors';
-                        if (label) label.className = 'text-[9px] font-bold text-green-400 hidden md:block uppercase tracking-wider';
+                        if (innerCircle) innerCircle.className = 'w-8 h-8 rounded-full bg-green-500 text-white border-2 border-green-200 flex items-center justify-center text-xs font-bold font-mono transition-colors';
+                        if (label) label.className = 'text-[9px] font-bold text-green-600 hidden md:block uppercase tracking-wider';
                     } else if (stepNum === step) {
                         // Active
-                        if (innerCircle) innerCircle.className = 'w-8 h-8 rounded-full bg-brand-purple text-white border-2 border-brand-yellow flex items-center justify-center text-xs font-bold font-mono transition-colors';
-                        if (label) label.className = 'text-[9px] font-bold text-brand-yellow hidden md:block uppercase tracking-wider';
+                        if (innerCircle) innerCircle.className = 'w-8 h-8 rounded-full bg-brand-purple text-white border-2 border-brand-purple/20 flex items-center justify-center text-xs font-bold font-mono transition-colors';
+                        if (label) label.className = 'text-[9px] font-bold text-brand-purple hidden md:block uppercase tracking-wider';
                     } else {
                         // Pending
-                        if (innerCircle) innerCircle.className = 'w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 transition-colors';
-                        if (label) label.className = 'text-[9px] font-bold text-slate-800 hidden md:block uppercase tracking-wider';
+                        if (innerCircle) innerCircle.className = 'w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-400 transition-colors';
+                        if (label) label.className = 'text-[9px] font-bold text-slate-400 hidden md:block uppercase tracking-wider';
                     }
                 });
 
