@@ -55,6 +55,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -353,108 +354,15 @@
                 </div>
 
                 <!-- Botón Principal: ¿Cómo funciona nuestro sistema? -->
-                <div class="max-w-2xl mx-auto text-center mb-14">
+                <div class="max-w-2xl mx-auto text-center">
                     <button id="btn-how-it-works" 
                             class="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-brand-purple via-brand-red to-brand-yellow hover:opacity-95 text-white rounded-2xl font-black text-base md:text-lg uppercase tracking-wider shadow-2xl hover:scale-[1.02] transition-all flex items-center justify-center gap-3 mx-auto cursor-pointer">
                         <span class="material-symbols-outlined text-2xl animate-pulse">play_circle</span>
                         <span>¿Cómo Funciona Nuestro Sistema?</span>
                     </button>
-                </div>
-
-                <!-- Result Container / Single Example Presentation -->
-                <div id="tracking-result" class="max-w-4xl mx-auto">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 bg-slate-950/60 p-6 rounded-2xl border border-slate-700 shadow-xl">
-                        <div>
-                            <span class="text-xs text-brand-yellow font-bold uppercase block mb-1">Ejemplo de Solicitud en Tiempo Real</span>
-                            <h3 id="project-title" class="font-black text-xl md:text-2xl text-white tracking-tight uppercase">Gestión de Solicitud Institucional</h3>
-                        </div>
-                        <div class="flex flex-wrap items-center gap-3">
-                            <div>
-                                <span class="text-xs text-slate-400 font-bold uppercase block mb-1">Estado de la Gestión</span>
-                                <span id="project-target-badge" class="font-mono text-xs bg-brand-yellow/10 text-brand-yellow border border-brand-yellow/30 px-3 py-1 rounded-lg">Fase 5/5 — Completado</span>
-                            </div>
-                            <div>
-                                <span class="text-xs text-slate-400 font-bold uppercase block mb-1">Actualización</span>
-                                <span id="project-date" class="font-mono text-xs bg-brand-purple/20 text-white border border-brand-purple/30 px-3 py-1 rounded-lg">En tiempo real</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Full Width Timeline -->
-                    <div class="mb-6">
-                        <div class="bg-slate-800/50 p-6 sm:p-8 rounded-3xl border border-slate-700/80 flex flex-col justify-between max-w-4xl mx-auto shadow-2xl">
-                            <div>
-                                <span class="text-xs text-slate-400 font-bold uppercase block mb-6 tracking-wider">Flujo Completo del Trámite</span>
-                                <div class="flex flex-col gap-6 relative pl-8 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-700">
-                                    <!-- Step 1 -->
-                                    <div id="step-1" class="timeline-step flex gap-4 relative">
-                                        <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-400 flex items-center justify-center text-xs font-bold z-10 transition-colors">
-                                            1
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-sm uppercase text-green-400">Solicitud Ingresada</h4>
-                                            <p class="text-xs text-slate-300 mt-0.5">Recepción de requerimientos, asignación de folio y envío automático de confirmación por correo.</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Step 2 -->
-                                    <div id="step-2" class="timeline-step flex gap-4 relative">
-                                        <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-400 flex items-center justify-center text-xs font-bold z-10 transition-colors">
-                                            2
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-sm uppercase text-green-400">Evaluación Operativa</h4>
-                                            <p class="text-xs text-slate-300 mt-0.5">Análisis del requerimiento y notificación instantánea por Telegram al equipo de trabajo.</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Step 3 -->
-                                    <div id="step-3" class="timeline-step flex gap-4 relative">
-                                        <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-400 flex items-center justify-center text-xs font-bold z-10 transition-colors">
-                                            3
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-sm uppercase text-green-400">Solicitud Aprobada</h4>
-                                            <p class="text-xs text-slate-300 mt-0.5">Aprobación formal del trámite y sincronización de base de datos a estado "Autorizado".</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Step 4 -->
-                                    <div id="step-4" class="timeline-step flex gap-4 relative">
-                                        <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-400 flex items-center justify-center text-xs font-bold z-10 transition-colors">
-                                            4
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-sm uppercase text-green-400">Ejecución y Gestión Activa</h4>
-                                            <p class="text-xs text-slate-300 mt-0.5">Monitoreo del avance de la gestión en tiempo real con panel de métricas e indicadores de avance.</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- Step 5 -->
-                                    <div id="step-5" class="timeline-step flex gap-4 relative">
-                                        <div class="step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-400 flex items-center justify-center text-xs font-bold z-10 transition-colors">
-                                            5
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-sm uppercase text-green-400">Entrega y Cierre Formal</h4>
-                                            <p class="text-xs text-slate-300 mt-0.5">Culminación del trámite, entrega de resultados y activación de canal de soporte post-servicio.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Button to open simulation modal -->
-                            <div class="mt-8 pt-6 border-t border-slate-700/85 flex flex-col sm:flex-row justify-between items-center gap-4">
-                                <p class="text-xs text-slate-300 font-medium text-center sm:text-left">
-                                    <span class="text-brand-yellow font-bold">Presentación Interactiva:</span> Explora en vivo las pantallas y automatizaciones de cada fase.
-                                </p>
-                                <button id="btn-open-simulation-modal" class="w-full sm:w-auto px-6 py-3.5 bg-brand-purple hover:bg-brand-red text-white rounded-xl text-xs font-bold transition-all shadow-lg hover:shadow-brand-purple/20 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer shrink-0">
-                                    <span>Iniciar Simulación Interactiva</span> 🚀
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
+                    <p class="text-xs text-slate-400 mt-4 font-medium">
+                        Haz clic para abrir la presentación interactiva paso a paso con vistas previas en tiempo real.
+                    </p>
                 </div>
             </div>
         </section>
