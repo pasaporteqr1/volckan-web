@@ -53,6 +53,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -560,7 +561,7 @@
             <div class="bg-white border border-slate-100 rounded-3xl w-full max-w-5xl shadow-2xl p-4 sm:p-6 md:p-8 transform scale-95 transition-transform duration-300 relative text-slate-900 max-h-[95vh] flex flex-col">
                 
                 <!-- Modal Close Button -->
-                <button id="eco-simulator-modal-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 transition-colors z-20">
+                <button id="eco-simulator-modal-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-800 hover:text-slate-900 transition-colors z-20">
                     <span class="material-symbols-outlined">close</span>
                 </button>
 
@@ -573,7 +574,7 @@
                         </span>
                         <h3 class="font-black text-lg sm:text-xl tracking-tight uppercase text-brand-purple">Simulación de Flujo Automatizado</h3>
                     </div>
-                    <p id="eco-modal-subtitle" class="text-xs text-slate-500 mt-1 font-medium">Visualiza el recorrido y las integraciones automáticas de tu propuesta paso a paso de forma simple.</p>
+                    <p id="eco-modal-subtitle" class="text-xs text-slate-800 mt-1 font-medium">Visualiza el recorrido y las integraciones automáticas de tu propuesta paso a paso de forma simple.</p>
                 </div>
 
                 <!-- Steps Progress Bar Inside Modal -->
@@ -585,23 +586,23 @@
 
                         <!-- Steps Dots -->
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="1">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">1</div>
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">1</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Ingresada</span>
                         </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="2">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">2</div>
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">2</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Evaluación</span>
                         </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="3">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">3</div>
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">3</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Autorizada</span>
                         </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="4">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">4</div>
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">4</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Gestión</span>
                         </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none" data-step="5">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-brand-purple transition-all font-mono">5</div>
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">5</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">Entregada</span>
                         </button>
                     </div>
@@ -643,7 +644,7 @@
                             </div>
 
                             <!-- Tech status summary (simple and elegant info badge) -->
-                            <div class="mt-8 pt-4 border-t border-slate-200 flex items-center gap-3 text-xs text-slate-500 font-medium font-mono">
+                            <div class="mt-8 pt-4 border-t border-slate-200 flex items-center gap-3 text-xs text-slate-800 font-medium font-mono">
                                 <span class="material-symbols-outlined text-sm text-brand-purple">verified</span>
                                 <span>Procesado por el Servidor de Integración Volckan.</span>
                             </div>
@@ -666,7 +667,7 @@
                                             <p><span class="font-bold text-slate-400">Para:</span> <span id="preview-email-to" class="font-bold text-slate-800">cliente@empresa.com</span></p>
                                         </div>
                                         <h4 class="font-bold text-sm text-brand-purple mb-2">¡Propuesta Recibida!</h4>
-                                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                        <p class="text-xs text-slate-800 leading-relaxed mb-4">
                                             Hola, hemos recibido tu propuesta para el proyecto <strong id="preview-email-project">---</strong>. Ya está asignada a evaluación técnica.
                                         </p>
                                         <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-center mb-4">
@@ -704,7 +705,7 @@
                                                     🔑 <strong>Código:</strong> ---<br>
                                                     🔧 <strong>Mesa asignada:</strong> Ingeniería de Sistemas
                                                 </p>
-                                                <span class="text-[8px] text-slate-500 block text-right mt-1">Hace un momento</span>
+                                                <span class="text-[8px] text-slate-800 block text-right mt-1">Hace un momento</span>
                                             </div>
                                         </div>
                                     </div>
@@ -725,7 +726,7 @@
                                         </div>
                                         <table class="w-full text-[10px] font-sans text-left border-collapse">
                                             <thead>
-                                                <tr class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200">
+                                                <tr class="bg-slate-50 text-slate-800 font-bold border-b border-slate-200">
                                                     <th class="p-2">Código</th>
                                                     <th class="p-2">Proyecto</th>
                                                     <th class="p-2 text-center">Estado</th>
@@ -735,7 +736,7 @@
                                                 <tr class="border-b border-slate-100 text-slate-400">
                                                     <td class="p-2 font-mono">VLK-2026-X99</td>
                                                     <td class="p-2">SOSQR Alerts</td>
-                                                    <td class="p-2 text-center"><span class="bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded text-[8px]">Terminado</span></td>
+                                                    <td class="p-2 text-center"><span class="bg-slate-100 text-slate-800 px-1.5 py-0.5 rounded text-[8px]">Terminado</span></td>
                                                 </tr>
                                                 <tr class="bg-brand-purple/5 text-slate-900 font-bold border-b border-slate-200">
                                                     <td id="preview-sheets-code" class="p-2 font-mono text-brand-purple">VLK-2026-A48</td>
@@ -756,17 +757,17 @@
                                         <span class="w-2 h-2 rounded-full bg-orange-400"></span> VISTA PREVIA: TABLERO DE GESTIÓN
                                     </span>
                                     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 text-white shadow-xl space-y-4">
-                                        <div class="flex justify-between items-center text-[10px] text-slate-500 font-mono border-b border-slate-850 pb-2">
+                                        <div class="flex justify-between items-center text-[10px] text-slate-800 font-mono border-b border-slate-850 pb-2">
                                             <span>HITOS & METAS</span>
                                             <span>Bitácora Operativa</span>
                                         </div>
                                         <div class="grid grid-cols-2 gap-3">
                                             <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
-                                                <span class="text-[8px] text-slate-500 block uppercase mb-1">Estado Operativo</span>
+                                                <span class="text-[8px] text-slate-800 block uppercase mb-1">Estado Operativo</span>
                                                 <span id="preview-metrics-perf" class="text-xs font-bold text-white uppercase">Activo</span>
                                             </div>
                                             <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
-                                                <span class="text-[8px] text-slate-500 block uppercase mb-1">Tiempo Transcurrido</span>
+                                                <span class="text-[8px] text-slate-800 block uppercase mb-1">Tiempo Transcurrido</span>
                                                 <span id="preview-metrics-time" class="text-xs font-bold text-brand-yellow font-mono">6 días transcurridos</span>
                                             </div>
                                         </div>
@@ -796,7 +797,7 @@
                                         </div>
                                         <div>
                                             <h4 class="font-bold text-sm text-slate-900">¡Proyecto Social Entregado!</h4>
-                                            <p class="text-xs text-slate-500 mt-1 max-w-[220px] mx-auto leading-relaxed">
+                                            <p class="text-xs text-slate-800 mt-1 max-w-[220px] mx-auto leading-relaxed">
                                                 La organización recibe las herramientas de gestión y el plan de acompañamiento social de forma automatizada.
                                             </p>
                                         </div>
@@ -816,7 +817,7 @@
 
                 <!-- Modal Footer (Interactive Controls) -->
                 <div class="border-t border-slate-200 pt-4 mt-6 shrink-0 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <div class="text-xs font-medium text-slate-500 font-mono">
+                    <div class="text-xs font-medium text-slate-800 font-mono">
                         Fase Actual: <span id="eco-modal-step-number" class="text-brand-purple font-bold">Paso 1 de 5</span>
                     </div>
                     <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end">
@@ -826,7 +827,7 @@
                         <button id="btn-modal-next-step" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-brand-purple hover:bg-brand-red text-white rounded-lg text-[10px] sm:text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider font-bold">
                             Siguiente
                         </button>
-                        <button id="btn-modal-close-footer" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 rounded-lg text-[10px] sm:text-xs font-bold transition-all uppercase tracking-wider font-mono">
+                        <button id="btn-modal-close-footer" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 hover:text-slate-900 rounded-lg text-[10px] sm:text-xs font-bold transition-all uppercase tracking-wider font-mono">
                             Cerrar
                         </button>
                     </div>
