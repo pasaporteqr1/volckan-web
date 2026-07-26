@@ -58,6 +58,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -449,56 +450,56 @@
         </section>
 
         <!-- Ecosystem Detail Modal -->
-        <div id="eco-simulator-modal" class="fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
-            <div class="bg-white border border-slate-100 rounded-3xl w-full max-w-5xl shadow-2xl p-4 sm:p-6 md:p-8 transform scale-95 transition-transform duration-300 relative text-slate-900 max-h-[95vh] flex flex-col">
+        <div id="eco-simulator-modal" class="fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-2.5 sm:p-4">
+            <div class="bg-white border border-slate-100 rounded-2xl sm:rounded-3xl w-full max-w-4xl shadow-2xl p-4 sm:p-6 md:p-8 transform scale-95 transition-transform duration-300 relative text-slate-900 max-h-[94vh] flex flex-col">
                 
                 <!-- Modal Close Button -->
-                <button id="eco-simulator-modal-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-800 hover:text-slate-900 transition-colors z-20">
-                    <span class="material-symbols-outlined">close</span>
+                <button id="eco-simulator-modal-close" class="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 flex items-center justify-center text-slate-800 hover:text-slate-900 transition-colors z-20 cursor-pointer">
+                    <span class="material-symbols-outlined text-xl sm:text-2xl">close</span>
                 </button>
 
                 <!-- Modal Header -->
-                <div class="border-b border-slate-200 pb-4 mb-6 shrink-0 pr-12">
+                <div class="border-b border-slate-200 pb-3 mb-4 sm:mb-6 shrink-0 pr-10">
                     <div class="flex items-center gap-2">
-                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-500/10 text-green-600 border border-green-500/20">
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-green-500/10 text-green-600 border border-green-500/20">
                             <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping"></span>
                             Simulación Activa
                         </span>
-                        <h3 class="font-black text-lg sm:text-xl tracking-tight uppercase text-brand-purple">¿Cómo Funciona Nuestro Sistema?</h3>
+                        <h3 class="font-black text-base sm:text-xl tracking-tight uppercase text-brand-purple">¿Cómo Funciona Nuestro Sistema?</h3>
                     </div>
-                    <p id="eco-modal-subtitle" class="text-xs text-slate-800 mt-1 font-medium">Conoce paso a paso de forma simple y amigable el recorrido de tus solicitudes.</p>
+                    <p id="eco-modal-subtitle" class="text-[11px] sm:text-xs text-slate-800 mt-1 font-medium leading-tight">Conoce paso a paso de forma simple y amigable el recorrido de tus solicitudes.</p>
                 </div>
 
                 <!-- Steps Progress Bar Inside Modal -->
-                <div class="mb-6 shrink-0 px-2">
-                    <div class="flex justify-between items-center relative">
+                <div class="mb-4 sm:mb-6 shrink-0 px-1 overflow-x-auto scrollbar-none">
+                    <div class="flex justify-between items-center relative min-w-[300px]">
                         <!-- Progress Line -->
                         <div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1 bg-slate-100 -z-10"></div>
                         <div id="eco-modal-progress-line" class="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-brand-purple to-brand-yellow -z-10 transition-all duration-500" style="width: 0%"></div>
 
                         <!-- Steps Dots -->
-                        <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none cursor-pointer" data-step="0">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">0</div>
+                        <button class="eco-modal-step-dot flex flex-col items-center gap-1.5 sm:gap-2 group outline-none cursor-pointer p-1" data-step="0">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">0</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">0. Tipo Apoyo</span>
                         </button>
-                        <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none cursor-pointer" data-step="1">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">1</div>
+                        <button class="eco-modal-step-dot flex flex-col items-center gap-1.5 sm:gap-2 group outline-none cursor-pointer p-1" data-step="1">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">1</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">1. Recibido</span>
                         </button>
-                        <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none cursor-pointer" data-step="2">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">2</div>
+                        <button class="eco-modal-step-dot flex flex-col items-center gap-1.5 sm:gap-2 group outline-none cursor-pointer p-1" data-step="2">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">2</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">2. Asignado</span>
                         </button>
-                        <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none cursor-pointer" data-step="3">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">3</div>
+                        <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none cursor-pointer p-1" data-step="3">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">3</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">3. Aprobado</span>
                         </button>
-                        <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none cursor-pointer" data-step="4">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">4</div>
+                        <button class="eco-modal-step-dot flex flex-col items-center gap-1.5 sm:gap-2 group outline-none cursor-pointer p-1" data-step="4">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">4</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">4. En Avance</span>
                         </button>
-                        <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none cursor-pointer" data-step="5">
-                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">5</div>
+                        <button class="eco-modal-step-dot flex flex-col items-center gap-1.5 sm:gap-2 group outline-none cursor-pointer p-1" data-step="5">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-[11px] sm:text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">5</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">5. Entregado</span>
                         </button>
                     </div>
@@ -506,39 +507,39 @@
 
                 <!-- Modal Content: Friendly step-by-step layout -->
                 <div class="flex-grow overflow-y-auto pr-1">
-                    <div class="max-w-3xl mx-auto p-2">
-                        <div class="bg-slate-50/90 rounded-3xl border border-slate-200/80 p-6 sm:p-8 md:p-10 shadow-sm space-y-8">
+                    <div class="max-w-3xl mx-auto p-1 sm:p-2">
+                        <div class="bg-slate-50/90 rounded-2xl sm:rounded-3xl border border-slate-200/80 p-4 sm:p-7 md:p-9 shadow-sm space-y-6 sm:space-y-8">
                             
                             <!-- Step Badge and Title -->
                             <div>
-                                <span id="friendly-step-badge" class="inline-block text-xs font-black uppercase tracking-widest px-3.5 py-1.5 bg-brand-purple/10 text-brand-purple rounded-lg mb-3">
-                                    Paso 1: Recepción Automática 📩
+                                <span id="friendly-step-badge" class="inline-block text-[11px] sm:text-xs font-black uppercase tracking-widest px-3 py-1 sm:px-3.5 sm:py-1.5 bg-brand-purple/10 text-brand-purple rounded-lg mb-2.5">
+                                    Paso 0: Clasificación Inicial de Apoyo 🎯
                                 </span>
-                                <h3 id="friendly-step-title" class="text-2xl sm:text-3xl md:text-4xl font-black text-brand-dark uppercase tracking-tight leading-tight">
-                                    ¡Listo! La solicitud llega volando
+                                <h3 id="friendly-step-title" class="text-xl sm:text-2xl md:text-4xl font-black text-brand-dark uppercase tracking-tight leading-snug sm:leading-tight">
+                                    ¿Qué tipo de apoyo solicitas? Selección inteligente
                                 </h3>
                             </div>
 
                             <!-- Friendly Colloquial Description -->
-                            <p id="friendly-step-desc" class="text-slate-700 text-base sm:text-lg leading-relaxed font-medium">
-                                Cuando una persona o empresa llena el formulario en tu página, el sistema responde de inmediato. Tu cliente recibe un correo de confirmación al instante diciéndole: "¡Tranquilo, ya tenemos tu mensaje y estamos en ello!". Al mismo tiempo, a ti y a tu equipo les llega una alerta para que nadie pierda el hilo.
+                            <p id="friendly-step-desc" class="text-slate-700 text-sm sm:text-base md:text-lg leading-relaxed font-medium">
+                                Al iniciar la solicitud en la web, la persona selecciona qué tipo de ayuda necesita. Según su elección y ubicación geográfica, el sistema enruta automáticamente la solicitud a la persona indicada:
                             </p>
 
                             <!-- Friendly Cards (3 benefit cards for this step) -->
-                            <div class="pt-6 border-t border-slate-200">
-                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Lo que ganas tú y tu cliente en este paso:</h4>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="friendly-automation-cards">
+                            <div class="pt-4 sm:pt-6 border-t border-slate-200">
+                                <h4 class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 sm:mb-4">Lo que ganas tú y tu cliente en este paso:</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4" id="friendly-automation-cards">
                                     <!-- Dynamic cards inserted by JS -->
                                 </div>
                             </div>
 
                             <!-- Trust badge footer -->
-                            <div class="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-800 font-medium">
-                                <span class="flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-base text-green-600 font-bold">check_circle</span>
+                            <div class="pt-3 sm:pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-3 text-[11px] sm:text-xs text-slate-800 font-medium">
+                                <span class="flex items-center gap-1.5 sm:gap-2">
+                                    <span class="material-symbols-outlined text-sm sm:text-base text-green-600 font-bold">check_circle</span>
                                     <span>Proceso 100% automatizado sin trabajo manual extra</span>
                                 </span>
-                                <span class="font-mono text-[10px] uppercase text-brand-purple bg-brand-purple/5 px-2.5 py-1 rounded-md font-bold">Tecno Volckánica</span>
+                                <span class="font-mono text-[9px] sm:text-[10px] uppercase text-brand-purple bg-brand-purple/5 px-2.5 py-1 rounded-md font-bold">Tecno Volckánica</span>
                             </div>
 
                         </div>
@@ -546,18 +547,18 @@
                 </div>
 
                 <!-- Modal Footer (Interactive Controls) -->
-                <div class="border-t border-slate-200 pt-4 mt-6 shrink-0 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <div class="text-xs font-medium text-slate-800 font-mono">
-                        Fase Actual: <span id="eco-modal-step-number" class="text-brand-purple font-bold">Paso 1 de 5</span>
+                <div class="border-t border-slate-200 pt-3 sm:pt-4 mt-4 sm:mt-6 shrink-0 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
+                    <div class="text-[11px] sm:text-xs font-medium text-slate-800 font-mono text-center sm:text-left">
+                        Fase Actual: <span id="eco-modal-step-number" class="text-brand-purple font-bold">Paso 0 de 5</span>
                     </div>
-                    <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end">
-                        <button id="btn-modal-prev-step" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[10px] sm:text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider">
+                    <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between">
+                        <button id="btn-modal-prev-step" class="flex-1 sm:flex-initial py-2.5 px-4 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 rounded-xl text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider text-center cursor-pointer">
                             Anterior
                         </button>
-                        <button id="btn-modal-next-step" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-brand-purple hover:bg-brand-red text-white rounded-lg text-[10px] sm:text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider font-bold">
+                        <button id="btn-modal-next-step" class="flex-1 sm:flex-initial py-2.5 px-4 bg-brand-purple hover:bg-brand-red active:scale-95 text-white rounded-xl text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider font-bold text-center cursor-pointer">
                             Siguiente
                         </button>
-                        <button id="btn-modal-close-footer" class="px-3 sm:px-4 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 hover:text-slate-900 rounded-lg text-[10px] sm:text-xs font-bold transition-all uppercase tracking-wider font-mono">
+                        <button id="btn-modal-close-footer" class="py-2.5 px-4 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-800 rounded-xl text-xs font-bold transition-all uppercase tracking-wider font-mono cursor-pointer">
                             Cerrar
                         </button>
                     </div>
