@@ -57,6 +57,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -476,6 +477,10 @@
                         <div id="eco-modal-progress-line" class="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-gradient-to-r from-brand-purple to-brand-yellow -z-10 transition-all duration-500" style="width: 0%"></div>
 
                         <!-- Steps Dots -->
+                        <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none cursor-pointer" data-step="0">
+                            <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">0</div>
+                            <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">0. Tipo Apoyo</span>
+                        </button>
                         <button class="eco-modal-step-dot flex flex-col items-center gap-2 group outline-none cursor-pointer" data-step="1">
                             <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-slate-200 flex items-center justify-center text-xs font-bold text-slate-800 group-hover:border-brand-purple transition-all font-mono">1</div>
                             <span class="text-[9px] font-bold text-slate-400 group-hover:text-slate-700 hidden md:block uppercase tracking-wider">1. Recibido</span>
@@ -1017,10 +1022,20 @@
             };
 
             let currentSimulatedCode = 'VLK-2026-DEMO';
-            let currentSimulatedStep = 1;
+            let currentSimulatedStep = 0;
 
             // Friendly Step details for client-centric simulation (Coloquial & No Técnico)
             const friendlyStepDetails = {
+                0: {
+                    badge: 'Paso 0: Clasificación Inicial de Apoyo 🎯',
+                    title: '¿Qué tipo de apoyo solicitas? Selección inteligente',
+                    desc: 'Al iniciar la solicitud en la web, la persona selecciona qué tipo de ayuda necesita. Según su elección y ubicación geográfica, el sistema enruta automáticamente la solicitud a la persona indicada:',
+                    bullets: [
+                        { icon: 'handshake', title: 'Si elige Patrocinio', text: 'El sistema enruta directo al Jefe Regional más cercano al lugar de la solicitud.' },
+                        { icon: 'volunteer_activism', title: 'Si elige Donación', text: 'Se canaliza inmediatamente al Encargado de la Fundación institucional.' },
+                        { icon: 'alt_route', title: 'Enrutamiento automático', text: 'Cero intermediarios: la solicitud llega a la persona exacta desde el primer segundo.' }
+                    ]
+                },
                 1: {
                     badge: 'Paso 1: Recepción Automática 📩',
                     title: '¡Listo! La solicitud llega volando',
@@ -1118,8 +1133,8 @@
             function updateModalTimelineVisuals(step) {
                 if (!modalStepDots || modalStepDots.length === 0) return;
                 
-                modalStepDots.forEach((dot, index) => {
-                    const stepNum = index + 1;
+                modalStepDots.forEach((dot) => {
+                    const stepNum = parseInt(dot.getAttribute('data-step'), 10);
                     const innerCircle = dot.querySelector('div');
                     const label = dot.querySelector('span');
 
@@ -1136,57 +1151,19 @@
                 });
 
                 if (modalProgressLine) {
-                    const pct = (step - 1) * 25;
+                    const pct = step * 20;
                     modalProgressLine.style.width = `${pct}%`;
                 }
 
                 if (modalStepNumberText) {
-                    modalStepNumberText.textContent = `Paso ${step} de 5`;
+                    modalStepNumberText.textContent = step === 0 ? 'Paso 0 de 5 (Tipo de Apoyo)' : `Paso ${step} de 5`;
                 }
 
-                if (btnModalPrev) btnModalPrev.disabled = (step === 1);
+                if (btnModalPrev) btnModalPrev.disabled = (step === 0);
                 if (btnModalNext) btnModalNext.disabled = (step === 5);
             }
 
             function updateTimelineVisuals(step) {
-                for (let i = 1; i <= 5; i++) {
-                    const stepEl = document.getElementById(`step-${i}`);
-                    if (!stepEl) continue;
-                    const iconEl = stepEl.querySelector('.step-icon');
-                    const textEl = stepEl.querySelector('h4');
-                    const descEl = stepEl.querySelector('p');
-
-                    stepEl.classList.remove('active', 'completed');
-                    if (iconEl) iconEl.className = 'step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs font-bold text-slate-400 z-10 transition-colors';
-                    if (textEl) textEl.className = 'font-bold text-sm uppercase text-slate-400';
-                    if (descEl) descEl.className = 'text-xs text-slate-400 mt-0.5';
-                }
-
-                for (let i = 1; i <= 5; i++) {
-                    const stepEl = document.getElementById(`step-${i}`);
-                    if (!stepEl) continue;
-                    const iconEl = stepEl.querySelector('.step-icon');
-                    const textEl = stepEl.querySelector('h4');
-                    const descEl = stepEl.querySelector('p');
-
-                    if (i < step) {
-                        stepEl.classList.add('completed');
-                        if (iconEl) iconEl.className = 'step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-450 flex items-center justify-center text-xs font-bold z-10 transition-colors';
-                        if (textEl) textEl.className = 'font-bold text-sm uppercase text-green-400';
-                        if (descEl) descEl.className = 'text-xs text-slate-300 mt-0.5';
-                    } else if (i === step) {
-                        stepEl.classList.add('active');
-                        if (i === 5) {
-                            if (iconEl) iconEl.className = 'step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-green-500 text-white border-2 border-green-400 flex items-center justify-center text-xs font-bold z-10 transition-colors';
-                            if (textEl) textEl.className = 'font-bold text-sm uppercase text-green-400';
-                        } else {
-                            if (iconEl) iconEl.className = 'step-icon absolute -left-8 w-6.5 h-6.5 rounded-full bg-brand-purple text-white border-2 border-brand-purple flex items-center justify-center text-xs font-bold z-10 transition-colors';
-                            if (textEl) textEl.className = 'font-bold text-sm uppercase text-brand-yellow';
-                        }
-                        if (descEl) descEl.className = 'text-xs text-white mt-0.5 font-medium';
-                    }
-                }
-
                 updateEcosystemVisuals(step);
                 updateModalTimelineVisuals(step);
             }
@@ -1220,7 +1197,7 @@
             // Click event for "¿Cómo Funciona Nuestro Sistema?" button
             if (howItWorksBtn) {
                 howItWorksBtn.addEventListener('click', () => {
-                    currentSimulatedStep = 1;
+                    currentSimulatedStep = 0;
                     openEcoModal();
                 });
             }
@@ -1228,7 +1205,7 @@
             // Click event for "Iniciar Simulación Interactiva" button
             if (openModalBtn) {
                 openModalBtn.addEventListener('click', () => {
-                    currentSimulatedStep = 1;
+                    currentSimulatedStep = 0;
                     openEcoModal();
                 });
             }
@@ -1246,7 +1223,7 @@
             // Modal step navigation buttons (prev / next)
             if (btnModalPrev) {
                 btnModalPrev.addEventListener('click', () => {
-                    if (currentSimulatedStep > 1) {
+                    if (currentSimulatedStep > 0) {
                         currentSimulatedStep--;
                         updateTimelineVisuals(currentSimulatedStep);
                     }
@@ -1267,7 +1244,7 @@
                 modalStepDots.forEach(dot => {
                     dot.addEventListener('click', () => {
                         const targetStep = parseInt(dot.getAttribute('data-step'), 10);
-                        if (targetStep >= 1 && targetStep <= 5) {
+                        if (targetStep >= 0 && targetStep <= 5) {
                             currentSimulatedStep = targetStep;
                             updateTimelineVisuals(currentSimulatedStep);
                         }
@@ -1276,7 +1253,7 @@
             }
 
             // Initialize timeline visual for single example
-            updateTimelineVisuals(5);
+            updateTimelineVisuals(0);
 
         });
     </script>
