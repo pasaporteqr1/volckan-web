@@ -35,6 +35,7 @@ These are the production parameters and credentials extracted from the codebase 
   - `soluciones-ciberseguridad.html`
   - `agendar-visita.html`
   - `propuestas-landing-tracking.html`
+  - `propuestas-metroproyectos.html`
 
 ## Isolation & Context Rules
 - Ensure no contexts, assets, configuration, or references from other projects (such as "Pasaporte QR" or other workspaces) leak into this repository.
