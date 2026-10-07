@@ -344,8 +344,9 @@
 
                 <div class="flex items-center gap-2">
                     <button onclick="window.print()" 
-                            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-slate-200 hover:border-brand-purple hover:text-brand-purple text-slate-700 font-bold text-xs uppercase tracking-wider shadow-sm transition-all">
-                        <span class="material-symbols-outlined text-sm">print</span>
+                            title="Descargar o imprimir esta cotización en PDF (2 páginas)"
+                            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 border border-brand-purple/40 hover:border-brand-purple text-brand-purple font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer">
+                        <span class="material-symbols-outlined text-base">picture_as_pdf</span>
                         <span>Descargar PDF (2 Páginas)</span>
                     </button>
                     <a href="https://wa.me/50246741239?text=Hola,%20deseo%20dar%20inicio%20al%20proyecto%20de%20Metroproyectos" target="_blank"
@@ -390,7 +391,7 @@
                     </div>
                     <div>
                         <span class="font-bold text-slate-400 block text-[9px] uppercase">Fecha:</span>
-                        <span class="font-bold text-brand-dark block">24 de Agosto de 2026</span>
+                        <span class="font-bold text-brand-dark block" id="cotizacion-fecha">7 de Octubre de 2026</span>
                     </div>
                     <div>
                         <span class="font-bold text-slate-400 block text-[9px] uppercase">Validez:</span>
@@ -669,6 +670,11 @@
                     Coordinamos de inmediato el cronograma de ejecución y la integración con la identidad de Metroproyectos.
                 </p>
                 <div class="flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="window.print()"
+                       class="px-6 py-3 rounded-full bg-white hover:bg-slate-100 text-brand-dark font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center gap-1.5 cursor-pointer">
+                        <span class="material-symbols-outlined text-base text-brand-purple">picture_as_pdf</span>
+                        Descargar Cotización PDF
+                    </button>
                     <a href="https://wa.me/50246741239?text=Hola,%20deseo%20dar%20inicio%20al%20portal%20web%20de%20Metroproyectos" target="_blank"
                        class="px-6 py-3 rounded-full bg-green-500 hover:bg-green-600 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center gap-1.5">
                         <span class="material-symbols-outlined text-base">chat</span>
@@ -841,9 +847,10 @@
         </div>
     </div>
 
-    <!-- Script de Menú -->
+    <!-- Script de Menú y Fecha Dinámica -->
     <script>
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenuClose = document.getElementById('mobile-menu-close');
             const mobileMenu = document.getElementById('mobile-menu');
 
@@ -857,96 +864,111 @@
             const propuestasIcon = document.getElementById('mobile-propuestas-icon');
 
             function openMenu() {
-                mobileMenu.classList.remove('translate-x-full');
-                document.body.style.overflow = 'hidden';
+                if (mobileMenu) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    document.body.style.overflow = 'hidden';
+                }
             }
 
             function closeMenu() {
-                mobileMenu.classList.add('translate-x-full');
-                document.body.style.overflow = '';
-                // Reset accordion when closing menu
-                solucionesMenu.classList.remove('max-h-[800px]', 'opacity-100');
-                solucionesMenu.classList.add('max-h-0', 'opacity-0');
-                solucionesIcon.classList.remove('rotate-180');
-                solucionesBtn.closest('div.rounded-xl').classList.remove('bg-white', 'shadow-md');
-                solucionesBtn.closest('div.rounded-xl').classList.add('bg-slate-50/80');
-
-                propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
-                propuestasMenu.classList.add('max-h-0', 'opacity-0');
-                propuestasIcon.classList.remove('rotate-180');
-                propuestasBtn.closest('div.rounded-xl').classList.remove('bg-white', 'shadow-md');
-                propuestasBtn.closest('div.rounded-xl').classList.add('bg-slate-50/80');
-            }
-
-            mobileMenuBtn.addEventListener('click', openMenu);
-            mobileMenuClose.addEventListener('click', closeMenu);
-
-            // Close menu when clicking nav links
-            mobileMenu.querySelectorAll('nav a').forEach(link => {
-                link.addEventListener('click', closeMenu);
-            });
-
-            // Accordion toggle for Soluciones
-            solucionesBtn.addEventListener('click', () => {
-                const isOpen = solucionesMenu.classList.contains('max-h-[800px]');
-                const card = solucionesBtn.closest('div.rounded-xl');
-
-                if (isOpen) {
+                if (mobileMenu) {
+                    mobileMenu.classList.add('translate-x-full');
+                    document.body.style.overflow = '';
+                }
+                if (solucionesMenu && solucionesIcon && solucionesBtn) {
                     solucionesMenu.classList.remove('max-h-[800px]', 'opacity-100');
                     solucionesMenu.classList.add('max-h-0', 'opacity-0');
                     solucionesIcon.classList.remove('rotate-180');
-                    card.classList.remove('bg-white', 'shadow-md');
-                    card.classList.add('bg-slate-50/80');
-                } else {
-                    solucionesMenu.classList.remove('max-h-0', 'opacity-0');
-                    solucionesMenu.classList.add('max-h-[800px]', 'opacity-100');
-                    solucionesIcon.classList.add('rotate-180');
-                    card.classList.remove('bg-slate-50/80');
-                    card.classList.add('bg-white', 'shadow-md');
+                    const card = solucionesBtn.closest('div.rounded-xl');
+                    if (card) {
+                        card.classList.remove('bg-white', 'shadow-md');
+                        card.classList.add('bg-slate-50/80');
+                    }
                 }
-            });
-
-            // Accordion toggle for Propuestas
-            propuestasBtn.addEventListener('click', () => {
-                const isOpen = propuestasMenu.classList.contains('max-h-[800px]');
-                const card = propuestasBtn.closest('div.rounded-xl');
-
-                if (isOpen) {
+                if (propuestasMenu && propuestasIcon && propuestasBtn) {
                     propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
                     propuestasMenu.classList.add('max-h-0', 'opacity-0');
                     propuestasIcon.classList.remove('rotate-180');
-                    card.classList.remove('bg-white', 'shadow-md');
-                    card.classList.add('bg-slate-50/80');
-                } else {
-                    propuestasMenu.classList.remove('max-h-0', 'opacity-0');
-                    propuestasMenu.classList.add('max-h-[800px]', 'opacity-100');
-                    propuestasIcon.classList.add('rotate-180');
-                    card.classList.remove('bg-slate-50/80');
-                    card.classList.add('bg-white', 'shadow-md');
+                    const card = propuestasBtn.closest('div.rounded-xl');
+                    if (card) {
+                        card.classList.remove('bg-white', 'shadow-md');
+                        card.classList.add('bg-slate-50/80');
+                    }
                 }
-            });
+            }
 
-            );
-        }
+            if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMenu);
+            if (mobileMenuClose) mobileMenuClose.addEventListener('click', closeMenu);
 
-        const mobilePropuestasBtn = document.getElementById('mobile-propuestas-btn');
-        const mobilePropuestasMenu = document.getElementById('mobile-propuestas-menu');
-        const mobilePropuestasIcon = document.getElementById('mobile-propuestas-icon');
+            if (mobileMenu) {
+                mobileMenu.querySelectorAll('nav a').forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                });
+            }
 
-        if (mobilePropuestasBtn && mobilePropuestasMenu) {
-            mobilePropuestasBtn.addEventListener('click', () => {
-                const isOpen = mobilePropuestasMenu.classList.contains('max-h-[800px]');
-                if (isOpen) {
-                    mobilePropuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
-                    mobilePropuestasMenu.classList.add('max-h-0', 'opacity-0');
-                    mobilePropuestasIcon.classList.remove('rotate-180');
-                } else {
-                    mobilePropuestasMenu.classList.remove('max-h-0', 'opacity-0');
-                    mobilePropuestasMenu.classList.add('max-h-[800px]', 'opacity-100');
-                    mobilePropuestasIcon.classList.add('rotate-180');
-                }
-            });
-        }
+            // Accordion toggle for Soluciones
+            if (solucionesBtn && solucionesMenu && solucionesIcon) {
+                solucionesBtn.addEventListener('click', () => {
+                    const isOpen = solucionesMenu.classList.contains('max-h-[800px]');
+                    const card = solucionesBtn.closest('div.rounded-xl');
+
+                    if (isOpen) {
+                        solucionesMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                        solucionesMenu.classList.add('max-h-0', 'opacity-0');
+                        solucionesIcon.classList.remove('rotate-180');
+                        if (card) {
+                            card.classList.remove('bg-white', 'shadow-md');
+                            card.classList.add('bg-slate-50/80');
+                        }
+                    } else {
+                        solucionesMenu.classList.remove('max-h-0', 'opacity-0');
+                        solucionesMenu.classList.add('max-h-[800px]', 'opacity-100');
+                        solucionesIcon.classList.add('rotate-180');
+                        if (card) {
+                            card.classList.remove('bg-slate-50/80');
+                            card.classList.add('bg-white', 'shadow-md');
+                        }
+                    }
+                });
+            }
+
+            // Accordion toggle for Propuestas
+            if (propuestasBtn && propuestasMenu && propuestasIcon) {
+                propuestasBtn.addEventListener('click', () => {
+                    const isOpen = propuestasMenu.classList.contains('max-h-[800px]');
+                    const card = propuestasBtn.closest('div.rounded-xl');
+
+                    if (isOpen) {
+                        propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                        propuestasMenu.classList.add('max-h-0', 'opacity-0');
+                        propuestasIcon.classList.remove('rotate-180');
+                        if (card) {
+                            card.classList.remove('bg-white', 'shadow-md');
+                            card.classList.add('bg-slate-50/80');
+                        }
+                    } else {
+                        propuestasMenu.classList.remove('max-h-0', 'opacity-0');
+                        propuestasMenu.classList.add('max-h-[800px]', 'opacity-100');
+                        propuestasIcon.classList.add('rotate-180');
+                        if (card) {
+                            card.classList.remove('bg-slate-50/80');
+                            card.classList.add('bg-white', 'shadow-md');
+                        }
+                    }
+                });
+            }
+
+            // Actualización dinámica de fecha de la cotización con la fecha actual
+            const fechaEl = document.getElementById('cotizacion-fecha');
+            if (fechaEl) {
+                const hoy = new Date();
+                const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                const dia = hoy.getDate();
+                const mes = meses[hoy.getMonth()];
+                const anio = hoy.getFullYear();
+                fechaEl.textContent = `${dia} de ${mes} de ${anio}`;
+            }
+        });
     </script>
 </body>
 
