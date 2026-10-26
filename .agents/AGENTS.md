@@ -12,11 +12,21 @@ To ensure we deploy code to the correct repository under the correct credentials
 - **Production Branch**: `main` (pushes to `origin/main` automatically deploy to the live website on GitHub Pages). Always push to `origin/main` immediately after committing any successful change.
 
 ## External Services & Integrations
-These are the production parameters and credentials extracted from the codebase (e.g., from `google-apps-script-codigo.js`):
+These are the production parameters and credentials extracted from the codebase (e.g., from `google-apps-script-codigo.js` and `tienda-standalone/.env`):
 - **Google Calendar ID**: `grupovolckan@gmail.com` (for booking demo slots)
 - **Google Spreadsheet ID**: Defined as `SPREADSHEET_ID` in `google-apps-script-codigo.js`
 - **Telegram Bot Token**: Defined as `TELEGRAM_BOT_TOKEN` in `google-apps-script-codigo.js`
 - **Telegram Chat ID**: Defined as `TELEGRAM_CHAT_ID` in `google-apps-script-codigo.js`
+- **Firebase Project (Volckan Store & Ecosystem)**:
+  - **Project ID**: `volckantienda`
+  - **Auth Domain**: `volckantienda.firebaseapp.com`
+  - **Database URL**: `https://volckantienda-default-rtdb.firebaseio.com`
+  - **Storage Bucket**: `volckantienda.firebasestorage.app`
+  - **Messaging Sender ID**: `715224828581`
+  - **App ID**: `1:715224828581:web:4df40fccb88334591e5b4c`
+  - **Measurement ID**: `G-2X023NMLM2`
+  - **WhatsApp Official Channel**: `+502 4674-1239` (50246741239)
+
 
 ## Code Synchronization & Guidelines
 - **Header, Footer & Menu Updates**: The source of truth for the common sections (Head, Header, Footer, Mobile Menu, and Demo Modal) is `index.html`.

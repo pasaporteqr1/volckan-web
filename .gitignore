@@ -27,3 +27,9 @@ test_mcp.py
 # Agent local configurations (contains credentials)
 .agent/
 
+# Dependencies & Build Artefacts
+node_modules/
+tienda-standalone/node_modules/
+tienda-standalone/dist/
+
+
