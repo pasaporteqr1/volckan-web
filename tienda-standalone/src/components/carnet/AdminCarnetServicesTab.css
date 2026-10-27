@@ -695,17 +695,18 @@
   color: #fca5a5;
 }
 
-/* Modal de Vista Previa Admin */
 .admin-carnet-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(8px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  z-index: 1100;
-  padding: 20px;
+  z-index: 10000;
+  padding: 16px;
+  padding-top: max(16px, env(safe-area-inset-top, 16px));
+  overflow-y: auto;
 }
 
 .admin-carnet-modal {
@@ -715,10 +716,14 @@
   max-width: 520px;
   width: 100%;
   padding: 24px;
+  margin-top: 4px;
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
   gap: 18px;
   align-items: center;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
 }
 
 .admin-modal-header {

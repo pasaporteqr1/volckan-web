@@ -686,10 +686,12 @@
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(8px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  z-index: 1000;
-  padding: 20px;
+  z-index: 10000;
+  padding: 12px;
+  padding-top: max(12px, env(safe-area-inset-top, 12px));
+  overflow-y: auto;
 }
 
 .carnet-success-modal {
@@ -698,14 +700,84 @@
   border-radius: 20px;
   max-width: 580px;
   width: 100%;
-  padding: 30px;
+  padding: 24px 20px;
+  margin-top: 4px;
+  margin-bottom: 24px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-height: 90vh;
+  max-height: calc(100vh - 28px);
   overflow-y: auto;
+}
+
+.modal-top-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid #22c55e;
+  color: #86efac;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.modal-title {
+  font-size: 1.35rem;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  font-weight: 800;
+}
+
+.modal-desc {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin: 0 0 16px 0;
+  line-height: 1.45;
+}
+
+.modal-card-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 8px 0 16px 0;
+}
+
+.modal-download-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.btn-modal-whatsapp {
+  background: #25d366;
+  color: #000000;
+  font-weight: 800;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-modal-whatsapp:hover {
+  background: #22c55e;
+  transform: translateY(-2px);
 }
 
 .success-icon-badge {
