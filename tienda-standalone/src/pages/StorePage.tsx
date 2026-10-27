@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useSearchParams, useParams } from 'react-router-dom';
+import { useSearchParams, useParams, useNavigate } from 'react-router-dom';
 import StoreTopBar from '../components/StoreTopBar';
 import { useStoreConfig } from '../context/StoreConfigContext';
 import { 
@@ -28,6 +28,7 @@ interface CartItem {
 const CART_STORAGE_KEY = 'mercado_cart_v1';
 
 export default function StorePage() {
+  const navigate = useNavigate();
   const { 
     products: allProducts, 
     collections: allCollections, 
@@ -36,7 +37,6 @@ export default function StorePage() {
   } = useStoreConfig();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
-  const [cuentosSubCategory, setCuentosSubCategory] = useState<'todos' | 'colecciones' | 'steam' | 'popol-vuh'>('todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating' | 'sold'>('featured');
   
@@ -73,7 +73,6 @@ export default function StorePage() {
     }
   });
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState<boolean>(false);
-  const [isCuentosAccordionOpen, setIsCuentosAccordionOpen] = useState<boolean>(true);
 
   const toggleSidebar = () => {
     soundEffects.playClick();
@@ -124,8 +123,7 @@ export default function StorePage() {
       if (allCollections.length > 0) {
         const foundCol = allCollections.find(c => c.id === pId || `bundle-${c.id}` === pId);
         if (foundCol) {
-          setSelectedCategory('software');
-          setCuentosSubCategory('colecciones');
+          setSelectedCategory('colecciones');
           setTimeout(() => {
             const el = document.getElementById(`collection-${foundCol.id}`);
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -139,8 +137,7 @@ export default function StorePage() {
     if (cId && allCollections.length > 0) {
       const foundCol = allCollections.find(c => c.id === cId);
       if (foundCol) {
-        setSelectedCategory('software');
-        setCuentosSubCategory('colecciones');
+        setSelectedCategory('colecciones');
         setTimeout(() => {
           const el = document.getElementById(`collection-${foundCol.id}`);
           if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -246,9 +243,7 @@ export default function StorePage() {
       const cat = params.get('cat');
       const sub = params.get('sub');
       if (cat) setSelectedCategory(cat);
-      if (sub && (sub === 'colecciones' || sub === 'steam' || sub === 'popol-vuh' || sub === 'todos')) {
-        setCuentosSubCategory(sub);
-      }
+      if (sub === 'colecciones') setSelectedCategory('colecciones');
     } catch {
       // Ignorar errores de URL
     }
@@ -259,19 +254,19 @@ export default function StorePage() {
     soundEffects.playSuccessFanfare();
     const bundleProduct: MercadoProduct = {
       id: `bundle-${collection.id}`,
-      title: `Colección: ${collection.title} (${books.length} Libros)`,
-      category: 'cuentos',
-      categoryLabel: 'Colección de Libros',
+      title: `Suite: ${collection.title} (${books.length} Módulos/Dispositivos)`,
+      category: 'software',
+      categoryLabel: 'Suite Tecnológica Empresarial',
       price: collection.price,
       originalPrice: collection.originalPrice,
       currency: collection.currency || 'Q',
       rating: collection.rating,
       reviewsCount: collection.reviewsCount,
       soldCount: collection.soldCount,
-      deliveryTime: 'Entrega 24-48 hrs en caja de colección',
+      deliveryTime: 'Implementación y entrega en 24 a 48 hrs',
       description: collection.description,
-      longDescription: `${collection.subtitle}. Incluye los ${books.length} títulos de la saga: ${books.map(b => b.title).join(', ')}.`,
-      badge: collection.badge || 'PACK COLECCIÓN',
+      longDescription: `${collection.subtitle}. Incluye los módulos: ${books.map(b => b.title).join(', ')}.`,
+      badge: collection.badge || 'SUITE INTEGRAL',
       icon: '📦',
       image: collection.image || books[0]?.image,
       gradeOrAge: collection.gradeOrAge,
@@ -408,10 +403,10 @@ export default function StorePage() {
     return categories.find(c => c.id === selectedCategory);
   }, [categories, selectedCategory]);
 
-  const isCollectionsActive = selectedCategory === 'cuentos' && cuentosSubCategory === 'colecciones';
+  const isCollectionsActive = selectedCategory === 'colecciones';
 
   const activeCategoryDisplayLabel = isCollectionsActive
-    ? 'Colecciones de Libros'
+    ? 'Suites & Paquetes Empresariales'
     : (currentCatObj?.label || 'Todo el Catálogo');
 
   const activeCategoryDisplayIcon = isCollectionsActive
@@ -429,15 +424,6 @@ export default function StorePage() {
     // Filtro por categoría
     if (selectedCategory !== 'todos') {
       list = list.filter(p => p.category === selectedCategory);
-    }
-
-    // Filtro por subcategoría específica de Cuentos y Libros
-    if (selectedCategory === 'cuentos') {
-      if (cuentosSubCategory === 'steam') {
-        list = list.filter(p => p.collectionId === 'col-steam');
-      } else if (cuentosSubCategory === 'popol-vuh') {
-        list = list.filter(p => p.collectionId === 'col-popol-vuh');
-      }
     }
 
     // Filtro por insignias / ofertas rápidas
@@ -474,7 +460,7 @@ export default function StorePage() {
     <div className="mercado-amazon-container animate-fade-in">
       {/* TopBar Limpio de la Tienda */}
       <StoreTopBar 
-        slogan="Mercado Oficial · Materiales, Cuentos y Juegos" 
+        slogan="Ecosistema de Software, Licencias, QR y Carnetización Inteligente" 
       />
 
       {/* Cinta Informativa Superior Limpia y Minimalista */}
@@ -501,33 +487,25 @@ export default function StorePage() {
           <div className="mercado-brand-section">
             <h1 className="mercado-store-logo">
               <span className="logo-cart-icon">🛒</span>
-              <span className="logo-text">mercado<small>.lluvia</small></span>
+              <span className="logo-text">volckan<small>.store</small></span>
             </h1>
-            <span className="mercado-tagline">Tienda Educativa & Creativa</span>
+            <span className="mercado-tagline">Ecosistema Tecnológico & Soluciones QR</span>
           </div>
 
           {/* Barra de Búsqueda Minimalista y Despejada */}
           <div className="mercado-amazon-search-box">
             <div className="search-category-select">
               <select 
-                value={selectedCategory === 'cuentos' && cuentosSubCategory === 'colecciones' ? 'colecciones' : selectedCategory}
+                value={selectedCategory}
                 onChange={(e) => {
                   soundEffects.playClick();
-                  const val = e.target.value;
-                  if (val === 'colecciones') {
-                    setSelectedCategory('cuentos');
-                    setCuentosSubCategory('colecciones');
-                  } else {
-                    setSelectedCategory(val);
-                    if (val === 'cuentos') {
-                      setCuentosSubCategory('todos');
-                    }
-                  }
+                  setSelectedCategory(e.target.value);
                 }}
               >
                 <option value="todos">Todos los Departamentos</option>
-                <option value="colecciones">📦 Colecciones de Libros</option>
-                {categories.filter(c => c.id !== 'todos').map(c => (
+                <option value="colecciones">📦 Suites & Paquetes</option>
+                <option value="insumos">🪪 Insumos & Credenciales</option>
+                {categories.filter(c => c.id !== 'todos' && c.id !== 'insumos').map(c => (
                   <option key={c.id} value={c.id}>
                     {c.icon} {c.label}
                   </option>
@@ -631,7 +609,6 @@ export default function StorePage() {
               onClick={() => {
                 soundEffects.playClick();
                 setSelectedCategory('todos');
-                setCuentosSubCategory('todos');
                 setFilterBadge('all');
               }}
             >
@@ -710,10 +687,42 @@ export default function StorePage() {
               {/* Lista Vertical de Departamentos con Acordeón Desplegable */}
               <div className="sidebar-filter-block">
                 <div className="sidebar-categories-vertical-list">
+                  {/* Suites & Paquetes */}
+                  <button
+                    type="button"
+                    className={`sidebar-vertical-cat-item ${selectedCategory === 'colecciones' ? 'active' : ''}`}
+                    onClick={() => {
+                      soundEffects.playClick();
+                      setSelectedCategory('colecciones');
+                    }}
+                  >
+                    <div className="sidebar-cat-left">
+                      <span className="sidebar-cat-emoji">📦</span>
+                      <span className="sidebar-cat-name">Suites & Paquetes</span>
+                    </div>
+                    <span className="sidebar-cat-number">{allCollections.length}</span>
+                  </button>
+
+                  {/* Acceso Directo al Diseñador de Carnets */}
+                  <button
+                    type="button"
+                    className="sidebar-vertical-cat-item"
+                    onClick={() => {
+                      soundEffects.playClick();
+                      navigate('/carnet');
+                    }}
+                    style={{ background: 'rgba(249, 115, 22, 0.12)', border: '1px solid rgba(249, 115, 22, 0.35)' }}
+                  >
+                    <div className="sidebar-cat-left">
+                      <span className="sidebar-cat-emoji">🪪</span>
+                      <span className="sidebar-cat-name" style={{ color: '#fb923c', fontWeight: 800 }}>Servicio de Carnets</span>
+                    </div>
+                    <span className="sidebar-cat-number" style={{ background: '#f97316', color: '#ffffff', fontWeight: 800 }}>NUEVO</span>
+                  </button>
+
                   {categories.map(cat => {
-                    const isSelected = selectedCategory === cat.id && (cat.id !== 'cuentos' || cuentosSubCategory !== 'colecciones');
+                    const isSelected = selectedCategory === cat.id;
                     const count = categoryCounts[cat.id] || 0;
-                    const isCuentos = cat.id === 'cuentos';
 
                     return (
                       <div key={cat.id} className="sidebar-cat-group">
@@ -724,10 +733,6 @@ export default function StorePage() {
                             onClick={() => {
                               soundEffects.playClick();
                               setSelectedCategory(cat.id);
-                              if (isCuentos) {
-                                setCuentosSubCategory('todos');
-                                setIsCuentosAccordionOpen(true);
-                              }
                             }}
                           >
                             <div className="sidebar-cat-left">
@@ -736,57 +741,7 @@ export default function StorePage() {
                             </div>
                             <span className="sidebar-cat-number">{count}</span>
                           </button>
-                          {isCuentos && (
-                            <button
-                              type="button"
-                              className={`sidebar-accordion-toggle-btn ${isCuentosAccordionOpen ? 'expanded' : ''}`}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                soundEffects.playClick();
-                                setIsCuentosAccordionOpen(prev => !prev);
-                              }}
-                              title={isCuentosAccordionOpen ? "Colapsar opciones de libros" : "Desplegar opciones de libros"}
-                              aria-label="Desplegar u ocultar subcategorías de libros"
-                            >
-                              ▾
-                            </button>
-                          )}
                         </div>
-
-                        {/* Acordeón Vertical Desplegable de Cuentos */}
-                        {isCuentos && isCuentosAccordionOpen && (
-                          <div className="sidebar-subitems-vertical animate-slide-down">
-                            <button
-                              type="button"
-                              className={`sidebar-subitem-btn ${selectedCategory === 'cuentos' && cuentosSubCategory === 'colecciones' ? 'active' : ''}`}
-                              onClick={() => {
-                                soundEffects.playClick();
-                                setSelectedCategory('cuentos');
-                                setCuentosSubCategory('colecciones');
-                              }}
-                            >
-                              <span className="subitem-icon">📦</span>
-                              <div className="subitem-text-group">
-                                <span className="subitem-title">Colecciones & Sagas</span>
-                                <span className="subitem-badge-pill">Ahorro</span>
-                              </div>
-                              <span className="subitem-count">{allCollections.length}</span>
-                            </button>
-
-                            <button
-                              type="button"
-                              className={`sidebar-subitem-btn ${selectedCategory === 'cuentos' && cuentosSubCategory === 'todos' ? 'active' : ''}`}
-                              onClick={() => {
-                                soundEffects.playClick();
-                                setSelectedCategory('cuentos');
-                                setCuentosSubCategory('todos');
-                              }}
-                            >
-                              <span className="subitem-icon">📖</span>
-                              <span className="subitem-title">Todos los Libros ({categoryCounts['cuentos'] || 9})</span>
-                            </button>
-                          </div>
-                        )}
                       </div>
                     );
                   })}
@@ -916,45 +871,70 @@ export default function StorePage() {
               </div>
             </div>
 
-            {/* Si está en la categoría Cuentos y Libros: Barra de Subcategorías */}
-            {selectedCategory === 'cuentos' && (
-              <div className="kindle-cuentos-subnav">
-                <div className="kindle-subnav-left">
-                  <span className="kindle-subnav-title">
-                    <span className="kindle-icon">📖</span> Catálogo de Libros
-                  </span>
-                  <button
-                    type="button"
-                    className={`kindle-subnav-pill ${cuentosSubCategory === 'todos' ? 'active' : ''}`}
-                    onClick={() => {
-                      soundEffects.playClick();
-                      setCuentosSubCategory('todos');
-                    }}
-                  >
-                    📚 Todos los Libros ({allProducts.filter(p => p.category === 'cuentos').length})
-                  </button>
-                  <button
-                    type="button"
-                    className={`kindle-subnav-pill subnav-collections-pill ${cuentosSubCategory === 'colecciones' ? 'active' : ''}`}
-                    onClick={() => {
-                      soundEffects.playClick();
-                      setCuentosSubCategory('colecciones');
-                    }}
-                  >
-                    <span className="sparkle">✨</span> 📦 Colecciones ({allCollections.length})
-                  </button>
+            {/* Si está en Insumos & Credenciales (o Todos), mostrar el banner interactivo de Carnetización */}
+            {(selectedCategory === 'insumos' || selectedCategory === 'todos') && (
+              <div className="volckan-carnet-service-banner animate-fade-in" style={{
+                background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 50%, rgba(127, 29, 29, 0.4) 100%)',
+                border: '1.5px solid rgba(249, 115, 22, 0.4)',
+                borderRadius: '16px',
+                padding: '24px 28px',
+                marginBottom: '24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '24px',
+                flexWrap: 'wrap',
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.45)'
+              }}>
+                <div style={{ flex: 1, minWidth: '280px' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(249, 115, 22, 0.15)', border: '1px solid rgba(249, 115, 22, 0.4)', color: '#fb923c', padding: '3px 10px', borderRadius: '20px', fontSize: '0.74rem', fontWeight: 800, marginBottom: '8px' }}>
+                    <span>🪪</span> SERVICIO DE CARNETIZACIÓN INTELIGENTE
+                  </div>
+                  <h3 style={{ margin: '0 0 6px 0', fontSize: '1.35rem', color: '#ffffff', fontFamily: 'Outfit, sans-serif' }}>
+                    Emisión de Carnets PVC Calibre 30 & Digital QR
+                  </h3>
+                  <p style={{ margin: 0, fontSize: '0.88rem', color: '#cbd5e1', lineHeight: '1.5', maxWidth: '620px' }}>
+                    Permite a tus colaboradores, estudiantes o clientes subir sus datos y fotografía con un simple enlace. Diseña y emite carnets imprimibles en PVC de grado bancario con código QR de acceso o emergencia SOS.
+                  </p>
+                  <div style={{ display: 'flex', gap: '14px', marginTop: '12px', flexWrap: 'wrap', fontSize: '0.78rem' }}>
+                    <span style={{ color: '#34d399', fontWeight: 600 }}>✓ Formato CR80 bancario</span>
+                    <span style={{ color: '#38bdf8', fontWeight: 600 }}>✓ QR dinámico escaneable</span>
+                    <span style={{ color: '#fb923c', fontWeight: 600 }}>✓ Pases digitales al instante</span>
+                  </div>
                 </div>
 
-                <div className="kindle-subnav-right">
-                  <span className="kindle-badge-format-info">
-                    ✨ Ediciones Físicas & Digitales · Literatura Infantil
-                  </span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-start' }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundEffects.playClick();
+                      navigate('/carnet');
+                    }}
+                    style={{
+                      background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                      color: '#ffffff',
+                      border: 'none',
+                      padding: '12px 22px',
+                      borderRadius: '10px',
+                      fontWeight: 800,
+                      fontSize: '0.95rem',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      boxShadow: '0 4px 16px rgba(249, 115, 22, 0.4)'
+                    }}
+                  >
+                    <span>🎨 Abrir Formulario & Diseñador</span>
+                    <span>➔</span>
+                  </button>
+                  <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Enlace compartible para tus usuarios</span>
                 </div>
               </div>
             )}
 
-            {/* Si se seleccionó la subcategoría Colecciones dentro de Cuentos */}
-            {selectedCategory === 'cuentos' && cuentosSubCategory === 'colecciones' ? (
+            {/* Si se seleccionó la subcategoría Colecciones / Suites */}
+            {selectedCategory === 'colecciones' ? (
               <KindleCollectionsView
                 allProducts={allProducts}
                 collections={allCollections}
@@ -968,58 +948,12 @@ export default function StorePage() {
                 onShareCollection={handleOpenShareCollection}
                 whatsappPhone={mercadoConfig.whatsappPhone || CONTACT.whatsappPhone}
                 onGoBackToCatalog={() => {
+                  soundEffects.playClick();
                   setSelectedCategory('todos');
-                  setCuentosSubCategory('todos');
                 }}
               />
-            ) : selectedCategory === 'cuentos' ? (
-              /* Libros en Formato Amazon Kindle (Portadas 3D) */
-              filteredProducts.length > 0 ? (
-                <div className="kindle-books-grid">
-                  {filteredProducts.map(product => (
-                    <KindleBookCard
-                      key={product.id}
-                      product={product}
-                      isOnlySoldAsPack={isOnlySoldAsPack(product)}
-                      onAddToCart={handleAddToCart}
-                      onQuickView={(p) => {
-                        soundEffects.playClick();
-                        setSelectedProduct(p);
-                        setDetailQuantity(1);
-                      }}
-                      onShare={handleOpenShareProduct}
-                      onSelectCollection={(colId) => {
-                        soundEffects.playClick();
-                        setCuentosSubCategory('colecciones');
-                        setTimeout(() => {
-                          const el = document.getElementById(`collection-${colId}`);
-                          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }, 120);
-                      }}
-                      getSingleProductWhatsAppUrl={getSingleProductWhatsAppUrl}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="amazon-empty-results">
-                  <span className="empty-icon-box">🔍</span>
-                  <h3>No se encontraron libros</h3>
-                  <p>Intenta con otros términos de búsqueda o cambia la subcategoría seleccionada.</p>
-                  <button 
-                    type="button" 
-                    className="btn-reset-filters"
-                    onClick={() => {
-                      setCuentosSubCategory('todos');
-                      setSearchQuery('');
-                      setFilterBadge('all');
-                    }}
-                  >
-                    Ver Todos los Libros
-                  </button>
-                </div>
-              )
             ) : (
-              /* Demás categorías de la tienda: Juegos, Personajes, etc. (Mantienen diseño retail estándar) */
+              /* Catálogo general de productos del Ecosistema */
               filteredProducts.length > 0 ? (
                 <div className="amazon-products-grid">
                   {filteredProducts.map(product => {
@@ -1134,8 +1068,7 @@ export default function StorePage() {
                                 onClick={() => {
                                   soundEffects.playClick();
                                   if (product.collectionId) {
-                                    setSelectedCategory('cuentos');
-                                    setCuentosSubCategory('colecciones');
+                                    setSelectedCategory('colecciones');
                                     setTimeout(() => {
                                       const el = document.getElementById(`collection-${product.collectionId}`);
                                       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1481,8 +1414,8 @@ export default function StorePage() {
                   <div className="modal-badge-item">
                     <span>🛡️</span>
                     <div>
-                      <strong>Garantía Editorial</strong>
-                      <p>Material pedagógico certificado</p>
+                      <strong>Garantía Volckan</strong>
+                      <p>Calidad certificada y soporte técnico</p>
                     </div>
                   </div>
                 </div>
@@ -1503,11 +1436,57 @@ export default function StorePage() {
                   <span className="modal-score">{selectedProduct.rating.toFixed(1)}</span>
                   <span className="modal-reviews-link">{selectedProduct.reviewsCount} calificaciones</span>
                   {selectedProduct.soldCount && (
-                    <span className="modal-sold-pill">+{selectedProduct.soldCount} comprados</span>
+                    <span className="modal-sold-pill">+{selectedProduct.soldCount} implementados</span>
                   )}
                 </div>
 
                 <hr className="modal-divider" />
+
+                {/* Si es de la categoría Insumos: Acceso al Diseñador de Carnets */}
+                {selectedProduct.category === 'insumos' && (
+                  <div style={{
+                    background: 'rgba(249, 115, 22, 0.1)',
+                    border: '1.5px solid rgba(249, 115, 22, 0.35)',
+                    borderRadius: '12px',
+                    padding: '12px 16px',
+                    marginBottom: '14px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '12px',
+                    flexWrap: 'wrap'
+                  }}>
+                    <div>
+                      <strong style={{ display: 'block', color: '#fb923c', fontSize: '0.88rem' }}>
+                        🪪 Servicio de Carnetización en Línea
+                      </strong>
+                      <span style={{ fontSize: '0.78rem', color: '#cbd5e1' }}>
+                        Diseña tu carnet con foto y QR o comparte el formulario por link.
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        soundEffects.playClick();
+                        setSelectedProduct(null);
+                        navigate('/carnet');
+                      }}
+                      style={{
+                        background: '#f97316',
+                        color: '#ffffff',
+                        border: 'none',
+                        padding: '8px 14px',
+                        borderRadius: '8px',
+                        fontWeight: 700,
+                        fontSize: '0.82rem',
+                        cursor: 'pointer',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      Abrir Formulario de Carnets ➔
+                    </button>
+                  </div>
+                )}
 
                 {/* Precios y Oferta */}
                 <div className="modal-pricing-box">
@@ -1526,10 +1505,10 @@ export default function StorePage() {
                         fontSize: '0.84rem',
                         width: 'fit-content'
                       }}>
-                        🔒 Venta Exclusiva en Colección Completa
+                        🔒 Venta Exclusiva en Suite Completa
                       </span>
                       <p style={{ margin: 0, fontSize: '0.92rem', color: 'var(--text-secondary, #64748b)', lineHeight: '1.4' }}>
-                        Este libro no se comercializa de forma individual. Está disponible exclusivamente dentro del estuche o paquete conmemorativo de su colección.
+                        Este módulo o dispositivo está disponible exclusivamente como parte de su suite integral.
                       </p>
                     </div>
                   ) : (
@@ -1543,7 +1522,7 @@ export default function StorePage() {
                           </span>
                         )}
                       </div>
-                      <span className="modal-tax-note">Impuestos incluidos · Factura disponible</span>
+                      <span className="modal-tax-note">Impuestos incluidos · Facturación FEL disponible</span>
                     </>
                   )}
                 </div>
@@ -1557,18 +1536,18 @@ export default function StorePage() {
                       {colImg && (
                         <div className="modal-col-cover-thumb">
                           <img src={colImg} alt={selectedProduct.collectionName} className="modal-col-thumb-img" />
-                          <span className="modal-col-pack-label">PACK</span>
+                          <span className="modal-col-pack-label">SUITE</span>
                         </div>
                       )}
                       <div className="col-card-text">
-                        <span className="col-tag-small">📦 COLECCIÓN EDITORIAL</span>
+                        <span className="col-tag-small">📦 SUITE EMPRESARIAL</span>
                         <h4 className="col-name-h4">
-                          Este libro forma parte de: <strong>{selectedProduct.collectionName}</strong>
+                          Parte de: <strong>{selectedProduct.collectionName}</strong>
                         </h4>
                         <p className="col-expl-p">
                           {isOnlySoldAsPack(selectedProduct)
-                            ? 'Los títulos de esta edición forman una obra integral y se entregan reunidos en su pack conmemorativo.'
-                            : 'Puedes adquirir la colección completa con descuento de pack especial o explorar los otros títulos que la componen.'}
+                            ? 'Este producto forma parte de una solución integral y se implementa dentro de su paquete empresarial.'
+                            : 'Puedes adquirir la solución completa con descuento de suite o cotizar módulos individuales.'}
                         </p>
                       </div>
                       <button
@@ -1578,15 +1557,14 @@ export default function StorePage() {
                           soundEffects.playClick();
                           const targetCol = selectedProduct.collectionId;
                           setSelectedProduct(null);
-                          setSelectedCategory('cuentos');
-                          setCuentosSubCategory('colecciones');
+                          setSelectedCategory('colecciones');
                           setTimeout(() => {
                             const el = document.getElementById(`collection-${targetCol}`);
                             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                           }, 150);
                         }}
                       >
-                        <span>Ver Colección Completa ▸</span>
+                        Ver Suite ➔
                       </button>
                     </div>
                   );
@@ -1823,10 +1801,50 @@ export default function StorePage() {
             {/* Contenido Scrollable Vertical de Categorías */}
             <div className="mobile-drawer-body">
               <div className="mobile-drawer-cat-list">
+                {/* Servicio de Carnets acceso directo móvil */}
+                <button
+                  type="button"
+                  className="mobile-drawer-cat-btn highlight-carnet"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(230, 57, 70, 0.15), rgba(99, 102, 241, 0.15))',
+                    border: '1px solid rgba(230, 57, 70, 0.35)',
+                    marginBottom: '8px'
+                  }}
+                  onClick={() => {
+                    soundEffects.playClick();
+                    setIsMobileDrawerOpen(false);
+                    navigate('/carnet');
+                  }}
+                >
+                  <span className="mobile-cat-emoji">🆔</span>
+                  <div className="mobile-cat-info">
+                    <span className="mobile-cat-name" style={{ color: '#ff6b6b', fontWeight: 700 }}>Servicio de Carnets</span>
+                  </div>
+                  <span className="mobile-cat-count" style={{ background: '#e63946', color: '#fff', fontSize: '0.65rem', padding: '2px 6px', borderRadius: '4px' }}>NUEVO</span>
+                </button>
+
+                {/* Colecciones / Suites */}
+                {allCollections.length > 0 && (
+                  <button
+                    type="button"
+                    className={`mobile-drawer-cat-btn ${isCollectionsActive ? 'active' : ''}`}
+                    onClick={() => {
+                      soundEffects.playClick();
+                      setSelectedCategory('colecciones');
+                      setIsMobileDrawerOpen(false);
+                    }}
+                  >
+                    <span className="mobile-cat-emoji">📦</span>
+                    <div className="mobile-cat-info">
+                      <span className="mobile-cat-name">Suites & Paquetes</span>
+                    </div>
+                    <span className="mobile-cat-count">{allCollections.length}</span>
+                  </button>
+                )}
+
                 {categories.map(cat => {
-                  const isSelected = selectedCategory === cat.id && (cat.id !== 'cuentos' || cuentosSubCategory !== 'colecciones');
+                  const isSelected = selectedCategory === cat.id;
                   const count = categoryCounts[cat.id] || 0;
-                  const isCuentos = cat.id === 'cuentos';
 
                   return (
                     <div key={cat.id} className="mobile-drawer-group">
@@ -1837,12 +1855,7 @@ export default function StorePage() {
                           onClick={() => {
                             soundEffects.playClick();
                             setSelectedCategory(cat.id);
-                            if (isCuentos) {
-                              setCuentosSubCategory('todos');
-                              setIsCuentosAccordionOpen(true);
-                            } else {
-                              setIsMobileDrawerOpen(false);
-                            }
+                            setIsMobileDrawerOpen(false);
                           }}
                         >
                           <span className="mobile-cat-emoji">{cat.icon}</span>
@@ -1851,57 +1864,7 @@ export default function StorePage() {
                           </div>
                           <span className="mobile-cat-count">{count}</span>
                         </button>
-                        {isCuentos && (
-                          <button
-                            type="button"
-                            className={`mobile-cat-expand-btn ${isCuentosAccordionOpen ? 'expanded' : ''}`}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              soundEffects.playClick();
-                              setIsCuentosAccordionOpen(prev => !prev);
-                            }}
-                            aria-label="Alternar subcategorías de libros"
-                          >
-                            ▾
-                          </button>
-                        )}
                       </div>
-
-                      {/* Subacordeón Móvil para Cuentos y Colecciones */}
-                      {isCuentos && isCuentosAccordionOpen && (
-                        <div className="mobile-drawer-sublist animate-slide-down">
-                          <button
-                            type="button"
-                            className={`mobile-drawer-subbtn ${selectedCategory === 'cuentos' && cuentosSubCategory === 'colecciones' ? 'active' : ''}`}
-                            onClick={() => {
-                              soundEffects.playClick();
-                              setSelectedCategory('cuentos');
-                              setCuentosSubCategory('colecciones');
-                              setIsMobileDrawerOpen(false);
-                            }}
-                          >
-                            <span className="sub-emoji">📦</span>
-                            <div className="sub-text-wrapper">
-                              <span className="sub-name">Colecciones & Sagas</span>
-                              <span className="sub-badge-tag">Packs Ahorro</span>
-                            </div>
-                            <span className="sub-count">{allCollections.length}</span>
-                          </button>
-                          <button
-                            type="button"
-                            className={`mobile-drawer-subbtn ${selectedCategory === 'cuentos' && cuentosSubCategory === 'todos' ? 'active' : ''}`}
-                            onClick={() => {
-                              soundEffects.playClick();
-                              setSelectedCategory('cuentos');
-                              setCuentosSubCategory('todos');
-                              setIsMobileDrawerOpen(false);
-                            }}
-                          >
-                            <span className="sub-emoji">📖</span>
-                            <span className="sub-name">Todos los Libros ({categoryCounts['cuentos'] || 9})</span>
-                          </button>
-                        </div>
-                      )}
                     </div>
                   );
                 })}

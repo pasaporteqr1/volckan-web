@@ -96,20 +96,20 @@ export const KindleBookCover: React.FC<KindleBookCoverProps> = ({
 
                 {/* Pie de portada */}
                 <div className="kindle-cover-footer-bar">
-                  <span className="kindle-badge-format">EDICIÓN ILUSTRADA</span>
-                  <span className="kindle-maya-motif">◈ ◈ ◈</span>
+                  <span className="kindle-badge-format">TECNOLOGÍA PROFESIONAL</span>
+                  <span className="kindle-maya-motif">◈ VOLCKAN ◈</span>
                 </div>
               </div>
 
-              {/* Brillo de papel / barniz uv */}
+              {/* Brillo de acabado superficial */}
               <div className="kindle-cover-glare-overlay" aria-hidden="true" />
             </div>
           )}
 
-          {/* Insignia Echar un vistazo / Look Inside en hover */}
+          {/* Insignia Ficha Técnica en hover */}
           {showLookInsideBadge && (
             <div className="kindle-look-inside-badge">
-              <span>👁️ Echar un vistazo</span>
+              <span>👁️ Ver Ficha Técnica</span>
             </div>
           )}
         </div>

@@ -31,7 +31,7 @@ export const KindleBookCard: React.FC<KindleBookCardProps> = ({
       {/* Top Badges de la Tarjeta */}
       <div className="kindle-card-badges-row">
         {product.badge && (
-          <span className={`kindle-badge-pill ${product.badge.includes('POPOL VUH') ? 'badge-myth' : product.badge.includes('MÁS VENDIDO') ? 'badge-bestseller' : 'badge-general'}`}>
+          <span className={`kindle-badge-pill ${product.badge.includes('MÁS VENDIDO') ? 'badge-bestseller' : 'badge-general'}`}>
             {product.badge}
           </span>
         )}
@@ -40,7 +40,7 @@ export const KindleBookCard: React.FC<KindleBookCardProps> = ({
         )}
       </div>
 
-      {/* Contenedor del Libro 3D (Kindle Format) */}
+      {/* Contenedor del Producto 3D */}
       <div className="kindle-card-book-stage">
         <KindleBookCover 
           product={product} 
@@ -49,39 +49,39 @@ export const KindleBookCard: React.FC<KindleBookCardProps> = ({
         />
       </div>
 
-      {/* Cuerpo de Metadatos Estilo Amazon Kindle Store */}
+      {/* Cuerpo de Metadatos */}
       <div className="kindle-card-info-pane">
         {/* Formato y Colección */}
         <div className="kindle-format-strip">
           <span className="kindle-format-text">
-            {product.formatType || '📖 Edición Física & Digital'}
+            {product.formatType || '⚡ Solución Tecnológica Oficial'}
           </span>
-          {product.pages && (
+          {Boolean(product.pages && product.pages > 0) && (
             <span className="kindle-pages-count">· {product.pages} págs.</span>
           )}
         </div>
 
-        {/* Título del libro (Tipografía Bookerly / Literaria) */}
+        {/* Título */}
         <h3 
           className="kindle-book-title"
           onClick={() => onQuickView(product)}
-          title={`Ver sinopsis de ${product.title}`}
+          title={`Ver detalles de ${product.title}`}
         >
           {product.title}
         </h3>
 
-        {/* Autor */}
+        {/* Autor / Desarrollador */}
         <div className="kindle-author-byline">
-          <span>de <strong>{product.author || 'Tecno Volckánica'}</strong> (Desarrollador)</span>
+          <span>de <strong>{product.author || 'Tecno Volckánica'}</strong> (Desarrollador Oficial)</span>
         </div>
 
-        {/* Pertenencia a Colección (Subcategoría interactiva) */}
+        {/* Pertenencia a Colección / Suite */}
         {product.collectionName && product.collectionId && (
           <button 
             type="button" 
             className="kindle-collection-link-btn"
             onClick={() => onSelectCollection?.(product.collectionId!)}
-            title={`Explorar todos los libros de ${product.collectionName}`}
+            title={`Explorar todos los módulos de ${product.collectionName}`}
           >
             <span className="col-icon">📦</span>
             <span className="col-text">Parte de: <em>{product.collectionName}</em></span>
@@ -89,7 +89,7 @@ export const KindleBookCard: React.FC<KindleBookCardProps> = ({
           </button>
         )}
 
-        {/* Estrellas y Reseñas Kindle (Color Naranja Dorado) */}
+        {/* Estrellas y Reseñas */}
         <div className="kindle-rating-row">
           <div className="kindle-stars-display" aria-label={`Calificación: ${product.rating} de 5 estrellas`}>
             {'★'.repeat(Math.floor(product.rating))}
@@ -98,13 +98,13 @@ export const KindleBookCard: React.FC<KindleBookCardProps> = ({
           <span className="kindle-rating-val">{product.rating.toFixed(1)}</span>
           <span className="kindle-reviews-num">({product.reviewsCount})</span>
           {product.soldCount && (
-            <span className="kindle-sales-tag">+{product.soldCount} lecturas</span>
+            <span className="kindle-sales-tag">+{product.soldCount} implementaciones</span>
           )}
         </div>
 
-        {/* Grado / CNB */}
+        {/* Sector / Dirigido a */}
         <div className="kindle-grade-tag">
-          <span className="grade-icon">🎯</span>
+          <span className="grade-icon">🏢</span>
           <span>{product.gradeOrAge}</span>
         </div>
 

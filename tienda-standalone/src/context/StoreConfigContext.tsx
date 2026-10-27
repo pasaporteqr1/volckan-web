@@ -9,6 +9,8 @@ import {
   type BookCollection,
   type MercadoCategory
 } from '../data/mercadoData';
+import { DEFAULT_CARNET_FORM_CONFIG } from '../data/carnetThemes';
+import type { CarnetServiceFormConfig, CarnetSubmission } from '../types/carnet';
 import { CONTACT } from '../constants';
 
 export interface StoreAnnouncementConfig {
@@ -24,18 +26,24 @@ interface StoreConfigContextProps {
   collections: BookCollection[];
   categories: MercadoCategory[];
   storeConfig: StoreAnnouncementConfig;
+  carnetConfig: CarnetServiceFormConfig;
+  carnetSubmissions: CarnetSubmission[];
   loading: boolean;
   saveProducts: (products: MercadoProduct[]) => Promise<void>;
   saveCollections: (collections: BookCollection[]) => Promise<void>;
   saveCategories: (categories: MercadoCategory[]) => Promise<void>;
   saveStoreConfig: (config: Partial<StoreAnnouncementConfig>) => Promise<void>;
+  saveCarnetConfig: (config: Partial<CarnetServiceFormConfig>) => Promise<void>;
+  saveCarnetSubmission: (submission: CarnetSubmission) => Promise<void>;
+  updateCarnetSubmissionStatus: (id: string, status: 'pendiente' | 'aprobado' | 'impreso') => Promise<void>;
+  deleteCarnetSubmission: (id: string) => Promise<void>;
 }
 
 const DEFAULT_STORE_CONFIG: StoreAnnouncementConfig = {
-  announcement: "Ecosistema Tecnológico Volckan · Implementación, Licencias y Soporte Técnico Especializado",
+  announcement: "Ecosistema Tecnológico Volckan · Software SaaS, Carnetización Inteligente y Soluciones QR",
   whatsappPhone: CONTACT.whatsappPhone,
-  bannerTitle: "Volckan Store & Ecosistema de Apps",
-  bannerSubtitle: "Adquiere licencias de software SaaS, módulos POS, hardware de control de acceso y servicios de automatización",
+  bannerTitle: "Volckan Store & Ecosistema de Soluciones",
+  bannerSubtitle: "Licencias de software, módulos POS, carnetización con QR de emergencia y hardware para empresas e instituciones",
   showPromoStrip: true
 };
 
@@ -78,9 +86,27 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   });
 
+  const [carnetConfig, setCarnetConfig] = useState<CarnetServiceFormConfig>(() => {
+    try {
+      const saved = localStorage.getItem('store_carnet_config_cache');
+      return saved ? { ...DEFAULT_CARNET_FORM_CONFIG, ...JSON.parse(saved) } : DEFAULT_CARNET_FORM_CONFIG;
+    } catch {
+      return DEFAULT_CARNET_FORM_CONFIG;
+    }
+  });
+
+  const [carnetSubmissions, setCarnetSubmissions] = useState<CarnetSubmission[]>(() => {
+    try {
+      const saved = localStorage.getItem('store_carnet_submissions_cache');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
   const [loading, setLoading] = useState<boolean>(Boolean(db));
 
-  // Sincronización en tiempo real con Firestore si db está conectado
+  // Sincronización en tiempo real con Firestore
   useEffect(() => {
     if (!db) {
       setLoading(false);
@@ -145,6 +171,33 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       });
       unsubs.push(unsubPortal);
 
+      // 5. Configuración de Carnets
+      const unsubCarnetConfig = onSnapshot(doc(db, 'config', 'servicios_carnets'), (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.data();
+          if (data?.carnetConfig) {
+            setCarnetConfig(prev => {
+              const updated = { ...prev, ...data.carnetConfig };
+              try { localStorage.setItem('store_carnet_config_cache', JSON.stringify(updated)); } catch {}
+              return updated;
+            });
+          }
+        }
+      }, (err) => console.warn('[StoreConfig] Error leyendo servicios_carnets:', err));
+      unsubs.push(unsubCarnetConfig);
+
+      // 6. Lista de Envíos de Carnets
+      const unsubCarnetSubs = onSnapshot(doc(db, 'data', 'carnet_submissions'), (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.data();
+          if (Array.isArray(data?.submissions)) {
+            setCarnetSubmissions(data.submissions);
+            try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(data.submissions)); } catch {}
+          }
+        }
+      }, (err) => console.warn('[StoreConfig] Error leyendo carnet_submissions:', err));
+      unsubs.push(unsubCarnetSubs);
+
     } catch (err) {
       console.warn('[StoreConfig] Excepción al suscribir a Firestore:', err);
       setLoading(false);
@@ -192,17 +245,63 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
+  const saveCarnetConfig = async (newConfig: Partial<CarnetServiceFormConfig>) => {
+    const updated: CarnetServiceFormConfig = { ...carnetConfig, ...newConfig, updatedAt: new Date().toISOString() };
+    setCarnetConfig(updated);
+    try { localStorage.setItem('store_carnet_config_cache', JSON.stringify(updated)); } catch {}
+    if (db) {
+      const docRef = doc(db, 'config', 'servicios_carnets');
+      await setDoc(docRef, { carnetConfig: updated, updatedAt: new Date().toISOString() }, { merge: true });
+    }
+  };
+
+  const saveCarnetSubmission = async (submission: CarnetSubmission) => {
+    const updated = [submission, ...carnetSubmissions.filter(s => s.id !== submission.id)];
+    setCarnetSubmissions(updated);
+    try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(updated)); } catch {}
+    if (db) {
+      const docRef = doc(db, 'data', 'carnet_submissions');
+      await setDoc(docRef, { submissions: updated, updatedAt: new Date().toISOString() }, { merge: true });
+    }
+  };
+
+  const updateCarnetSubmissionStatus = async (id: string, status: 'pendiente' | 'aprobado' | 'impreso') => {
+    const updated = carnetSubmissions.map(s => s.id === id ? { ...s, status } : s);
+    setCarnetSubmissions(updated);
+    try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(updated)); } catch {}
+    if (db) {
+      const docRef = doc(db, 'data', 'carnet_submissions');
+      await setDoc(docRef, { submissions: updated, updatedAt: new Date().toISOString() }, { merge: true });
+    }
+  };
+
+  const deleteCarnetSubmission = async (id: string) => {
+    const updated = carnetSubmissions.filter(s => s.id !== id);
+    setCarnetSubmissions(updated);
+    try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(updated)); } catch {}
+    if (db) {
+      const docRef = doc(db, 'data', 'carnet_submissions');
+      await setDoc(docRef, { submissions: updated, updatedAt: new Date().toISOString() }, { merge: true });
+    }
+  };
+
   return (
     <StoreConfigContext.Provider value={{
       products,
       collections,
       categories,
       storeConfig,
+      carnetConfig,
+      carnetSubmissions,
       loading,
       saveProducts,
       saveCollections,
       saveCategories,
-      saveStoreConfig
+      saveStoreConfig,
+      saveCarnetConfig,
+      saveCarnetSubmission,
+      updateCarnetSubmissionStatus,
+      deleteCarnetSubmission
     }}>
       {children}
     </StoreConfigContext.Provider>

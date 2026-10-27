@@ -12,6 +12,7 @@ import {
 import { useStoreConfig, type StoreAnnouncementConfig } from '../context/StoreConfigContext';
 import { uploadImageToStorage, shrinkBase64Image } from '../utils/imageUpload';
 import { soundEffects } from '../utils/soundEffects';
+import AdminCarnetServicesTab from '../components/carnet/AdminCarnetServicesTab';
 import './AdminStorePage.css';
 
 interface LocalStoreState {
@@ -30,48 +31,48 @@ const createEmptyDepartment = (currentLength: number): MercadoCategory => ({
 });
 
 const POPULAR_EMOJIS = [
-  '📚', '📖', '🎲', '♟️', '🎭', '🎴', '🃏', '🚀', 
-  '🔬', '🎨', '🖍️', '🌽', '🧭', '🧪', '🧬', '⚡', 
-  '🪐', '👑', '🦖', '🎒', '🧩', '📝', '✂️', '🏺'
+  '🪪', '💻', '🖨️', '🏷️', '⚙️', '🔑', '🛡️', '⚡', 
+  '📊', '🌐', '📡', '📱', '💳', '🏢', '🏫', '🔒', 
+  '🎯', '🚀', '⭐', '📦', '👔', '💡', '🏷️', '🛠️'
 ];
 
 const BADGE_PRESETS = [
   'MÁS VENDIDO',
-  'OFERTA RELÁMPAGO',
-  'EXCLUSIVO EDITORIAL',
-  'RECOMENDADO DOCENTE',
-  'TENDENCIA',
+  'CALIDAD BANCARIA',
+  'SUITE POPULAR',
   'NUEVO LANZAMIENTO',
+  'OFERTA EMPRESARIAL',
+  'LICENCIA PERPETUA',
   'EDICIÓN LIMITADA'
 ];
 
 const createEmptyProduct = (): MercadoProduct => ({
   id: `prod-${Date.now()}`,
   title: '',
-  category: 'cuentos',
-  categoryLabel: 'Cuentos y Libros',
-  price: 50.00,
-  originalPrice: 65.00,
+  category: 'insumos',
+  categoryLabel: 'Insumos & Credenciales',
+  price: 950.00,
+  originalPrice: 1200.00,
   currency: 'Q',
   rating: 5.0,
   reviewsCount: 1,
   soldCount: 10,
-  deliveryTime: 'Entrega 24-48 hrs en toda Guatemala',
+  deliveryTime: 'Entrega en 3 a 5 días hábiles',
   badge: 'NUEVO LANZAMIENTO',
-  icon: '📚',
-  gradeOrAge: 'Primaria & Básicos',
+  icon: '🪪',
+  gradeOrAge: 'Empresas, Colegios & Comercios',
   author: 'Tecno Volckánica',
-  pages: 64,
-  formatType: 'Kindle eBook & Tapa Dura',
+  pages: 0,
+  formatType: 'Credencial PVC / Dispositivo',
   coverTheme: 'amber',
   description: '',
   longDescription: '',
   features: [
-    'Material pedagógico certificado',
-    'Integración curricular para el aula'
+    'Material de alta resistencia y grado bancario',
+    'Compatibilidad con el ecosistema Volckan'
   ],
   contents: [
-    '1 Set completo con guía de uso'
+    '1 Kit completo con garantía y soporte'
   ],
   featured: true,
   inStock: true
@@ -80,22 +81,22 @@ const createEmptyProduct = (): MercadoProduct => ({
 const createEmptyCollection = (): BookCollection => ({
   id: `col-${Date.now()}`,
   title: '',
-  subtitle: 'Colección de 5 Obras Maestras Ilustradas',
-  badge: 'PACK COLECCIÓN COMPLETA',
+  subtitle: 'Suite Integral de Hardware y Software',
+  badge: 'SUITE EMPRESARIAL',
   description: '',
-  price: 440.00,
-  originalPrice: 550.00,
+  price: 3500.00,
+  originalPrice: 4200.00,
   currency: 'Q',
-  gradeOrAge: 'Primaria & Ciclo Básico',
+  gradeOrAge: 'Empresas, Colegios & Comercios',
   rating: 5.0,
   reviewsCount: 1,
   soldCount: 0,
   themeColor: '#0284c7',
   accentGradient: 'linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0284c7 100%)',
   features: [
-    '5 Libros en pasta dura a todo color de alta definición',
-    'Glosario pedagógico y mapa cosmológico incluido',
-    'Caja conmemorativa de colección'
+    'Licencia de software SaaS con soporte anual',
+    'Hardware certificado de alto rendimiento',
+    'Capacitación e instalación incluida'
   ],
   onlySoldAsPack: true,
   includedBooks: [
@@ -149,6 +150,7 @@ export default function AdminStorePage() {
     collections: initialCollections, 
     categories: initialCategories, 
     storeConfig: initialStoreConfig,
+    carnetSubmissions,
     saveProducts,
     saveCollections,
     saveCategories,
@@ -234,16 +236,16 @@ export default function AdminStorePage() {
     return DEFAULT_MERCADO_DEPARTMENTS;
   }, [localConfig.mercadoCategories]);
 
-  // Subpestaña activa (Productos vs Colecciones vs Departamentos) con persistencia en recarga
-  const [adminSubTab, setAdminSubTab] = useState<'productos' | 'colecciones' | 'departamentos'>(() => {
+  // Subpestaña activa (Productos vs Colecciones vs Departamentos vs Servicios en Línea) con persistencia en recarga
+  const [adminSubTab, setAdminSubTab] = useState<'productos' | 'colecciones' | 'departamentos' | 'servicios-online'>(() => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
       const subtabFromUrl = urlParams.get('subtab');
-      if (subtabFromUrl === 'productos' || subtabFromUrl === 'colecciones' || subtabFromUrl === 'departamentos') {
+      if (subtabFromUrl === 'productos' || subtabFromUrl === 'colecciones' || subtabFromUrl === 'departamentos' || subtabFromUrl === 'servicios-online') {
         return subtabFromUrl;
       }
       const saved = localStorage.getItem('admin_tienda_subtab');
-      if (saved === 'productos' || saved === 'colecciones' || saved === 'departamentos') {
+      if (saved === 'productos' || saved === 'colecciones' || saved === 'departamentos' || saved === 'servicios-online') {
         return saved;
       }
     } catch {
@@ -969,13 +971,13 @@ export default function AdminStorePage() {
           </div>
           <div className="admin-mercado-heading">
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-              <h3 style={{ margin: 0 }}>Administrador de Mercado (Tienda Oficial)</h3>
-              <span style={{ fontSize: '0.74rem', fontFamily: 'monospace', fontWeight: 700, background: 'rgba(20, 184, 166, 0.2)', color: '#2dd4bf', padding: '2px 8px', borderRadius: '4px' }}>
-                TND-LIBROS-C01 · MKT-BOLETOS-C01
+              <h3 style={{ margin: 0 }}>Administrador del Ecosistema Volckan Store</h3>
+              <span style={{ fontSize: '0.74rem', fontFamily: 'monospace', fontWeight: 700, background: 'rgba(249, 115, 22, 0.2)', color: '#fb923c', padding: '2px 8px', borderRadius: '4px' }}>
+                VOLCKAN-ECOSISTEMA · CARNETS-V2
               </span>
             </div>
             <p>
-              Gestiona el catálogo completo de productos educativos: cuentos, juegos de mesa, personajes, tarjetas, proyectos STEAM y útiles.
+              Gestiona el catálogo de software SaaS, hardware de acceso, insumos de credencialización y el servicio de carnets inteligentes.
             </p>
           </div>
         </div>
@@ -1016,25 +1018,34 @@ export default function AdminStorePage() {
             {saving ? '⏳ Guardando en Nube...' : '💾 Guardar Cambios'}
           </button>
 
-          {adminSubTab === 'colecciones' ? (
+          {adminSubTab === 'servicios-online' ? (
+            <button
+              type="button"
+              className="btn-mercado-primary"
+              onClick={() => window.open(window.location.origin + window.location.pathname.replace(/\/admin\/?$/, '') + '#/carnet', '_blank')}
+              title="Abrir formulario público de carnets en una nueva pestaña"
+            >
+              👁️ Abrir Formulario en Vivo ↗
+            </button>
+          ) : adminSubTab === 'colecciones' ? (
             <>
               {collections.length > 0 && (
                 <button 
                   type="button" 
                   className="btn-mercado-clear"
                   onClick={handleClearAllCollections}
-                  title="Vaciar todas las colecciones"
+                  title="Vaciar todas las suites"
                 >
-                  🗑️ Vaciar Colecciones
+                  🗑️ Vaciar Suites
                 </button>
               )}
               <button 
                 type="button" 
                 className="btn-mercado-primary"
                 onClick={handleOpenNewCollection}
-                title="Crear una nueva colección o paquete de libros"
+                title="Crear una nueva suite o paquete comercial"
               >
-                ＋ Nueva Colección / Pack (5 Libros)
+                ＋ Nueva Suite / Paquete
               </button>
             </>
           ) : adminSubTab === 'departamentos' ? (
@@ -1043,7 +1054,7 @@ export default function AdminStorePage() {
                 type="button" 
                 className="btn-mercado-secondary"
                 onClick={handleRestoreDefaultDepartments}
-                title="Restaurar los 6 departamentos pedagógicos base"
+                title="Restaurar los departamentos base"
               >
                 ♻️ Restaurar Departamentos Base
               </button>
@@ -1146,7 +1157,7 @@ export default function AdminStorePage() {
           }}
         >
           <span className="subtab-icon">📦</span>
-          <span>Colecciones y Packs (5 Libros)</span>
+          <span>Suites & Paquetes</span>
           <span className="subtab-count-badge">{collections.length}</span>
         </button>
         <button
@@ -1161,16 +1172,30 @@ export default function AdminStorePage() {
           <span>Departamentos & Categorías</span>
           <span className="subtab-count-badge">{departments.length}</span>
         </button>
+        <button
+          type="button"
+          className={`admin-tienda-subtab-btn ${adminSubTab === 'servicios-online' ? 'active' : ''}`}
+          onClick={() => {
+            soundEffects.playClick();
+            setAdminSubTab('servicios-online');
+          }}
+        >
+          <span className="subtab-icon">🪪</span>
+          <span>Servicios en Línea & Carnets</span>
+          <span className="subtab-count-badge" style={{ background: '#f97316' }}>{carnetSubmissions.length}</span>
+        </button>
       </div>
 
-      {adminSubTab === 'colecciones' ? (
+      {adminSubTab === 'servicios-online' ? (
+        <AdminCarnetServicesTab />
+      ) : adminSubTab === 'colecciones' ? (
         <div className="admin-collections-section animate-fade-in">
           {/* Banner explicativo de Colecciones */}
           <div style={{ background: 'rgba(2, 132, 199, 0.12)', border: '1px solid rgba(2, 132, 199, 0.35)', borderRadius: '14px', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: '16px', color: '#e0f2fe', marginTop: '16px' }}>
             <span style={{ fontSize: '2rem' }}>📦</span>
             <div style={{ fontSize: '0.88rem', lineHeight: '1.45' }}>
               <strong style={{ display: 'block', color: '#38bdf8', fontSize: '0.98rem', marginBottom: '3px' }}>
-                Gestor de Colecciones Pedagógicas y Sagas Literarias
+                Gestor de Suites Tecnológicas y Paquetes de Soluciones
               </strong>
               Aquí puedes crear paquetes de libros completos. Si los 5 libros no se venden por separado, la opción 
               <strong style={{ color: '#fbbf24' }}> "Venta exclusiva en pack"</strong> está activada para que los visitantes puedan revisar la ficha técnica y portada de cada uno de los 5 libros en la estantería 3D, pero únicamente puedan adquirir la colección completa por un solo precio de compra.

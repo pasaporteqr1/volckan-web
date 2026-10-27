@@ -1,0 +1,530 @@
+/* ==========================================================================
+   CARNET CARD CR80 PREVIEW & 3D FLIP STYLES
+   Standard CR80 Credit Card Ratio: 85.6mm x 53.98mm (~1.5857:1)
+   ========================================================================== */
+
+.carnet-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+/* Escena de Volteo 3D */
+.carnet-flip-scene {
+  width: 100%;
+  perspective: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carnet-flip-card {
+  width: 100%;
+  aspect-ratio: 1.586 / 1;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+  cursor: pointer;
+}
+
+.carnet-flip-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* Cara Frontal y Cara Trasera */
+.carnet-card-cr80 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+.carnet-card-cr80.front-face {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.carnet-card-cr80.back-face {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+/* Hint flotante de volteo */
+.carnet-flip-hint {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+
+.carnet-flip-card:hover .carnet-flip-hint {
+  opacity: 1;
+}
+
+/* Interior del Carnet */
+.carnet-card-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 10px 14px;
+  box-sizing: border-box;
+  position: relative;
+  justify-content: space-between;
+}
+
+/* Cabecera del Carnet */
+.carnet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  margin: -10px -14px 6px -14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+.carnet-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.carnet-header-logo {
+  height: 28px;
+  max-width: 70px;
+  object-fit: contain;
+}
+
+.carnet-header-logo-placeholder {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.carnet-brand-titles {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.carnet-institution-name {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.carnet-subtag {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.carnet-chip-icon {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.smart-chip-grid {
+  width: 14px;
+  height: 11px;
+  border: 1px solid;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.chip-line {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.nfc-symbol {
+  font-size: 0.65rem;
+}
+
+/* Cuerpo del Frente */
+.carnet-body-front {
+  display: grid;
+  grid-template-columns: 86px 1fr;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+}
+
+.carnet-photo-frame {
+  width: 86px;
+  height: 104px;
+  border-radius: 8px;
+  border: 2px solid;
+  position: relative;
+  overflow: hidden;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carnet-user-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carnet-user-photo-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.empty-photo-icon {
+  font-size: 1.8rem;
+  opacity: 0.7;
+}
+
+.empty-photo-text {
+  font-size: 0.62rem;
+  font-weight: 600;
+}
+
+.photo-verified-seal {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  background: #10b981;
+  color: white;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55rem;
+  font-weight: 900;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Detalles del Usuario */
+.carnet-user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.carnet-role-pill {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.carnet-user-name {
+  font-size: 0.96rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 2px 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.carnet-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+}
+
+.carnet-meta-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.66rem;
+}
+
+.carnet-meta-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.carnet-meta-val {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* Pie del Frente */
+.carnet-footer-front {
+  margin: 4px -14px -10px -14px;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.carnet-security-strip {
+  height: 2px;
+  background: linear-gradient(90deg, #38bdf8 0%, #a855f7 50%, #f97316 100%);
+  margin-bottom: 2px;
+}
+
+.carnet-footer-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.52rem;
+  font-family: monospace;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ==================== REVERSO ==================== */
+.carnet-magstripe {
+  height: 18px;
+  background: #09090b;
+  margin: -10px -14px 6px -14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.carnet-body-back {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+}
+
+.carnet-qr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.carnet-qr-box {
+  width: 90px;
+  height: 90px;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 4px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.carnet-qr-code-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.carnet-qr-caption {
+  font-size: 0.52rem;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+.carnet-emergency-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.65rem;
+}
+
+.carnet-blood-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid;
+  align-self: flex-start;
+  font-size: 0.64rem;
+}
+
+.blood-val {
+  font-size: 0.72rem;
+}
+
+.carnet-emergency-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.em-label {
+  font-size: 0.55rem;
+  font-weight: 700;
+}
+
+.em-val {
+  font-weight: 600;
+}
+
+.notes-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.6rem;
+}
+
+/* Pie del Reverso */
+.carnet-footer-back {
+  margin: 4px -14px -10px -14px;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.carnet-legal-notice {
+  font-size: 0.48rem;
+  line-height: 1.25;
+  margin: 0 0 2px 0;
+  text-align: justify;
+  opacity: 0.85;
+}
+
+.carnet-back-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.52rem;
+  font-family: monospace;
+  font-weight: 700;
+}
+
+/* Controles de vista de carnet */
+.carnet-preview-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.btn-carnet-side-toggle {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #cbd5e1;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-carnet-side-toggle.active {
+  background: #f97316;
+  border-color: #ea580c;
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(249, 115, 22, 0.35);
+}
+
+/* Vista de ambos lados a la vez (para impresión o exportación) */
+.carnet-both-sides-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.carnet-single-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.carnet-side-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.carnet-both-sides-wrapper .carnet-card-cr80 {
+  position: relative;
+  aspect-ratio: 1.586 / 1;
+  transform: none !important;
+}
+
+/* Responsividad para móviles pequeños */
+@media (max-width: 420px) {
+  .carnet-body-front {
+    grid-template-columns: 74px 1fr;
+    gap: 8px;
+  }
+  .carnet-photo-frame {
+    width: 74px;
+    height: 90px;
+  }
+  .carnet-user-name {
+    font-size: 0.85rem;
+  }
+  .carnet-body-back {
+    grid-template-columns: 80px 1fr;
+    gap: 8px;
+  }
+  .carnet-qr-box {
+    width: 76px;
+    height: 76px;
+  }
+}
