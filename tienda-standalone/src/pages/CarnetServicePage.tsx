@@ -555,24 +555,6 @@ export default function CarnetServicePage() {
             <div className="modal-download-actions">
               <button
                 type="button"
-                className="btn-modal-download png"
-                onClick={handleDownloadDigitalPng}
-                disabled={exportingType !== null}
-              >
-                {exportingType === 'png' ? '⏳ Exportando...' : '📥 Descargar Pase Digital (PNG)'}
-              </button>
-
-              <button
-                type="button"
-                className="btn-modal-download pdf"
-                onClick={handleDownloadPdf}
-                disabled={exportingType !== null}
-              >
-                {exportingType === 'pdf' ? '⏳ Generando...' : '🖨️ Descargar Carnet Imprimible (PDF CR80)'}
-              </button>
-
-              <button
-                type="button"
                 className="btn-modal-whatsapp"
                 onClick={handleShareToWhatsApp}
               >
@@ -583,9 +565,17 @@ export default function CarnetServicePage() {
             <button
               type="button"
               className="btn-modal-close"
-              onClick={() => setIsSuccessModalOpen(false)}
+              onClick={() => {
+                setIsSuccessModalOpen(false);
+                setFullName('');
+                setIdNumber('');
+                setPhoneDigits('');
+                setInstitutionRepresented('');
+                setPhotoUrl('');
+                setPhotoFile(null);
+              }}
             >
-              Cerrar Ventana
+              Aceptar y Cerrar
             </button>
           </div>
         </div>
