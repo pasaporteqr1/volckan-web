@@ -9,6 +9,9 @@ interface PhotoCropModalProps {
   onCancel: () => void;
 }
 
+// Calidad de compresión WebP fija y optimizada por defecto (alta nitidez y peso liviano ~40-60 KB)
+const DEFAULT_WEBP_QUALITY = 0.85;
+
 export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
   isOpen,
   imageSrc,
@@ -20,20 +23,20 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [qualityLevel, setQualityLevel] = useState<number>(0.82); // 82% WebP recomendado
   const [showFaceGuide, setShowFaceGuide] = useState<boolean>(true);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [naturalSize, setNaturalSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
-  // Dimensiones del viewport de encuadre (Aspect Ratio 3:4 estándar de credencial comercial)
+  // Dimensiones estándar del visor de encuadre (Aspect Ratio 3:4)
   const CROP_WIDTH = 300;
   const CROP_HEIGHT = 400;
   const OUTPUT_WIDTH = 450;
   const OUTPUT_HEIGHT = 600;
 
-  // Reset al abrir nueva imagen
+  // Reset de estados al abrir una nueva fotografía
   useEffect(() => {
     if (isOpen) {
       setScale(1);
@@ -41,6 +44,24 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
       setPosition({ x: 0, y: 0 });
     }
   }, [isOpen, imageSrc]);
+
+  // Al cargar la imagen, calculamos las dimensiones naturales y el factor de escala base
+  const handleImageLoaded = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    const nw = img.naturalWidth || 600;
+    const nh = img.naturalHeight || 800;
+    setNaturalSize({ width: nw, height: nh });
+    setScale(1);
+    setPosition({ x: 0, y: 0 });
+  };
+
+  // Factor de escala base para que la imagen cubra exactamente el visor de 300x400
+  const baseScale = naturalSize.width > 0 && naturalSize.height > 0
+    ? Math.max(CROP_WIDTH / naturalSize.width, CROP_HEIGHT / naturalSize.height)
+    : 1;
+
+  const displayWidth = naturalSize.width > 0 ? naturalSize.width * baseScale : CROP_WIDTH;
+  const displayHeight = naturalSize.height > 0 ? naturalSize.height * baseScale : CROP_HEIGHT;
 
   // Manejo de arrastre (Pan) con Mouse y Touch
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -88,9 +109,9 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
     e.preventDefault();
     const zoomStep = 0.08;
     if (e.deltaY < 0) {
-      setScale(prev => Math.min(prev + zoomStep, 3.5));
+      setScale(prev => Math.min(prev + zoomStep, 3.0));
     } else {
-      setScale(prev => Math.max(prev - zoomStep, 0.6));
+      setScale(prev => Math.max(prev - zoomStep, 0.8));
     }
   };
 
@@ -111,7 +132,7 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
     setRotation(prev => (prev + 90) % 360);
   };
 
-  // Centrar y reajustar
+  // Centrar y reajustar posición
   const handleReset = () => {
     soundEffects.playClick();
     setScale(1);
@@ -119,7 +140,7 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
     setPosition({ x: 0, y: 0 });
   };
 
-  // Generar recorte definitivo a resolución fija (450x600 px) con compresión WebP
+  // Generar recorte definitivo a resolución fija (450x600 px) con compresión WebP automática
   const handleApplyCrop = async () => {
     if (!imageRef.current || isProcessing) return;
     setIsProcessing(true);
@@ -136,27 +157,27 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
         throw new Error('No se pudo inicializar canvas 2D');
       }
 
-      // Suavizado de imagen de alta calidad (Bicubic / High quality)
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
 
-      // Fondo oscuro neutro para márgenes si quedara algún espacio
+      // Fondo oscuro
       ctx.fillStyle = '#0f172a';
       ctx.fillRect(0, 0, OUTPUT_WIDTH, OUTPUT_HEIGHT);
 
-      // Calcular factor de escala entre viewport de pantalla y output
+      // Factor de ampliación entre el visor visual y el canvas de salida
       const factor = OUTPUT_WIDTH / CROP_WIDTH;
 
       ctx.save();
-      // Trasladar al centro del canvas de salida
+      // Trasladar al centro
       ctx.translate(OUTPUT_WIDTH / 2, OUTPUT_HEIGHT / 2);
-
-      // Aplicar posición y escala del usuario
       ctx.translate(position.x * factor, position.y * factor);
       ctx.rotate((rotation * Math.PI) / 180);
-      ctx.scale(scale * factor, scale * factor);
 
-      // Dibujar imagen centrada en su propio eje
+      // Escala combinada exacta: baseScale * userScale * factor
+      const combinedScale = baseScale * scale * factor;
+      ctx.scale(combinedScale, combinedScale);
+
+      // Dibujar imagen centrada con su resolución nativa completa
       ctx.drawImage(
         img,
         -img.naturalWidth / 2,
@@ -166,7 +187,7 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
       );
       ctx.restore();
 
-      // Convertir a WebP Blob con la calidad seleccionada
+      // Convertir a WebP Blob con calidad óptima por defecto
       canvas.toBlob(
         (blob) => {
           if (!blob) {
@@ -175,7 +196,7 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
             return;
           }
 
-          const dataUrl = canvas.toDataURL('image/webp', qualityLevel);
+          const dataUrl = canvas.toDataURL('image/webp', DEFAULT_WEBP_QUALITY);
           const file = new File(
             [blob],
             `foto_credencial_${Date.now()}.webp`,
@@ -189,11 +210,11 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
             file,
             width: OUTPUT_WIDTH,
             height: OUTPUT_HEIGHT,
-            quality: qualityLevel
+            quality: DEFAULT_WEBP_QUALITY
           });
         },
         'image/webp',
-        qualityLevel
+        DEFAULT_WEBP_QUALITY
       );
     } catch (err) {
       console.error('Error aplicando recorte:', err);
@@ -212,8 +233,8 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
           <div className="crop-title-group">
             <span className="crop-header-icon">✂️</span>
             <div>
-              <h3>Encuadre y Recorte Profesional de Fotografía</h3>
-              <p>Arrastra para mover, usa el zoom para encuadrar tu rostro centrado y ajusta la calidad.</p>
+              <h3>Encuadre y Recorte de Fotografía</h3>
+              <p>Arrastra para mover y ajusta el zoom para que tu rostro quede dentro del óvalo guía.</p>
             </div>
           </div>
           <button
@@ -238,20 +259,25 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
             onTouchEnd={handleTouchEnd}
             onWheel={handleWheel}
           >
-            {/* Imagen manipulable */}
+            {/* Imagen manipulable adaptada al visor */}
             <img
               ref={imageRef}
               src={imageSrc}
               alt="Encuadre"
               className="crop-source-image"
               draggable={false}
+              onLoad={handleImageLoaded}
               style={{
+                width: `${displayWidth}px`,
+                height: `${displayHeight}px`,
+                maxWidth: 'none',
+                maxHeight: 'none',
                 transform: `translate(${position.x}px, ${position.y}px) rotate(${rotation}deg) scale(${scale})`,
                 cursor: isDragging ? 'grabbing' : 'grab'
               }}
             />
 
-            {/* Cuadrícula de tercios fotográfica */}
+            {/* Guía de tercios fotográficos */}
             <div className="crop-grid-overlay">
               <span className="grid-h line-1" />
               <span className="grid-h line-2" />
@@ -259,42 +285,38 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
               <span className="grid-v line-2" />
             </div>
 
-            {/* Guía facial biométrica ovalada tipo red social */}
+            {/* Silueta de Guía Facial */}
             {showFaceGuide && (
               <div className="crop-face-guide">
-                <div className="face-oval" />
-                <span className="face-guide-hint">Centra tu rostro dentro del óvalo</span>
+                <div className="face-oval">
+                  <div className="eye-line-guide" />
+                </div>
+                <span className="face-guide-hint">Centra tus ojos y rostro aquí</span>
               </div>
             )}
-
-            {/* Medidas estándar */}
-            <div className="crop-aspect-badge">
-              <span>Proporción Estándar CR80 (3:4)</span>
-            </div>
           </div>
         </div>
 
-        {/* Barra de Controles y Herramientas */}
-        <div className="crop-tools-panel">
-          {/* Control de Zoom */}
+        {/* Barra de Controles y Zoom */}
+        <div className="crop-controls-panel">
           <div className="crop-control-row">
             <label className="crop-control-label">
-              <span>🔍 Zoom / Escala:</span>
+              <span>🔍 Zoom / Tamaño:</span>
               <strong>{Math.round(scale * 100)}%</strong>
             </label>
             <div className="crop-slider-group">
               <button
                 type="button"
                 className="btn-scale-step"
-                onClick={() => setScale(prev => Math.max(prev - 0.1, 0.6))}
+                onClick={() => setScale(prev => Math.max(prev - 0.1, 0.8))}
                 title="Reducir zoom"
               >
                 −
               </button>
               <input
                 type="range"
-                min="0.6"
-                max="3.0"
+                min="0.8"
+                max="2.8"
                 step="0.05"
                 value={scale}
                 onChange={(e) => setScale(parseFloat(e.target.value))}
@@ -303,7 +325,7 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
               <button
                 type="button"
                 className="btn-scale-step"
-                onClick={() => setScale(prev => Math.min(prev + 0.1, 3.0))}
+                onClick={() => setScale(prev => Math.min(prev + 0.1, 2.8))}
                 title="Aumentar zoom"
               >
                 +
@@ -338,34 +360,6 @@ export const PhotoCropModal: React.FC<PhotoCropModalProps> = ({
               >
                 👤 {showFaceGuide ? 'Ocultar Guía' : 'Ver Guía Rostro'}
               </button>
-            </div>
-
-            {/* Selector de Calidad y Compresión */}
-            <div className="crop-quality-selector">
-              <label>Compresión & Calidad WebP:</label>
-              <div className="quality-chips">
-                <button
-                  type="button"
-                  className={`quality-chip ${qualityLevel === 0.90 ? 'active' : ''}`}
-                  onClick={() => setQualityLevel(0.90)}
-                >
-                  HD (90%) <small>~50 KB</small>
-                </button>
-                <button
-                  type="button"
-                  className={`quality-chip ${qualityLevel === 0.82 ? 'active' : ''}`}
-                  onClick={() => setQualityLevel(0.82)}
-                >
-                  ⭐ Óptima (82%) <small>~35 KB</small>
-                </button>
-                <button
-                  type="button"
-                  className={`quality-chip ${qualityLevel === 0.68 ? 'active' : ''}`}
-                  onClick={() => setQualityLevel(0.68)}
-                >
-                  Rápida (68%) <small>~20 KB</small>
-                </button>
-              </div>
             </div>
           </div>
         </div>

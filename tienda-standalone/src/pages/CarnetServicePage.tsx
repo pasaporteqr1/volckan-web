@@ -5,7 +5,7 @@ import CarnetCardPreview, { type CarnetCardData, formatDpiString, formatPhoneStr
 import PhotoCropModal from '../components/carnet/PhotoCropModal';
 import { CARNET_THEMES } from '../data/carnetThemes';
 import { useStoreConfig } from '../context/StoreConfigContext';
-import { uploadCarnetPhoto } from '../utils/imageUpload';
+import { uploadCarnetPhoto, compressImageWebP, blobToDataURL } from '../utils/imageUpload';
 import { 
   exportSingleCarnetPdf, 
   captureElementToPng, 
@@ -78,6 +78,14 @@ export default function CarnetServicePage() {
     return CARNET_THEMES.find(t => t.id === selectedThemeId) || CARNET_THEMES[0];
   }, [selectedThemeId]);
 
+  // Formato para el input de DPI mientras el usuario escribe (evita ceros atascados)
+  const formatDpiInputDisplay = (digits: string): string => {
+    if (!digits) return '';
+    if (digits.length <= 4) return digits;
+    if (digits.length <= 9) return `${digits.slice(0, 4)} ${digits.slice(4)}`;
+    return `${digits.slice(0, 4)} ${digits.slice(4, 9)} ${digits.slice(9, 13)}`;
+  };
+
   // Manejo estricto de DPI con exactamente 13 dígitos
   const cleanDpi = idNumber.replace(/\D/g, '');
   const isDpiValid = cleanDpi.length === 13;
@@ -114,8 +122,8 @@ export default function CarnetServicePage() {
     };
   }, [fullName, cleanDpi, fullPhoneString, institutionRepresented, departmentMunicipality, photoUrl, carnetConfig]);
 
-  // Manejo de selección inicial de foto: abre automáticamente el modal de encuadre social
-  const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Manejo de selección de foto: optimiza fotos pesadas de teléfonos antes de encuadrar
+  const handlePhotoSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -124,16 +132,26 @@ export default function CarnetServicePage() {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      const src = evt.target?.result as string;
-      if (src) {
-        setRawImageSrcForCrop(src);
-        setIsCropModalOpen(true);
-        soundEffects.playClick();
-      }
-    };
-    reader.readAsDataURL(file);
+    try {
+      // Pre-escala imágenes masivas de cámaras móviles (>1200px) a un tamaño óptimo
+      const optimizedBlob = await compressImageWebP(file, 1200, 1200, 0.90);
+      const dataUrl = await blobToDataURL(optimizedBlob);
+      setRawImageSrcForCrop(dataUrl);
+      setIsCropModalOpen(true);
+      soundEffects.playClick();
+    } catch (err) {
+      console.warn('Fallback a lectura directa:', err);
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const src = evt.target?.result as string;
+        if (src) {
+          setRawImageSrcForCrop(src);
+          setIsCropModalOpen(true);
+          soundEffects.playClick();
+        }
+      };
+      reader.readAsDataURL(file);
+    }
 
     e.target.value = '';
   };
@@ -400,10 +418,11 @@ export default function CarnetServicePage() {
                 </label>
                 <input
                   type="text"
+                  inputMode="numeric"
                   required
                   maxLength={15}
                   placeholder="Ej: 2948 12345 0101"
-                  value={formatDpiString(cleanDpi)}
+                  value={formatDpiInputDisplay(cleanDpi)}
                   onChange={handleDpiChange}
                   className={`carnet-input ${cleanDpi.length > 0 && !isDpiValid ? 'input-warning' : ''}`}
                 />
