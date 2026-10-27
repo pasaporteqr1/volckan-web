@@ -89,7 +89,11 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [carnetConfig, setCarnetConfig] = useState<CarnetServiceFormConfig>(() => {
     try {
       const saved = localStorage.getItem('store_carnet_config_cache');
-      return saved ? { ...DEFAULT_CARNET_FORM_CONFIG, ...JSON.parse(saved) } : DEFAULT_CARNET_FORM_CONFIG;
+      const parsed = saved ? { ...DEFAULT_CARNET_FORM_CONFIG, ...JSON.parse(saved) } : DEFAULT_CARNET_FORM_CONFIG;
+      if (!parsed.institutionName || parsed.institutionName.toLowerCase().includes('summit')) {
+        parsed.institutionName = 'Mesa de Competitividad de Quetzaltenango';
+      }
+      return parsed;
     } catch {
       return DEFAULT_CARNET_FORM_CONFIG;
     }

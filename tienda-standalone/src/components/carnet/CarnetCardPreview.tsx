@@ -180,7 +180,7 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
           )}
           <div className="carnet-brand-titles">
             <span className="carnet-institution-name" style={{ color: theme.textColor }}>
-              {data.institutionName || 'CONGRESO & NETWORKING'}
+              {data.institutionName || 'Mesa de Competitividad de Quetzaltenango'}
             </span>
             <span className="carnet-subtag" style={{ color: theme.accentColor }}>
               ACREDITACIÓN OFICIAL & CREDENCIAL

@@ -106,8 +106,9 @@ export default function CarnetServicePage() {
       phone: fullPhoneString,
       institutionRepresented: institutionRepresented.trim() || undefined,
       departmentMunicipality: departmentMunicipality.trim() || undefined,
-      photoUrl: photoUrl || undefined,
-      institutionName: carnetConfig.institutionName || 'VOLCKAN SUMMIT & NETWORKING',
+      institutionName: (carnetConfig.institutionName && !carnetConfig.institutionName.toLowerCase().includes('summit'))
+        ? carnetConfig.institutionName 
+        : 'Mesa de Competitividad de Quetzaltenango',
       logoUrl: carnetConfig.logoUrl || undefined,
       qrToken: `VOLCKAN-PASS-${cleanDpi || 'PASS'}-${Date.now().toString().slice(-4)}`
     };
@@ -302,7 +303,7 @@ export default function CarnetServicePage() {
           </p>
           <div className="carnet-institution-pill">
             <span className="inst-icon">🏛️</span>
-            <span>Entidad Emisora: <strong>{carnetConfig.institutionName || 'Volckan Technologies'}</strong></span>
+            <span>Entidad Emisora: <strong>{(carnetConfig.institutionName && !carnetConfig.institutionName.toLowerCase().includes('summit')) ? carnetConfig.institutionName : 'Mesa de Competitividad de Quetzaltenango'}</strong></span>
           </div>
         </div>
       </section>
