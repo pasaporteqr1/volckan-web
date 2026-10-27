@@ -370,6 +370,58 @@
   color: #94a3b8;
 }
 
+.submissions-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-export-csv {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.btn-export-csv:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn-export-csv:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-export-json {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-export-json:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-export-json:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .btn-batch-print {
   background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
   color: white;
@@ -380,11 +432,16 @@
   font-size: 0.88rem;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
-  transition: transform 0.2s;
+  transition: transform 0.2s, opacity 0.2s;
 }
 
 .btn-batch-print:hover:not(:disabled) {
   transform: translateY(-2px);
+}
+
+.btn-batch-print:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .submissions-filters-bar {

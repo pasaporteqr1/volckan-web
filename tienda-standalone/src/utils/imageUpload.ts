@@ -91,6 +91,31 @@ export async function uploadImageToStorage(file: File, folder = 'mercado-assets'
   return res.url;
 }
 
+export async function uploadCarnetPhoto(
+  file: File,
+  submissionId: string
+): Promise<{ url: string; storagePath?: string; isBase64: boolean }> {
+  // Comprimir imagen a resolución ideal para carnets CR80 (500x650 px a 80% calidad WebP)
+  const compressedBlob = await compressImageWebP(file, 500, 650, 0.80);
+
+  if (storage) {
+    try {
+      const storagePath = `carnet_photos/photo_${submissionId}.webp`;
+      const fileRef = ref(storage, storagePath);
+      await uploadBytes(fileRef, compressedBlob, { contentType: 'image/webp' });
+      const downloadUrl = await getDownloadURL(fileRef);
+      return { url: downloadUrl, storagePath, isBase64: false };
+    } catch (storageErr) {
+      console.warn('[ImageUpload] Error en Storage para foto de carnet, aplicando fallback Base64 WebP:', storageErr);
+    }
+  }
+
+  // Fallback seguro a Base64 WebP de alta compresión
+  const compactBlob = await compressImageWebP(file, 400, 500, 0.68);
+  const dataUrl = await blobToDataURL(compactBlob);
+  return { url: dataUrl, isBase64: true };
+}
+
 export async function shrinkBase64Image(
   base64Str: string,
   maxWidth = 400,
@@ -99,6 +124,10 @@ export async function shrinkBase64Image(
 ): Promise<string> {
   if (!base64Str || !base64Str.startsWith('data:')) return base64Str;
 
+  // Si maxHeight viene como valor menor a 1 (ej. por pasar calidad como segundo argumento por error)
+  const effectiveMaxHeight = (typeof maxHeight === 'number' && maxHeight > 10) ? maxHeight : 550;
+  const effectiveQuality = (typeof quality === 'number' && quality > 0 && quality <= 1) ? quality : 0.70;
+
   return new Promise((resolve) => {
     const img = new Image();
     img.src = base64Str;
@@ -106,13 +135,13 @@ export async function shrinkBase64Image(
       let width = img.width;
       let height = img.height;
 
-      if (width > maxWidth || height > maxHeight) {
-        if (width / height > maxWidth / maxHeight) {
+      if (width > maxWidth || height > effectiveMaxHeight) {
+        if (width / height > maxWidth / effectiveMaxHeight) {
           height = Math.round((height * maxWidth) / width);
           width = maxWidth;
         } else {
-          width = Math.round((width * maxHeight) / height);
-          height = maxHeight;
+          width = Math.round((width * effectiveMaxHeight) / height);
+          height = effectiveMaxHeight;
         }
       }
 
@@ -123,9 +152,10 @@ export async function shrinkBase64Image(
       if (!ctx) return resolve(base64Str);
 
       ctx.drawImage(img, 0, 0, width, height);
-      const compressed = canvas.toDataURL('image/webp', quality);
+      const compressed = canvas.toDataURL('image/webp', effectiveQuality);
       resolve(compressed);
     };
     img.onerror = () => resolve(base64Str);
   });
 }
+

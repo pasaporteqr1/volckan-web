@@ -4,7 +4,7 @@ import StoreTopBar from '../components/StoreTopBar';
 import CarnetCardPreview, { type CarnetCardData } from '../components/carnet/CarnetCardPreview';
 import { CARNET_THEMES } from '../data/carnetThemes';
 import { useStoreConfig } from '../context/StoreConfigContext';
-import { shrinkBase64Image } from '../utils/imageUpload';
+import { shrinkBase64Image, uploadCarnetPhoto } from '../utils/imageUpload';
 import { 
   exportSingleCarnetPdf, 
   captureElementToPng, 
@@ -46,6 +46,7 @@ export default function CarnetServicePage() {
   const [expirationDate, setExpirationDate] = useState<string>('2025 - 2026');
   const [allergiesOrNotes, setAllergiesOrNotes] = useState<string>('');
   const [photoUrl, setPhotoUrl] = useState<string>('');
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [selectedThemeId, setSelectedThemeId] = useState<string>(carnetConfig.defaultThemeId || 'volckan-cyber');
 
   // Estados de proceso y éxito
@@ -79,7 +80,7 @@ export default function CarnetServicePage() {
     };
   }, [fullName, idNumber, role, gradeOrArea, bloodType, emergencyContact, emergencyPhone, expirationDate, allergiesOrNotes, photoUrl, carnetConfig]);
 
-  // Manejo de carga de foto con compresión automática
+  // Manejo de carga de foto con compresión automática y preservación de archivo
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -89,25 +90,27 @@ export default function CarnetServicePage() {
       return;
     }
 
+    setPhotoFile(file);
+
     try {
       const reader = new FileReader();
       reader.onload = async (evt) => {
         const rawBase64 = evt.target?.result as string;
         if (rawBase64) {
-          // Comprimir a máximo 500px para que quepa en localStorage / Firestore sin problemas
-          const compressed = await shrinkBase64Image(rawBase64, 500, 0.85);
+          // Comprimir para vista previa fluida instantánea
+          const compressed = await shrinkBase64Image(rawBase64, 400, 500, 0.75);
           setPhotoUrl(compressed);
           soundEffects.playSuccess();
         }
       };
       reader.readAsDataURL(file);
     } catch (err) {
-      console.error('Error procesando imagen:', err);
+      console.error('Error procesando imagen para vista previa:', err);
       alert('Ocurrió un error al cargar la fotografía.');
     }
   };
 
-  // Validación y Envío del Formulario
+  // Validación y Envío del Formulario con subida segura a Storage
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
@@ -129,10 +132,27 @@ export default function CarnetServicePage() {
     soundEffects.playClick();
 
     try {
+      const submissionId = `carnet-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
+      let finalPhotoUrl = photoUrl || '';
+      let photoStoragePath: string | undefined = undefined;
+
+      // Subir a Firebase Storage de forma segura si tenemos el archivo
+      if (photoFile) {
+        try {
+          const uploadRes = await uploadCarnetPhoto(photoFile, submissionId);
+          finalPhotoUrl = uploadRes.url;
+          photoStoragePath = uploadRes.storagePath;
+        } catch (uploadErr) {
+          console.warn('[CarnetServicePage] Fallback a Base64 local para foto:', uploadErr);
+        }
+      }
+
       const submission: CarnetSubmission = {
-        id: `carnet-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        id: submissionId,
         formId: carnetConfig.id || 'form-carnets-principal',
         createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        schemaVersion: 1, // Desacoplamiento de versión de esquema
         fullName: fullName.trim(),
         idNumber: idNumber.trim(),
         role: role.trim(),
@@ -142,8 +162,10 @@ export default function CarnetServicePage() {
         emergencyPhone: emergencyPhone.trim() || undefined,
         expirationDate: expirationDate.trim() || undefined,
         allergiesOrNotes: allergiesOrNotes.trim() || undefined,
-        photoUrl: photoUrl || '',
+        photoUrl: finalPhotoUrl,
+        photoStoragePath,
         themeId: selectedThemeId,
+        themeSnapshot: currentTheme, // Congelar paleta visual exacta para reproducibilidad futura
         qrToken: `https://volckan.com/tienda/#/carnet/verify?id=${encodeURIComponent(idNumber.trim())}`,
         status: 'pendiente',
         institutionName: carnetConfig.institutionName

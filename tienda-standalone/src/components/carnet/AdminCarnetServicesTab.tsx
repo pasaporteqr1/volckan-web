@@ -264,6 +264,86 @@ export const AdminCarnetServicesTab: React.FC = () => {
     }
   };
 
+  // Exportar solicitudes a Excel / CSV (con BOM UTF-8 para acentos correctos en Excel)
+  const handleExportCsv = () => {
+    const targetSubs = filteredSubmissions.length > 0 ? filteredSubmissions : carnetSubmissions;
+    if (targetSubs.length === 0) {
+      alert('No hay credenciales registradas para exportar.');
+      return;
+    }
+    soundEffects.playClick();
+
+    const headers = [
+      'ID Registro',
+      'Fecha Registro',
+      'Estado',
+      'Nombre Completo',
+      'Identificación / DPI',
+      'Rol / Cargo',
+      'Área / Grado',
+      'Tipo de Sangre',
+      'Contacto Emergencia',
+      'Teléfono Emergencia',
+      'Vigencia',
+      'Alergias / Notas',
+      'Tema Carnet',
+      'URL Fotografía',
+      'Token QR'
+    ];
+
+    const escapeCsv = (str?: string) => {
+      if (!str) return '""';
+      return `"${str.toString().replace(/"/g, '""')}"`;
+    };
+
+    const rows = targetSubs.map(s => [
+      escapeCsv(s.id),
+      escapeCsv(new Date(s.createdAt).toLocaleString()),
+      escapeCsv(s.status),
+      escapeCsv(s.fullName),
+      escapeCsv(s.idNumber),
+      escapeCsv(s.role),
+      escapeCsv(s.gradeOrArea || ''),
+      escapeCsv(s.bloodType || ''),
+      escapeCsv(s.emergencyContact || ''),
+      escapeCsv(s.emergencyPhone || ''),
+      escapeCsv(s.expirationDate || ''),
+      escapeCsv(s.allergiesOrNotes || ''),
+      escapeCsv(s.themeId),
+      escapeCsv(s.photoUrl),
+      escapeCsv(s.qrToken)
+    ]);
+
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Carnets_Volckan_${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    soundEffects.playSuccess();
+  };
+
+  // Exportar copia de seguridad en JSON completo
+  const handleExportJson = () => {
+    const targetSubs = filteredSubmissions.length > 0 ? filteredSubmissions : carnetSubmissions;
+    if (targetSubs.length === 0) {
+      alert('No hay credenciales registradas para exportar.');
+      return;
+    }
+    soundEffects.playClick();
+    const jsonStr = JSON.stringify(targetSubs, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Respaldo_Carnets_Volckan_${new Date().toISOString().slice(0, 10)}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    soundEffects.playSuccess();
+  };
+
   // Convertir submission a preview data
   const getSubmissionPreviewData = (sub: CarnetSubmission): CarnetCardData => ({
     fullName: sub.fullName,
@@ -539,6 +619,24 @@ export const AdminCarnetServicesTab: React.FC = () => {
           </div>
 
           <div className="submissions-top-actions">
+            <button
+              type="button"
+              className="btn-export-csv"
+              onClick={handleExportCsv}
+              disabled={carnetSubmissions.length === 0}
+              title="Descargar base de datos completa compatible con Microsoft Excel y Google Sheets"
+            >
+              📊 Exportar a Excel (CSV)
+            </button>
+            <button
+              type="button"
+              className="btn-export-json"
+              onClick={handleExportJson}
+              disabled={carnetSubmissions.length === 0}
+              title="Descargar respaldo estructurado en JSON"
+            >
+              💾 Respaldo JSON
+            </button>
             <button
               type="button"
               className="btn-batch-print"

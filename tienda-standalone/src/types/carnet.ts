@@ -51,6 +51,10 @@ export interface CarnetSubmission {
   id: string;
   formId: string;
   createdAt: string;
+  updatedAt?: string;
+  schemaVersion?: number; // v1: versión de esquema para migraciones futuras
+  
+  // Datos personales canónicos (desacoplados del diseño)
   fullName: string;
   idNumber: string;
   role: string;
@@ -60,9 +64,17 @@ export interface CarnetSubmission {
   emergencyPhone?: string;
   expirationDate?: string;
   allergiesOrNotes?: string;
-  photoUrl: string;
+  
+  // Fotografía y almacenamiento
+  photoUrl: string; // URL en Cloud Storage o fallback WebP
+  photoStoragePath?: string; // Ruta interna en Firebase Storage (para gestión/borrado)
+  
+  // Configuración visual preservada
   themeId: string;
+  themeSnapshot?: CarnetTheme; // Congela la paleta y estilo en el momento del envío
+  institutionName?: string;
+  
+  // Control de seguridad y estado
   qrToken: string;
   status: 'pendiente' | 'aprobado' | 'impreso';
-  institutionName?: string;
 }

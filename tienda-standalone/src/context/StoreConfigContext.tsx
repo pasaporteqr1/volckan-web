@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, setDoc, query, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
 import { 
   DEFAULT_MERCADO_PRODUCTS, 
@@ -186,14 +186,29 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       }, (err) => console.warn('[StoreConfig] Error leyendo servicios_carnets:', err));
       unsubs.push(unsubCarnetConfig);
 
-      // 6. Lista de Envíos de Carnets
-      const unsubCarnetSubs = onSnapshot(doc(db, 'data', 'carnet_submissions'), (snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.data();
-          if (Array.isArray(data?.submissions)) {
-            setCarnetSubmissions(data.submissions);
-            try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(data.submissions)); } catch {}
-          }
+      // 6. Lista de Envíos de Carnets (Colección dedicada carnet_submissions)
+      const carnetSubmissionsCol = collection(db, 'carnet_submissions');
+      const qCarnets = query(carnetSubmissionsCol, orderBy('createdAt', 'desc'));
+      const unsubCarnetSubs = onSnapshot(qCarnets, (snapshot) => {
+        if (!snapshot.empty) {
+          const subs: CarnetSubmission[] = [];
+          snapshot.forEach((docSnap) => {
+            subs.push({ ...(docSnap.data() as CarnetSubmission), id: docSnap.id });
+          });
+          setCarnetSubmissions(subs);
+          try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(subs)); } catch {}
+        } else {
+          // Fallback de transición: si la colección está vacía, verificar documento legado
+          const legacyDoc = doc(db, 'data', 'carnet_submissions');
+          onSnapshot(legacyDoc, (legacySnap) => {
+            if (legacySnap.exists()) {
+              const data = legacySnap.data();
+              if (Array.isArray(data?.submissions) && data.submissions.length > 0) {
+                setCarnetSubmissions(data.submissions);
+                try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(data.submissions)); } catch {}
+              }
+            }
+          }, () => {});
         }
       }, (err) => console.warn('[StoreConfig] Error leyendo carnet_submissions:', err));
       unsubs.push(unsubCarnetSubs);
@@ -260,18 +275,19 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setCarnetSubmissions(updated);
     try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(updated)); } catch {}
     if (db) {
-      const docRef = doc(db, 'data', 'carnet_submissions');
-      await setDoc(docRef, { submissions: updated, updatedAt: new Date().toISOString() }, { merge: true });
+      // Guardar como documento atómico individual en la colección carnet_submissions
+      const docRef = doc(db, 'carnet_submissions', submission.id);
+      await setDoc(docRef, { ...submission, updatedAt: new Date().toISOString() }, { merge: true });
     }
   };
 
   const updateCarnetSubmissionStatus = async (id: string, status: 'pendiente' | 'aprobado' | 'impreso') => {
-    const updated = carnetSubmissions.map(s => s.id === id ? { ...s, status } : s);
+    const updated = carnetSubmissions.map(s => s.id === id ? { ...s, status, updatedAt: new Date().toISOString() } : s);
     setCarnetSubmissions(updated);
     try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(updated)); } catch {}
     if (db) {
-      const docRef = doc(db, 'data', 'carnet_submissions');
-      await setDoc(docRef, { submissions: updated, updatedAt: new Date().toISOString() }, { merge: true });
+      const docRef = doc(db, 'carnet_submissions', id);
+      await setDoc(docRef, { status, updatedAt: new Date().toISOString() }, { merge: true });
     }
   };
 
@@ -280,8 +296,8 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setCarnetSubmissions(updated);
     try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(updated)); } catch {}
     if (db) {
-      const docRef = doc(db, 'data', 'carnet_submissions');
-      await setDoc(docRef, { submissions: updated, updatedAt: new Date().toISOString() }, { merge: true });
+      const docRef = doc(db, 'carnet_submissions', id);
+      await deleteDoc(docRef);
     }
   };
 
