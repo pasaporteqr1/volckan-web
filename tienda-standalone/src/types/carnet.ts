@@ -16,15 +16,12 @@ export interface CarnetTheme {
 }
 
 export interface CarnetFieldConfig {
-  requireIdNumber: boolean;
-  requireRole: boolean;
-  requireGradeOrArea: boolean;
-  requireBloodType: boolean;
-  requireEmergencyContact: boolean;
-  requireEmergencyPhone: boolean;
-  requireExpirationDate: boolean;
+  requireIdNumber: boolean; // Exigir DPI de 13 dígitos
+  requireRole: boolean; // Cargo / Acreditación
+  requireInstitutionRepresented: boolean; // Empresa / Institución que representa
+  requireDepartmentMunicipality: boolean; // Departamento y Municipio
   requirePhoto: boolean;
-  qrDestination: 'sosqr_profile' | 'digital_pass' | 'custom_url';
+  qrDestination: 'conferencia_pass' | 'digital_pass' | 'custom_url';
   customUrlPrefix?: string;
 }
 
@@ -52,29 +49,25 @@ export interface CarnetSubmission {
   formId: string;
   createdAt: string;
   updatedAt?: string;
-  schemaVersion?: number; // v1: versión de esquema para migraciones futuras
+  schemaVersion?: number; // v2: comercial y conferencias
   
-  // Datos personales canónicos (desacoplados del diseño)
+  // Datos comerciales y de acreditación (desacoplados del diseño)
   fullName: string;
-  idNumber: string;
-  role: string;
-  gradeOrArea?: string;
-  bloodType?: string;
-  emergencyContact?: string;
-  emergencyPhone?: string;
-  expirationDate?: string;
-  allergiesOrNotes?: string;
+  idNumber: string; // DPI con exactamente 13 dígitos
+  role: string; // Cargo / Tipo de Acreditación (Conferencista, Delegado, Prensa, etc.)
+  institutionRepresented?: string; // Institución o Empresa a la que representa
+  departmentMunicipality?: string; // Departamento / Municipio de procedencia
   
   // Fotografía y almacenamiento
-  photoUrl: string; // URL en Cloud Storage o fallback WebP
-  photoStoragePath?: string; // Ruta interna en Firebase Storage (para gestión/borrado)
+  photoUrl: string; // URL en Cloud Storage o fallback WebP estandarizado
+  photoStoragePath?: string; // Ruta interna en Firebase Storage
   
   // Configuración visual preservada
   themeId: string;
-  themeSnapshot?: CarnetTheme; // Congela la paleta y estilo en el momento del envío
-  institutionName?: string;
+  themeSnapshot?: CarnetTheme; // Congela paleta y diseño exactos al momento de emisión
+  institutionName?: string; // Nombre del evento, congreso o empresa anfitriona
   
-  // Control de seguridad y estado
+  // Control de acreditación y estado
   qrToken: string;
   status: 'pendiente' | 'aprobado' | 'impreso';
 }

@@ -1,20 +1,16 @@
-import React, { useEffect, useState, forwardRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { CarnetTheme } from '../../types/carnet';
 import { generateQrDataUrl } from '../../utils/carnetExport';
 import './CarnetCardPreview.css';
 
 export interface CarnetCardData {
   fullName: string;
-  idNumber: string;
-  role: string;
-  gradeOrArea?: string;
-  bloodType?: string;
-  emergencyContact?: string;
-  emergencyPhone?: string;
-  expirationDate?: string;
-  allergiesOrNotes?: string;
+  idNumber: string; // DPI de 13 dígitos
+  role: string; // Cargo / Acreditación
+  institutionRepresented?: string; // Institución o Empresa que representa
+  departmentMunicipality?: string; // Departamento / Municipio
   photoUrl?: string;
-  institutionName: string;
+  institutionName: string; // Evento, Congreso o Empresa anfitriona
   logoUrl?: string;
   qrToken?: string;
 }
@@ -29,6 +25,16 @@ interface CarnetCardPreviewProps {
   className?: string;
   frontRef?: React.RefObject<HTMLDivElement | null>;
   backRef?: React.RefObject<HTMLDivElement | null>;
+}
+
+// Función auxiliar para dar formato de 13 dígitos al DPI (ej: 1234 56789 0101)
+export function formatDpiString(raw?: string): string {
+  if (!raw) return '0000 00000 0000';
+  const clean = raw.replace(/\D/g, '');
+  if (clean.length === 13) {
+    return `${clean.slice(0, 4)} ${clean.slice(4, 9)} ${clean.slice(9, 13)}`;
+  }
+  return raw;
 }
 
 export const CarnetCardPreview: React.FC<CarnetCardPreviewProps> = ({
@@ -70,13 +76,13 @@ export const CarnetCardPreview: React.FC<CarnetCardPreviewProps> = ({
       {side === 'both' ? (
         <div className="carnet-both-sides-wrapper">
           <div className="carnet-single-stage">
-            <span className="carnet-side-label">Frente (Front)</span>
+            <span className="carnet-side-label">Frente Oficial (Front)</span>
             <div ref={frontRef} className="carnet-card-cr80 front-face" style={{ background: theme.frontBg, borderColor: theme.borderColor }}>
               <FrontCardContent data={data} theme={theme} />
             </div>
           </div>
           <div className="carnet-single-stage">
-            <span className="carnet-side-label">Reverso (Back)</span>
+            <span className="carnet-side-label">Reverso Comercial (Back)</span>
             <div ref={backRef} className="carnet-card-cr80 back-face" style={{ background: theme.backBg, borderColor: theme.borderColor }}>
               <BackCardContent data={data} theme={theme} qrDataUrl={qrDataUrl} />
             </div>
@@ -126,7 +132,7 @@ export const CarnetCardPreview: React.FC<CarnetCardPreviewProps> = ({
                 className={`btn-carnet-side-toggle ${currentSide === 'front' ? 'active' : ''}`}
                 onClick={(e) => { e.stopPropagation(); setCurrentSide('front'); }}
               >
-                🪪 Frente
+                🪪 Frente Oficial
               </button>
               <button 
                 type="button" 
@@ -143,11 +149,11 @@ export const CarnetCardPreview: React.FC<CarnetCardPreviewProps> = ({
   );
 };
 
-// Contenido del Frente
+// Contenido del Frente Comercial y de Conferencia
 const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> = ({ data, theme }) => {
   return (
     <div className="carnet-card-inner">
-      {/* Cabecera: Logo y Nombre de Institución */}
+      {/* Cabecera: Logo y Nombre de Conferencia / Empresa Emisora */}
       <div className="carnet-header" style={{ background: theme.headerBg }}>
         <div className="carnet-brand-group">
           {data.logoUrl ? (
@@ -159,10 +165,10 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
           )}
           <div className="carnet-brand-titles">
             <span className="carnet-institution-name" style={{ color: theme.textColor }}>
-              {data.institutionName || 'INSTITUCIÓN EMISORA'}
+              {data.institutionName || 'CONGRESO & NETWORKING'}
             </span>
             <span className="carnet-subtag" style={{ color: theme.accentColor }}>
-              CREDENCIAL OFICIAL INTELIGENTE
+              ACREDITACIÓN OFICIAL DE CONFERENCIA
             </span>
           </div>
         </div>
@@ -177,7 +183,7 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
 
       {/* Cuerpo Principal del Frente */}
       <div className="carnet-body-front">
-        {/* Fotografía de Usuario con Marco Holográfico */}
+        {/* Fotografía de Usuario con Marco Proporción 3:4 */}
         <div className="carnet-photo-frame" style={{ borderColor: theme.accentColor, boxShadow: `0 0 12px ${theme.glowColor}` }}>
           {data.photoUrl ? (
             <img src={data.photoUrl} alt={data.fullName} className="carnet-user-photo" />
@@ -187,42 +193,44 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
               <span className="empty-photo-text">Subir Foto</span>
             </div>
           )}
-          <span className="photo-verified-seal" title="Identidad Verificada">✓</span>
+          <span className="photo-verified-seal" title="Identidad Acreditada">✓</span>
         </div>
 
-        {/* Datos del Titular */}
+        {/* Datos Comerciales del Titular */}
         <div className="carnet-user-details">
           <div className="carnet-role-pill" style={{ background: theme.badgeBg, color: theme.badgeText, borderColor: theme.borderColor }}>
-            {data.role || 'MIEMBRO REGISTRADO'}
+            {data.role || 'ASISTENTE / DELEGADO'}
           </div>
 
           <h3 className="carnet-user-name" style={{ color: theme.textColor }}>
-            {data.fullName || 'NOMBRE COMPLETO'}
+            {data.fullName || 'NOMBRE DEL ASISTENTE'}
           </h3>
 
           <div className="carnet-meta-grid">
             <div className="carnet-meta-item">
-              <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>ID / DPI / CÓDIGO</span>
-              <span className="carnet-meta-val" style={{ color: theme.textColor }}>
-                {data.idNumber || 'ID-00000000'}
+              <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>DPI (13 DÍGITOS)</span>
+              <span className="carnet-meta-val" style={{ color: theme.textColor, letterSpacing: '0.04em' }}>
+                {formatDpiString(data.idNumber)}
               </span>
             </div>
 
-            {data.gradeOrArea && (
+            {data.institutionRepresented && (
               <div className="carnet-meta-item">
-                <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>ÁREA / GRADO</span>
+                <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>INSTITUCIÓN / EMPRESA</span>
                 <span className="carnet-meta-val" style={{ color: theme.textColor }}>
-                  {data.gradeOrArea}
+                  {data.institutionRepresented}
                 </span>
               </div>
             )}
 
-            <div className="carnet-meta-item">
-              <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>VIGENCIA</span>
-              <span className="carnet-meta-val" style={{ color: theme.accentColor }}>
-                {data.expirationDate || '2025 - 2026'}
-              </span>
-            </div>
+            {data.departmentMunicipality && (
+              <div className="carnet-meta-item">
+                <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>DEPARTAMENTO / MUNICIPIO</span>
+                <span className="carnet-meta-val" style={{ color: theme.accentColor }}>
+                  📍 {data.departmentMunicipality}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -231,15 +239,15 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
       <div className="carnet-footer-front">
         <div className="carnet-security-strip" />
         <div className="carnet-footer-labels">
-          <span className="security-tag" style={{ color: theme.subtextColor }}>SECURE SMARTPASS · VOLCKAN ID</span>
-          <span className="security-hologram" style={{ color: theme.accentColor }}>◈ ◈ BIOMETRIC ◈ ◈</span>
+          <span className="security-tag" style={{ color: theme.subtextColor }}>ACREDITACIÓN COMERCIAL · VOLCKAN ID</span>
+          <span className="security-hologram" style={{ color: theme.accentColor }}>◈ ◈ CONFERENCIA ◈ ◈</span>
         </div>
       </div>
     </div>
   );
 };
 
-// Contenido del Reverso
+// Contenido del Reverso Comercial (Sin datos médicos)
 const BackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme; qrDataUrl: string }> = ({
   data,
   theme,
@@ -252,7 +260,7 @@ const BackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme; qrDa
 
       {/* Cuerpo del Reverso */}
       <div className="carnet-body-back">
-        {/* Contenedor del QR de Acceso / SOS */}
+        {/* Contenedor del QR de Acceso y Networking */}
         <div className="carnet-qr-container">
           <div className="carnet-qr-box" style={{ borderColor: theme.accentColor }}>
             {qrDataUrl ? (
@@ -262,51 +270,55 @@ const BackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme; qrDa
             )}
           </div>
           <span className="carnet-qr-caption" style={{ color: theme.accentColor }}>
-            ESCANEAR PARA VALIDAR O SOS
+            ESCANEAR PARA VALIDAR ACCESO
           </span>
         </div>
 
-        {/* Datos de Emergencia y Contacto */}
+        {/* Datos Comerciales y de Acceso */}
         <div className="carnet-emergency-details">
-          {data.bloodType && (
-            <div className="carnet-blood-badge" style={{ background: theme.badgeBg, borderColor: theme.borderColor }}>
-              <span className="blood-icon">🩸</span>
-              <span className="blood-label" style={{ color: theme.subtextColor }}>TIPO DE SANGRE:</span>
-              <strong className="blood-val" style={{ color: theme.accentColor }}>{data.bloodType}</strong>
+          <div className="carnet-commercial-badge" style={{ background: theme.badgeBg, borderColor: theme.borderColor }}>
+            <span className="badge-bullet">🎟️</span>
+            <span className="badge-text" style={{ color: theme.badgeText }}>PASE DE ACCESO CONFERENCIA</span>
+          </div>
+
+          {data.institutionRepresented && (
+            <div className="carnet-emergency-item">
+              <span className="em-label" style={{ color: theme.subtextColor }}>ENTIDAD / EMPRESA:</span>
+              <span className="em-val" style={{ color: theme.textColor, fontWeight: 700 }}>{data.institutionRepresented}</span>
             </div>
           )}
 
-          {data.emergencyContact && (
+          {data.departmentMunicipality && (
             <div className="carnet-emergency-item">
-              <span className="em-label" style={{ color: theme.subtextColor }}>CONTACTO SOS:</span>
-              <span className="em-val" style={{ color: theme.textColor }}>{data.emergencyContact}</span>
+              <span className="em-label" style={{ color: theme.subtextColor }}>PROCEDENCIA:</span>
+              <span className="em-val" style={{ color: theme.textColor }}>📍 {data.departmentMunicipality}</span>
             </div>
           )}
 
-            {data.emergencyPhone && (
-            <div className="carnet-emergency-item">
-              <span className="em-label" style={{ color: theme.subtextColor }}>TEL. EMERGENCIA:</span>
-              <span className="em-val" style={{ color: theme.accentColor }}>📞 {data.emergencyPhone}</span>
-            </div>
-          )}
+          <div className="carnet-emergency-item">
+            <span className="em-label" style={{ color: theme.subtextColor }}>DPI REGISTRADO:</span>
+            <span className="em-val" style={{ color: theme.accentColor, fontFamily: 'monospace' }}>
+              {formatDpiString(data.idNumber)}
+            </span>
+          </div>
 
-          {data.allergiesOrNotes && (
-            <div className="carnet-emergency-item">
-              <span className="em-label" style={{ color: theme.subtextColor }}>OBSERVACIONES / ALERGIAS:</span>
-              <span className="em-val notes-truncate" style={{ color: theme.textColor }}>{data.allergiesOrNotes}</span>
-            </div>
-          )}
+          <div className="carnet-emergency-item">
+            <span className="em-label" style={{ color: theme.subtextColor }}>ZONAS AUTORIZADAS:</span>
+            <span className="em-val" style={{ color: theme.textColor, fontSize: '0.66rem' }}>
+              Plenarias · Stands Comerciales · Networking
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Términos y Aviso Legal al pie */}
+      {/* Términos y Aviso Legal Comercial al pie */}
       <div className="carnet-footer-back">
         <p className="carnet-legal-notice" style={{ color: theme.subtextColor }}>
-          Esta credencial es propiedad de {data.institutionName || 'la institución emisora'}. Es personal, intransferible y de porte obligatorio. En caso de emergencia o extravío favor comunicarse a los números registrados.
+          Credencial comercial intransferible para acceso a conferencias, exposiciones y ruedas de negocios. Presentar en los puntos de control y acreditación QR.
         </p>
         <div className="carnet-back-bar">
           <span className="volckan-seal" style={{ color: theme.accentColor }}>POWERED BY VOLCKAN SMART ID</span>
-          <span className="serial-number" style={{ color: theme.subtextColor }}>{data.idNumber || 'CR80-STD'}</span>
+          <span className="serial-number" style={{ color: theme.subtextColor }}>{formatDpiString(data.idNumber)}</span>
         </div>
       </div>
     </div>

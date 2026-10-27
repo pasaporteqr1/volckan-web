@@ -102,28 +102,25 @@ export const CARNET_THEMES: CarnetTheme[] = [
 export const DEFAULT_CARNET_FORM_CONFIG: CarnetServiceFormConfig = {
   id: 'form-carnets-principal',
   slug: 'general',
-  title: 'Formulario de Carnetización y Credenciales Inteligentes',
-  institutionName: 'Volckan Technologies',
-  subtitle: 'Completa tus datos personales y sube tu fotografía para emitir tu carnet oficial imprimible y digital con código QR.',
-  description: 'Credencial inteligente en PVC calibre 30 con chip QR intransferible para control de accesos, identificación corporativa y perfil médico de emergencia SOS.',
+  title: 'Acreditación Oficial & Credenciales de Conferencia',
+  institutionName: 'Volckan Summit & Networking',
+  subtitle: 'Completa tus datos profesionales, encuadra tu fotografía oficial y genera tu credencial digital y carnet imprimible CR80 con código QR.',
+  description: 'Credencial comercial en PVC estándar CR80 con código QR intransferible para control de accesos a conferencias, foros empresariales y ruedas de networking.',
   logoUrl: '',
   defaultThemeId: 'volckan-cyber',
   allowUserThemeSelection: true,
   allowedThemes: ['volckan-cyber', 'executive-navy-gold', 'emerald-security', 'cyberpunk-neon', 'minimal-frost', 'royal-crimson'],
   fields: {
-    requireIdNumber: true,
+    requireIdNumber: true, // DPI de 13 dígitos
     requireRole: true,
-    requireGradeOrArea: true,
-    requireBloodType: true,
-    requireEmergencyContact: true,
-    requireEmergencyPhone: true,
-    requireExpirationDate: true,
+    requireInstitutionRepresented: true, // Empresa / Institución que representa
+    requireDepartmentMunicipality: true, // Departamento / Municipio
     requirePhoto: true,
-    qrDestination: 'digital_pass',
+    qrDestination: 'conferencia_pass',
     customUrlPrefix: ''
   },
   isActive: true,
-  deliveryNotes: 'Tiempo de producción de carnets físicos: 2 a 3 días hábiles. El carnet digital está listo de forma inmediata al enviar el formulario.',
+  deliveryNotes: 'Entrega física en la recepción del evento o envío previo de credenciales en PVC. El pase digital QR se emite inmediatamente.',
   supportPhone: '50246741239',
   createdAt: '2025-01-01T00:00:00Z'
 };

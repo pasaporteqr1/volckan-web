@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useStoreConfig } from '../../context/StoreConfigContext';
 import { CARNET_THEMES } from '../../data/carnetThemes';
-import CarnetCardPreview, { type CarnetCardData } from './CarnetCardPreview';
+import CarnetCardPreview, { type CarnetCardData, formatDpiString } from './CarnetCardPreview';
 import { 
   exportSingleCarnetPdf, 
   exportBatchCarnetsPdf, 
@@ -127,7 +127,8 @@ export const AdminCarnetServicesTab: React.FC = () => {
         sub.fullName.toLowerCase().includes(q) ||
         sub.idNumber.toLowerCase().includes(q) ||
         sub.role.toLowerCase().includes(q) ||
-        (sub.gradeOrArea && sub.gradeOrArea.toLowerCase().includes(q))
+        (sub.institutionRepresented && sub.institutionRepresented.toLowerCase().includes(q)) ||
+        (sub.departmentMunicipality && sub.departmentMunicipality.toLowerCase().includes(q))
       );
     }
     return true;
@@ -180,7 +181,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
         frontEl.innerHTML = `
           <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:4px;">
             <div style="font-size:10px; font-weight:800;">${sub.institutionName || localFormConfig.institutionName}</div>
-            <div style="font-size:8px; color:${theme.accentColor}; font-weight:700;">SECURE ID</div>
+            <div style="font-size:8px; color:${theme.accentColor}; font-weight:700;">ACREDITACIÓN OFICIAL</div>
           </div>
           <div style="display:flex; gap:10px; align-items:center; margin:4px 0;">
             <div style="width:68px; height:80px; border-radius:6px; border:2px solid ${theme.accentColor}; overflow:hidden; background:#000; flex-shrink:0;">
@@ -188,15 +189,15 @@ export const AdminCarnetServicesTab: React.FC = () => {
             </div>
             <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
               <span style="font-size:8px; background:${theme.badgeBg}; color:${theme.badgeText}; padding:2px 6px; border-radius:4px; font-weight:800; align-self:flex-start;">${sub.role}</span>
-              <strong style="font-size:12px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${sub.fullName}</strong>
-              <span style="font-size:9px; color:${theme.subtextColor};">ID: <strong>${sub.idNumber}</strong></span>
-              ${sub.gradeOrArea ? `<span style="font-size:8px; color:${theme.subtextColor};">${sub.gradeOrArea}</span>` : ''}
-              <span style="font-size:8px; color:${theme.accentColor}; font-weight:700;">VIGENCIA: ${sub.expirationDate || '2025-2026'}</span>
+              <strong style="font-size:11px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${sub.fullName}</strong>
+              <span style="font-size:8px; color:${theme.subtextColor};">DPI: <strong>${formatDpiString(sub.idNumber)}</strong></span>
+              ${sub.institutionRepresented ? `<span style="font-size:8px; color:${theme.textColor};"><strong>${sub.institutionRepresented}</strong></span>` : ''}
+              ${sub.departmentMunicipality ? `<span style="font-size:8px; color:${theme.accentColor};">📍 ${sub.departmentMunicipality}</span>` : ''}
             </div>
           </div>
           <div style="font-size:7px; font-family:monospace; display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.1); padding-top:2px;">
-            <span>VOLCKAN CR80</span>
-            <span style="color:${theme.accentColor};">◈ VERIFIED ◈</span>
+            <span>CONFERENCIA CR80</span>
+            <span style="color:${theme.accentColor};">◈ ACREDITADO ◈</span>
           </div>
         `;
 
@@ -223,14 +224,14 @@ export const AdminCarnetServicesTab: React.FC = () => {
               <img src="${qrUrl}" style="width:100%; height:100%; object-fit:contain;" />
             </div>
             <div style="display:flex; flex-direction:column; gap:2px; font-size:8px;">
-              ${sub.bloodType ? `<span style="font-size:9px; font-weight:800; color:${theme.accentColor};">🩸 TIPO: ${sub.bloodType}</span>` : ''}
-              ${sub.emergencyContact ? `<span>SOS: <strong>${sub.emergencyContact}</strong></span>` : ''}
-              ${sub.emergencyPhone ? `<span>TEL: <strong>${sub.emergencyPhone}</strong></span>` : ''}
-              ${sub.allergiesOrNotes ? `<span style="color:${theme.subtextColor}; font-size:7px;">OBS: ${sub.allergiesOrNotes}</span>` : ''}
+              <span style="font-size:8px; font-weight:800; color:${theme.accentColor};">PASE DE ACCESO & CONFERENCIA</span>
+              ${sub.institutionRepresented ? `<span>EMPRESA: <strong>${sub.institutionRepresented}</strong></span>` : ''}
+              ${sub.departmentMunicipality ? `<span>PROCEDENCIA: <strong>${sub.departmentMunicipality}</strong></span>` : ''}
+              <span>DPI: <strong>${formatDpiString(sub.idNumber)}</strong></span>
             </div>
           </div>
           <div style="font-size:6px; opacity:0.8; text-align:justify; border-top:1px solid rgba(255,255,255,0.1); padding-top:2px;">
-            Credencial intransferible de ${sub.institutionName || localFormConfig.institutionName}. En caso de extravío o emergencia notificar a la administración.
+            Credencial comercial e intransferible para acceso a conferencias, paneles y eventos de networking de ${sub.institutionName || localFormConfig.institutionName}.
           </div>
         `;
 
@@ -278,14 +279,10 @@ export const AdminCarnetServicesTab: React.FC = () => {
       'Fecha Registro',
       'Estado',
       'Nombre Completo',
-      'Identificación / DPI',
-      'Rol / Cargo',
-      'Área / Grado',
-      'Tipo de Sangre',
-      'Contacto Emergencia',
-      'Teléfono Emergencia',
-      'Vigencia',
-      'Alergias / Notas',
+      'DPI (13 Dígitos)',
+      'Cargo / Acreditación',
+      'Empresa / Institución',
+      'Departamento / Municipio',
       'Tema Carnet',
       'URL Fotografía',
       'Token QR'
@@ -301,14 +298,10 @@ export const AdminCarnetServicesTab: React.FC = () => {
       escapeCsv(new Date(s.createdAt).toLocaleString()),
       escapeCsv(s.status),
       escapeCsv(s.fullName),
-      escapeCsv(s.idNumber),
+      escapeCsv(formatDpiString(s.idNumber)),
       escapeCsv(s.role),
-      escapeCsv(s.gradeOrArea || ''),
-      escapeCsv(s.bloodType || ''),
-      escapeCsv(s.emergencyContact || ''),
-      escapeCsv(s.emergencyPhone || ''),
-      escapeCsv(s.expirationDate || ''),
-      escapeCsv(s.allergiesOrNotes || ''),
+      escapeCsv(s.institutionRepresented || ''),
+      escapeCsv(s.departmentMunicipality || ''),
       escapeCsv(s.themeId),
       escapeCsv(s.photoUrl),
       escapeCsv(s.qrToken)
@@ -319,7 +312,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `Carnets_Volckan_${new Date().toISOString().slice(0, 10)}.csv`;
+    link.download = `Carnets_Conferencia_${new Date().toISOString().slice(0, 10)}.csv`;
     link.click();
     URL.revokeObjectURL(url);
     soundEffects.playSuccess();
@@ -349,12 +342,8 @@ export const AdminCarnetServicesTab: React.FC = () => {
     fullName: sub.fullName,
     idNumber: sub.idNumber,
     role: sub.role,
-    gradeOrArea: sub.gradeOrArea,
-    bloodType: sub.bloodType,
-    emergencyContact: sub.emergencyContact,
-    emergencyPhone: sub.emergencyPhone,
-    expirationDate: sub.expirationDate || '2025 - 2026',
-    allergiesOrNotes: sub.allergiesOrNotes,
+    institutionRepresented: sub.institutionRepresented,
+    departmentMunicipality: sub.departmentMunicipality,
     photoUrl: sub.photoUrl,
     institutionName: sub.institutionName || localFormConfig.institutionName,
     logoUrl: localFormConfig.logoUrl,
@@ -537,7 +526,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
 
           {/* Opciones y Campos Exigidos */}
           <div className="admin-field-group full-width">
-            <label>Campos Requeridos en el Formulario</label>
+            <label>Campos Requeridos en el Formulario (Uso Comercial / Conferencias)</label>
             <div className="admin-checkboxes-grid">
               <label className="checkbox-item">
                 <input
@@ -554,43 +543,43 @@ export const AdminCarnetServicesTab: React.FC = () => {
                   checked={localFormConfig.fields.requirePhoto}
                   onChange={(e) => updateFieldRequirement('requirePhoto', e.target.checked)}
                 />
-                <span>Exigir Fotografía Obligatoria</span>
+                <span>Exigir Fotografía Oficial (con encuadre)</span>
               </label>
 
               <label className="checkbox-item">
                 <input
                   type="checkbox"
-                  checked={localFormConfig.fields.requireBloodType}
-                  onChange={(e) => updateFieldRequirement('requireBloodType', e.target.checked)}
+                  checked={localFormConfig.fields.requireIdNumber}
+                  onChange={(e) => updateFieldRequirement('requireIdNumber', e.target.checked)}
                 />
-                <span>Incluir Tipo de Sangre en el Reverso</span>
+                <span>Exigir DPI de 13 dígitos numéricos</span>
               </label>
 
               <label className="checkbox-item">
                 <input
                   type="checkbox"
-                  checked={localFormConfig.fields.requireEmergencyContact}
-                  onChange={(e) => updateFieldRequirement('requireEmergencyContact', e.target.checked)}
+                  checked={localFormConfig.fields.requireRole}
+                  onChange={(e) => updateFieldRequirement('requireRole', e.target.checked)}
                 />
-                <span>Incluir Contacto de Emergencia SOS</span>
+                <span>Exigir Cargo o Tipo de Acreditación</span>
               </label>
 
               <label className="checkbox-item">
                 <input
                   type="checkbox"
-                  checked={localFormConfig.fields.requireEmergencyPhone}
-                  onChange={(e) => updateFieldRequirement('requireEmergencyPhone', e.target.checked)}
+                  checked={localFormConfig.fields.requireInstitutionRepresented}
+                  onChange={(e) => updateFieldRequirement('requireInstitutionRepresented', e.target.checked)}
                 />
-                <span>Incluir Teléfono de Emergencia</span>
+                <span>Exigir Institución o Empresa que Representa</span>
               </label>
 
               <label className="checkbox-item">
                 <input
                   type="checkbox"
-                  checked={localFormConfig.fields.requireGradeOrArea}
-                  onChange={(e) => updateFieldRequirement('requireGradeOrArea', e.target.checked)}
+                  checked={localFormConfig.fields.requireDepartmentMunicipality}
+                  onChange={(e) => updateFieldRequirement('requireDepartmentMunicipality', e.target.checked)}
                 />
-                <span>Incluir Grado / Área de Trabajo</span>
+                <span>Exigir Departamento / Municipio de Procedencia</span>
               </label>
             </div>
           </div>
@@ -727,14 +716,13 @@ export const AdminCarnetServicesTab: React.FC = () => {
                     <div className="sub-main-info">
                       <strong className="sub-name">{sub.fullName}</strong>
                       <span className="sub-role-badge">{sub.role}</span>
-                      <span className="sub-meta-id">ID: {sub.idNumber}</span>
+                      <span className="sub-meta-id">DPI: {formatDpiString(sub.idNumber)}</span>
                     </div>
                   </div>
 
                   <div className="sub-card-details">
-                    {sub.gradeOrArea && <div><span>Área:</span> {sub.gradeOrArea}</div>}
-                    {sub.bloodType && <div><span>Sangre:</span> 🩸 {sub.bloodType}</div>}
-                    {sub.emergencyPhone && <div><span>Tel. SOS:</span> {sub.emergencyPhone}</div>}
+                    {sub.institutionRepresented && <div><span>Empresa:</span> {sub.institutionRepresented}</div>}
+                    {sub.departmentMunicipality && <div><span>Procedencia:</span> 📍 {sub.departmentMunicipality}</div>}
                     <div><span>Diseño:</span> {theme.name}</div>
                     <div><span>Fecha:</span> {new Date(sub.createdAt).toLocaleDateString()}</div>
                   </div>
