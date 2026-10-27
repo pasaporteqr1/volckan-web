@@ -15,32 +15,6 @@ import { soundEffects } from '../utils/soundEffects';
 import type { CarnetSubmission, CarnetTheme } from '../types/carnet';
 import './CarnetServicePage.css';
 
-const GUATEMALA_DEPARTAMENTOS = [
-  'Guatemala (Ciudad Capital)',
-  'Sacatepéquez (Antigua Guatemala)',
-  'Quetzaltenango',
-  'Escuintla',
-  'Chimaltenango',
-  'Alta Verapaz (Cobán)',
-  'Baja Verapaz (Salamá)',
-  'Huehuetenango',
-  'San Marcos',
-  'Petén (Flores)',
-  'Izabal (Puerto Barrios)',
-  'Zacapa',
-  'Chiquimula',
-  'Jalapa',
-  'Jutiapa',
-  'Santa Rosa',
-  'Retalhuleu',
-  'Suchitepéquez (Mazatenango)',
-  'Sololá (Panajachel)',
-  'Totonicapán',
-  'Quiché (Santa Cruz)',
-  'El Progreso (Guastatoya)',
-  'Internacional / Extranjero'
-];
-
 export default function CarnetServicePage() {
   const navigate = useNavigate();
   const { carnetConfig, saveCarnetSubmission, storeConfig } = useStoreConfig();
@@ -55,7 +29,7 @@ export default function CarnetServicePage() {
   const [idNumber, setIdNumber] = useState<string>(''); // Exactamente 13 dígitos numéricos
   const [phoneDigits, setPhoneDigits] = useState<string>(''); // Exactamente 8 dígitos numéricos (+502 fijo)
   const [institutionRepresented, setInstitutionRepresented] = useState<string>('');
-  const [departmentMunicipality, setDepartmentMunicipality] = useState<string>('Guatemala (Ciudad Capital)');
+  const [departmentMunicipality, setDepartmentMunicipality] = useState<string>('');
   const [photoUrl, setPhotoUrl] = useState<string>('');
   const [photoFile, setPhotoFile] = useState<File | null>(null);
 
@@ -480,15 +454,11 @@ export default function CarnetServicePage() {
                 <input
                   type="text"
                   required
-                  list="departamentos-list"
-                  placeholder="Ej: Guatemala (Ciudad Capital) o Quetzaltenango"
+                  placeholder="Ej: Quetzaltenango, San Marcos, Guatemala, etc."
                   value={departmentMunicipality}
                   onChange={(e) => setDepartmentMunicipality(e.target.value)}
                   className="carnet-input"
                 />
-                <datalist id="departamentos-list">
-                  {GUATEMALA_DEPARTAMENTOS.map(d => <option key={d} value={d} />)}
-                </datalist>
               </div>
             </div>
 
@@ -571,6 +541,7 @@ export default function CarnetServicePage() {
                 setIdNumber('');
                 setPhoneDigits('');
                 setInstitutionRepresented('');
+                setDepartmentMunicipality('');
                 setPhotoUrl('');
                 setPhotoFile(null);
               }}
