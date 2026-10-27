@@ -89,9 +89,9 @@
 
 /* Layout Centrado para Formulario Directo de Compartir */
 .carnet-standalone-form-layout {
-  max-width: 760px;
-  margin: 30px auto 40px;
-  padding: 0 16px;
+  max-width: 680px;
+  margin: 36px auto 60px;
+  padding: 0 20px;
 }
 
 .carnet-form-centered-container {
@@ -99,9 +99,37 @@
 }
 
 .carnet-form-card.standalone-card {
-  max-width: 100%;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(249, 115, 22, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  width: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 36px 36px 40px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-sizing: border-box;
+}
+
+.carnet-form-header {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.carnet-form-header h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+.carnet-form-header p {
+  font-size: 0.92rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.5;
 }
 
 .clean-form-hero {
@@ -113,41 +141,46 @@
   display: flex;
   align-items: stretch;
   background: rgba(2, 6, 23, 0.7);
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
   overflow: hidden;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  min-height: 48px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
 }
 
 .phone-fixed-group:focus-within {
   border-color: #f97316;
   box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+  background: rgba(2, 6, 23, 0.9);
 }
 
 .phone-prefix-fixed {
-  background: rgba(15, 23, 42, 0.95);
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
-  color: #f97316;
+  background: rgba(249, 115, 22, 0.12);
+  border-right: 1.5px solid rgba(255, 255, 255, 0.14);
+  color: #fb923c;
   font-weight: 800;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   letter-spacing: 0.5px;
-  padding: 12px 14px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   user-select: none;
+  white-space: nowrap;
 }
 
 .phone-number-input {
   border: none !important;
   background: transparent !important;
   box-shadow: none !important;
-  padding: 12px 14px !important;
+  padding: 0 16px !important;
   font-size: 1rem !important;
-  font-family: monospace;
-  letter-spacing: 1.5px;
+  font-family: inherit;
+  letter-spacing: 1px;
   color: #ffffff !important;
   width: 100%;
+  min-height: 100%;
 }
 
 .phone-number-input:focus {
@@ -263,57 +296,64 @@
 }
 
 .form-sub-header {
-  margin: 28px 0 16px 0;
-  padding-top: 20px;
+  margin: 28px 0 20px 0;
+  padding-top: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .form-sub-header h4 {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  margin: 0 0 4px 0;
+  margin: 0 0 6px 0;
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #f87171;
+  color: #ffffff;
 }
 
 .form-sub-header p {
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   color: #94a3b8;
   margin: 0;
+  line-height: 1.45;
 }
 
 /* Alerta de Error */
 .carnet-alert-error {
   background: rgba(239, 68, 68, 0.15);
   border: 1px solid rgba(239, 68, 68, 0.45);
-  border-radius: 10px;
-  padding: 12px 16px;
+  border-radius: 12px;
+  padding: 14px 18px;
   color: #fca5a5;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 /* Bloque de Carga y Encuadre de Foto tipo Red Social */
 .carnet-upload-hero-box {
   display: flex;
   align-items: center;
-  gap: 20px;
-  background: rgba(2, 6, 23, 0.7);
-  border: 1.5px dashed rgba(249, 115, 22, 0.35);
+  gap: 24px;
+  background: rgba(2, 6, 23, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
-  padding: 18px 22px;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  padding: 22px 24px;
+  margin-bottom: 26px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.carnet-upload-hero-box:hover {
+  border-color: rgba(249, 115, 22, 0.35);
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.08);
 }
 
 .upload-hero-avatar-wrap {
-  width: 90px;
-  height: 120px;
+  width: 96px;
+  height: 128px;
   border-radius: 12px;
   border: 2px solid #f97316;
   overflow: hidden;
@@ -322,7 +362,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .avatar-preview-img {
@@ -336,38 +376,39 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
   color: #64748b;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   text-align: center;
 }
 
 .avatar-placeholder span {
-  font-size: 2rem;
+  font-size: 2.2rem;
 }
 
 .upload-hero-content {
   flex: 1;
+  min-width: 0;
 }
 
 .upload-hero-content h4 {
-  font-size: 0.96rem;
+  font-size: 1.02rem;
   font-weight: 800;
   color: #ffffff;
-  margin: 0 0 4px 0;
+  margin: 0 0 6px 0;
 }
 
 .upload-hero-content p {
-  font-size: 0.8rem;
+  font-size: 0.84rem;
   color: #94a3b8;
-  margin: 0 0 14px 0;
-  line-height: 1.35;
+  margin: 0 0 16px 0;
+  line-height: 1.4;
 }
 
 .upload-actions-cluster {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -375,35 +416,42 @@
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: #ffffff;
   border: none;
-  padding: 9px 18px;
-  border-radius: 8px;
-  font-size: 0.84rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.88rem;
   font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
-  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+  transition: all 0.2s ease;
 }
 
 .btn-upload-photo:hover {
   transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(249, 115, 22, 0.45);
 }
 
 .btn-reframe-photo {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #f1f5f9;
-  padding: 9px 16px;
-  border-radius: 8px;
-  font-size: 0.84rem;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  transition: all 0.2s;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-reframe-photo:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .btn-reframe-photo:hover {
@@ -513,13 +561,13 @@
 .form-fields-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 20px 18px;
 }
 
 .carnet-input-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
 .carnet-input-group.full-width {
@@ -527,48 +575,75 @@
 }
 
 .field-label {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: #cbd5e1;
+  color: #e2e8f0;
+  letter-spacing: 0.2px;
 }
 
 .carnet-input {
-  background: rgba(2, 6, 23, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 8px;
-  padding: 10px 14px;
+  background: rgba(2, 6, 23, 0.75);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 12px 16px;
   color: #ffffff;
-  font-size: 0.9rem;
-  transition: border-color 0.2s;
+  font-size: 0.95rem;
+  min-height: 48px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.carnet-input::placeholder {
+  color: #64748b;
 }
 
 .carnet-input:focus {
   outline: none;
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+  background: rgba(2, 6, 23, 0.9);
 }
 
 .carnet-select {
   cursor: pointer;
 }
 
-/* Nota de Entrega */
-.carnet-delivery-note {
-  margin-top: 24px;
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-radius: 10px;
-  padding: 12px 16px;
-  font-size: 0.84rem;
-  color: #bae6fd;
+/* Helpers de validación de dígitos */
+.dpi-validation-helper {
+  margin-top: 4px;
   display: flex;
   align-items: center;
-  gap: 10px;
+}
+
+.dpi-valid {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.dpi-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.74rem;
+  font-weight: 600;
 }
 
 /* Barra de Botón de Envío */
-.form-actions-bar {
-  margin-top: 28px;
+.carnet-form-submit-row {
+  margin-top: 32px;
 }
 
 .btn-submit-carnet {
@@ -576,21 +651,27 @@
   background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%);
   color: #ffffff;
   border: none;
-  padding: 15px 24px;
-  border-radius: 12px;
-  font-size: 1.05rem;
+  padding: 16px 28px;
+  border-radius: 14px;
+  font-size: 1.08rem;
   font-weight: 800;
+  letter-spacing: 0.3px;
   cursor: pointer;
-  box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 12px 28px -6px rgba(249, 115, 22, 0.45);
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 }
 
 .btn-submit-carnet:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px -5px rgba(249, 115, 22, 0.55);
+  box-shadow: 0 16px 36px -6px rgba(249, 115, 22, 0.6);
+}
+
+.btn-submit-carnet:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn-submit-carnet:disabled {
@@ -750,21 +831,108 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
+  .carnet-page-root {
+    padding-bottom: 40px;
+  }
+
+  .clean-form-hero {
+    padding: 24px 16px 18px;
+  }
+
+  .carnet-hero-title {
+    font-size: 1.45rem;
+  }
+
+  .carnet-hero-subtitle {
+    font-size: 0.88rem;
+  }
+
+  .carnet-standalone-form-layout {
+    margin: 16px auto 30px;
+    padding: 0 12px;
+  }
+
+  .carnet-form-card.standalone-card {
+    padding: 22px 16px 28px;
+    border-radius: 16px;
+  }
+
+  .carnet-form-header {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+  }
+
+  .carnet-form-header h2 {
+    font-size: 1.35rem;
+  }
+
+  .carnet-form-header p {
+    font-size: 0.85rem;
+  }
+
+  /* Bloque de foto apilado verticalmente en móviles */
+  .carnet-upload-hero-box {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 16px;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .upload-hero-avatar-wrap {
+    width: 90px;
+    height: 120px;
+  }
+
+  .upload-actions-cluster {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-upload-photo,
+  .btn-reframe-photo {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  /* Campos en columna única */
   .form-fields-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
+
   .carnet-input-group.full-width {
     grid-column: span 1;
   }
-  .carnet-hero-title {
-    font-size: 1.6rem;
+
+  .carnet-input,
+  .phone-fixed-group {
+    min-height: 48px;
+    font-size: 16px; /* Evita zoom automático en Safari iOS / Chrome */
   }
-  .carnet-photo-upload-block {
-    flex-direction: column;
-    text-align: center;
+
+  .phone-prefix-fixed {
+    padding: 0 12px;
+    font-size: 0.92rem;
   }
-  .photo-btn-group {
-    justify-content: center;
+
+  .phone-number-input {
+    padding: 0 12px !important;
+    font-size: 16px !important;
+  }
+
+  .btn-submit-carnet {
+    padding: 15px 20px;
+    font-size: 1.02rem;
+    border-radius: 12px;
+  }
+
+  .form-sub-header {
+    margin: 22px 0 16px 0;
+    padding-top: 18px;
   }
 }

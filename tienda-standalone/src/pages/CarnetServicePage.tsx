@@ -472,17 +472,6 @@ export default function CarnetServicePage() {
               </div>
             </div>
 
-            {/* Aviso de Entrega */}
-            <div className="carnet-delivery-note">
-              <span className="delivery-icon">🚚</span>
-              <div>
-                <strong>Acreditación & Entrega de Credencial:</strong>
-                <p>
-                  {carnetConfig.deliveryNotes || 'Tu credencial digital con código QR de acceso estará lista inmediatamente al enviar este formulario. La credencial física en PVC se entregará en la recepción del evento.'}
-                </p>
-              </div>
-            </div>
-
             {/* Botón Principal de Envío */}
             <div className="carnet-form-submit-row">
               <button
