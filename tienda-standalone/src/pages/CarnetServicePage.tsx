@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import StoreTopBar from '../components/StoreTopBar';
-import CarnetCardPreview, { type CarnetCardData, formatDpiString } from '../components/carnet/CarnetCardPreview';
+import CarnetCardPreview, { type CarnetCardData, formatDpiString, formatPhoneString } from '../components/carnet/CarnetCardPreview';
 import PhotoCropModal from '../components/carnet/PhotoCropModal';
 import { CARNET_THEMES } from '../data/carnetThemes';
 import { useStoreConfig } from '../context/StoreConfigContext';
@@ -14,16 +14,6 @@ import {
 import { soundEffects } from '../utils/soundEffects';
 import type { CarnetSubmission, CarnetTheme } from '../types/carnet';
 import './CarnetServicePage.css';
-
-const CONFERENCE_ROLE_SUGGESTIONS = [
-  'Conferencista / Speaker',
-  'Delegado / Asistente VIP',
-  'Empresario / Ejecutivo',
-  'Expositor / Stand Comercial',
-  'Prensa / Cobertura de Medios',
-  'Organizador / Comité Staff',
-  'Invitado Especial'
-];
 
 const GUATEMALA_DEPARTAMENTOS = [
   'Guatemala (Ciudad Capital)',
@@ -53,23 +43,24 @@ const GUATEMALA_DEPARTAMENTOS = [
 
 export default function CarnetServicePage() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const { carnetConfig, saveCarnetSubmission, storeConfig } = useStoreConfig();
 
-  // Referencias para captura de PNG y PDF
+  // Referencias para captura de PNG y PDF en segundo plano
   const frontRef = useRef<HTMLDivElement | null>(null);
   const backRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // Estados del Formulario Comercial y de Conferencia
+  // Estados del Formulario (Centrado en datos comerciales y contacto directo)
   const [fullName, setFullName] = useState<string>('');
   const [idNumber, setIdNumber] = useState<string>(''); // Exactamente 13 dígitos numéricos
-  const [role, setRole] = useState<string>('Delegado / Asistente VIP');
+  const [phoneDigits, setPhoneDigits] = useState<string>(''); // Exactamente 8 dígitos numéricos (+502 fijo)
   const [institutionRepresented, setInstitutionRepresented] = useState<string>('');
   const [departmentMunicipality, setDepartmentMunicipality] = useState<string>('Guatemala (Ciudad Capital)');
   const [photoUrl, setPhotoUrl] = useState<string>('');
   const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [selectedThemeId, setSelectedThemeId] = useState<string>(carnetConfig.defaultThemeId || 'volckan-cyber');
+
+  // El diseño de portada lo define el administrador desde el panel (sin selector en el formulario público)
+  const selectedThemeId = carnetConfig.defaultThemeId || 'volckan-cyber';
 
   // Estados del Modal de Encuadre Fotográfico tipo Red Social
   const [isCropModalOpen, setIsCropModalOpen] = useState<boolean>(false);
@@ -82,7 +73,7 @@ export default function CarnetServicePage() {
   const [exportingType, setExportingType] = useState<'png' | 'pdf' | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Tema activo
+  // Tema activo predeterminado
   const currentTheme = useMemo<CarnetTheme>(() => {
     return CARNET_THEMES.find(t => t.id === selectedThemeId) || CARNET_THEMES[0];
   }, [selectedThemeId]);
@@ -97,22 +88,32 @@ export default function CarnetServicePage() {
     setIdNumber(digitsOnly);
   };
 
-  // Datos en vivo para la vista previa 3D
+  // Manejo estricto de Teléfono con prefijo fijo +502 y exactamente 8 dígitos restantes
+  const cleanPhone = phoneDigits.replace(/\D/g, '').slice(0, 8);
+  const isPhoneValid = cleanPhone.length === 8;
+  const fullPhoneString = `+502 ${cleanPhone}`;
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 8);
+    setPhoneDigits(digitsOnly);
+  };
+
+  // Datos para la credencial y generación del código QR
   const previewData: CarnetCardData = useMemo(() => {
     return {
-      fullName: fullName.trim() || 'NOMBRE DEL ASISTENTE',
+      fullName: fullName.trim() || 'NOMBRE DEL TITULAR',
       idNumber: cleanDpi || '0000000000000',
-      role: role.trim() || 'ASISTENTE VIP',
+      phone: fullPhoneString,
       institutionRepresented: institutionRepresented.trim() || undefined,
       departmentMunicipality: departmentMunicipality.trim() || undefined,
       photoUrl: photoUrl || undefined,
       institutionName: carnetConfig.institutionName || 'VOLCKAN SUMMIT & NETWORKING',
       logoUrl: carnetConfig.logoUrl || undefined,
-      qrToken: `VOLCKAN-CONF-${cleanDpi || 'PASS'}-${Date.now().toString().slice(-4)}`
+      qrToken: `VOLCKAN-PASS-${cleanDpi || 'PASS'}-${Date.now().toString().slice(-4)}`
     };
-  }, [fullName, cleanDpi, role, institutionRepresented, departmentMunicipality, photoUrl, carnetConfig]);
+  }, [fullName, cleanDpi, fullPhoneString, institutionRepresented, departmentMunicipality, photoUrl, carnetConfig]);
 
-  // Manejo de selección inicial de foto: abre el modal de encuadre social
+  // Manejo de selección inicial de foto: abre automáticamente el modal de encuadre social
   const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -133,7 +134,6 @@ export default function CarnetServicePage() {
     };
     reader.readAsDataURL(file);
 
-    // Reset input para permitir seleccionar la misma foto si se desea
     e.target.value = '';
   };
 
@@ -156,12 +156,17 @@ export default function CarnetServicePage() {
     }
 
     if (carnetConfig.fields.requireIdNumber && !isDpiValid) {
-      setErrorMessage(`El DPI debe tener exactamente 13 dígitos numéricos. Has ingresado ${cleanDpi.length} de 13 dígitos.`);
+      setErrorMessage(`El DPI debe contener exactamente 13 dígitos numéricos. Has ingresado ${cleanDpi.length} de 13 dígitos.`);
+      return;
+    }
+
+    if (carnetConfig.fields.requirePhone && !isPhoneValid) {
+      setErrorMessage(`El número de teléfono debe contener exactamente 8 dígitos después de +502. Has ingresado ${cleanPhone.length} de 8 dígitos.`);
       return;
     }
 
     if (carnetConfig.fields.requirePhoto && !photoUrl) {
-      setErrorMessage('Es obligatorio subir y encuadrar una fotografía para tu credencial oficial.');
+      setErrorMessage('Es obligatorio subir y encuadrar una fotografía para emitir tu credencial.');
       return;
     }
 
@@ -189,10 +194,10 @@ export default function CarnetServicePage() {
         formId: carnetConfig.id || 'form-carnets-principal',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        schemaVersion: 2, // Versión 2: comercial y conferencias
+        schemaVersion: 3, // Versión 3: comercial, telefónico sin selectores visuales
         fullName: fullName.trim(),
         idNumber: cleanDpi,
-        role: role.trim(),
+        phone: fullPhoneString,
         institutionRepresented: institutionRepresented.trim() || undefined,
         departmentMunicipality: departmentMunicipality.trim() || undefined,
         photoUrl: finalPhotoUrl,
@@ -209,7 +214,7 @@ export default function CarnetServicePage() {
       setIsSuccessModalOpen(true);
       soundEffects.playSuccessFanfare();
     } catch (err) {
-      console.error('Error guardando credencial comercial:', err);
+      console.error('Error guardando credencial:', err);
       setErrorMessage('No se pudo enviar la solicitud. Por favor intenta de nuevo.');
     } finally {
       setIsSubmitting(false);
@@ -223,7 +228,7 @@ export default function CarnetServicePage() {
     soundEffects.playClick();
     try {
       const pngData = await captureElementToPng(frontRef.current);
-      downloadImage(pngData, `Credencial_Conferencia_${previewData.fullName.replace(/\s+/g, '_')}.png`);
+      downloadImage(pngData, `Credencial_${previewData.fullName.replace(/\s+/g, '_')}.png`);
       soundEffects.playSuccess();
     } catch (err) {
       console.error('Error exportando PNG:', err);
@@ -254,10 +259,10 @@ export default function CarnetServicePage() {
     const phone = carnetConfig.supportPhone || storeConfig.whatsappPhone || '50246741239';
     const text = [
       `¡Hola ${carnetConfig.institutionName}! 👋`,
-      `He completado mi registro de acreditación para la conferencia / evento comercial:`,
+      `He completado mi registro de acreditación y credencial oficial:`,
       `🪪 *Nombre:* ${fullName}`,
       `🆔 *DPI:* ${formatDpiString(cleanDpi)}`,
-      `🏷️ *Rol / Cargo:* ${role}`,
+      `📱 *Teléfono:* +502 ${cleanPhone}`,
       institutionRepresented ? `🏢 *Empresa / Institución:* ${institutionRepresented}` : '',
       departmentMunicipality ? `📍 *Procedencia:* ${departmentMunicipality}` : '',
       `📅 *Fecha de Registro:* ${new Date().toLocaleDateString()}`,
@@ -270,60 +275,45 @@ export default function CarnetServicePage() {
 
   return (
     <div className="carnet-page-root animate-fade-in">
-      <StoreTopBar slogan="Acreditación Oficial de Conferencias & Credenciales Comerciales con QR" />
+      <StoreTopBar slogan="Acreditación Oficial & Emisión de Credenciales con Código QR" />
 
-      {/* Hero Header de la Página */}
-      <section className="carnet-hero-banner">
+      {/* Renderizado fuera de pantalla para captura de PNG y PDF al enviar */}
+      <div style={{ position: 'fixed', top: '-9999px', left: '-9999px', pointerEvents: 'none', opacity: 0 }}>
+        <CarnetCardPreview
+          data={previewData}
+          theme={currentTheme}
+          frontRef={frontRef}
+          backRef={backRef}
+          side="both"
+        />
+      </div>
+
+      {/* Hero Header Limpio */}
+      <section className="carnet-hero-banner clean-form-hero">
         <div className="carnet-hero-container">
           <div className="carnet-hero-badge">
-            <span>🎟️</span> PLATAFORMA DE ACREDITACIÓN & CREDENCIALES VOLCKAN
+            <span>🪪</span> SISTEMA OFICIAL DE REGISTRO & ACREDITACIÓN
           </div>
           <h1 className="carnet-hero-title">
-            {carnetConfig.title || 'Acreditación Oficial & Credenciales de Conferencia'}
+            {carnetConfig.title || 'Acreditación Oficial & Emisión de Credenciales'}
           </h1>
           <p className="carnet-hero-subtitle">
-            {carnetConfig.subtitle || 'Ingresa tus datos profesionales, encuadra tu fotografía oficial y genera tu credencial digital y carnet imprimible CR80 con código QR.'}
+            {carnetConfig.subtitle || 'Ingresa tus datos personales y encuadra tu fotografía oficial para generar tu credencial con código QR.'}
           </p>
           <div className="carnet-institution-pill">
             <span className="inst-icon">🏛️</span>
-            <span>Evento / Anfitrión: <strong>{carnetConfig.institutionName || 'Volckan Summit'}</strong></span>
+            <span>Entidad Emisora: <strong>{carnetConfig.institutionName || 'Volckan Technologies'}</strong></span>
           </div>
         </div>
       </section>
 
-      {/* Contenedor Principal: Vista Previa 3D + Formulario */}
-      <main className="carnet-main-layout">
-        {/* Columna Izquierda: Vista Previa Interactiva */}
-        <aside className="carnet-preview-sticky-col">
-          <div className="preview-card-wrapper">
-            <div className="preview-header-bar">
-              <span className="live-indicator"><span className="pulse-dot" /> VISTA PREVIA EN VIVO</span>
-              <span className="cr80-tag">FORMATO CR80 COMERCIAL</span>
-            </div>
-
-            <CarnetCardPreview
-              data={previewData}
-              theme={currentTheme}
-              frontRef={frontRef}
-              backRef={backRef}
-              interactiveFlip={true}
-            />
-
-            <div className="preview-tip-box">
-              <span className="tip-icon">💡</span>
-              <p>
-                Haz clic sobre la credencial para voltearla. El frente contiene tus datos de acreditación y el reverso tu pase digital con código QR.
-              </p>
-            </div>
-          </div>
-        </aside>
-
-        {/* Columna Derecha: Formulario de Registro */}
-        <section className="carnet-form-col">
-          <form className="carnet-form-card" onSubmit={handleSubmit}>
+      {/* Layout Centrado Exclusivo para Formulario de Grupo (Sin vista previa lateral) */}
+      <main className="carnet-standalone-form-layout">
+        <div className="carnet-form-centered-container">
+          <form className="carnet-form-card standalone-card" onSubmit={handleSubmit}>
             <div className="carnet-form-header">
-              <h2>Formulario de Acreditación Oficial</h2>
-              <p>Todos los datos se verificarán al ingresar a las conferencias y eventos.</p>
+              <h2>Formulario de Registro de Asistentes</h2>
+              <p>Por favor completa cada uno de los campos solicitados para tu credencial oficial.</p>
             </div>
 
             {errorMessage && (
@@ -347,9 +337,9 @@ export default function CarnetServicePage() {
               </div>
 
               <div className="upload-hero-content">
-                <h4>Fotografía del Titular (Proporción 3:4)</h4>
+                <h4>Fotografía para Credencial Oficial (Proporción 3:4)</h4>
                 <p>
-                  Sube tu foto y utiliza nuestro encuadre interactivo para recortarla centrada y con calidad profesional.
+                  Sube tu fotografía y ajústala fácilmente con nuestro recortador interactivo con guía de rostro.
                 </p>
 
                 <div className="upload-actions-cluster">
@@ -358,7 +348,7 @@ export default function CarnetServicePage() {
                     className="btn-upload-photo"
                     onClick={() => fileInputRef.current?.click()}
                   >
-                    <span>📷</span> {photoUrl ? 'Cambiar / Re-encuadrar Foto' : 'Subir Fotografía'}
+                    <span>📷</span> {photoUrl ? 'Cambiar / Re-encuadrar Foto' : 'Subir y Encuadrar Foto'}
                   </button>
 
                   {photoUrl && rawImageSrcForCrop && (
@@ -382,51 +372,16 @@ export default function CarnetServicePage() {
               </div>
             </div>
 
-            {/* SECCIÓN 2: Selector de Fondo de Portada */}
-            {carnetConfig.allowUserThemeSelection && (
-              <div className="carnet-theme-selector-block">
-                <label className="field-label">
-                  <span>🎨</span> Selecciona el Estilo de Portada para tu Credencial
-                </label>
-                <div className="theme-chips-grid">
-                  {CARNET_THEMES.filter(t => carnetConfig.allowedThemes?.includes(t.id) ?? true).map(th => {
-                    const isSelected = selectedThemeId === th.id;
-                    return (
-                      <button
-                        key={th.id}
-                        type="button"
-                        className={`theme-chip-btn ${isSelected ? 'active' : ''}`}
-                        onClick={() => {
-                          soundEffects.playClick();
-                          setSelectedThemeId(th.id);
-                        }}
-                      >
-                        <span 
-                          className="theme-chip-swatch" 
-                          style={{ background: th.frontBg, borderColor: th.accentColor }} 
-                        />
-                        <div className="theme-chip-info">
-                          <span className="theme-chip-title">{th.name}</span>
-                          <span className="theme-chip-desc">{th.description}</span>
-                        </div>
-                        {isSelected && <span className="theme-selected-mark">✓</span>}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* SECCIÓN 3: Datos de Acreditación y Procedencia */}
+            {/* SECCIÓN 2: Datos del Titular (Sin selectores de diseño de portada) */}
             <div className="form-sub-header">
-              <h4><span>🪪</span> Información del Asistente / Titular</h4>
-              <p>Datos impresos en el frente oficial de la tarjeta PVC y asociados al código QR.</p>
+              <h4><span>📋</span> Datos para la Credencial</h4>
+              <p>Ingresa la información exactamente como debe aparecer en tu carnet impreso y digital.</p>
             </div>
 
             <div className="form-fields-grid">
               {/* Nombre Completo */}
               <div className="carnet-input-group full-width">
-                <label className="field-label">Nombre Completo *</label>
+                <label className="field-label">Nombre Completo del Titular *</label>
                 <input
                   type="text"
                   required
@@ -460,21 +415,30 @@ export default function CarnetServicePage() {
                 </div>
               </div>
 
-              {/* Rol / Acreditación */}
+              {/* Teléfono Móvil con Prefijo Fijo +502 y 8 dígitos restantes */}
               <div className="carnet-input-group">
-                <label className="field-label">Cargo o Tipo de Acreditación *</label>
-                <input
-                  type="text"
-                  required
-                  list="conference-roles-list"
-                  placeholder="Ej: Conferencista, Delegado VIP..."
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="carnet-input"
-                />
-                <datalist id="conference-roles-list">
-                  {CONFERENCE_ROLE_SUGGESTIONS.map(r => <option key={r} value={r} />)}
-                </datalist>
+                <label className="field-label">
+                  <span>Número de Teléfono Celular *</span>
+                </label>
+                <div className="phone-fixed-group">
+                  <span className="phone-prefix-fixed">+502</span>
+                  <input
+                    type="tel"
+                    required
+                    maxLength={9}
+                    placeholder="5555 1234"
+                    value={cleanPhone.length > 4 ? `${cleanPhone.slice(0, 4)} ${cleanPhone.slice(4)}` : cleanPhone}
+                    onChange={handlePhoneChange}
+                    className={`carnet-input phone-number-input ${cleanPhone.length > 0 && !isPhoneValid ? 'input-warning' : ''}`}
+                  />
+                </div>
+                <div className="dpi-validation-helper">
+                  <span className={isPhoneValid ? 'dpi-valid' : 'dpi-pending'}>
+                    {isPhoneValid 
+                      ? '✓ Teléfono de 8 dígitos verificado' 
+                      : `Faltan dígitos: ${cleanPhone.length} de 8`}
+                  </span>
+                </div>
               </div>
 
               {/* Institución o Empresa que Representa */}
@@ -483,7 +447,7 @@ export default function CarnetServicePage() {
                 <input
                   type="text"
                   required
-                  placeholder="Ej: Banco Continental, CMI, Universidad..."
+                  placeholder="Ej: Banco Continental, CMI, Empresa Propia..."
                   value={institutionRepresented}
                   onChange={(e) => setInstitutionRepresented(e.target.value)}
                   className="carnet-input"
@@ -528,15 +492,15 @@ export default function CarnetServicePage() {
               >
                 {isSubmitting ? (
                   <span className="btn-spinner-content">
-                    <span className="spinner-circle" /> Procesando y Generando Credencial...
+                    <span className="spinner-circle" /> Procesando y Registrando Credencial...
                   </span>
                 ) : (
-                  <span>🚀 Emitir Credencial Oficial de Conferencia</span>
+                  <span>🚀 Enviar Datos y Registrar Credencial</span>
                 )}
               </button>
             </div>
           </form>
-        </section>
+        </div>
       </main>
 
       {/* Modal Interactivo de Encuadre y Recorte tipo Red Social */}
@@ -555,9 +519,9 @@ export default function CarnetServicePage() {
               <span>🎉</span> REGISTRO COMPLETADO EXITOSAMENTE
             </div>
 
-            <h2 className="modal-title">¡Tu Credencial ha sido Generada!</h2>
+            <h2 className="modal-title">¡Tu Credencial ha sido Registrada!</h2>
             <p className="modal-desc">
-              Hola <strong>{submittedData.fullName}</strong>, tu registro comercial ha sido procesado de forma segura en los servidores de Volckan.
+              Hola <strong>{submittedData.fullName}</strong>, tus datos han sido procesados y tu pase con código QR ha sido emitido.
             </p>
 
             <div className="modal-card-display">
@@ -565,7 +529,7 @@ export default function CarnetServicePage() {
                 data={{
                   fullName: submittedData.fullName,
                   idNumber: submittedData.idNumber,
-                  role: submittedData.role,
+                  phone: submittedData.phone,
                   institutionRepresented: submittedData.institutionRepresented,
                   departmentMunicipality: submittedData.departmentMunicipality,
                   photoUrl: submittedData.photoUrl,
@@ -603,7 +567,7 @@ export default function CarnetServicePage() {
                 className="btn-modal-whatsapp"
                 onClick={handleShareToWhatsApp}
               >
-                💬 Confirmar Acreditación por WhatsApp
+                💬 Confirmar Registro por WhatsApp
               </button>
             </div>
 

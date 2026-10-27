@@ -87,6 +87,73 @@
   align-items: start;
 }
 
+/* Layout Centrado para Formulario Directo de Compartir */
+.carnet-standalone-form-layout {
+  max-width: 760px;
+  margin: 30px auto 40px;
+  padding: 0 16px;
+}
+
+.carnet-form-centered-container {
+  width: 100%;
+}
+
+.carnet-form-card.standalone-card {
+  max-width: 100%;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(249, 115, 22, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.clean-form-hero {
+  padding: 36px 20px 24px;
+}
+
+/* Grupo de Teléfono con prefijo fijo +502 */
+.phone-fixed-group {
+  display: flex;
+  align-items: stretch;
+  background: rgba(2, 6, 23, 0.7);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.phone-fixed-group:focus-within {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+}
+
+.phone-prefix-fixed {
+  background: rgba(15, 23, 42, 0.95);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f97316;
+  font-weight: 800;
+  font-size: 0.92rem;
+  letter-spacing: 0.5px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.phone-number-input {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 12px 14px !important;
+  font-size: 1rem !important;
+  font-family: monospace;
+  letter-spacing: 1.5px;
+  color: #ffffff !important;
+  width: 100%;
+}
+
+.phone-number-input:focus {
+  outline: none !important;
+}
+
 /* Columna Izquierda: Vista Previa Pegajosa */
 .carnet-preview-sticky-col {
   position: sticky;

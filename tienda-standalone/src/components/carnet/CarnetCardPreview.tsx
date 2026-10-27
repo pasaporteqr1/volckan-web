@@ -6,7 +6,8 @@ import './CarnetCardPreview.css';
 export interface CarnetCardData {
   fullName: string;
   idNumber: string; // DPI de 13 dígitos
-  role: string; // Cargo / Acreditación
+  phone?: string; // Teléfono (+502 ########)
+  role?: string;
   institutionRepresented?: string; // Institución o Empresa que representa
   departmentMunicipality?: string; // Departamento / Municipio
   photoUrl?: string;
@@ -37,6 +38,20 @@ export function formatDpiString(raw?: string): string {
   return raw;
 }
 
+// Función auxiliar para dar formato a número de teléfono guatemalteco (+502 #### ####)
+export function formatPhoneString(raw?: string): string {
+  if (!raw) return '+502 0000 0000';
+  const clean = raw.replace(/\D/g, '');
+  if (clean.length === 11 && clean.startsWith('502')) {
+    const num = clean.slice(3);
+    return `+502 ${num.slice(0, 4)} ${num.slice(4)}`;
+  }
+  if (clean.length === 8) {
+    return `+502 ${clean.slice(0, 4)} ${clean.slice(4)}`;
+  }
+  return raw.startsWith('+502') ? raw : `+502 ${raw}`;
+}
+
 export const CarnetCardPreview: React.FC<CarnetCardPreviewProps> = ({
   data,
   theme,
@@ -56,12 +71,12 @@ export const CarnetCardPreview: React.FC<CarnetCardPreviewProps> = ({
     }
   }, [side]);
 
-  // Generar código QR dinámico cuando cambie el token o ID
+  // Generar código QR dinámico cuando cambie el token, ID o teléfono
   useEffect(() => {
     const qrPayload = data.qrToken || 
-      `https://volckan.com/tienda/#/carnet/verify?id=${encodeURIComponent(data.idNumber || 'DEMO')}&name=${encodeURIComponent(data.fullName || 'VOLCKAN')}`;
+      `https://volckan.com/tienda/#/carnet/verify?id=${encodeURIComponent(data.idNumber || 'DEMO')}&phone=${encodeURIComponent(data.phone || '')}`;
     generateQrDataUrl(qrPayload).then(url => setQrDataUrl(url));
-  }, [data.qrToken, data.idNumber, data.fullName]);
+  }, [data.qrToken, data.idNumber, data.phone]);
 
   const toggleFlip = () => {
     if (!interactiveFlip) return;
@@ -168,7 +183,7 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
               {data.institutionName || 'CONGRESO & NETWORKING'}
             </span>
             <span className="carnet-subtag" style={{ color: theme.accentColor }}>
-              ACREDITACIÓN OFICIAL DE CONFERENCIA
+              ACREDITACIÓN OFICIAL & CREDENCIAL
             </span>
           </div>
         </div>
@@ -198,12 +213,13 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
 
         {/* Datos Comerciales del Titular */}
         <div className="carnet-user-details">
+          {/* Badge con el Teléfono del Titular */}
           <div className="carnet-role-pill" style={{ background: theme.badgeBg, color: theme.badgeText, borderColor: theme.borderColor }}>
-            {data.role || 'ASISTENTE / DELEGADO'}
+            📱 {formatPhoneString(data.phone)}
           </div>
 
           <h3 className="carnet-user-name" style={{ color: theme.textColor }}>
-            {data.fullName || 'NOMBRE DEL ASISTENTE'}
+            {data.fullName || 'NOMBRE DEL TITULAR'}
           </h3>
 
           <div className="carnet-meta-grid">
@@ -216,7 +232,7 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
 
             {data.institutionRepresented && (
               <div className="carnet-meta-item">
-                <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>INSTITUCIÓN / EMPRESA</span>
+                <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>EMPRESA / ENTIDAD</span>
                 <span className="carnet-meta-val" style={{ color: theme.textColor }}>
                   {data.institutionRepresented}
                 </span>
@@ -225,7 +241,7 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
 
             {data.departmentMunicipality && (
               <div className="carnet-meta-item">
-                <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>DEPARTAMENTO / MUNICIPIO</span>
+                <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>PROCEDENCIA</span>
                 <span className="carnet-meta-val" style={{ color: theme.accentColor }}>
                   📍 {data.departmentMunicipality}
                 </span>
@@ -240,7 +256,7 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
         <div className="carnet-security-strip" />
         <div className="carnet-footer-labels">
           <span className="security-tag" style={{ color: theme.subtextColor }}>ACREDITACIÓN COMERCIAL · VOLCKAN ID</span>
-          <span className="security-hologram" style={{ color: theme.accentColor }}>◈ ◈ CONFERENCIA ◈ ◈</span>
+          <span className="security-hologram" style={{ color: theme.accentColor }}>◈ ◈ OFICIAL ◈ ◈</span>
         </div>
       </div>
     </div>
@@ -260,7 +276,7 @@ const BackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme; qrDa
 
       {/* Cuerpo del Reverso */}
       <div className="carnet-body-back">
-        {/* Contenedor del QR de Acceso y Networking */}
+        {/* Contenedor del QR de Acceso y Validación */}
         <div className="carnet-qr-container">
           <div className="carnet-qr-box" style={{ borderColor: theme.accentColor }}>
             {qrDataUrl ? (
@@ -274,47 +290,49 @@ const BackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme; qrDa
           </span>
         </div>
 
-        {/* Datos Comerciales y de Acceso */}
+        {/* Datos Comerciales y de Contacto */}
         <div className="carnet-emergency-details">
           <div className="carnet-commercial-badge" style={{ background: theme.badgeBg, borderColor: theme.borderColor }}>
             <span className="badge-bullet">🎟️</span>
-            <span className="badge-text" style={{ color: theme.badgeText }}>PASE DE ACCESO CONFERENCIA</span>
+            <span className="badge-text" style={{ color: theme.badgeText }}>PASE OFICIAL DE ACCESO</span>
           </div>
+
+          {data.phone && (
+            <div className="carnet-emergency-item">
+              <span className="em-label" style={{ color: theme.subtextColor }}>TELÉFONO REGISTRADO:</span>
+              <span className="em-val" style={{ color: theme.accentColor, fontWeight: 700 }}>
+                {formatPhoneString(data.phone)}
+              </span>
+            </div>
+          )}
 
           {data.institutionRepresented && (
             <div className="carnet-emergency-item">
-              <span className="em-label" style={{ color: theme.subtextColor }}>ENTIDAD / EMPRESA:</span>
+              <span className="em-label" style={{ color: theme.subtextColor }}>EMPRESA / INSTITUCIÓN:</span>
               <span className="em-val" style={{ color: theme.textColor, fontWeight: 700 }}>{data.institutionRepresented}</span>
             </div>
           )}
 
           {data.departmentMunicipality && (
             <div className="carnet-emergency-item">
-              <span className="em-label" style={{ color: theme.subtextColor }}>PROCEDENCIA:</span>
+              <span className="em-label" style={{ color: theme.subtextColor }}>DEPARTAMENTO / MUNICIPIO:</span>
               <span className="em-val" style={{ color: theme.textColor }}>📍 {data.departmentMunicipality}</span>
             </div>
           )}
 
           <div className="carnet-emergency-item">
-            <span className="em-label" style={{ color: theme.subtextColor }}>DPI REGISTRADO:</span>
-            <span className="em-val" style={{ color: theme.accentColor, fontFamily: 'monospace' }}>
+            <span className="em-label" style={{ color: theme.subtextColor }}>DPI CUI VALIDADO:</span>
+            <span className="em-val" style={{ color: theme.textColor, fontFamily: 'monospace' }}>
               {formatDpiString(data.idNumber)}
-            </span>
-          </div>
-
-          <div className="carnet-emergency-item">
-            <span className="em-label" style={{ color: theme.subtextColor }}>ZONAS AUTORIZADAS:</span>
-            <span className="em-val" style={{ color: theme.textColor, fontSize: '0.66rem' }}>
-              Plenarias · Stands Comerciales · Networking
             </span>
           </div>
         </div>
       </div>
 
-      {/* Términos y Aviso Legal Comercial al pie */}
+      {/* Términos y Aviso Legal al pie */}
       <div className="carnet-footer-back">
         <p className="carnet-legal-notice" style={{ color: theme.subtextColor }}>
-          Credencial comercial intransferible para acceso a conferencias, exposiciones y ruedas de negocios. Presentar en los puntos de control y acreditación QR.
+          Credencial personal e intransferible para acceso y acreditación oficial de {data.institutionName || 'la institución emisora'}.
         </p>
         <div className="carnet-back-bar">
           <span className="volckan-seal" style={{ color: theme.accentColor }}>POWERED BY VOLCKAN SMART ID</span>

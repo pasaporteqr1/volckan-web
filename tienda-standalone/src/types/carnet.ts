@@ -17,7 +17,7 @@ export interface CarnetTheme {
 
 export interface CarnetFieldConfig {
   requireIdNumber: boolean; // Exigir DPI de 13 dígitos
-  requireRole: boolean; // Cargo / Acreditación
+  requirePhone: boolean; // Teléfono (+502 fijo con 8 dígitos)
   requireInstitutionRepresented: boolean; // Empresa / Institución que representa
   requireDepartmentMunicipality: boolean; // Departamento y Municipio
   requirePhoto: boolean;
@@ -49,12 +49,13 @@ export interface CarnetSubmission {
   formId: string;
   createdAt: string;
   updatedAt?: string;
-  schemaVersion?: number; // v2: comercial y conferencias
+  schemaVersion?: number; // v3: comercial y telefónico
   
   // Datos comerciales y de acreditación (desacoplados del diseño)
   fullName: string;
   idNumber: string; // DPI con exactamente 13 dígitos
-  role: string; // Cargo / Tipo de Acreditación (Conferencista, Delegado, Prensa, etc.)
+  phone: string; // Teléfono oficial (+502 ########)
+  role?: string; // Opcional / Legado
   institutionRepresented?: string; // Institución o Empresa a la que representa
   departmentMunicipality?: string; // Departamento / Municipio de procedencia
   

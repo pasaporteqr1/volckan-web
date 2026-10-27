@@ -18,6 +18,8 @@ export default function App() {
           <Route path="/producto/:productId" element={<StorePage />} />
           <Route path="/carnet" element={<CarnetServicePage />} />
           <Route path="/carnets" element={<CarnetServicePage />} />
+          <Route path="/registro" element={<CarnetServicePage />} />
+          <Route path="/registro-carnet" element={<CarnetServicePage />} />
           <Route path="/carnet/:formId" element={<CarnetServicePage />} />
           <Route path="/servicios/carnet" element={<CarnetServicePage />} />
           <Route path="/servicios/carnets" element={<CarnetServicePage />} />

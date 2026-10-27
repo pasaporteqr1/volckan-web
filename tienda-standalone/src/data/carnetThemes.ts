@@ -112,7 +112,7 @@ export const DEFAULT_CARNET_FORM_CONFIG: CarnetServiceFormConfig = {
   allowedThemes: ['volckan-cyber', 'executive-navy-gold', 'emerald-security', 'cyberpunk-neon', 'minimal-frost', 'royal-crimson'],
   fields: {
     requireIdNumber: true, // DPI de 13 dígitos
-    requireRole: true,
+    requirePhone: true, // Teléfono (+502 con 8 dígitos)
     requireInstitutionRepresented: true, // Empresa / Institución que representa
     requireDepartmentMunicipality: true, // Departamento / Municipio
     requirePhoto: true,

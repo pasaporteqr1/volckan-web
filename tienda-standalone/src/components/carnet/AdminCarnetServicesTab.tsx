@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useStoreConfig } from '../../context/StoreConfigContext';
 import { CARNET_THEMES } from '../../data/carnetThemes';
-import CarnetCardPreview, { type CarnetCardData, formatDpiString } from './CarnetCardPreview';
+import CarnetCardPreview, { type CarnetCardData, formatDpiString, formatPhoneString } from './CarnetCardPreview';
 import { 
   exportSingleCarnetPdf, 
   exportBatchCarnetsPdf, 
@@ -40,10 +40,10 @@ export const AdminCarnetServicesTab: React.FC = () => {
   const modalBackRef = useRef<HTMLDivElement | null>(null);
   const logoInputRef = useRef<HTMLInputElement | null>(null);
 
-  // Enlace oficial directo para compartir
+  // Enlace oficial directo para compartir (Formulario limpio sin vista previa lateral)
   const origin = window.location.origin;
   const pathname = window.location.pathname.replace(/\/admin\/?$/, '');
-  const publicFormUrl = `${origin}${pathname}#/carnet`;
+  const publicFormUrl = `${origin}${pathname}#/registro`;
 
   // Actualizar configuración local
   const updateConfigField = <K extends keyof CarnetServiceFormConfig>(key: K, val: CarnetServiceFormConfig[K]) => {
@@ -109,11 +109,11 @@ export const AdminCarnetServicesTab: React.FC = () => {
   // Compartir enlace por WhatsApp
   const handleShareLinkWhatsApp = () => {
     const text = [
-      `¡Hola! 👋`,
-      `Te compartimos el enlace oficial para ingresar tus datos y emitir tu credencial oficial:`,
+      `¡Hola a todos! 👋`,
+      `Les compartimos el enlace oficial para ingresar sus datos y fotografía para la acreditación y credencial oficial:`,
       `🔗 ${publicFormUrl}`,
       ``,
-      `Por favor sube tu fotografía con fondo claro y verifica que tus datos estén correctos. ¡Gracias!`
+      `Por favor ingresen su nombre, DPI (13 dígitos), teléfono, empresa y departamento, y encuadren su fotografía con fondo claro. ¡Muchas gracias!`
     ].join('\n');
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   };
@@ -126,7 +126,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
       return (
         sub.fullName.toLowerCase().includes(q) ||
         sub.idNumber.toLowerCase().includes(q) ||
-        sub.role.toLowerCase().includes(q) ||
+        (sub.phone && sub.phone.toLowerCase().includes(q)) ||
         (sub.institutionRepresented && sub.institutionRepresented.toLowerCase().includes(q)) ||
         (sub.departmentMunicipality && sub.departmentMunicipality.toLowerCase().includes(q))
       );
@@ -280,7 +280,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
       'Estado',
       'Nombre Completo',
       'DPI (13 Dígitos)',
-      'Cargo / Acreditación',
+      'Teléfono (+502)',
       'Empresa / Institución',
       'Departamento / Municipio',
       'Tema Carnet',
@@ -299,7 +299,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
       escapeCsv(s.status),
       escapeCsv(s.fullName),
       escapeCsv(formatDpiString(s.idNumber)),
-      escapeCsv(s.role),
+      escapeCsv(formatPhoneString(s.phone)),
       escapeCsv(s.institutionRepresented || ''),
       escapeCsv(s.departmentMunicipality || ''),
       escapeCsv(s.themeId),
@@ -341,6 +341,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
   const getSubmissionPreviewData = (sub: CarnetSubmission): CarnetCardData => ({
     fullName: sub.fullName,
     idNumber: sub.idNumber,
+    phone: sub.phone,
     role: sub.role,
     institutionRepresented: sub.institutionRepresented,
     departmentMunicipality: sub.departmentMunicipality,
@@ -382,7 +383,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
           <span className="link-badge">🔗 ENLACE OFICIAL DEL FORMULARIO PÚBLICO</span>
           <h4>Comparte este link con tus usuarios, estudiantes o colaboradores</h4>
           <p>
-            Al abrir este enlace, las personas completan su información, suben su foto y ven su carnet en tiempo real antes de enviarlo.
+            Al abrir este enlace, los interesados ingresan a un formulario ágil y optimizado para móviles (sin vista previa pesada), ideal para compartir en grupos de WhatsApp y redes.
           </p>
           <div className="link-display-row">
             <input 
@@ -558,10 +559,10 @@ export const AdminCarnetServicesTab: React.FC = () => {
               <label className="checkbox-item">
                 <input
                   type="checkbox"
-                  checked={localFormConfig.fields.requireRole}
-                  onChange={(e) => updateFieldRequirement('requireRole', e.target.checked)}
+                  checked={localFormConfig.fields.requirePhone}
+                  onChange={(e) => updateFieldRequirement('requirePhone', e.target.checked)}
                 />
-                <span>Exigir Cargo o Tipo de Acreditación</span>
+                <span>Exigir Teléfono Móvil (+502 con 8 dígitos)</span>
               </label>
 
               <label className="checkbox-item">
@@ -715,12 +716,13 @@ export const AdminCarnetServicesTab: React.FC = () => {
                     </div>
                     <div className="sub-main-info">
                       <strong className="sub-name">{sub.fullName}</strong>
-                      <span className="sub-role-badge">{sub.role}</span>
+                      <span className="sub-role-badge">📱 {formatPhoneString(sub.phone)}</span>
                       <span className="sub-meta-id">DPI: {formatDpiString(sub.idNumber)}</span>
                     </div>
                   </div>
 
                   <div className="sub-card-details">
+                    {sub.phone && <div><span>Teléfono:</span> 📞 {formatPhoneString(sub.phone)}</div>}
                     {sub.institutionRepresented && <div><span>Empresa:</span> {sub.institutionRepresented}</div>}
                     {sub.departmentMunicipality && <div><span>Procedencia:</span> 📍 {sub.departmentMunicipality}</div>}
                     <div><span>Diseño:</span> {theme.name}</div>
