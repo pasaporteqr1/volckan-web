@@ -217,15 +217,15 @@ export default function CarnetServicePage() {
         fullName: fullName.trim(),
         idNumber: cleanDpi,
         phone: fullPhoneString,
-        institutionRepresented: institutionRepresented.trim() || undefined,
-        departmentMunicipality: departmentMunicipality.trim() || undefined,
+        institutionRepresented: institutionRepresented.trim() || '',
+        departmentMunicipality: departmentMunicipality.trim() || '',
         photoUrl: finalPhotoUrl,
-        photoStoragePath,
         themeId: selectedThemeId,
         themeSnapshot: currentTheme, // Congela la paleta y diseño exactos al momento de emisión
         qrToken: `https://volckan.com/tienda/#/carnet/verify?id=${encodeURIComponent(cleanDpi)}`,
         status: 'pendiente',
-        institutionName: carnetConfig.institutionName
+        institutionName: carnetConfig.institutionName || 'Mesa de Competitividad de Quetzaltenango',
+        ...(photoStoragePath ? { photoStoragePath } : {})
       };
 
       await saveCarnetSubmission(submission);

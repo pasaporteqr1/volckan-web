@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { collection, deleteDoc, doc, onSnapshot, setDoc, query, orderBy } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, setDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import { 
   DEFAULT_MERCADO_PRODUCTS, 
@@ -37,6 +37,22 @@ interface StoreConfigContextProps {
   saveCarnetSubmission: (submission: CarnetSubmission) => Promise<void>;
   updateCarnetSubmissionStatus: (id: string, status: 'pendiente' | 'aprobado' | 'impreso') => Promise<void>;
   deleteCarnetSubmission: (id: string) => Promise<void>;
+  refreshCarnetSubmissions: () => Promise<void>;
+}
+
+// Sanitizador seguro para Firestore (elimina recursivamente undefined)
+export function sanitizeFirestoreData<T extends Record<string, any>>(obj: T): T {
+  const result: any = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value !== undefined) {
+      if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+        result[key] = sanitizeFirestoreData(value);
+      } else {
+        result[key] = value;
+      }
+    }
+  }
+  return result;
 }
 
 const DEFAULT_STORE_CONFIG: StoreAnnouncementConfig = {
@@ -156,13 +172,14 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       }, (err) => console.warn('[StoreConfig] Error leyendo categorías de Firestore:', err));
       unsubs.push(unsubCategories);
 
-      // 4. Configuración general / Anuncios
-      const unsubPortal = onSnapshot(doc(db, 'config', 'portal'), (snapshot) => {
+      // 4. Configuración general / Anuncios (Soporta mercado_config y portal)
+      const unsubPortal = onSnapshot(doc(db, 'config', 'mercado_config'), (snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.data();
-          if (data?.mercadoConfig) {
+          const cfg = data?.mercadoConfig || data;
+          if (cfg) {
             setStoreConfig(prev => {
-              const updated = { ...prev, ...data.mercadoConfig };
+              const updated = { ...prev, ...cfg };
               try { localStorage.setItem('store_announcement_cache', JSON.stringify(updated)); } catch {}
               return updated;
             });
@@ -170,7 +187,7 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
         }
         setLoading(false);
       }, (err) => {
-        console.warn('[StoreConfig] Error leyendo config/portal de Firestore:', err);
+        console.warn('[StoreConfig] Error leyendo config/mercado_config de Firestore:', err);
         setLoading(false);
       });
       unsubs.push(unsubPortal);
@@ -191,30 +208,31 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       unsubs.push(unsubCarnetConfig);
 
       // 6. Lista de Envíos de Carnets (Colección dedicada carnet_submissions)
+      // Escuchamos la colección directa y ordenamos en memoria para garantizar que ningún documento se excluya
       const carnetSubmissionsCol = collection(db, 'carnet_submissions');
-      const qCarnets = query(carnetSubmissionsCol, orderBy('createdAt', 'desc'));
-      const unsubCarnetSubs = onSnapshot(qCarnets, (snapshot) => {
-        if (!snapshot.empty) {
-          const subs: CarnetSubmission[] = [];
-          snapshot.forEach((docSnap) => {
-            subs.push({ ...(docSnap.data() as CarnetSubmission), id: docSnap.id });
-          });
-          setCarnetSubmissions(subs);
-          try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(subs)); } catch {}
-        } else {
-          // Fallback de transición: si la colección está vacía, verificar documento legado
-          const legacyDoc = doc(db, 'data', 'carnet_submissions');
-          onSnapshot(legacyDoc, (legacySnap) => {
-            if (legacySnap.exists()) {
-              const data = legacySnap.data();
-              if (Array.isArray(data?.submissions) && data.submissions.length > 0) {
-                setCarnetSubmissions(data.submissions);
-                try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(data.submissions)); } catch {}
-              }
-            }
-          }, () => {});
+      const unsubCarnetSubs = onSnapshot(carnetSubmissionsCol, (snapshot) => {
+        const subs: CarnetSubmission[] = [];
+        snapshot.forEach((docSnap) => {
+          subs.push({ ...(docSnap.data() as CarnetSubmission), id: docSnap.id });
+        });
+        // Orden cronológico descendente (los más recientes primero)
+        subs.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+        setCarnetSubmissions(subs);
+        try {
+          localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(subs));
+        } catch {
+          try {
+            // Si localStorage excede cuota por imágenes Base64, guardamos versión compacta
+            const lightweight = subs.map(s => ({
+              ...s,
+              photoUrl: s.photoUrl && s.photoUrl.startsWith('data:') ? '' : s.photoUrl
+            }));
+            localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(lightweight));
+          } catch {}
         }
-      }, (err) => console.warn('[StoreConfig] Error leyendo carnet_submissions:', err));
+      }, (err) => {
+        console.warn('[StoreConfig] Error leyendo carnet_submissions en tiempo real:', err);
+      });
       unsubs.push(unsubCarnetSubs);
 
     } catch (err) {
@@ -259,29 +277,40 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
     setStoreConfig(updated);
     try { localStorage.setItem('store_announcement_cache', JSON.stringify(updated)); } catch {}
     if (db) {
-      const docRef = doc(db, 'config', 'portal');
-      await setDoc(docRef, { mercadoConfig: updated, updatedAt: new Date().toISOString() }, { merge: true });
+      const docRef = doc(db, 'config', 'mercado_config');
+      await setDoc(docRef, { ...updated, updatedAt: new Date().toISOString() }, { merge: true });
     }
   };
 
   const saveCarnetConfig = async (newConfig: Partial<CarnetServiceFormConfig>) => {
     const updated: CarnetServiceFormConfig = { ...carnetConfig, ...newConfig, updatedAt: new Date().toISOString() };
-    setCarnetConfig(updated);
-    try { localStorage.setItem('store_carnet_config_cache', JSON.stringify(updated)); } catch {}
+    const cleanConfig = sanitizeFirestoreData(updated);
+    setCarnetConfig(cleanConfig);
+    try { localStorage.setItem('store_carnet_config_cache', JSON.stringify(cleanConfig)); } catch {}
     if (db) {
       const docRef = doc(db, 'config', 'servicios_carnets');
-      await setDoc(docRef, { carnetConfig: updated, updatedAt: new Date().toISOString() }, { merge: true });
+      await setDoc(docRef, { carnetConfig: cleanConfig, updatedAt: new Date().toISOString() }, { merge: true });
     }
   };
 
   const saveCarnetSubmission = async (submission: CarnetSubmission) => {
-    const updated = [submission, ...carnetSubmissions.filter(s => s.id !== submission.id)];
+    const cleanSubmission = sanitizeFirestoreData(submission);
+    const updated = [cleanSubmission, ...carnetSubmissions.filter(s => s.id !== cleanSubmission.id)];
     setCarnetSubmissions(updated);
-    try { localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(updated)); } catch {}
+    try {
+      localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(updated));
+    } catch {
+      try {
+        const lightweight = updated.map(s => ({
+          ...s,
+          photoUrl: s.photoUrl && s.photoUrl.startsWith('data:') ? '' : s.photoUrl
+        }));
+        localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(lightweight));
+      } catch {}
+    }
     if (db) {
-      // Guardar como documento atómico individual en la colección carnet_submissions
-      const docRef = doc(db, 'carnet_submissions', submission.id);
-      await setDoc(docRef, { ...submission, updatedAt: new Date().toISOString() }, { merge: true });
+      const docRef = doc(db, 'carnet_submissions', cleanSubmission.id);
+      await setDoc(docRef, { ...cleanSubmission, updatedAt: new Date().toISOString() }, { merge: true });
     }
   };
 
@@ -305,6 +334,25 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
+  // Función de sincronización forzada para el panel de administración
+  const refreshCarnetSubmissions = async () => {
+    if (!db) return;
+    try {
+      const snapshot = await getDocs(collection(db, 'carnet_submissions'));
+      const subs: CarnetSubmission[] = [];
+      snapshot.forEach(docSnap => {
+        subs.push({ ...(docSnap.data() as CarnetSubmission), id: docSnap.id });
+      });
+      subs.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+      setCarnetSubmissions(subs);
+      try {
+        localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(subs));
+      } catch {}
+    } catch (err) {
+      console.warn('[StoreConfig] Error al refrescar carnet_submissions manualmente:', err);
+    }
+  };
+
   return (
     <StoreConfigContext.Provider value={{
       products,
@@ -321,7 +369,8 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       saveCarnetConfig,
       saveCarnetSubmission,
       updateCarnetSubmissionStatus,
-      deleteCarnetSubmission
+      deleteCarnetSubmission,
+      refreshCarnetSubmissions
     }}>
       {children}
     </StoreConfigContext.Provider>

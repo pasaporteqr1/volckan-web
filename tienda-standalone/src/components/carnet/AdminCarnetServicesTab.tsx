@@ -21,12 +21,14 @@ export const AdminCarnetServicesTab: React.FC = () => {
     carnetSubmissions, 
     updateCarnetSubmissionStatus, 
     deleteCarnetSubmission,
+    refreshCarnetSubmissions,
     storeConfig
   } = useStoreConfig();
 
   // Estados de edición de configuración
   const [localFormConfig, setLocalFormConfig] = useState<CarnetServiceFormConfig>(carnetConfig);
   const [isSavingConfig, setIsSavingConfig] = useState<boolean>(false);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
 
   // Estados de gestión de envíos recibidos
@@ -188,7 +190,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
               ${sub.photoUrl ? `<img src="${sub.photoUrl}" style="width:100%; height:100%; object-fit:cover;" />` : `<div style="color:#666; font-size:9px; text-align:center; padding-top:28px;">FOTO</div>`}
             </div>
             <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
-              <span style="font-size:8px; background:${theme.badgeBg}; color:${theme.badgeText}; padding:2px 6px; border-radius:4px; font-weight:800; align-self:flex-start;">${sub.role}</span>
+              <span style="font-size:8px; background:${theme.badgeBg}; color:${theme.badgeText}; padding:2px 6px; border-radius:4px; font-weight:800; align-self:flex-start;">${sub.role || 'ACREDITADO'}</span>
               <strong style="font-size:11px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${sub.fullName}</strong>
               <span style="font-size:8px; color:${theme.subtextColor};">DPI: <strong>${formatDpiString(sub.idNumber)}</strong></span>
               ${sub.institutionRepresented ? `<span style="font-size:8px; color:${theme.textColor};"><strong>${sub.institutionRepresented}</strong></span>` : ''}
@@ -609,6 +611,35 @@ export const AdminCarnetServicesTab: React.FC = () => {
           </div>
 
           <div className="submissions-top-actions">
+            <button
+              type="button"
+              className="btn-sync-cloud"
+              onClick={async () => {
+                setIsRefreshing(true);
+                soundEffects.playClick();
+                await refreshCarnetSubmissions();
+                setTimeout(() => setIsRefreshing(false), 800);
+                soundEffects.playSuccess();
+              }}
+              disabled={isRefreshing}
+              title="Sincronizar y recargar registros directamente desde la nube Firestore"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                background: 'rgba(34, 197, 94, 0.15)',
+                color: '#4ade80',
+                border: '1px solid rgba(34, 197, 94, 0.4)',
+                padding: '8px 14px',
+                borderRadius: '8px',
+                fontWeight: 600,
+                fontSize: '0.85rem',
+                cursor: 'pointer'
+              }}
+            >
+              <span>{isRefreshing ? '⏳' : '🔄'}</span>
+              <span>{isRefreshing ? 'Sincronizando...' : 'Sincronizar Nube'}</span>
+            </button>
             <button
               type="button"
               className="btn-export-csv"

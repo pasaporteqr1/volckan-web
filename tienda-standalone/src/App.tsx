@@ -4,6 +4,7 @@ import { StoreConfigProvider } from './context/StoreConfigContext';
 import StorePage from './pages/StorePage';
 import AdminStorePage from './pages/AdminStorePage';
 import CarnetServicePage from './pages/CarnetServicePage';
+import CarnetVerifyPage from './pages/CarnetVerifyPage';
 import './App.css';
 
 export default function App() {
@@ -23,6 +24,9 @@ export default function App() {
           <Route path="/carnet/:formId" element={<CarnetServicePage />} />
           <Route path="/servicios/carnet" element={<CarnetServicePage />} />
           <Route path="/servicios/carnets" element={<CarnetServicePage />} />
+          <Route path="/carnet/verify" element={<CarnetVerifyPage />} />
+          <Route path="/verificar" element={<CarnetVerifyPage />} />
+          <Route path="/verify" element={<CarnetVerifyPage />} />
           <Route path="/admin" element={<AdminStorePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

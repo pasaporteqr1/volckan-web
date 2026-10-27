@@ -1,5 +1,5 @@
 import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
-import { getFirestore, type Firestore } from 'firebase/firestore';
+import { initializeFirestore, getFirestore, type Firestore } from 'firebase/firestore';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
 import { getAuth, type Auth } from 'firebase/auth';
 
@@ -23,8 +23,18 @@ let auth: Auth | null = null;
 
 if (apiKey && apiKey !== 'tu_api_key_aqui') {
   try {
-    app = getApps().length > 0 ? getApps()[0] : initializeApp(firebaseConfig);
-    db = getFirestore(app);
+    const existingApps = getApps();
+    if (existingApps.length > 0) {
+      app = existingApps[0];
+      try {
+        db = initializeFirestore(app, { ignoreUndefinedProperties: true });
+      } catch {
+        db = getFirestore(app);
+      }
+    } else {
+      app = initializeApp(firebaseConfig);
+      db = initializeFirestore(app, { ignoreUndefinedProperties: true });
+    }
     storage = getStorage(app);
     auth = getAuth(app);
   } catch (err) {
