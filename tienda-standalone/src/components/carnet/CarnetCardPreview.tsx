@@ -184,77 +184,128 @@ export const CarnetCardPreview: React.FC<CarnetCardPreviewProps> = ({
 
 // ============================================================================
 // DISEÑO VERTICAL PROFESIONAL CR80 (53.98mm x 85.60mm - Ratio Estándar Vertical)
+// Inspirado en el Sistema de Acreditación Summit de Competitividad / Quetzaltenango
 // ============================================================================
 
 const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> = ({ data, theme }) => {
   return (
     <div className="carnet-vertical-inner">
-      {/* Cabecera Vertical: Logo Institucional Prominente + Institución Emisora */}
-      <div className="carnet-v-header" style={{ background: theme.headerBg }}>
-        <div className="carnet-v-brand">
+      {/* Fondo Dinámico con Geometría de Cumbres (Mesh Gradient + SVG Cumbres de Quetzaltenango) */}
+      <div className="carnet-bg-mesh" aria-hidden="true">
+        <svg className="carnet-mountain-pattern" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M-20 220L95 55L215 220H-20Z" fill={`url(#gradPeak1-${theme.id})`} />
+          <path d="M120 220L245 35L380 220H120Z" fill={`url(#gradPeak2-${theme.id})`} />
+          <path d="M230 220L335 85L430 220H230Z" fill={`url(#gradPeak1-${theme.id})`} />
+          <defs>
+            <linearGradient id={`gradPeak1-${theme.id}`} x1="100" y1="40" x2="100" y2="220" gradientUnits="userSpaceOnUse">
+              <stop stopColor={theme.accentColor} stopOpacity="0.45" />
+              <stop offset="1" stopColor={theme.accentColor} stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id={`gradPeak2-${theme.id}`} x1="250" y1="35" x2="250" y2="220" gradientUnits="userSpaceOnUse">
+              <stop stopColor={theme.borderColor || '#38bdf8'} stopOpacity="0.4" />
+              <stop offset="1" stopColor={theme.borderColor || '#38bdf8'} stopOpacity="0" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      {/* Ranura Superior para Cinta / Lanyard */}
+      <div className="carnet-lanyard-slot-wrap">
+        <div className="carnet-lanyard-slot" title="Ranura para cinta"></div>
+      </div>
+
+      {/* 1. Cabecera Institucional: Píldora del Organizador y Título del Evento */}
+      <header className="carnet-header-top">
+        <div className="carnet-organizer-pill">
+          <span className="carnet-organizer-dot" style={{ background: theme.accentColor, boxShadow: `0 0 8px ${theme.accentColor}` }}></span>
           {data.logoUrl ? (
-            <img src={data.logoUrl} alt="Logo Institucional" className="carnet-v-logo" />
+            <img src={data.logoUrl} alt="Logo" className="carnet-organizer-logo" />
           ) : (
-            <div className="carnet-v-logo-fallback" style={{ background: theme.badgeBg, color: theme.accentColor }}>
-              <span>🏛️</span>
-            </div>
+            <span className="carnet-organizer-symbol" style={{ color: theme.accentColor }}>⚡</span>
           )}
-          <div className="carnet-v-titles">
-            <span className="carnet-v-inst-name" style={{ color: theme.textColor }}>
-              {data.institutionName || 'Mesa de Competitividad'}
-            </span>
-            <span className="carnet-v-subtag" style={{ color: theme.accentColor }}>
-              ACREDITACIÓN OFICIAL & CREDENCIAL
-            </span>
+          <span className="carnet-organizer-name" style={{ color: theme.textColor }}>
+            {data.institutionName || 'Mesa de Competitividad de Quetzaltenango'}
+          </span>
+        </div>
+        <h2 className="carnet-summit-title" style={{ color: theme.textColor }}>
+          SUMMIT DE COMPETITIVIDAD<span className="year-highlight" style={{ color: theme.accentColor }}> 2026</span>
+        </h2>
+        <p className="carnet-summit-subtitle" style={{ color: theme.subtextColor }}>
+          Innovación · Productividad · Desarrollo Regional
+        </p>
+      </header>
+
+      {/* 2. Sección de Fotografía del Portador con Marco de Resplandor y Sello de Verificación */}
+      <div className="carnet-photo-cluster-wrap">
+        <div className="carnet-photo-ring" style={{ background: `linear-gradient(135deg, ${theme.accentColor} 0%, rgba(56, 189, 248, 0.8) 100%)`, boxShadow: `0 10px 24px -6px rgba(0,0,0,0.5), 0 0 18px ${theme.glowColor}` }}>
+          <div className="carnet-photo-frame-inner" style={{ background: '#020617' }}>
+            {data.photoUrl ? (
+              <img src={data.photoUrl} alt={data.fullName} className="carnet-bearer-photo" />
+            ) : (
+              <div className="carnet-photo-empty-state" style={{ color: theme.subtextColor }}>
+                <span style={{ fontSize: '1.4rem' }}>👤</span>
+                <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.05em' }}>FOTOGRAFÍA</span>
+              </div>
+            )}
+            <div className="carnet-verified-seal-badge" style={{ background: theme.accentColor, color: '#071120' }} title="Identidad Verificada">
+              ✓
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bloque Fotográfico Vertical Proporción 3:4 */}
-      <div className="carnet-v-photo-cluster">
-        <div className="carnet-v-photo-frame" style={{ borderColor: theme.accentColor, boxShadow: `0 0 16px ${theme.glowColor}` }}>
-          {data.photoUrl ? (
-            <img src={data.photoUrl} alt={data.fullName} className="carnet-v-user-photo" />
-          ) : (
-            <div className="carnet-v-photo-empty" style={{ color: theme.subtextColor }}>
-              <span style={{ fontSize: '1.4rem' }}>👤</span>
-              <span>Fotografía</span>
-            </div>
-          )}
-          <span className="carnet-v-verified-seal" title="Identidad Verificada">✓</span>
+      {/* 3. Jerarquía de Datos del Titular */}
+      <div className="carnet-bearer-body">
+        <div className="carnet-role-pill-badge" style={{ background: `linear-gradient(135deg, ${theme.accentColor} 0%, rgba(217, 119, 6, 0.95) 100%)`, color: '#071120', boxShadow: `0 4px 14px ${theme.glowColor}` }}>
+          {data.role || 'ACREDITACIÓN OFICIAL'}
         </div>
-      </div>
 
-      {/* Jerarquía de Identidad del Titular */}
-      <div className="carnet-v-identity">
-        {data.phone && (
-          <div className="carnet-v-role-badge" style={{ background: theme.badgeBg, color: theme.badgeText, borderColor: theme.borderColor }}>
-            📱 {formatPhoneString(data.phone)}
-          </div>
-        )}
-
-        <h3 className="carnet-v-name" style={{ color: theme.textColor }}>
+        <h3 className="carnet-bearer-name" style={{ color: theme.textColor }}>
           {data.fullName || 'NOMBRE DEL TITULAR'}
         </h3>
 
+        {/* Tarjeta Glassmorphism de la Institución o Empresa que Representa */}
         {data.institutionRepresented && (
-          <div className="carnet-v-org" style={{ color: theme.accentColor }}>
-            🏢 {data.institutionRepresented}
+          <div className="carnet-institution-card">
+            <span className="carnet-field-label" style={{ color: theme.accentColor }}>EMPRESA / INSTITUCIÓN</span>
+            <span className="carnet-institution-val" style={{ color: theme.textColor }}>
+              {data.institutionRepresented}
+            </span>
           </div>
         )}
 
-        {data.departmentMunicipality && (
-          <div className="carnet-v-loc" style={{ color: theme.subtextColor }}>
-            📍 {data.departmentMunicipality}
-          </div>
-        )}
+        {/* Tira de Contacto y Ubicación */}
+        <div className="carnet-contact-strip">
+          {data.phone && (
+            <div className="carnet-phone-block">
+              <div className="carnet-phone-icon-box" style={{ background: theme.badgeBg, borderColor: theme.borderColor, color: theme.accentColor }}>
+                📱
+              </div>
+              <div className="carnet-phone-texts">
+                <span className="carnet-field-label" style={{ color: theme.subtextColor, fontSize: '0.52rem' }}>TELÉFONO</span>
+                <span className="carnet-phone-number" style={{ color: theme.textColor }}>
+                  {formatPhoneString(data.phone)}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {data.departmentMunicipality && (
+            <div className="carnet-location-block">
+              <span className="carnet-field-label" style={{ color: theme.subtextColor, fontSize: '0.52rem' }}>PROCEDENCIA</span>
+              <span className="carnet-location-value" style={{ color: theme.textColor }}>
+                📍 {data.departmentMunicipality}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Pie de Seguridad y Marca Oficial */}
-      <div className="carnet-v-footer" style={{ color: theme.subtextColor }}>
-        <span style={{ fontWeight: 800, letterSpacing: '0.04em' }}>volckan.com</span>
-        <span style={{ color: theme.accentColor }}>◈ OFICIAL CR80 ◈</span>
-      </div>
+      {/* 4. Pie del Carnet con Marca y Sello de Seguridad */}
+      <footer className="carnet-footer-bottom">
+        <span className="carnet-footer-brand" style={{ color: theme.accentColor }}>volckan.com</span>
+        <span className="carnet-footer-serial" style={{ color: theme.subtextColor }}>◈ OFICIAL CR80 ◈</span>
+      </footer>
     </div>
   );
 };
@@ -266,15 +317,21 @@ const VerticalBackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetThe
 }) => {
   return (
     <div className="carnet-v-back-inner">
+      {/* Ranura Superior para Cinta */}
+      <div className="carnet-lanyard-slot-wrap">
+        <div className="carnet-lanyard-slot" title="Ranura para cinta"></div>
+      </div>
+
+      {/* Banda Magnética */}
       <div className="carnet-v-magstripe" />
 
-      {/* Bloque QR Central */}
+      {/* QR de Acceso y Validación Oficial */}
       <div className="carnet-v-qr-cluster">
-        <div className="carnet-v-qr-box" style={{ borderColor: theme.accentColor }}>
+        <div className="carnet-v-qr-large-box" style={{ borderColor: theme.accentColor }}>
           {qrDataUrl ? (
             <img src={qrDataUrl} alt="QR Verificación" className="carnet-v-qr-img" />
           ) : (
-            <div style={{ fontSize: '0.65rem', color: '#666' }}>Cargando...</div>
+            <div style={{ fontSize: '0.65rem', color: '#666' }}>Cargando QR...</div>
           )}
         </div>
         <span className="carnet-v-qr-caption" style={{ color: theme.accentColor }}>
@@ -282,24 +339,33 @@ const VerticalBackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetThe
         </span>
       </div>
 
-      {/* Datos Clave Resumen (Sin DPI) */}
-      <div className="carnet-v-back-details" style={{ color: theme.textColor }}>
-        <div style={{ fontWeight: 800, color: theme.accentColor, fontSize: '0.74rem' }}>
-          {data.fullName || 'TITULAR'}
-        </div>
-        {data.phone && <div><span>TEL:</span> <strong>{formatPhoneString(data.phone)}</strong></div>}
-        {data.institutionRepresented && <div><span>ENTIDAD:</span> <strong>{data.institutionRepresented}</strong></div>}
-        {data.departmentMunicipality && <div><span>PROCEDENCIA:</span> <strong>{data.departmentMunicipality}</strong></div>}
+      {/* Rejilla de Zonas Habilitadas del Evento */}
+      <div className="carnet-v-zones-grid">
+        <span className="carnet-v-zone-pill" style={{ color: theme.textColor }}>CONFERENCIA</span>
+        <span className="carnet-v-zone-pill" style={{ color: theme.textColor }}>PANELES</span>
+        <span className="carnet-v-zone-pill active" style={{ color: theme.accentColor, borderColor: theme.accentColor }}>NETWORKING</span>
       </div>
 
-      <p className="carnet-v-back-notice" style={{ color: theme.subtextColor }}>
-        Credencial oficial de acceso y acreditación para {data.institutionName || 'la entidad emisora'}. Su portación es personal e intransferible.
-      </p>
+      {/* Normativa y Aviso Legal Oficial */}
+      <div className="carnet-v-back-rules">
+        <strong style={{ color: theme.textColor }}>CREDENCIAL PERSONAL E INTRANSFERIBLE</strong>
+        <p style={{ color: theme.subtextColor }}>
+          Pase oficial emitido para {data.institutionName || 'la entidad organizadora'}. Su portación es obligatoria para el acceso a salones y actividades de la conferencia.
+        </p>
+      </div>
 
-      <div className="carnet-v-back-footer">
+      {/* Resumen del Titular (Sin DPI) */}
+      <div className="carnet-v-back-summary" style={{ color: theme.textColor }}>
+        <div style={{ fontWeight: 800, color: theme.accentColor, fontSize: '0.74rem' }}>{data.fullName || 'TITULAR'}</div>
+        {data.phone && <div style={{ fontSize: '0.64rem' }}>TEL: {formatPhoneString(data.phone)}</div>}
+        {data.institutionRepresented && <div style={{ fontSize: '0.64rem' }}>ENTIDAD: {data.institutionRepresented}</div>}
+      </div>
+
+      {/* Pie del Reverso */}
+      <footer className="carnet-v-back-footer">
         <span style={{ color: theme.accentColor, fontWeight: 800 }}>volckan.com</span>
         <span style={{ color: theme.subtextColor }}>VERIFICACIÓN OFICIAL</span>
-      </div>
+      </footer>
     </div>
   );
 };

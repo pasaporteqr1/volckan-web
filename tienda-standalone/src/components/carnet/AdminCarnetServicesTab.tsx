@@ -158,100 +158,163 @@ export const AdminCarnetServicesTab: React.FC = () => {
 
       const logoSrc = localFormConfig.logoUrl || carnetConfig.logoUrl;
 
-      // Elemento Frente Vertical (204px x 323px - Proporción CR80 53.98 x 85.60 mm)
+      // Elemento Frente Vertical (216px x 342px - Proporción CR80 53.98 x 85.60 mm)
       const frontEl = document.createElement('div');
-      frontEl.style.width = '204px';
-      frontEl.style.height = '323px';
+      frontEl.style.width = '216px';
+      frontEl.style.height = '342px';
       frontEl.style.borderRadius = '14px';
       frontEl.style.background = theme.frontBg;
       frontEl.style.border = `1.5px solid ${theme.borderColor}`;
       frontEl.style.overflow = 'hidden';
       frontEl.style.boxSizing = 'border-box';
-      frontEl.style.padding = '8px 10px';
+      frontEl.style.padding = '8px 10px 10px 10px';
       frontEl.style.display = 'flex';
       frontEl.style.flexDirection = 'column';
       frontEl.style.justifyContent = 'space-between';
-      frontEl.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+      frontEl.style.fontFamily = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
       frontEl.style.color = theme.textColor;
       frontEl.style.textAlign = 'center';
+      frontEl.style.position = 'relative';
 
       frontEl.innerHTML = `
-        <div style="display:flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,0.18); padding-bottom:5px; text-align:left;">
-          ${logoSrc ? `<img src="${logoSrc}" style="height:36px; max-width:55px; object-fit:contain; flex-shrink:0;" />` : `<div style="width:32px; height:32px; border-radius:6px; background:${theme.badgeBg}; display:flex; align-items:center; justify-content:center; font-size:16px;">🏛️</div>`}
-          <div style="display:flex; flex-direction:column; min-width:0; flex:1;">
-            <div style="font-size:7.5px; font-weight:900; line-height:1.15; text-transform:uppercase; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+        <!-- Fondo Cumbres SVG -->
+        <svg style="position:absolute; top:0; left:0; width:100%; height:130px; opacity:0.18; pointer-events:none; z-index:0;" viewBox="0 0 400 220" fill="none">
+          <path d="M-20 220L95 55L215 220H-20Z" fill="${theme.accentColor}" fill-opacity="0.5" />
+          <path d="M120 220L245 35L380 220H120Z" fill="${theme.borderColor || '#38bdf8'}" fill-opacity="0.4" />
+          <path d="M230 220L335 85L430 220H230Z" fill="${theme.accentColor}" fill-opacity="0.5" />
+        </svg>
+
+        <!-- Ranura Lanyard -->
+        <div style="position:relative; z-index:2; display:flex; justify-content:center; margin-bottom:2px;">
+          <div style="width:44px; height:6px; border-radius:999px; background:rgba(7,17,32,0.9); border:1px solid rgba(255,255,255,0.22); box-shadow:inset 0 1px 3px rgba(0,0,0,0.7);"></div>
+        </div>
+
+        <!-- 1. Cabecera Organizador + Evento -->
+        <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:1px;">
+          <div style="display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:999px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); max-width:95%;">
+            <span style="width:5px; height:5px; border-radius:50%; background:${theme.accentColor}; box-shadow:0 0 6px ${theme.accentColor}; flex-shrink:0;"></span>
+            ${logoSrc ? `<img src="${logoSrc}" style="height:14px; max-width:38px; object-fit:contain; flex-shrink:0;" />` : `<span style="font-size:8px; color:${theme.accentColor};">⚡</span>`}
+            <span style="font-size:6px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
               ${sub.institutionName || localFormConfig.institutionName}
-            </div>
-            <div style="font-size:5.5px; color:${theme.accentColor}; font-weight:800; letter-spacing:0.04em;">ACREDITACIÓN OFICIAL & CREDENCIAL</div>
-          </div>
-        </div>
-        
-        <div style="display:flex; justify-content:center; margin:3px 0;">
-          <div style="width:84px; height:110px; border-radius:10px; border:2px solid ${theme.accentColor}; overflow:hidden; background:#020617; box-shadow:0 4px 12px rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;">
-            ${sub.photoUrl ? `<img src="${sub.photoUrl}" style="width:100%; height:100%; object-fit:cover;" />` : `<div style="color:#666; font-size:9px;">FOTO</div>`}
-          </div>
-        </div>
-
-        <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
-          ${sub.phone ? `
-            <span style="font-size:6.5px; background:${theme.badgeBg}; color:${theme.badgeText}; padding:2px 8px; border-radius:999px; font-weight:800; border:1px solid rgba(255,255,255,0.15);">
-              📱 ${formatPhoneString(sub.phone)}
             </span>
-          ` : ''}
-          <strong style="font-size:10.5px; font-weight:900; line-height:1.15; text-transform:uppercase; margin-top:2px;">${sub.fullName}</strong>
-          ${sub.institutionRepresented ? `<div style="font-size:7.5px; font-weight:700; color:${theme.accentColor};">🏢 ${sub.institutionRepresented}</div>` : ''}
-          ${sub.departmentMunicipality ? `<div style="font-size:6.5px; font-weight:600; opacity:0.85;">📍 ${sub.departmentMunicipality}</div>` : ''}
+          </div>
+          <div style="font-size:8.5px; font-weight:800; line-height:1.15; text-transform:uppercase; letter-spacing:-0.01em; margin-top:2px;">
+            SUMMIT DE COMPETITIVIDAD <span style="color:${theme.accentColor}; font-weight:800;">2026</span>
+          </div>
+          <div style="font-size:5px; color:${theme.subtextColor}; font-weight:600; text-transform:uppercase; letter-spacing:0.06em;">
+            Innovación · Productividad · Desarrollo
+          </div>
         </div>
 
-        <div style="display:flex; justify-content:space-between; font-size:6px; font-family:monospace; opacity:0.9; border-top:1px solid rgba(255,255,255,0.12); padding-top:3px;">
-          <span style="font-weight:800; letter-spacing:0.04em;">volckan.com</span>
-          <span style="color:${theme.accentColor};">◈ OFICIAL CR80 ◈</span>
+        <!-- 2. Foto con Anillo Squircle y Sello -->
+        <div style="position:relative; z-index:2; display:flex; justify-content:center; margin:3px 0;">
+          <div style="width:86px; height:86px; border-radius:24px; padding:3px; background:linear-gradient(135deg, ${theme.accentColor} 0%, rgba(56,189,248,0.8) 100%); box-shadow:0 6px 16px rgba(0,0,0,0.5); position:relative;">
+            <div style="width:100%; height:100%; border-radius:21px; overflow:hidden; background:#020617; display:flex; align-items:center; justify-content:center;">
+              ${sub.photoUrl ? `<img src="${sub.photoUrl}" style="width:100%; height:100%; object-fit:cover;" />` : `<div style="color:${theme.subtextColor}; font-size:8px; font-weight:700;">FOTOGRAFÍA</div>`}
+            </div>
+            <div style="position:absolute; bottom:-2px; right:-2px; width:20px; height:20px; border-radius:6px; background:${theme.accentColor}; color:#071120; font-size:10px; font-weight:900; display:flex; align-items:center; justify-content:center; border:1.5px solid #071120;">
+              ✓
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Jerarquía del Titular -->
+        <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <span style="font-size:6px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; background:${theme.accentColor}; color:#071120; padding:2px 8px; border-radius:999px;">
+            ${sub.role || 'ACREDITACIÓN OFICIAL'}
+          </span>
+          <div style="font-size:10px; font-weight:800; line-height:1.15; text-transform:uppercase; letter-spacing:-0.01em; margin:1px 0;">
+            ${sub.fullName}
+          </div>
+          ${sub.institutionRepresented ? `
+            <div style="width:100%; padding:3px 6px; border-radius:7px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); box-sizing:border-box;">
+              <div style="font-size:4.5px; font-weight:800; color:${theme.accentColor}; text-transform:uppercase; letter-spacing:0.08em;">EMPRESA / INSTITUCIÓN</div>
+              <div style="font-size:6.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${sub.institutionRepresented}</div>
+            </div>
+          ` : ''}
+          <div style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:3px 6px; border-radius:7px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); box-sizing:border-box;">
+            ${sub.phone ? `
+              <div style="display:flex; align-items:center; gap:4px;">
+                <span style="font-size:7px;">📱</span>
+                <span style="font-size:6.5px; font-family:'JetBrains Mono', monospace; font-weight:700;">${formatPhoneString(sub.phone)}</span>
+              </div>
+            ` : '<span></span>'}
+            ${sub.departmentMunicipality ? `
+              <div style="font-size:6px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100px;">
+                📍 ${sub.departmentMunicipality}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+
+        <!-- 4. Pie de Seguridad -->
+        <div style="position:relative; z-index:2; display:flex; justify-content:space-between; font-size:5.5px; border-top:1px solid rgba(255,255,255,0.12); padding-top:2px;">
+          <span style="font-weight:800; color:${theme.accentColor};">volckan.com</span>
+          <span style="font-family:'JetBrains Mono', monospace; color:${theme.subtextColor};">◈ OFICIAL CR80 ◈</span>
         </div>
       `;
 
       // Elemento Reverso Vertical
       const backEl = document.createElement('div');
-      backEl.style.width = '204px';
-      backEl.style.height = '323px';
+      backEl.style.width = '216px';
+      backEl.style.height = '342px';
       backEl.style.borderRadius = '14px';
       backEl.style.background = theme.backBg;
       backEl.style.border = `1.5px solid ${theme.borderColor}`;
       backEl.style.overflow = 'hidden';
       backEl.style.boxSizing = 'border-box';
-      backEl.style.padding = '8px 10px';
+      backEl.style.padding = '8px 10px 10px 10px';
       backEl.style.display = 'flex';
       backEl.style.flexDirection = 'column';
       backEl.style.justifyContent = 'space-between';
-      backEl.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+      backEl.style.fontFamily = "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif";
       backEl.style.color = theme.textColor;
       backEl.style.textAlign = 'center';
+      backEl.style.position = 'relative';
 
       backEl.innerHTML = `
-        <div style="height:12px; background:#000; margin:-8px -10px 4px -10px;"></div>
+        <!-- Ranura Lanyard -->
+        <div style="display:flex; justify-content:center; margin-bottom:2px;">
+          <div style="width:44px; height:6px; border-radius:999px; background:rgba(7,17,32,0.9); border:1px solid rgba(255,255,255,0.22); box-shadow:inset 0 1px 3px rgba(0,0,0,0.7);"></div>
+        </div>
 
-        <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
-          <div style="width:78px; height:78px; background:#fff; padding:3px; border-radius:6px; border:2px solid ${theme.accentColor};">
+        <!-- Banda Magnética -->
+        <div style="height:10px; background:#000; margin:-2px -10px 3px -10px;"></div>
+
+        <!-- QR de Validación -->
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px; margin:2px 0;">
+          <div style="width:84px; height:84px; background:#fff; padding:4px; border-radius:10px; border:2px solid ${theme.accentColor}; box-shadow:0 4px 12px rgba(0,0,0,0.45);">
             <img src="${qrUrl}" style="width:100%; height:100%; object-fit:contain;" />
           </div>
-          <span style="font-size:6px; font-weight:800; color:${theme.accentColor}; letter-spacing:0.04em;">
+          <span style="font-size:5.5px; font-weight:800; color:${theme.accentColor}; letter-spacing:0.06em; text-transform:uppercase;">
             ESCANEAR PARA VALIDAR ACCESO
           </span>
         </div>
 
-        <div style="background:rgba(0,0,0,0.35); border-radius:6px; padding:4px 6px; font-size:6.5px; text-align:left; display:flex; flex-direction:column; gap:2px;">
-          <div style="font-weight:800; color:${theme.accentColor}; font-size:7.5px;">${sub.fullName}</div>
-          ${sub.phone ? `<div><span style="opacity:0.7;">TEL:</span> <strong>${formatPhoneString(sub.phone)}</strong></div>` : ''}
-          ${sub.institutionRepresented ? `<div><span style="opacity:0.7;">ENTIDAD:</span> <strong>${sub.institutionRepresented}</strong></div>` : ''}
-          ${sub.departmentMunicipality ? `<div><span style="opacity:0.7;">PROCEDENCIA:</span> <strong>${sub.departmentMunicipality}</strong></div>` : ''}
+        <!-- Rejilla de Zonas Habilitadas -->
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; width:100%;">
+          <div style="padding:2.5px 0; border-radius:5px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); font-size:5px; font-weight:800;">CONFERENCIA</div>
+          <div style="padding:2.5px 0; border-radius:5px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); font-size:5px; font-weight:800;">PANELES</div>
+          <div style="padding:2.5px 0; border-radius:5px; background:rgba(245,158,11,0.14); border:1px solid ${theme.accentColor}; color:${theme.accentColor}; font-size:5px; font-weight:800;">NETWORKING</div>
         </div>
 
-        <div style="font-size:5.5px; opacity:0.8; line-height:1.3; text-align:justify; margin:2px 0;">
-          Credencial oficial de acceso y acreditación para ${sub.institutionName || localFormConfig.institutionName}. Su portación es personal e intransferible.
+        <!-- Normativa Oficial -->
+        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:7px; padding:4px 6px; font-size:5px; text-align:left; line-height:1.35;">
+          <strong style="color:${theme.textColor}; text-transform:uppercase; letter-spacing:0.03em;">CREDENCIAL PERSONAL E INTRANSFERIBLE</strong>
+          <div style="color:${theme.subtextColor};">Pase oficial emitido para ${sub.institutionName || localFormConfig.institutionName}. Su portación es obligatoria para el acceso a salones y actividades.</div>
         </div>
 
-        <div style="display:flex; justify-content:space-between; font-size:6px; font-family:monospace; border-top:1px solid rgba(255,255,255,0.1); padding-top:2px;">
+        <!-- Resumen del Titular -->
+        <div style="background:rgba(0,0,0,0.3); border-radius:6px; padding:3px 6px; font-size:5.5px; text-align:left; display:flex; flex-direction:column; gap:1px;">
+          <div style="font-weight:800; color:${theme.accentColor}; font-size:6.5px;">${sub.fullName}</div>
+          ${sub.phone ? `<div>TEL: <strong>${formatPhoneString(sub.phone)}</strong></div>` : ''}
+          ${sub.institutionRepresented ? `<div>ENTIDAD: <strong>${sub.institutionRepresented}</strong></div>` : ''}
+        </div>
+
+        <!-- Pie Reverso -->
+        <div style="display:flex; justify-content:space-between; font-size:5.5px; border-top:1px solid rgba(255,255,255,0.1); padding-top:2px;">
           <span style="color:${theme.accentColor}; font-weight:800;">volckan.com</span>
-          <span style="opacity:0.8;">VERIFICACIÓN OFICIAL</span>
+          <span style="color:${theme.subtextColor};">VERIFICACIÓN OFICIAL</span>
         </div>
       `;
 
