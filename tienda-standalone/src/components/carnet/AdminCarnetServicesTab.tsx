@@ -226,29 +226,26 @@ export const AdminCarnetServicesTab: React.FC = () => {
           </div>
         </div>
 
-        <!-- 3. Jerarquía del Titular (Sin corte de textos) -->
-        <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:2.5px;">
-          <span style="font-size:6px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; background:${theme.accentColor}; color:#071120; padding:2px 8px; border-radius:999px;">
-            ${sub.role || 'ACREDITACIÓN OFICIAL'}
-          </span>
-          <div style="font-size:9.5px; font-weight:800; line-height:1.15; text-transform:uppercase; letter-spacing:-0.01em; margin:1px 0; white-space:normal; word-break:break-word;">
+        <!-- 3. Jerarquía del Titular (Sin corte de textos y con mayor tamaño) -->
+        <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div style="font-size:11px; font-weight:800; line-height:1.15; text-transform:uppercase; letter-spacing:-0.01em; margin:1px 0 2px 0; white-space:normal; word-break:break-word;">
             ${sub.fullName}
           </div>
           ${sub.institutionRepresented ? `
-            <div style="width:100%; padding:3px 6px; border-radius:7px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); box-sizing:border-box;">
-              <div style="font-size:4.5px; font-weight:800; color:${theme.accentColor}; text-transform:uppercase; letter-spacing:0.08em;">EMPRESA / INSTITUCIÓN</div>
-              <div style="font-size:6.5px; font-weight:700; white-space:normal; line-height:1.2; word-break:break-word; text-align:center;">${sub.institutionRepresented}</div>
+            <div style="width:100%; padding:4px 8px; border-radius:8px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); box-sizing:border-box;">
+              <div style="font-size:5.2px; font-weight:800; color:${theme.accentColor}; text-transform:uppercase; letter-spacing:0.07em;">EMPRESA / INSTITUCIÓN</div>
+              <div style="font-size:9.5px; font-weight:800; white-space:normal; line-height:1.24; word-break:break-word; text-align:center;">${sub.institutionRepresented}</div>
             </div>
           ` : ''}
-          <div style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:3px 6px; border-radius:7px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); box-sizing:border-box;">
+          <div style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:4px 8px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); box-sizing:border-box;">
             ${sub.phone ? `
-              <div style="display:flex; align-items:center; gap:3px;">
-                <span style="font-size:7px;">📱</span>
-                <span style="font-size:6.2px; font-family:'JetBrains Mono', monospace; font-weight:700;">${formatPhoneString(sub.phone)}</span>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <span style="font-size:8px;">📱</span>
+                <span style="font-size:8.8px; font-family:'JetBrains Mono', monospace; font-weight:800; letter-spacing:0.02em;">${formatPhoneString(sub.phone)}</span>
               </div>
             ` : '<span></span>'}
             ${sub.departmentMunicipality ? `
-              <div style="font-size:6px; font-weight:700; white-space:normal; line-height:1.15; word-break:break-word; text-align:right; max-width:105px;">
+              <div style="font-size:8.5px; font-weight:800; white-space:normal; line-height:1.18; word-break:break-word; text-align:right; max-width:115px;">
                 📍 ${sub.departmentMunicipality}
               </div>
             ` : ''}

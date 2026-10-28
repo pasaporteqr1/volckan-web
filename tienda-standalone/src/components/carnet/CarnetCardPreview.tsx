@@ -264,15 +264,11 @@ const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTh
 
       {/* 3. Jerarquía de Datos del Titular */}
       <div className="carnet-bearer-body">
-        <div className="carnet-role-pill-badge" style={{ background: `linear-gradient(135deg, ${theme.accentColor} 0%, rgba(217, 119, 6, 0.95) 100%)`, color: '#071120', boxShadow: `0 4px 14px ${theme.glowColor}` }}>
-          {data.role || 'ACREDITACIÓN OFICIAL'}
-        </div>
-
         <h3 className="carnet-bearer-name" style={{ color: theme.textColor }}>
           {data.fullName || 'NOMBRE DEL TITULAR'}
         </h3>
 
-        {/* Tarjeta Glassmorphism de la Institución o Empresa que Representa (Texto multilínea sin cortes) */}
+        {/* Tarjeta Glassmorphism de la Institución o Empresa que Representa (Gran legibilidad) */}
         {data.institutionRepresented && (
           <div className="carnet-institution-card">
             <span className="carnet-field-label" style={{ color: theme.accentColor }}>EMPRESA / INSTITUCIÓN</span>
