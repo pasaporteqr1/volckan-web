@@ -275,6 +275,7 @@ export default function CarnetServicePage() {
         <CarnetCardPreview
           data={previewData}
           theme={currentTheme}
+          orientation="vertical"
           frontRef={frontRef}
           backRef={backRef}
           side="both"
@@ -517,6 +518,7 @@ export default function CarnetServicePage() {
                   qrToken: submittedData.qrToken
                 }}
                 theme={currentTheme}
+                orientation="vertical"
                 interactiveFlip={true}
                 scale={0.92}
               />

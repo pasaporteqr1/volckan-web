@@ -5,6 +5,7 @@ import CarnetCardPreview, { type CarnetCardData, formatDpiString, formatPhoneStr
 import { 
   exportSingleCarnetPdf, 
   exportBatchCarnetsPdf, 
+  exportArchBBatchCarnetsPdf,
   captureElementToPng, 
   downloadImage,
   generateQrDataUrl
@@ -136,8 +137,145 @@ export const AdminCarnetServicesTab: React.FC = () => {
     return true;
   });
 
-  // Exportar lote masivo en PDF
-  const handleExportBatch = async () => {
+  // Función auxiliar para renderizar y capturar los carnets en formato vertical CR80
+  const prepareVerticalCardsData = async (targetSubs: CarnetSubmission[]) => {
+    // Contenedor temporal fuera de pantalla
+    const container = document.createElement('div');
+    container.style.position = 'fixed';
+    container.style.top = '-9999px';
+    container.style.left = '-9999px';
+    container.style.width = '350px';
+    container.style.zIndex = '-100';
+    document.body.appendChild(container);
+
+    const cardsData: { frontDataUrl: string; backDataUrl: string; submission: CarnetSubmission }[] = [];
+
+    for (const sub of targetSubs) {
+      const theme = CARNET_THEMES.find(t => t.id === sub.themeId) || CARNET_THEMES[0];
+      const qrUrl = await generateQrDataUrl(
+        sub.qrToken || `https://volckan.com/tienda/#/carnet/verify?id=${encodeURIComponent(sub.idNumber)}&phone=${encodeURIComponent(sub.phone || '')}`
+      );
+
+      // Elemento Frente Vertical (204px x 323px - Proporción CR80 53.98 x 85.60 mm)
+      const frontEl = document.createElement('div');
+      frontEl.style.width = '204px';
+      frontEl.style.height = '323px';
+      frontEl.style.borderRadius = '14px';
+      frontEl.style.background = theme.frontBg;
+      frontEl.style.border = `1.5px solid ${theme.borderColor}`;
+      frontEl.style.overflow = 'hidden';
+      frontEl.style.boxSizing = 'border-box';
+      frontEl.style.padding = '8px 10px';
+      frontEl.style.display = 'flex';
+      frontEl.style.flexDirection = 'column';
+      frontEl.style.justifyContent = 'space-between';
+      frontEl.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+      frontEl.style.color = theme.textColor;
+      frontEl.style.textAlign = 'center';
+
+      frontEl.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.18); padding-bottom:4px;">
+          <div style="font-size:7.5px; font-weight:800; text-align:left; line-height:1.15; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-transform:uppercase;">
+            ${sub.institutionName || localFormConfig.institutionName}
+            <div style="font-size:5.5px; color:${theme.accentColor}; font-weight:800; letter-spacing:0.04em;">ACREDITACIÓN OFICIAL & CREDENCIAL</div>
+          </div>
+          <div style="font-size:8px; opacity:0.9; color:${theme.chipColor};">📶</div>
+        </div>
+        
+        <div style="display:flex; justify-content:center; margin:3px 0;">
+          <div style="width:84px; height:110px; border-radius:10px; border:2px solid ${theme.accentColor}; overflow:hidden; background:#020617; box-shadow:0 4px 12px rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;">
+            ${sub.photoUrl ? `<img src="${sub.photoUrl}" style="width:100%; height:100%; object-fit:cover;" />` : `<div style="color:#666; font-size:9px;">FOTO</div>`}
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+          <span style="font-size:6.5px; background:${theme.badgeBg}; color:${theme.badgeText}; padding:2px 8px; border-radius:999px; font-weight:800; border:1px solid rgba(255,255,255,0.15);">
+            📱 ${formatPhoneString(sub.phone)}
+          </span>
+          <strong style="font-size:10px; font-weight:900; line-height:1.15; text-transform:uppercase; margin-top:2px;">${sub.fullName}</strong>
+          ${sub.institutionRepresented ? `<div style="font-size:7.5px; font-weight:700; color:${theme.accentColor};">🏢 ${sub.institutionRepresented}</div>` : ''}
+          ${sub.departmentMunicipality ? `<div style="font-size:6.5px; font-weight:600; opacity:0.85;">📍 ${sub.departmentMunicipality}</div>` : ''}
+        </div>
+
+        <div style="background:rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.12); border-radius:6px; padding:3px 6px;">
+          <div style="font-size:5.5px; opacity:0.75; letter-spacing:0.04em;">DPI / CUI IDENTIFICACIÓN</div>
+          <div style="font-family:monospace; font-size:8px; font-weight:800; letter-spacing:0.05em;">${formatDpiString(sub.idNumber)}</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; font-size:5.5px; font-family:monospace; opacity:0.85; border-top:1px solid rgba(255,255,255,0.12); padding-top:2px;">
+          <span>VOLCKAN ID</span>
+          <span style="color:${theme.accentColor};">◈ OFICIAL CR80 ◈</span>
+        </div>
+      `;
+
+      // Elemento Reverso Vertical
+      const backEl = document.createElement('div');
+      backEl.style.width = '204px';
+      backEl.style.height = '323px';
+      backEl.style.borderRadius = '14px';
+      backEl.style.background = theme.backBg;
+      backEl.style.border = `1.5px solid ${theme.borderColor}`;
+      backEl.style.overflow = 'hidden';
+      backEl.style.boxSizing = 'border-box';
+      backEl.style.padding = '8px 10px';
+      backEl.style.display = 'flex';
+      backEl.style.flexDirection = 'column';
+      backEl.style.justifyContent = 'space-between';
+      backEl.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+      backEl.style.color = theme.textColor;
+      backEl.style.textAlign = 'center';
+
+      backEl.innerHTML = `
+        <div style="height:12px; background:#000; margin:-8px -10px 4px -10px;"></div>
+
+        <div style="display:flex; flex-direction:column; align-items:center; gap:3px;">
+          <div style="width:78px; height:78px; background:#fff; padding:3px; border-radius:6px; border:2px solid ${theme.accentColor};">
+            <img src="${qrUrl}" style="width:100%; height:100%; object-fit:contain;" />
+          </div>
+          <span style="font-size:6px; font-weight:800; color:${theme.accentColor}; letter-spacing:0.04em;">
+            ESCANEAR PARA VALIDAR ACCESO
+          </span>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.35); border-radius:6px; padding:4px 6px; font-size:6.5px; text-align:left; display:flex; flex-direction:column; gap:2px;">
+          <div><span style="opacity:0.7;">DPI CUI:</span> <strong>${formatDpiString(sub.idNumber)}</strong></div>
+          ${sub.phone ? `<div><span style="opacity:0.7;">TEL:</span> <strong>${formatPhoneString(sub.phone)}</strong></div>` : ''}
+          ${sub.institutionRepresented ? `<div><span style="opacity:0.7;">ENTIDAD:</span> <strong>${sub.institutionRepresented}</strong></div>` : ''}
+          ${sub.departmentMunicipality ? `<div><span style="opacity:0.7;">PROCEDENCIA:</span> <strong>${sub.departmentMunicipality}</strong></div>` : ''}
+        </div>
+
+        <div style="font-size:5.5px; opacity:0.8; line-height:1.3; text-align:justify; margin:2px 0;">
+          Credencial oficial de acceso y acreditación para ${sub.institutionName || localFormConfig.institutionName}. Su portación es personal e intransferible.
+        </div>
+
+        <div style="display:flex; justify-content:space-between; font-size:5.5px; font-family:monospace; border-top:1px solid rgba(255,255,255,0.1); padding-top:2px;">
+          <span style="color:${theme.accentColor};">POWERED BY VOLCKAN ID</span>
+          <span style="opacity:0.8;">VERIFICACIÓN ACTIVA</span>
+        </div>
+      `;
+
+      container.appendChild(frontEl);
+      container.appendChild(backEl);
+
+      const frontPng = await captureElementToPng(frontEl);
+      const backPng = await captureElementToPng(backEl);
+
+      cardsData.push({
+        frontDataUrl: frontPng,
+        backDataUrl: backPng,
+        submission: sub
+      });
+
+      container.removeChild(frontEl);
+      container.removeChild(backEl);
+    }
+
+    document.body.removeChild(container);
+    return cardsData;
+  };
+
+  // Exportar lote en Pliego Arch B (12" x 18" / 16 carnets por pliego con tiro y retiro)
+  const handleExportBatchArchB = async () => {
     const targetSubs = filteredSubmissions.length > 0 ? filteredSubmissions : carnetSubmissions;
     if (targetSubs.length === 0) {
       alert('No hay credenciales registradas para generar el lote.');
@@ -148,120 +286,37 @@ export const AdminCarnetServicesTab: React.FC = () => {
     soundEffects.playClick();
 
     try {
-      // Crear contenedor temporal fuera de pantalla para renderizar cada carnet
-      const container = document.createElement('div');
-      container.style.position = 'fixed';
-      container.style.top = '-9999px';
-      container.style.left = '-9999px';
-      container.style.width = '400px';
-      container.style.zIndex = '-100';
-      document.body.appendChild(container);
+      const cardsData = await prepareVerticalCardsData(targetSubs);
+      await exportArchBBatchCarnetsPdf(cardsData, localFormConfig.institutionName);
+      soundEffects.playSuccessFanfare();
+      alert(`¡Pliego Industrial Arch B (12"x18") generado exitosamente para ${cardsData.length} credenciales!`);
+    } catch (err) {
+      console.error('Error generando pliego Arch B:', err);
+      alert('Ocurrió un error al generar el pliego Arch B.');
+    } finally {
+      setIsBatchGenerating(false);
+    }
+  };
 
-      const cardsData: { frontDataUrl: string; backDataUrl: string; submission: CarnetSubmission }[] = [];
+  // Exportar lote en Hoja Carta (Letter: 6 carnets verticales por hoja con tiro y retiro)
+  const handleExportBatchLetter = async () => {
+    const targetSubs = filteredSubmissions.length > 0 ? filteredSubmissions : carnetSubmissions;
+    if (targetSubs.length === 0) {
+      alert('No hay credenciales registradas para generar el lote.');
+      return;
+    }
 
-      // Procesar cada carnet de forma secuencial
-      for (const sub of targetSubs) {
-        const theme = CARNET_THEMES.find(t => t.id === sub.themeId) || CARNET_THEMES[0];
-        const qrUrl = await generateQrDataUrl(sub.qrToken || `https://volckan.com/tienda/#/carnet/verify?id=${sub.idNumber}`);
+    setIsBatchGenerating(true);
+    soundEffects.playClick();
 
-        // Crear elemento Front
-        const frontEl = document.createElement('div');
-        frontEl.style.width = '323px';
-        frontEl.style.height = '204px';
-        frontEl.style.borderRadius = '14px';
-        frontEl.style.background = theme.frontBg;
-        frontEl.style.border = `1.5px solid ${theme.borderColor}`;
-        frontEl.style.overflow = 'hidden';
-        frontEl.style.boxSizing = 'border-box';
-        frontEl.style.padding = '8px 12px';
-        frontEl.style.display = 'flex';
-        frontEl.style.flexDirection = 'column';
-        frontEl.style.justifyContent = 'space-between';
-        frontEl.style.fontFamily = 'sans-serif';
-        frontEl.style.color = theme.textColor;
-
-        frontEl.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:4px;">
-            <div style="font-size:10px; font-weight:800;">${sub.institutionName || localFormConfig.institutionName}</div>
-            <div style="font-size:8px; color:${theme.accentColor}; font-weight:700;">ACREDITACIÓN OFICIAL</div>
-          </div>
-          <div style="display:flex; gap:10px; align-items:center; margin:4px 0;">
-            <div style="width:68px; height:80px; border-radius:6px; border:2px solid ${theme.accentColor}; overflow:hidden; background:#000; flex-shrink:0;">
-              ${sub.photoUrl ? `<img src="${sub.photoUrl}" style="width:100%; height:100%; object-fit:cover;" />` : `<div style="color:#666; font-size:9px; text-align:center; padding-top:28px;">FOTO</div>`}
-            </div>
-            <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
-              <span style="font-size:8px; background:${theme.badgeBg}; color:${theme.badgeText}; padding:2px 6px; border-radius:4px; font-weight:800; align-self:flex-start;">${sub.role || 'ACREDITADO'}</span>
-              <strong style="font-size:11px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${sub.fullName}</strong>
-              <span style="font-size:8px; color:${theme.subtextColor};">DPI: <strong>${formatDpiString(sub.idNumber)}</strong></span>
-              ${sub.institutionRepresented ? `<span style="font-size:8px; color:${theme.textColor};"><strong>${sub.institutionRepresented}</strong></span>` : ''}
-              ${sub.departmentMunicipality ? `<span style="font-size:8px; color:${theme.accentColor};">📍 ${sub.departmentMunicipality}</span>` : ''}
-            </div>
-          </div>
-          <div style="font-size:7px; font-family:monospace; display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.1); padding-top:2px;">
-            <span>CONFERENCIA CR80</span>
-            <span style="color:${theme.accentColor};">◈ ACREDITADO ◈</span>
-          </div>
-        `;
-
-        // Crear elemento Back
-        const backEl = document.createElement('div');
-        backEl.style.width = '323px';
-        backEl.style.height = '204px';
-        backEl.style.borderRadius = '14px';
-        backEl.style.background = theme.backBg;
-        backEl.style.border = `1.5px solid ${theme.borderColor}`;
-        backEl.style.overflow = 'hidden';
-        backEl.style.boxSizing = 'border-box';
-        backEl.style.padding = '8px 12px';
-        backEl.style.display = 'flex';
-        backEl.style.flexDirection = 'column';
-        backEl.style.justifyContent = 'space-between';
-        backEl.style.fontFamily = 'sans-serif';
-        backEl.style.color = theme.textColor;
-
-        backEl.innerHTML = `
-          <div style="height:12px; background:#000; margin:-8px -12px 4px -12px;"></div>
-          <div style="display:flex; gap:12px; align-items:center;">
-            <div style="width:70px; height:70px; background:#fff; padding:3px; border-radius:4px; border:2px solid ${theme.accentColor}; flex-shrink:0;">
-              <img src="${qrUrl}" style="width:100%; height:100%; object-fit:contain;" />
-            </div>
-            <div style="display:flex; flex-direction:column; gap:2px; font-size:8px;">
-              <span style="font-size:8px; font-weight:800; color:${theme.accentColor};">PASE DE ACCESO & CONFERENCIA</span>
-              ${sub.institutionRepresented ? `<span>EMPRESA: <strong>${sub.institutionRepresented}</strong></span>` : ''}
-              ${sub.departmentMunicipality ? `<span>PROCEDENCIA: <strong>${sub.departmentMunicipality}</strong></span>` : ''}
-              <span>DPI: <strong>${formatDpiString(sub.idNumber)}</strong></span>
-            </div>
-          </div>
-          <div style="font-size:6px; opacity:0.8; text-align:justify; border-top:1px solid rgba(255,255,255,0.1); padding-top:2px;">
-            Credencial comercial e intransferible para acceso a conferencias, paneles y eventos de networking de ${sub.institutionName || localFormConfig.institutionName}.
-          </div>
-        `;
-
-        container.appendChild(frontEl);
-        container.appendChild(backEl);
-
-        const frontPng = await captureElementToPng(frontEl);
-        const backPng = await captureElementToPng(backEl);
-
-        cardsData.push({
-          frontDataUrl: frontPng,
-          backDataUrl: backPng,
-          submission: sub
-        });
-
-        container.removeChild(frontEl);
-        container.removeChild(backEl);
-      }
-
-      document.body.removeChild(container);
-
-      // Exportar PDF
-      await exportBatchCarnetsPdf(cardsData);
+    try {
+      const cardsData = await prepareVerticalCardsData(targetSubs);
+      await exportBatchCarnetsPdf(cardsData, localFormConfig.institutionName);
       soundEffects.playSuccessFanfare();
       alert(`¡Lote de ${cardsData.length} credenciales generado exitosamente en PDF tamaño Carta!`);
     } catch (err) {
-      console.error('Error generando lote de carnets:', err);
-      alert('Ocurrió un error al generar el lote masivo.');
+      console.error('Error generando lote tamaño Carta:', err);
+      alert('Ocurrió un error al generar el lote tamaño Carta.');
     } finally {
       setIsBatchGenerating(false);
     }
@@ -660,12 +715,21 @@ export const AdminCarnetServicesTab: React.FC = () => {
             </button>
             <button
               type="button"
-              className="btn-batch-print"
-              onClick={handleExportBatch}
+              className="btn-batch-archb"
+              onClick={handleExportBatchArchB}
               disabled={isBatchGenerating || carnetSubmissions.length === 0}
-              title="Generar PDF tamaño Carta con todos los carnets para imprenta"
+              title="Generar pliego industrial Arch B (12x18 pulgadas) con 16 credenciales por pliego y guías de corte"
             >
-              {isBatchGenerating ? '⏳ Generando Lote PDF...' : '🖨️ Imprimir Lote Masivo en PDF'}
+              {isBatchGenerating ? '⏳ Procesando...' : '🖨️ Pliego Arch B (12"×18")'}
+            </button>
+            <button
+              type="button"
+              className="btn-batch-print"
+              onClick={handleExportBatchLetter}
+              disabled={isBatchGenerating || carnetSubmissions.length === 0}
+              title="Generar PDF tamaño Carta con credenciales verticales y alineación dúplex"
+            >
+              {isBatchGenerating ? '⏳ Procesando...' : '📄 Hoja Carta (6/hoja)'}
             </button>
           </div>
         </div>
@@ -824,6 +888,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
               <CarnetCardPreview
                 data={getSubmissionPreviewData(previewSubmission)}
                 theme={CARNET_THEMES.find(t => t.id === previewSubmission.themeId) || CARNET_THEMES[0]}
+                orientation="vertical"
                 side="front"
                 interactiveFlip={true}
                 scale={0.96}
@@ -838,12 +903,12 @@ export const AdminCarnetServicesTab: React.FC = () => {
                 className="btn-modal-action print-pdf"
                 onClick={async () => {
                   if (modalFrontRef.current && modalBackRef.current) {
-                    await exportSingleCarnetPdf(modalFrontRef.current, modalBackRef.current, previewSubmission);
+                    await exportSingleCarnetPdf(modalFrontRef.current, modalBackRef.current, previewSubmission, 'vertical');
                     soundEffects.playSuccess();
                   }
                 }}
               >
-                🖨️ Descargar PDF (CR80 Bancario)
+                🖨️ Descargar PDF (CR80 Vertical)
               </button>
 
               <button
