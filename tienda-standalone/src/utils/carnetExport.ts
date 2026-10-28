@@ -149,7 +149,7 @@ export async function exportSingleCarnetPdf(
   pdf.addImage(backImg, 'PNG', 0, 0, cardW, cardH);
 
   const cleanName = (submission.fullName || 'carnet').replace(/[^a-zA-Z0-9]/g, '_');
-  pdf.save(`Carnet_CR80_${isVertical ? 'Vertical' : 'Horizontal'}_${cleanName}_${submission.idNumber || 'id'}.pdf`);
+  pdf.save(`Carnet_CR80_${isVertical ? 'Vertical' : 'Horizontal'}_${cleanName}.pdf`);
 }
 
 /**
@@ -315,7 +315,7 @@ export async function exportArchBBatchCarnetsPdf(
       pdf.setFontSize(5);
       pdf.setTextColor(140, 150, 160);
       pdf.text(
-        `[#${startIdx + idx + 1} REVERSO] DPI: ${card.submission.idNumber || ''}`,
+        `[#${startIdx + idx + 1} REVERSO] ${card.submission.fullName?.slice(0, 24) || ''}`,
         x + 1,
         y + cardH + 2.5
       );

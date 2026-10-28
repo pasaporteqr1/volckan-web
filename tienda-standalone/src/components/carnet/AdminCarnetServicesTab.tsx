@@ -156,6 +156,8 @@ export const AdminCarnetServicesTab: React.FC = () => {
         sub.qrToken || `https://volckan.com/tienda/#/carnet/verify?id=${encodeURIComponent(sub.idNumber)}&phone=${encodeURIComponent(sub.phone || '')}`
       );
 
+      const logoSrc = localFormConfig.logoUrl || carnetConfig.logoUrl;
+
       // Elemento Frente Vertical (204px x 323px - Proporción CR80 53.98 x 85.60 mm)
       const frontEl = document.createElement('div');
       frontEl.style.width = '204px';
@@ -174,12 +176,14 @@ export const AdminCarnetServicesTab: React.FC = () => {
       frontEl.style.textAlign = 'center';
 
       frontEl.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.18); padding-bottom:4px;">
-          <div style="font-size:7.5px; font-weight:800; text-align:left; line-height:1.15; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-transform:uppercase;">
-            ${sub.institutionName || localFormConfig.institutionName}
+        <div style="display:flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,0.18); padding-bottom:5px; text-align:left;">
+          ${logoSrc ? `<img src="${logoSrc}" style="height:36px; max-width:55px; object-fit:contain; flex-shrink:0;" />` : `<div style="width:32px; height:32px; border-radius:6px; background:${theme.badgeBg}; display:flex; align-items:center; justify-content:center; font-size:16px;">🏛️</div>`}
+          <div style="display:flex; flex-direction:column; min-width:0; flex:1;">
+            <div style="font-size:7.5px; font-weight:900; line-height:1.15; text-transform:uppercase; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+              ${sub.institutionName || localFormConfig.institutionName}
+            </div>
             <div style="font-size:5.5px; color:${theme.accentColor}; font-weight:800; letter-spacing:0.04em;">ACREDITACIÓN OFICIAL & CREDENCIAL</div>
           </div>
-          <div style="font-size:8px; opacity:0.9; color:${theme.chipColor};">📶</div>
         </div>
         
         <div style="display:flex; justify-content:center; margin:3px 0;">
@@ -189,21 +193,18 @@ export const AdminCarnetServicesTab: React.FC = () => {
         </div>
 
         <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
-          <span style="font-size:6.5px; background:${theme.badgeBg}; color:${theme.badgeText}; padding:2px 8px; border-radius:999px; font-weight:800; border:1px solid rgba(255,255,255,0.15);">
-            📱 ${formatPhoneString(sub.phone)}
-          </span>
-          <strong style="font-size:10px; font-weight:900; line-height:1.15; text-transform:uppercase; margin-top:2px;">${sub.fullName}</strong>
+          ${sub.phone ? `
+            <span style="font-size:6.5px; background:${theme.badgeBg}; color:${theme.badgeText}; padding:2px 8px; border-radius:999px; font-weight:800; border:1px solid rgba(255,255,255,0.15);">
+              📱 ${formatPhoneString(sub.phone)}
+            </span>
+          ` : ''}
+          <strong style="font-size:10.5px; font-weight:900; line-height:1.15; text-transform:uppercase; margin-top:2px;">${sub.fullName}</strong>
           ${sub.institutionRepresented ? `<div style="font-size:7.5px; font-weight:700; color:${theme.accentColor};">🏢 ${sub.institutionRepresented}</div>` : ''}
           ${sub.departmentMunicipality ? `<div style="font-size:6.5px; font-weight:600; opacity:0.85;">📍 ${sub.departmentMunicipality}</div>` : ''}
         </div>
 
-        <div style="background:rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.12); border-radius:6px; padding:3px 6px;">
-          <div style="font-size:5.5px; opacity:0.75; letter-spacing:0.04em;">DPI / CUI IDENTIFICACIÓN</div>
-          <div style="font-family:monospace; font-size:8px; font-weight:800; letter-spacing:0.05em;">${formatDpiString(sub.idNumber)}</div>
-        </div>
-
-        <div style="display:flex; justify-content:space-between; font-size:5.5px; font-family:monospace; opacity:0.85; border-top:1px solid rgba(255,255,255,0.12); padding-top:2px;">
-          <span>VOLCKAN ID</span>
+        <div style="display:flex; justify-content:space-between; font-size:6px; font-family:monospace; opacity:0.9; border-top:1px solid rgba(255,255,255,0.12); padding-top:3px;">
+          <span style="font-weight:800; letter-spacing:0.04em;">volckan.com</span>
           <span style="color:${theme.accentColor};">◈ OFICIAL CR80 ◈</span>
         </div>
       `;
@@ -238,7 +239,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
         </div>
 
         <div style="background:rgba(0,0,0,0.35); border-radius:6px; padding:4px 6px; font-size:6.5px; text-align:left; display:flex; flex-direction:column; gap:2px;">
-          <div><span style="opacity:0.7;">DPI CUI:</span> <strong>${formatDpiString(sub.idNumber)}</strong></div>
+          <div style="font-weight:800; color:${theme.accentColor}; font-size:7.5px;">${sub.fullName}</div>
           ${sub.phone ? `<div><span style="opacity:0.7;">TEL:</span> <strong>${formatPhoneString(sub.phone)}</strong></div>` : ''}
           ${sub.institutionRepresented ? `<div><span style="opacity:0.7;">ENTIDAD:</span> <strong>${sub.institutionRepresented}</strong></div>` : ''}
           ${sub.departmentMunicipality ? `<div><span style="opacity:0.7;">PROCEDENCIA:</span> <strong>${sub.departmentMunicipality}</strong></div>` : ''}
@@ -248,9 +249,9 @@ export const AdminCarnetServicesTab: React.FC = () => {
           Credencial oficial de acceso y acreditación para ${sub.institutionName || localFormConfig.institutionName}. Su portación es personal e intransferible.
         </div>
 
-        <div style="display:flex; justify-content:space-between; font-size:5.5px; font-family:monospace; border-top:1px solid rgba(255,255,255,0.1); padding-top:2px;">
-          <span style="color:${theme.accentColor};">POWERED BY VOLCKAN ID</span>
-          <span style="opacity:0.8;">VERIFICACIÓN ACTIVA</span>
+        <div style="display:flex; justify-content:space-between; font-size:6px; font-family:monospace; border-top:1px solid rgba(255,255,255,0.1); padding-top:2px;">
+          <span style="color:${theme.accentColor}; font-weight:800;">volckan.com</span>
+          <span style="opacity:0.8;">VERIFICACIÓN OFICIAL</span>
         </div>
       `;
 

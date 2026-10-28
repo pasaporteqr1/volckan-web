@@ -141,11 +141,6 @@ export const CarnetCardPreview: React.FC<CarnetCardPreviewProps> = ({
               ) : (
                 <FrontCardContent data={data} theme={theme} />
               )}
-              {interactiveFlip && (
-                <div className="carnet-flip-hint">
-                  <span>🔄 Voltear Reverso</span>
-                </div>
-              )}
             </div>
 
             {/* Reverso */}
@@ -158,11 +153,6 @@ export const CarnetCardPreview: React.FC<CarnetCardPreviewProps> = ({
                 <VerticalBackCardContent data={data} theme={theme} qrDataUrl={qrDataUrl} />
               ) : (
                 <BackCardContent data={data} theme={theme} qrDataUrl={qrDataUrl} />
-              )}
-              {interactiveFlip && (
-                <div className="carnet-flip-hint">
-                  <span>🔄 Voltear Frente</span>
-                </div>
               )}
             </div>
           </div>
@@ -199,14 +189,14 @@ export const CarnetCardPreview: React.FC<CarnetCardPreviewProps> = ({
 const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> = ({ data, theme }) => {
   return (
     <div className="carnet-vertical-inner">
-      {/* Cabecera Vertical: Logo + Institución Emisora */}
+      {/* Cabecera Vertical: Logo Institucional Prominente + Institución Emisora */}
       <div className="carnet-v-header" style={{ background: theme.headerBg }}>
         <div className="carnet-v-brand">
           {data.logoUrl ? (
-            <img src={data.logoUrl} alt="Logo" className="carnet-v-logo" />
+            <img src={data.logoUrl} alt="Logo Institucional" className="carnet-v-logo" />
           ) : (
             <div className="carnet-v-logo-fallback" style={{ background: theme.badgeBg, color: theme.accentColor }}>
-              <span>⚡</span>
+              <span>🏛️</span>
             </div>
           )}
           <div className="carnet-v-titles">
@@ -217,9 +207,6 @@ const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTh
               ACREDITACIÓN OFICIAL & CREDENCIAL
             </span>
           </div>
-        </div>
-        <div className="carnet-v-chip" title="Chip Inteligente & NFC">
-          <span style={{ color: theme.chipColor }}>📶</span>
         </div>
       </div>
 
@@ -240,9 +227,11 @@ const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTh
 
       {/* Jerarquía de Identidad del Titular */}
       <div className="carnet-v-identity">
-        <div className="carnet-v-role-badge" style={{ background: theme.badgeBg, color: theme.badgeText, borderColor: theme.borderColor }}>
-          📱 {formatPhoneString(data.phone)}
-        </div>
+        {data.phone && (
+          <div className="carnet-v-role-badge" style={{ background: theme.badgeBg, color: theme.badgeText, borderColor: theme.borderColor }}>
+            📱 {formatPhoneString(data.phone)}
+          </div>
+        )}
 
         <h3 className="carnet-v-name" style={{ color: theme.textColor }}>
           {data.fullName || 'NOMBRE DEL TITULAR'}
@@ -261,17 +250,9 @@ const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTh
         )}
       </div>
 
-      {/* Caja de Datos de Seguridad Monospace (CUI y Teléfono) */}
-      <div className="carnet-v-security-box">
-        <div className="carnet-v-dpi" style={{ color: theme.textColor }}>
-          <span style={{ color: theme.subtextColor, fontSize: '0.56rem', display: 'block', letterSpacing: '0.04em' }}>DPI / CUI IDENTIFICACIÓN</span>
-          {formatDpiString(data.idNumber)}
-        </div>
-      </div>
-
-      {/* Pie de Seguridad y Holograma */}
+      {/* Pie de Seguridad y Marca Oficial */}
       <div className="carnet-v-footer" style={{ color: theme.subtextColor }}>
-        <span>VOLCKAN ID</span>
+        <span style={{ fontWeight: 800, letterSpacing: '0.04em' }}>volckan.com</span>
         <span style={{ color: theme.accentColor }}>◈ OFICIAL CR80 ◈</span>
       </div>
     </div>
@@ -301,9 +282,11 @@ const VerticalBackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetThe
         </span>
       </div>
 
-      {/* Datos Clave Resumen */}
+      {/* Datos Clave Resumen (Sin DPI) */}
       <div className="carnet-v-back-details" style={{ color: theme.textColor }}>
-        <div><span>DPI CUI:</span> <strong>{formatDpiString(data.idNumber)}</strong></div>
+        <div style={{ fontWeight: 800, color: theme.accentColor, fontSize: '0.74rem' }}>
+          {data.fullName || 'TITULAR'}
+        </div>
         {data.phone && <div><span>TEL:</span> <strong>{formatPhoneString(data.phone)}</strong></div>}
         {data.institutionRepresented && <div><span>ENTIDAD:</span> <strong>{data.institutionRepresented}</strong></div>}
         {data.departmentMunicipality && <div><span>PROCEDENCIA:</span> <strong>{data.departmentMunicipality}</strong></div>}
@@ -314,8 +297,8 @@ const VerticalBackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetThe
       </p>
 
       <div className="carnet-v-back-footer">
-        <span style={{ color: theme.accentColor }}>POWERED BY VOLCKAN ID</span>
-        <span style={{ color: theme.subtextColor }}>VERIFICACIÓN ACTIVA</span>
+        <span style={{ color: theme.accentColor, fontWeight: 800 }}>volckan.com</span>
+        <span style={{ color: theme.subtextColor }}>VERIFICACIÓN OFICIAL</span>
       </div>
     </div>
   );
@@ -348,13 +331,6 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
             </span>
           </div>
         </div>
-        <div className="carnet-chip-icon" style={{ borderColor: theme.chipColor }}>
-          <div className="smart-chip-grid" style={{ borderColor: theme.chipColor }}>
-            <span className="chip-line" />
-            <span className="chip-line" />
-          </div>
-          <span className="nfc-symbol">📶</span>
-        </div>
       </div>
 
       {/* Cuerpo Principal del Frente */}
@@ -375,22 +351,17 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
         {/* Datos Comerciales del Titular */}
         <div className="carnet-user-details">
           {/* Badge con el Teléfono del Titular */}
-          <div className="carnet-role-pill" style={{ background: theme.badgeBg, color: theme.badgeText, borderColor: theme.borderColor }}>
-            📱 {formatPhoneString(data.phone)}
-          </div>
+          {data.phone && (
+            <div className="carnet-role-pill" style={{ background: theme.badgeBg, color: theme.badgeText, borderColor: theme.borderColor }}>
+              📱 {formatPhoneString(data.phone)}
+            </div>
+          )}
 
           <h3 className="carnet-user-name" style={{ color: theme.textColor }}>
             {data.fullName || 'NOMBRE DEL TITULAR'}
           </h3>
 
           <div className="carnet-meta-grid">
-            <div className="carnet-meta-item">
-              <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>DPI (13 DÍGITOS)</span>
-              <span className="carnet-meta-val" style={{ color: theme.textColor, letterSpacing: '0.04em' }}>
-                {formatDpiString(data.idNumber)}
-              </span>
-            </div>
-
             {data.institutionRepresented && (
               <div className="carnet-meta-item">
                 <span className="carnet-meta-label" style={{ color: theme.subtextColor }}>EMPRESA / ENTIDAD</span>
@@ -416,7 +387,7 @@ const FrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme }> =
       <div className="carnet-footer-front">
         <div className="carnet-security-strip" />
         <div className="carnet-footer-labels">
-          <span className="security-tag" style={{ color: theme.subtextColor }}>ACREDITACIÓN COMERCIAL · VOLCKAN ID</span>
+          <span className="security-tag" style={{ color: theme.subtextColor, fontWeight: 700 }}>volckan.com</span>
           <span className="security-hologram" style={{ color: theme.accentColor }}>◈ ◈ OFICIAL ◈ ◈</span>
         </div>
       </div>
@@ -458,6 +429,10 @@ const BackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme; qrDa
             <span className="badge-text" style={{ color: theme.badgeText }}>PASE OFICIAL DE ACCESO</span>
           </div>
 
+          <div style={{ fontWeight: 800, color: theme.textColor, fontSize: '0.85rem' }}>
+            {data.fullName || 'TITULAR'}
+          </div>
+
           {data.phone && (
             <div className="carnet-emergency-item">
               <span className="em-label" style={{ color: theme.subtextColor }}>TELÉFONO REGISTRADO:</span>
@@ -480,13 +455,6 @@ const BackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme; qrDa
               <span className="em-val" style={{ color: theme.textColor }}>📍 {data.departmentMunicipality}</span>
             </div>
           )}
-
-          <div className="carnet-emergency-item">
-            <span className="em-label" style={{ color: theme.subtextColor }}>DPI CUI VALIDADO:</span>
-            <span className="em-val" style={{ color: theme.textColor, fontFamily: 'monospace' }}>
-              {formatDpiString(data.idNumber)}
-            </span>
-          </div>
         </div>
       </div>
 
@@ -496,8 +464,8 @@ const BackCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTheme; qrDa
           Credencial personal e intransferible para acceso y acreditación oficial de {data.institutionName || 'la institución emisora'}.
         </p>
         <div className="carnet-back-bar">
-          <span className="volckan-seal" style={{ color: theme.accentColor }}>POWERED BY VOLCKAN SMART ID</span>
-          <span className="serial-number" style={{ color: theme.subtextColor }}>{formatDpiString(data.idNumber)}</span>
+          <span className="volckan-seal" style={{ color: theme.accentColor, fontWeight: 700 }}>volckan.com</span>
+          <span className="serial-number" style={{ color: theme.subtextColor }}>VERIFICACIÓN OFICIAL</span>
         </div>
       </div>
     </div>
