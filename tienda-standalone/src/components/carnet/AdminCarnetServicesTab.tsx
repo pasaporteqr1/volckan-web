@@ -189,58 +189,66 @@ export const AdminCarnetServicesTab: React.FC = () => {
           <div style="width:44px; height:6px; border-radius:999px; background:rgba(7,17,32,0.9); border:1px solid rgba(255,255,255,0.22); box-shadow:inset 0 1px 3px rgba(0,0,0,0.7);"></div>
         </div>
 
-        <!-- 1. Cabecera Organizador + Evento -->
-        <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:1px;">
-          <div style="display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:999px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); max-width:95%;">
+        <!-- 1. Cabecera Institucional: Logotipo Prominente + Organizador + Evento -->
+        <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:2px;">
+          ${logoSrc ? `
+            <div style="display:flex; justify-content:center; align-items:center; margin-bottom:1px;">
+              <img src="${logoSrc}" style="height:32px; max-width:80px; object-fit:contain; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.45));" />
+            </div>
+          ` : `
+            <div style="width:30px; height:30px; border-radius:6px; background:${theme.badgeBg}; border:1px solid ${theme.borderColor}; display:flex; align-items:center; justify-content:center; font-size:14px; margin-bottom:1px;">⚡</div>
+          `}
+          
+          <div style="display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:999px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); max-width:98%;">
             <span style="width:5px; height:5px; border-radius:50%; background:${theme.accentColor}; box-shadow:0 0 6px ${theme.accentColor}; flex-shrink:0;"></span>
-            ${logoSrc ? `<img src="${logoSrc}" style="height:14px; max-width:38px; object-fit:contain; flex-shrink:0;" />` : `<span style="font-size:8px; color:${theme.accentColor};">⚡</span>`}
-            <span style="font-size:6px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            <span style="font-size:5.8px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; white-space:normal; line-height:1.15; word-break:break-word;">
               ${sub.institutionName || localFormConfig.institutionName}
             </span>
           </div>
-          <div style="font-size:8.5px; font-weight:800; line-height:1.15; text-transform:uppercase; letter-spacing:-0.01em; margin-top:2px;">
+
+          <div style="font-size:8.5px; font-weight:800; line-height:1.15; text-transform:uppercase; letter-spacing:-0.01em; margin-top:1px; white-space:normal; word-break:break-word;">
             SUMMIT DE COMPETITIVIDAD <span style="color:${theme.accentColor}; font-weight:800;">2026</span>
           </div>
-          <div style="font-size:5px; color:${theme.subtextColor}; font-weight:600; text-transform:uppercase; letter-spacing:0.06em;">
-            Innovación · Productividad · Desarrollo
+          <div style="font-size:5px; color:${theme.subtextColor}; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; white-space:normal; line-height:1.18;">
+            Innovación · Productividad · Desarrollo Regional
           </div>
         </div>
 
-        <!-- 2. Foto con Anillo Squircle y Sello -->
+        <!-- 2. Foto con Anillo Rectangular Vertical (Proporción 3:4) y Sello de Verificación -->
         <div style="position:relative; z-index:2; display:flex; justify-content:center; margin:3px 0;">
-          <div style="width:86px; height:86px; border-radius:24px; padding:3px; background:linear-gradient(135deg, ${theme.accentColor} 0%, rgba(56,189,248,0.8) 100%); box-shadow:0 6px 16px rgba(0,0,0,0.5); position:relative;">
-            <div style="width:100%; height:100%; border-radius:21px; overflow:hidden; background:#020617; display:flex; align-items:center; justify-content:center;">
+          <div style="width:78px; height:104px; border-radius:16px; padding:2.5px; background:linear-gradient(135deg, ${theme.accentColor} 0%, rgba(56,189,248,0.85) 100%); box-shadow:0 6px 16px rgba(0,0,0,0.55); position:relative;">
+            <div style="width:100%; height:100%; border-radius:13.5px; overflow:hidden; background:#020617; display:flex; align-items:center; justify-content:center;">
               ${sub.photoUrl ? `<img src="${sub.photoUrl}" style="width:100%; height:100%; object-fit:cover;" />` : `<div style="color:${theme.subtextColor}; font-size:8px; font-weight:700;">FOTOGRAFÍA</div>`}
             </div>
-            <div style="position:absolute; bottom:-2px; right:-2px; width:20px; height:20px; border-radius:6px; background:${theme.accentColor}; color:#071120; font-size:10px; font-weight:900; display:flex; align-items:center; justify-content:center; border:1.5px solid #071120;">
+            <div style="position:absolute; bottom:-2px; right:-2px; width:18px; height:18px; border-radius:5px; background:${theme.accentColor}; color:#071120; font-size:9px; font-weight:900; display:flex; align-items:center; justify-content:center; border:1.5px solid #071120;">
               ✓
             </div>
           </div>
         </div>
 
-        <!-- 3. Jerarquía del Titular -->
-        <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:3px;">
+        <!-- 3. Jerarquía del Titular (Sin corte de textos) -->
+        <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:2.5px;">
           <span style="font-size:6px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; background:${theme.accentColor}; color:#071120; padding:2px 8px; border-radius:999px;">
             ${sub.role || 'ACREDITACIÓN OFICIAL'}
           </span>
-          <div style="font-size:10px; font-weight:800; line-height:1.15; text-transform:uppercase; letter-spacing:-0.01em; margin:1px 0;">
+          <div style="font-size:9.5px; font-weight:800; line-height:1.15; text-transform:uppercase; letter-spacing:-0.01em; margin:1px 0; white-space:normal; word-break:break-word;">
             ${sub.fullName}
           </div>
           ${sub.institutionRepresented ? `
             <div style="width:100%; padding:3px 6px; border-radius:7px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); box-sizing:border-box;">
               <div style="font-size:4.5px; font-weight:800; color:${theme.accentColor}; text-transform:uppercase; letter-spacing:0.08em;">EMPRESA / INSTITUCIÓN</div>
-              <div style="font-size:6.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${sub.institutionRepresented}</div>
+              <div style="font-size:6.5px; font-weight:700; white-space:normal; line-height:1.2; word-break:break-word; text-align:center;">${sub.institutionRepresented}</div>
             </div>
           ` : ''}
           <div style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:3px 6px; border-radius:7px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); box-sizing:border-box;">
             ${sub.phone ? `
-              <div style="display:flex; align-items:center; gap:4px;">
+              <div style="display:flex; align-items:center; gap:3px;">
                 <span style="font-size:7px;">📱</span>
-                <span style="font-size:6.5px; font-family:'JetBrains Mono', monospace; font-weight:700;">${formatPhoneString(sub.phone)}</span>
+                <span style="font-size:6.2px; font-family:'JetBrains Mono', monospace; font-weight:700;">${formatPhoneString(sub.phone)}</span>
               </div>
             ` : '<span></span>'}
             ${sub.departmentMunicipality ? `
-              <div style="font-size:6px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100px;">
+              <div style="font-size:6px; font-weight:700; white-space:normal; line-height:1.15; word-break:break-word; text-align:right; max-width:105px;">
                 📍 ${sub.departmentMunicipality}
               </div>
             ` : ''}

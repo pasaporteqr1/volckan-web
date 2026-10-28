@@ -620,7 +620,7 @@
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-/* 1. Cabecera Institucional: Organizador y Nombre del Evento */
+/* 1. Cabecera Institucional: Logotipo Prominente, Organizador y Evento */
 .carnet-header-top {
   position: relative;
   z-index: 2;
@@ -630,6 +630,32 @@
   flex-direction: column;
   align-items: center;
   gap: 2px;
+}
+
+.carnet-header-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+}
+
+.carnet-header-prominent-logo {
+  height: 38px;
+  max-width: 90px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+}
+
+.carnet-header-logo-fallback {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 .carnet-organizer-pill {
@@ -642,7 +668,7 @@
   border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(8px);
   margin-bottom: 2px;
-  max-width: 95%;
+  max-width: 100%;
 }
 
 .carnet-organizer-dot {
@@ -652,36 +678,26 @@
   flex-shrink: 0;
 }
 
-.carnet-organizer-logo {
-  height: 16px;
-  max-width: 44px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.carnet-organizer-symbol {
-  font-size: 0.72rem;
-  line-height: 1;
-}
-
 .carnet-organizer-name {
   font-size: 0.58rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  letter-spacing: 0.05em;
+  white-space: normal;
+  line-height: 1.15;
+  word-break: break-word;
 }
 
 .carnet-summit-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.015em;
   text-transform: uppercase;
   margin: 1px 0 0 0;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .carnet-summit-title .year-highlight {
@@ -692,19 +708,22 @@
 .carnet-summit-subtitle {
   font-size: 0.52rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   margin: 0;
+  white-space: normal;
+  line-height: 1.18;
+  word-break: break-word;
 }
 
-/* 2. Sección de Fotografía del Portador */
+/* 2. Sección de Fotografía del Portador (Rectangular Vertical 3:4) */
 .carnet-photo-cluster-wrap {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 6px 0 4px 0;
+  margin: 5px 0 3px 0;
 }
 
 .carnet-photo-ring {
@@ -714,6 +733,13 @@
   padding: 3.5px;
   position: relative;
   transition: transform 0.3s ease;
+}
+
+.carnet-photo-ring.rectangular {
+  width: 98px;
+  height: 130px;
+  border-radius: 18px;
+  padding: 3px;
 }
 
 .carnet-photo-frame-inner {
@@ -726,6 +752,10 @@
   align-items: center;
   justify-content: center;
   position: relative;
+}
+
+.carnet-photo-frame-inner.rectangular {
+  border-radius: 15px;
 }
 
 .carnet-bearer-photo {
@@ -749,12 +779,12 @@
   position: absolute;
   bottom: -3px;
   right: -3px;
-  width: 24px;
-  height: 24px;
-  border-radius: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
   display: grid;
   place-items: center;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 900;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
   border: 2px solid #071120;
@@ -788,17 +818,18 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 1.05rem;
   font-weight: 800;
-  line-height: 1.16;
+  line-height: 1.15;
   letter-spacing: -0.015em;
   margin: 1px 0;
   word-break: break-word;
+  white-space: normal;
   max-width: 100%;
   text-transform: uppercase;
 }
 
 .carnet-institution-card {
   width: 100%;
-  padding: 5px 8px;
+  padding: 4px 8px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -818,12 +849,12 @@
 }
 
 .carnet-institution-val {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
   line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
   max-width: 100%;
 }
 
@@ -844,8 +875,8 @@
 .carnet-phone-block {
   display: flex;
   align-items: center;
-  gap: 6px;
-  min-width: 0;
+  gap: 5px;
+  flex-shrink: 0;
 }
 
 .carnet-phone-icon-box {
@@ -878,16 +909,18 @@
   flex-direction: column;
   align-items: flex-end;
   min-width: 0;
+  flex: 1;
   text-align: right;
 }
 
 .carnet-location-value {
   font-size: 0.68rem;
   font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 120px;
+  line-height: 1.18;
+  white-space: normal;
+  word-break: break-word;
+  text-align: right;
+  max-width: 135px;
 }
 
 /* 4. Pie del Carnet */

@@ -214,19 +214,27 @@ const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTh
         <div className="carnet-lanyard-slot" title="Ranura para cinta"></div>
       </div>
 
-      {/* 1. Cabecera Institucional: Píldora del Organizador y Título del Evento */}
+      {/* 1. Cabecera Institucional: Logotipo prominente + Píldora del Organizador y Título */}
       <header className="carnet-header-top">
+        {data.logoUrl ? (
+          <div className="carnet-header-logo-container">
+            <img src={data.logoUrl} alt="Logo Institucional" className="carnet-header-prominent-logo" />
+          </div>
+        ) : (
+          <div className="carnet-header-logo-container">
+            <div className="carnet-header-logo-fallback" style={{ background: theme.badgeBg, color: theme.accentColor, borderColor: theme.borderColor }}>
+              ⚡
+            </div>
+          </div>
+        )}
+
         <div className="carnet-organizer-pill">
           <span className="carnet-organizer-dot" style={{ background: theme.accentColor, boxShadow: `0 0 8px ${theme.accentColor}` }}></span>
-          {data.logoUrl ? (
-            <img src={data.logoUrl} alt="Logo" className="carnet-organizer-logo" />
-          ) : (
-            <span className="carnet-organizer-symbol" style={{ color: theme.accentColor }}>⚡</span>
-          )}
           <span className="carnet-organizer-name" style={{ color: theme.textColor }}>
             {data.institutionName || 'Mesa de Competitividad de Quetzaltenango'}
           </span>
         </div>
+
         <h2 className="carnet-summit-title" style={{ color: theme.textColor }}>
           SUMMIT DE COMPETITIVIDAD<span className="year-highlight" style={{ color: theme.accentColor }}> 2026</span>
         </h2>
@@ -235,16 +243,16 @@ const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTh
         </p>
       </header>
 
-      {/* 2. Sección de Fotografía del Portador con Marco de Resplandor y Sello de Verificación */}
+      {/* 2. Sección de Fotografía del Portador (Formato Rectangular Vertical 3:4 con Marco Squircle y Sello) */}
       <div className="carnet-photo-cluster-wrap">
-        <div className="carnet-photo-ring" style={{ background: `linear-gradient(135deg, ${theme.accentColor} 0%, rgba(56, 189, 248, 0.8) 100%)`, boxShadow: `0 10px 24px -6px rgba(0,0,0,0.5), 0 0 18px ${theme.glowColor}` }}>
-          <div className="carnet-photo-frame-inner" style={{ background: '#020617' }}>
+        <div className="carnet-photo-ring rectangular" style={{ background: `linear-gradient(135deg, ${theme.accentColor} 0%, rgba(56, 189, 248, 0.85) 100%)`, boxShadow: `0 10px 24px -6px rgba(0,0,0,0.55), 0 0 18px ${theme.glowColor}` }}>
+          <div className="carnet-photo-frame-inner rectangular" style={{ background: '#020617' }}>
             {data.photoUrl ? (
               <img src={data.photoUrl} alt={data.fullName} className="carnet-bearer-photo" />
             ) : (
               <div className="carnet-photo-empty-state" style={{ color: theme.subtextColor }}>
-                <span style={{ fontSize: '1.4rem' }}>👤</span>
-                <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.05em' }}>FOTOGRAFÍA</span>
+                <span style={{ fontSize: '1.6rem' }}>👤</span>
+                <span style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.05em' }}>FOTOGRAFÍA</span>
               </div>
             )}
             <div className="carnet-verified-seal-badge" style={{ background: theme.accentColor, color: '#071120' }} title="Identidad Verificada">
@@ -264,7 +272,7 @@ const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTh
           {data.fullName || 'NOMBRE DEL TITULAR'}
         </h3>
 
-        {/* Tarjeta Glassmorphism de la Institución o Empresa que Representa */}
+        {/* Tarjeta Glassmorphism de la Institución o Empresa que Representa (Texto multilínea sin cortes) */}
         {data.institutionRepresented && (
           <div className="carnet-institution-card">
             <span className="carnet-field-label" style={{ color: theme.accentColor }}>EMPRESA / INSTITUCIÓN</span>
@@ -274,7 +282,7 @@ const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTh
           </div>
         )}
 
-        {/* Tira de Contacto y Ubicación */}
+        {/* Tira de Contacto y Ubicación (Procedencia adaptable en 2 filas sin cortes) */}
         <div className="carnet-contact-strip">
           {data.phone && (
             <div className="carnet-phone-block">
