@@ -132,8 +132,9 @@ export async function exportSingleCarnetPdf(
   const backImg = await captureElementToPng(backElement);
 
   const isVertical = orientation === 'vertical';
-  const cardW = isVertical ? 53.98 : 85.60;
-  const cardH = isVertical ? 85.60 : 53.98;
+  // Medidas con +1mm en cada dirección para demasía/sangre de impresión (55.98 x 87.60 mm)
+  const cardW = isVertical ? 55.98 : 87.60;
+  const cardH = isVertical ? 87.60 : 55.98;
 
   const pdf = new jsPDF({
     orientation: isVertical ? 'portrait' : 'landscape',
@@ -168,23 +169,23 @@ export async function exportArchBBatchCarnetsPdf(
   const sheetW = 304.8;
   const sheetH = 457.2;
 
-  // Medidas exactas CR80 Vertical
-  const cardW = 53.98;
-  const cardH = 85.60;
+  // Medidas CR80 Vertical + 1 mm en cada dirección para corte/demasía (55.98 x 87.60 mm)
+  const cardW = 55.98;
+  const cardH = 87.60;
 
   // Grilla 4 x 4 = 16 carnets por pliego
   const cols = 4;
   const rows = 4;
   const cardsPerPage = cols * rows;
 
-  const gapX = 12.0;
-  const gapY = 12.0;
+  const gapX = 10.0;
+  const gapY = 10.0;
 
   // Cálculo de márgenes centrados
-  const totalGridW = cols * cardW + (cols - 1) * gapX; // 251.92 mm
-  const totalGridH = rows * cardH + (rows - 1) * gapY; // 378.40 mm
-  const marginX = (sheetW - totalGridW) / 2; // 26.44 mm
-  const marginY = (sheetH - totalGridH) / 2; // 39.40 mm
+  const totalGridW = cols * cardW + (cols - 1) * gapX; // 253.92 mm
+  const totalGridH = rows * cardH + (rows - 1) * gapY; // 380.40 mm
+  const marginX = (sheetW - totalGridW) / 2; // 25.44 mm
+  const marginY = (sheetH - totalGridH) / 2; // 38.40 mm
 
   const pdf = new jsPDF({
     orientation: 'portrait',
@@ -229,7 +230,7 @@ export async function exportArchBBatchCarnetsPdf(
     pdf.setFontSize(7);
     pdf.setTextColor(100, 116, 139);
     pdf.text(
-      `Institución: ${institutionName}  |  Pliego: ${sheetNum} de ${totalSheets}  |  Carnets: ${slice.length}/16  |  Resolución: 300 DPI  |  Corte: 53.98 x 85.60 mm`,
+      `Institución: ${institutionName}  |  Pliego: ${sheetNum} de ${totalSheets}  |  Carnets: ${slice.length}/16  |  Resolución: 300 DPI  |  Corte: 53.98 x 85.60 mm (+1 mm en cada dirección: 55.98 x 87.60 mm)`,
       marginX,
       22
     );
@@ -343,19 +344,19 @@ export async function exportBatchCarnetsPdf(
     format: 'letter'
   });
 
-  const cardW = 53.98;
-  const cardH = 85.60;
+  const cardW = 55.98;
+  const cardH = 87.60;
   const cols = 3;
   const rows = 2;
   const cardsPerPage = cols * rows; // 6 tarjetas verticales por página Carta
 
-  const gapX = 14.0;
-  const gapY = 16.0;
+  const gapX = 10.0;
+  const gapY = 14.0;
 
-  const totalGridW = cols * cardW + (cols - 1) * gapX; // 189.94 mm
-  const totalGridH = rows * cardH + (rows - 1) * gapY; // 187.20 mm
-  const marginX = (215.9 - totalGridW) / 2; // ~12.98 mm
-  const marginY = (279.4 - totalGridH) / 2; // ~46.10 mm
+  const totalGridW = cols * cardW + (cols - 1) * gapX; // 187.94 mm
+  const totalGridH = rows * cardH + (rows - 1) * gapY; // 189.20 mm
+  const marginX = (215.9 - totalGridW) / 2; // ~13.98 mm
+  const marginY = (279.4 - totalGridH) / 2; // ~45.10 mm
 
   for (let i = 0; i < cardsData.length; i += cardsPerPage) {
     if (i > 0) pdf.addPage('letter', 'portrait');
@@ -372,7 +373,7 @@ export async function exportBatchCarnetsPdf(
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(7);
     pdf.setTextColor(120, 120, 120);
-    pdf.text(`${institutionName} · Corte estándar 53.98 x 85.60 mm`, marginX, 27);
+    pdf.text(`${institutionName} · Corte estándar 53.98 x 85.60 mm (+1 mm en cada dirección: 55.98 x 87.60 mm)`, marginX, 27);
 
     slice.forEach((card, idx) => {
       const col = idx % cols;

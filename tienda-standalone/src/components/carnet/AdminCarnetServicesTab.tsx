@@ -237,16 +237,16 @@ export const AdminCarnetServicesTab: React.FC = () => {
               <div style="font-size:9.5px; font-weight:800; white-space:normal; line-height:1.24; word-break:break-word; text-align:center;">${sub.institutionRepresented}</div>
             </div>
           ` : ''}
-          <div style="width:100%; display:flex; justify-content:space-between; align-items:center; padding:4px 8px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); box-sizing:border-box;">
+          <div style="width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2.5px; padding:4px 8px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); box-sizing:border-box; text-align:center;">
             ${sub.phone ? `
-              <div style="display:flex; align-items:center; gap:4px;">
+              <div style="display:inline-flex; align-items:center; justify-content:center; gap:4px;">
                 <span style="font-size:8px;">📱</span>
-                <span style="font-size:8.8px; font-family:'JetBrains Mono', monospace; font-weight:800; letter-spacing:0.02em;">${formatPhoneString(sub.phone)}</span>
+                <span style="font-size:9.5px; font-family:'JetBrains Mono', monospace; font-weight:800; letter-spacing:0.02em;">${formatPhoneString(sub.phone)}</span>
               </div>
-            ` : '<span></span>'}
+            ` : ''}
             ${sub.departmentMunicipality ? `
-              <div style="font-size:8.5px; font-weight:800; white-space:normal; line-height:1.18; word-break:break-word; text-align:right; max-width:115px;">
-                📍 ${sub.departmentMunicipality}
+              <div style="display:inline-flex; align-items:center; justify-content:center; gap:3px; font-size:8.5px; font-weight:800; white-space:normal; line-height:1.2; word-break:break-word; text-align:center;">
+                <span style="font-size:7.5px;">📍</span> <span>${sub.departmentMunicipality}</span>
               </div>
             ` : ''}
           </div>

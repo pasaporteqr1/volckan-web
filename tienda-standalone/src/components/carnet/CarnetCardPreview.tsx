@@ -278,27 +278,22 @@ const VerticalFrontCardContent: React.FC<{ data: CarnetCardData; theme: CarnetTh
           </div>
         )}
 
-        {/* Tira de Contacto y Ubicación (Procedencia adaptable en 2 filas sin cortes) */}
-        <div className="carnet-contact-strip">
+        {/* Bloque de Contacto y Ubicación (Teléfono centrado y Procedencia debajo) */}
+        <div className="carnet-contact-strip centered-stack">
           {data.phone && (
-            <div className="carnet-phone-block">
-              <div className="carnet-phone-icon-box" style={{ background: theme.badgeBg, borderColor: theme.borderColor, color: theme.accentColor }}>
-                📱
-              </div>
-              <div className="carnet-phone-texts">
-                <span className="carnet-field-label" style={{ color: theme.subtextColor, fontSize: '0.52rem' }}>TELÉFONO</span>
-                <span className="carnet-phone-number" style={{ color: theme.textColor }}>
-                  {formatPhoneString(data.phone)}
-                </span>
-              </div>
+            <div className="carnet-phone-centered">
+              <span className="carnet-phone-icon">📱</span>
+              <span className="carnet-phone-number" style={{ color: theme.textColor }}>
+                {formatPhoneString(data.phone)}
+              </span>
             </div>
           )}
 
           {data.departmentMunicipality && (
-            <div className="carnet-location-block">
-              <span className="carnet-field-label" style={{ color: theme.subtextColor, fontSize: '0.52rem' }}>PROCEDENCIA</span>
+            <div className="carnet-location-centered">
+              <span className="carnet-location-icon">📍</span>
               <span className="carnet-location-value" style={{ color: theme.textColor }}>
-                📍 {data.departmentMunicipality}
+                {data.departmentMunicipality}
               </span>
             </div>
           )}
