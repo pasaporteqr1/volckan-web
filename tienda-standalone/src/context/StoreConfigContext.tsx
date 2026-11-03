@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { collection, deleteDoc, doc, onSnapshot, setDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import { 
@@ -11,6 +11,7 @@ import {
 } from '../data/mercadoData';
 import { DEFAULT_CARNET_FORM_CONFIG } from '../data/carnetThemes';
 import type { CarnetServiceFormConfig, CarnetSubmission } from '../types/carnet';
+import type { StoreOrder } from '../types/order';
 import { CONTACT } from '../constants';
 
 export interface StoreAnnouncementConfig {
@@ -28,6 +29,7 @@ interface StoreConfigContextProps {
   storeConfig: StoreAnnouncementConfig;
   carnetConfig: CarnetServiceFormConfig;
   carnetSubmissions: CarnetSubmission[];
+  orders: StoreOrder[];
   loading: boolean;
   saveProducts: (products: MercadoProduct[]) => Promise<void>;
   saveCollections: (collections: BookCollection[]) => Promise<void>;
@@ -38,6 +40,10 @@ interface StoreConfigContextProps {
   updateCarnetSubmissionStatus: (id: string, status: 'pendiente' | 'aprobado' | 'impreso') => Promise<void>;
   deleteCarnetSubmission: (id: string) => Promise<void>;
   refreshCarnetSubmissions: () => Promise<void>;
+  subscribeToCarnetSubmissions: () => () => void;
+  createOrder: (order: StoreOrder) => Promise<void>;
+  updateOrderStatus: (id: string, status: StoreOrder['status']) => Promise<void>;
+  subscribeToOrders: () => () => void;
 }
 
 // Sanitizador seguro para Firestore (elimina recursivamente undefined)
@@ -124,9 +130,18 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   });
 
+  const [orders, setOrders] = useState<StoreOrder[]>(() => {
+    try {
+      const saved = localStorage.getItem('store_orders_cache');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
   const [loading, setLoading] = useState<boolean>(Boolean(db));
 
-  // Sincronización en tiempo real con Firestore
+  // Sincronización en tiempo real pública con Firestore (catálogos y anuncios)
   useEffect(() => {
     if (!db) {
       setLoading(false);
@@ -207,34 +222,6 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       }, (err) => console.warn('[StoreConfig] Error leyendo servicios_carnets:', err));
       unsubs.push(unsubCarnetConfig);
 
-      // 6. Lista de Envíos de Carnets (Colección dedicada carnet_submissions)
-      // Escuchamos la colección directa y ordenamos en memoria para garantizar que ningún documento se excluya
-      const carnetSubmissionsCol = collection(db, 'carnet_submissions');
-      const unsubCarnetSubs = onSnapshot(carnetSubmissionsCol, (snapshot) => {
-        const subs: CarnetSubmission[] = [];
-        snapshot.forEach((docSnap) => {
-          subs.push({ ...(docSnap.data() as CarnetSubmission), id: docSnap.id });
-        });
-        // Orden cronológico descendente (los más recientes primero)
-        subs.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
-        setCarnetSubmissions(subs);
-        try {
-          localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(subs));
-        } catch {
-          try {
-            // Si localStorage excede cuota por imágenes Base64, guardamos versión compacta
-            const lightweight = subs.map(s => ({
-              ...s,
-              photoUrl: s.photoUrl && s.photoUrl.startsWith('data:') ? '' : s.photoUrl
-            }));
-            localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(lightweight));
-          } catch {}
-        }
-      }, (err) => {
-        console.warn('[StoreConfig] Error leyendo carnet_submissions en tiempo real:', err);
-      });
-      unsubs.push(unsubCarnetSubs);
-
     } catch (err) {
       console.warn('[StoreConfig] Excepción al suscribir a Firestore:', err);
       setLoading(false);
@@ -243,6 +230,41 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
     return () => {
       unsubs.forEach(unsub => unsub());
     };
+  }, []);
+
+  // Suscripción bajo demanda a carnet_submissions (SOLO activa cuando un administrador autenticado ingresa al panel)
+  const subscribeToCarnetSubmissions = useCallback(() => {
+    if (!db) return () => {};
+
+    try {
+      const carnetSubmissionsCol = collection(db, 'carnet_submissions');
+      const unsub = onSnapshot(carnetSubmissionsCol, (snapshot) => {
+        const subs: CarnetSubmission[] = [];
+        snapshot.forEach((docSnap) => {
+          subs.push({ ...(docSnap.data() as CarnetSubmission), id: docSnap.id });
+        });
+        subs.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+        setCarnetSubmissions(subs);
+        try {
+          localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(subs));
+        } catch {
+          try {
+            const lightweight = subs.map(s => ({
+              ...s,
+              photoUrl: s.photoUrl && s.photoUrl.startsWith('data:') ? '' : s.photoUrl
+            }));
+            localStorage.setItem('store_carnet_submissions_cache', JSON.stringify(lightweight));
+          } catch {}
+        }
+      }, (err) => {
+        console.warn('[StoreConfig] Permiso denegado o error leyendo carnet_submissions:', err);
+      });
+
+      return unsub;
+    } catch (err) {
+      console.warn('[StoreConfig] Error iniciando suscripción a carnet_submissions:', err);
+      return () => {};
+    }
   }, []);
 
   const saveProducts = async (newProducts: MercadoProduct[]) => {
@@ -353,6 +375,60 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
+  // Suscripción bajo demanda a pedidos (exclusiva para administradores)
+  const subscribeToOrders = useCallback(() => {
+    if (!db) return () => {};
+
+    try {
+      const ordersCol = collection(db, 'orders');
+      const unsub = onSnapshot(ordersCol, (snapshot) => {
+        const ords: StoreOrder[] = [];
+        snapshot.forEach((docSnap) => {
+          ords.push({ ...(docSnap.data() as StoreOrder), id: docSnap.id });
+        });
+        ords.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+        setOrders(ords);
+        try {
+          localStorage.setItem('store_orders_cache', JSON.stringify(ords));
+        } catch {}
+      }, (err) => {
+        console.warn('[StoreConfig] Permiso denegado o error leyendo orders:', err);
+      });
+
+      return unsub;
+    } catch (err) {
+      console.warn('[StoreConfig] Error iniciando suscripción a orders:', err);
+      return () => {};
+    }
+  }, []);
+
+  const createOrder = async (order: StoreOrder) => {
+    const cleanOrder = sanitizeFirestoreData(order);
+    const updated = [cleanOrder, ...orders.filter(o => o.id !== cleanOrder.id)];
+    setOrders(updated);
+    try {
+      localStorage.setItem('store_orders_cache', JSON.stringify(updated));
+    } catch {}
+
+    if (db) {
+      const docRef = doc(db, 'orders', cleanOrder.id);
+      await setDoc(docRef, cleanOrder, { merge: true });
+    }
+  };
+
+  const updateOrderStatus = async (id: string, status: StoreOrder['status']) => {
+    const updated = orders.map(o => o.id === id ? { ...o, status, updatedAt: new Date().toISOString() } : o);
+    setOrders(updated);
+    try {
+      localStorage.setItem('store_orders_cache', JSON.stringify(updated));
+    } catch {}
+
+    if (db) {
+      const docRef = doc(db, 'orders', id);
+      await setDoc(docRef, { status, updatedAt: new Date().toISOString() }, { merge: true });
+    }
+  };
+
   return (
     <StoreConfigContext.Provider value={{
       products,
@@ -361,6 +437,7 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       storeConfig,
       carnetConfig,
       carnetSubmissions,
+      orders,
       loading,
       saveProducts,
       saveCollections,
@@ -370,7 +447,11 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       saveCarnetSubmission,
       updateCarnetSubmissionStatus,
       deleteCarnetSubmission,
-      refreshCarnetSubmissions
+      refreshCarnetSubmissions,
+      subscribeToCarnetSubmissions,
+      createOrder,
+      updateOrderStatus,
+      subscribeToOrders
     }}>
       {children}
     </StoreConfigContext.Provider>
@@ -380,7 +461,7 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
 export const useStoreConfig = () => {
   const context = useContext(StoreConfigContext);
   if (!context) {
-    throw new Error('useStoreConfig must be used within a StoreConfigProvider');
+    throw new Error('useStoreConfig debe ser utilizado dentro de un StoreConfigProvider');
   }
   return context;
 };

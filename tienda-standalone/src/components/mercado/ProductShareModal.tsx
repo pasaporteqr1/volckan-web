@@ -32,12 +32,13 @@ export const ProductShareModal: React.FC<ProductShareModalProps> = ({
   const image = isCollection ? collection.image : product!.image;
   const icon = isCollection ? '📦' : (product!.icon || '📖');
 
-  // URL directo y limpio para compartir
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://lluviadeideas-educativo.web.app';
+  // URL directo y limpio para compartir (compatible con HashRouter y servidores estáticos)
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://www.volckan.com';
+  const pathname = typeof window !== 'undefined' ? window.location.pathname.replace(/\/$/, '') : '';
   const shareParam = isCollection 
     ? `?c=${encodeURIComponent(collection.id)}`
     : `?p=${encodeURIComponent(product!.id)}`;
-  const shareUrl = `${origin}/mercado${shareParam}`;
+  const shareUrl = `${origin}${pathname}/#/${shareParam}`;
 
   const handleCopyLink = async () => {
     soundEffects.playClick();

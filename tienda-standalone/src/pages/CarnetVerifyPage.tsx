@@ -31,8 +31,7 @@ export default function CarnetVerifyPage() {
       // 1. Buscar primero en la memoria local activa
       const localMatch = carnetSubmissions.find(s => 
         s.id === rawId || 
-        s.idNumber === cleanId || 
-        s.idNumber === rawId
+        (cleanId.length === 13 && s.idNumber === cleanId)
       );
 
       if (localMatch) {
@@ -46,7 +45,7 @@ export default function CarnetVerifyPage() {
       // 2. Si no está en memoria, consultar Firestore directamente
       if (db) {
         try {
-          // Búsqueda por ID de documento
+          // Búsqueda por ID seguro de documento (ej: carnet-uuid)
           const docRef = doc(db, 'carnet_submissions', rawId);
           const docSnap = await getDoc(docRef);
           if (docSnap.exists() && isMounted) {
@@ -55,15 +54,20 @@ export default function CarnetVerifyPage() {
             return;
           }
 
-          // Búsqueda por número de DPI
-          if (cleanId) {
-            const qDpi = query(collection(db, 'carnet_submissions'), where('idNumber', '==', cleanId));
-            const snapDpi = await getDocs(qDpi);
-            if (!snapDpi.empty && isMounted) {
-              const firstDoc = snapDpi.docs[0];
-              setSubmission({ ...(firstDoc.data() as CarnetSubmission), id: firstDoc.id });
-              setLoading(false);
-              return;
+          // Fallback de retrocompatibilidad: búsqueda por número de DPI si tiene exactamente 13 dígitos
+          if (cleanId && cleanId.length === 13) {
+            try {
+              const qDpi = query(collection(db, 'carnet_submissions'), where('idNumber', '==', cleanId));
+              const snapDpi = await getDocs(qDpi);
+              if (!snapDpi.empty && isMounted) {
+                const firstDoc = snapDpi.docs[0];
+                setSubmission({ ...(firstDoc.data() as CarnetSubmission), id: firstDoc.id });
+                setLoading(false);
+                return;
+              }
+            } catch (queryErr) {
+              // En modo no administrador, list query puede ser restringido por las reglas de seguridad
+              console.warn('[CarnetVerifyPage] Consulta de listado no autorizada en modo público:', queryErr);
             }
           }
         } catch (err) {

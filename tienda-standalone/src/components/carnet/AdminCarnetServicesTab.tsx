@@ -153,7 +153,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
     for (const sub of targetSubs) {
       const theme = CARNET_THEMES.find(t => t.id === sub.themeId) || CARNET_THEMES[0];
       const qrUrl = await generateQrDataUrl(
-        sub.qrToken || `https://volckan.com/tienda/#/carnet/verify?id=${encodeURIComponent(sub.idNumber)}&phone=${encodeURIComponent(sub.phone || '')}`
+        sub.qrToken || `https://volckan.com/tienda/#/carnet/verify?id=${encodeURIComponent(sub.id)}`
       );
 
       const logoSrc = localFormConfig.logoUrl || carnetConfig.logoUrl;

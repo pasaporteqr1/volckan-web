@@ -13,6 +13,9 @@ import { useStoreConfig, type StoreAnnouncementConfig } from '../context/StoreCo
 import { uploadImageToStorage, shrinkBase64Image } from '../utils/imageUpload';
 import { soundEffects } from '../utils/soundEffects';
 import AdminCarnetServicesTab from '../components/carnet/AdminCarnetServicesTab';
+import AdminOrdersTab from '../components/mercado/AdminOrdersTab';
+import { useAuth } from '../context/AuthContext';
+import AdminLoginModal from '../components/AdminLoginModal';
 import './AdminStorePage.css';
 
 interface LocalStoreState {
@@ -145,17 +148,34 @@ const createEmptyCollection = (): BookCollection => ({
 
 export default function AdminStorePage() {
   const navigate = useNavigate();
+  const { currentUser, loading: authLoading, isAdmin, logout } = useAuth();
   const { 
     products: initialProducts, 
     collections: initialCollections, 
     categories: initialCategories, 
     storeConfig: initialStoreConfig,
     carnetSubmissions,
+    orders,
     saveProducts,
     saveCollections,
     saveCategories,
-    saveStoreConfig 
+    saveStoreConfig,
+    subscribeToCarnetSubmissions,
+    subscribeToOrders,
+    updateOrderStatus
   } = useStoreConfig();
+
+  // Suscribir en vivo a la colección carnet_submissions y orders SOLO cuando el administrador esté autenticado
+  useEffect(() => {
+    if (isAdmin) {
+      const unsubCarnets = subscribeToCarnetSubmissions();
+      const unsubOrders = subscribeToOrders();
+      return () => {
+        if (unsubCarnets) unsubCarnets();
+        if (unsubOrders) unsubOrders();
+      };
+    }
+  }, [isAdmin, subscribeToCarnetSubmissions, subscribeToOrders]);
 
   const [localConfig, setLocalConfig] = useState<LocalStoreState>({
     mercadoProducts: initialProducts,
@@ -236,16 +256,16 @@ export default function AdminStorePage() {
     return DEFAULT_MERCADO_DEPARTMENTS;
   }, [localConfig.mercadoCategories]);
 
-  // Subpestaña activa (Productos vs Colecciones vs Departamentos vs Servicios en Línea) con persistencia en recarga
-  const [adminSubTab, setAdminSubTab] = useState<'productos' | 'colecciones' | 'departamentos' | 'servicios-online'>(() => {
+  // Subpestaña activa (Productos vs Colecciones vs Departamentos vs Servicios en Línea vs Pedidos) con persistencia en recarga
+  const [adminSubTab, setAdminSubTab] = useState<'productos' | 'colecciones' | 'departamentos' | 'servicios-online' | 'pedidos'>(() => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
       const subtabFromUrl = urlParams.get('subtab');
-      if (subtabFromUrl === 'productos' || subtabFromUrl === 'colecciones' || subtabFromUrl === 'departamentos' || subtabFromUrl === 'servicios-online') {
+      if (subtabFromUrl === 'productos' || subtabFromUrl === 'colecciones' || subtabFromUrl === 'departamentos' || subtabFromUrl === 'servicios-online' || subtabFromUrl === 'pedidos') {
         return subtabFromUrl;
       }
       const saved = localStorage.getItem('admin_tienda_subtab');
-      if (saved === 'productos' || saved === 'colecciones' || saved === 'departamentos' || saved === 'servicios-online') {
+      if (saved === 'productos' || saved === 'colecciones' || saved === 'departamentos' || saved === 'servicios-online' || saved === 'pedidos') {
         return saved;
       }
     } catch {
@@ -929,6 +949,25 @@ export default function AdminStorePage() {
     return counts;
   }, [products, departments]);
 
+  if (authLoading) {
+    return (
+      <div className="admin-mercado-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '80vh' }}>
+        <div style={{ textAlign: 'center', color: '#94a3b8' }}>
+          <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '1rem' }}>⏳</span>
+          <h3>Verificando credenciales de acceso...</h3>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="admin-mercado-wrapper">
+        <AdminLoginModal isOpen={true} onSuccess={() => {}} />
+      </div>
+    );
+  }
+
   return (
     <div className="admin-mercado-wrapper animate-fade-in">
       {restoredDraftNotice && (
@@ -1006,6 +1045,31 @@ export default function AdminStorePage() {
             }}
           >
             ← Volver a la Tienda
+          </button>
+
+          <button
+            type="button"
+            className="btn-mercado-logout"
+            onClick={async () => {
+              soundEffects.playClick();
+              await logout();
+            }}
+            title={`Cerrar sesión de administrador (${currentUser?.email || ''})`}
+            style={{
+              padding: '0.6rem 1rem',
+              borderRadius: '8px',
+              border: '1px solid rgba(239, 68, 68, 0.35)',
+              background: 'rgba(239, 68, 68, 0.15)',
+              color: '#fca5a5',
+              cursor: 'pointer',
+              fontWeight: 600,
+              fontSize: '0.88rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem'
+            }}
+          >
+            🚪 Salir ({currentUser?.email?.split('@')[0]})
           </button>
 
           <button 
@@ -1184,9 +1248,26 @@ export default function AdminStorePage() {
           <span>Servicios en Línea & Carnets</span>
           <span className="subtab-count-badge" style={{ background: '#f97316' }}>{carnetSubmissions.length}</span>
         </button>
+        <button
+          type="button"
+          className={`admin-tienda-subtab-btn ${adminSubTab === 'pedidos' ? 'active' : ''}`}
+          onClick={() => {
+            soundEffects.playClick();
+            setAdminSubTab('pedidos');
+          }}
+        >
+          <span className="subtab-icon">📑</span>
+          <span>Pedidos & Cotizaciones</span>
+          <span className="subtab-count-badge" style={{ background: '#10b981' }}>{orders.length}</span>
+        </button>
       </div>
 
-      {adminSubTab === 'servicios-online' ? (
+      {adminSubTab === 'pedidos' ? (
+        <AdminOrdersTab 
+          orders={orders} 
+          onUpdateStatus={updateOrderStatus} 
+        />
+      ) : adminSubTab === 'servicios-online' ? (
         <AdminCarnetServicesTab />
       ) : adminSubTab === 'colecciones' ? (
         <div className="admin-collections-section animate-fade-in">

@@ -167,7 +167,10 @@ export default function CarnetServicePage() {
     soundEffects.playClick();
 
     try {
-      const submissionId = `carnet-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
+      // Generar identificador criptográfico único no predecible (UUID v4 estándar)
+      const submissionId = typeof crypto !== 'undefined' && crypto.randomUUID
+        ? `carnet-${crypto.randomUUID()}`
+        : `carnet-${Date.now()}-${Math.random().toString(36).substring(2, 10)}`;
       let finalPhotoUrl = photoUrl || '';
       let photoStoragePath: string | undefined = undefined;
 
@@ -196,7 +199,7 @@ export default function CarnetServicePage() {
         photoUrl: finalPhotoUrl,
         themeId: selectedThemeId,
         themeSnapshot: currentTheme, // Congela la paleta y diseño exactos al momento de emisión
-        qrToken: `https://volckan.com/tienda/#/carnet/verify?id=${encodeURIComponent(cleanDpi)}`,
+        qrToken: `https://volckan.com/tienda/#/carnet/verify?id=${encodeURIComponent(submissionId)}`,
         status: 'pendiente',
         institutionName: carnetConfig.institutionName || 'Mesa de Competitividad de Quetzaltenango',
         ...(photoStoragePath ? { photoStoragePath } : {})

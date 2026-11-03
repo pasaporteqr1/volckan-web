@@ -10,3 +10,9 @@ export const CONTACT = {
   siteUrl: 'https://www.volckan.com'
 };
 
+export const RECURRENTE_CONFIG = {
+  env: (import.meta.env.VITE_RECURRENTE_ENV || 'live') as 'live' | 'test',
+  publicKey: import.meta.env.VITE_RECURRENTE_PUBLIC_KEY || '',
+  secretKey: import.meta.env.VITE_RECURRENTE_SECRET_KEY || '',
+  apiUrl: 'https://app.recurrente.com/api/checkouts'
+};

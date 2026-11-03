@@ -16,11 +16,12 @@ import KindleBookCover from '../components/mercado/KindleBookCover';
 import KindleBookCard from '../components/mercado/KindleBookCard';
 import KindleCollectionsView from '../components/mercado/KindleCollectionsView';
 import ProductShareModal from '../components/mercado/ProductShareModal';
+import CheckoutModal from '../components/mercado/CheckoutModal';
 import { soundEffects } from '../utils/soundEffects';
 import { CONTACT } from '../constants';
 import './StorePage.css';
 
-interface CartItem {
+export interface CartItem {
   product: MercadoProduct;
   quantity: number;
 }
@@ -33,7 +34,8 @@ export default function StorePage() {
     products: allProducts, 
     collections: allCollections, 
     categories: storeCategories, 
-    storeConfig: mercadoConfig 
+    storeConfig: mercadoConfig,
+    createOrder
   } = useStoreConfig();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
@@ -51,6 +53,8 @@ export default function StorePage() {
   // Estado del Modal de Compartir
   const [shareItem, setShareItem] = useState<{ product?: MercadoProduct; collection?: BookCollection } | null>(null);
   const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
+  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState<boolean>(false);
+  const [checkoutInitialMethod, setCheckoutInitialMethod] = useState<'recurrente_card' | 'whatsapp'>('recurrente_card');
 
   // Carrito de compras
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -147,20 +151,31 @@ export default function StorePage() {
     }
   }, [routeProductId, searchParams, allProducts, allCollections]);
 
-  // Sincronizar URL del navegador cuando se abre o cierra la vista previa del producto
+  // Sincronizar URL del navegador cuando se abre o cierra la vista previa del producto (manteniendo el hash)
   useEffect(() => {
     if (selectedProduct) {
-      const currentP = new URLSearchParams(window.location.search).get('p');
-      if (currentP !== selectedProduct.id) {
-        window.history.replaceState(null, '', `/?p=${encodeURIComponent(selectedProduct.id)}`);
-      }
       document.title = `${selectedProduct.title} | Volckan Store`;
-    } else {
-      const currentP = new URLSearchParams(window.location.search).get('p');
-      if (currentP) {
-        window.history.replaceState(null, '', '/');
+      const hash = window.location.hash || '#/';
+      const [path, queryString] = hash.split('?');
+      const params = new URLSearchParams(queryString || '');
+      if (params.get('p') !== selectedProduct.id) {
+        params.set('p', selectedProduct.id);
+        const newHash = `${path}?${params.toString()}`;
+        if (window.location.hash !== newHash) {
+          window.history.replaceState(null, '', newHash);
+        }
       }
+    } else {
       document.title = 'Volckan Store | Ecosistema Tecnológico & Soluciones QR';
+      const hash = window.location.hash || '#/';
+      if (hash.includes('p=')) {
+        const [path, queryString] = hash.split('?');
+        const params = new URLSearchParams(queryString || '');
+        params.delete('p');
+        const remaining = params.toString();
+        const newHash = remaining ? `${path}?${remaining}` : path;
+        window.history.replaceState(null, '', newHash);
+      }
     }
   }, [selectedProduct]);
 
@@ -1316,15 +1331,29 @@ export default function StorePage() {
                 </div>
 
                 <div className="sidebar-checkout-actions">
-                  <a
-                    href={getWhatsAppOrderUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="amazon-proceed-btn"
-                    onClick={() => soundEffects.playSuccessFanfare()}
+                  <button
+                    type="button"
+                    className="amazon-proceed-card-btn"
+                    onClick={() => {
+                      soundEffects.playClick();
+                      setCheckoutInitialMethod('recurrente_card');
+                      setIsCheckoutModalOpen(true);
+                    }}
                   >
-                    <span>📱 Proceder al Pedido (WhatsApp)</span>
-                  </a>
+                    <span>💳 Pagar con Tarjeta (Recurrente)</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="amazon-proceed-wa-btn"
+                    onClick={() => {
+                      soundEffects.playClick();
+                      setCheckoutInitialMethod('whatsapp');
+                      setIsCheckoutModalOpen(true);
+                    }}
+                  >
+                    <span>💬 Pedido en WhatsApp / Transferencia</span>
+                  </button>
 
                   <button
                     type="button"
@@ -1944,6 +1973,25 @@ export default function StorePage() {
         }}
         product={shareItem?.product}
         collection={shareItem?.collection}
+      />
+
+      {/* Modal de Datos de Facturación y Guardado de Pedido */}
+      <CheckoutModal
+        isOpen={isCheckoutModalOpen}
+        onClose={() => setIsCheckoutModalOpen(false)}
+        cartItems={cartItems}
+        totalPrice={totalCartPrice}
+        totalSavings={totalSavings}
+        totalCount={totalCartCount}
+        whatsappPhone={mercadoConfig.whatsappPhone || CONTACT.whatsappPhone}
+        initialMethod={checkoutInitialMethod}
+        onOrderCreated={async (order) => {
+          await createOrder(order);
+        }}
+        onOrderCompleted={() => {
+          setCartItems([]);
+          setIsCartDrawerOpen(false);
+        }}
       />
 
     </div>
