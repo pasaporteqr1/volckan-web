@@ -20,6 +20,8 @@ export interface StoreAnnouncementConfig {
   bannerTitle: string;
   bannerSubtitle: string;
   showPromoStrip: boolean;
+  recurrenteSecretKey?: string;
+  recurrentePublicKey?: string;
 }
 
 interface StoreConfigContextProps {

@@ -1195,6 +1195,29 @@ export default function AdminStorePage() {
               placeholder="Ej: 50246741239"
             />
           </div>
+
+          <div className="mercado-input-group">
+            <label>💳 Recurrente: Clave Secreta (X-SECRET-KEY)</label>
+            <input
+              type="password"
+              value={mercadoConfig.recurrenteSecretKey || ''}
+              onChange={(e) => updateMercadoConfig('recurrenteSecretKey', e.target.value)}
+              placeholder="Dejar en blanco para usar la clave Live predeterminada"
+            />
+            <small style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '4px' }}>
+              Utilizada para crear los checkouts con tarjeta y ACH. Si está vacía, se utiliza automáticamente la llave Live activa.
+            </small>
+          </div>
+
+          <div className="mercado-input-group">
+            <label>💳 Recurrente: Clave Pública / Test (Opcional)</label>
+            <input
+              type="text"
+              value={mercadoConfig.recurrentePublicKey || ''}
+              onChange={(e) => updateMercadoConfig('recurrentePublicKey', e.target.value)}
+              placeholder="Ej: sk_test_..."
+            />
+          </div>
         </div>
       </div>
 

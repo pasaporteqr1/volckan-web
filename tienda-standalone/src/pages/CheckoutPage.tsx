@@ -154,7 +154,8 @@ export default function CheckoutPage() {
       if (paymentMethod === 'recurrente') {
         // Generar checkout dinámico en Recurrente (soporta Tarjeta y Transferencia ACH automática)
         const recurrenteRes = await createRecurrenteCheckout({
-          order: baseOrder
+          order: baseOrder,
+          customSecretKey: (mercadoConfig as any)?.recurrenteSecretKey
         });
 
         const updatedOrder: StoreOrder = {
