@@ -270,29 +270,32 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
   }, []);
 
   const saveProducts = async (newProducts: MercadoProduct[]) => {
-    setProducts(newProducts);
-    try { localStorage.setItem('store_products_cache', JSON.stringify(newProducts)); } catch {}
+    const clean = newProducts.map(p => sanitizeFirestoreData(p));
+    setProducts(clean);
+    try { localStorage.setItem('store_products_cache', JSON.stringify(clean)); } catch {}
     if (db) {
       const docRef = doc(db, 'config', 'mercado_products');
-      await setDoc(docRef, { products: newProducts, updatedAt: new Date().toISOString() }, { merge: true });
+      await setDoc(docRef, { products: clean, updatedAt: new Date().toISOString() }, { merge: true });
     }
   };
 
   const saveCollections = async (newCollections: BookCollection[]) => {
-    setCollections(newCollections);
-    try { localStorage.setItem('store_collections_cache', JSON.stringify(newCollections)); } catch {}
+    const clean = newCollections.map(c => sanitizeFirestoreData(c));
+    setCollections(clean);
+    try { localStorage.setItem('store_collections_cache', JSON.stringify(clean)); } catch {}
     if (db) {
       const docRef = doc(db, 'config', 'mercado_collections');
-      await setDoc(docRef, { collections: newCollections, updatedAt: new Date().toISOString() }, { merge: true });
+      await setDoc(docRef, { collections: clean, updatedAt: new Date().toISOString() }, { merge: true });
     }
   };
 
   const saveCategories = async (newCategories: MercadoCategory[]) => {
-    setCategories(newCategories);
-    try { localStorage.setItem('store_categories_cache', JSON.stringify(newCategories)); } catch {}
+    const clean = newCategories.map(c => sanitizeFirestoreData(c));
+    setCategories(clean);
+    try { localStorage.setItem('store_categories_cache', JSON.stringify(clean)); } catch {}
     if (db) {
       const docRef = doc(db, 'config', 'mercado_categories');
-      await setDoc(docRef, { categories: newCategories, updatedAt: new Date().toISOString() }, { merge: true });
+      await setDoc(docRef, { categories: clean, updatedAt: new Date().toISOString() }, { merge: true });
     }
   };
 

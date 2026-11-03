@@ -1801,12 +1801,12 @@ export default function AdminStorePage() {
                     type="text"
                     value={editingProduct.title}
                     onChange={(e) => setEditingProduct({ ...editingProduct, title: e.target.value })}
-                    placeholder="Ej: El Código del Maíz: Origen y Sustento"
+                    placeholder="Ej: Lector Láser 2D de Códigos QR e Insumos POS"
                     required
                   />
                 </div>
 
-                <div className="form-grid-3">
+                <div className="form-grid-4">
                   <div className="mercado-input-group">
                     <label>Categoría / Departamento</label>
                     <select
@@ -1830,12 +1830,24 @@ export default function AdminStorePage() {
                   </div>
 
                   <div className="mercado-input-group">
-                    <label>Grado Escolar / Edad Dirigida</label>
+                    <label>Tipo de Solución</label>
+                    <select
+                      value={editingProduct.productType || 'fisico'}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, productType: e.target.value as any })}
+                    >
+                      <option value="fisico">🖨️ Dispositivo / Hardware / PVC</option>
+                      <option value="digital">💻 Software SaaS / Licencia Cloud</option>
+                      <option value="servicio">⚙️ Servicio / Consultoría</option>
+                    </select>
+                  </div>
+
+                  <div className="mercado-input-group">
+                    <label>Sector / Dirigido a</label>
                     <input
                       type="text"
                       value={editingProduct.gradeOrAge}
                       onChange={(e) => setEditingProduct({ ...editingProduct, gradeOrAge: e.target.value })}
-                      placeholder="Ej: 4to a 6to Primaria"
+                      placeholder="Ej: Empresas, Comercios, Colegios..."
                     />
                   </div>
 
@@ -1896,24 +1908,46 @@ export default function AdminStorePage() {
                   </div>
 
                   <div className="mercado-input-group">
-                    <label>Tiempo de Entrega</label>
+                    <label>Tiempo de Entrega / Activación</label>
                     <input
                       type="text"
                       value={editingProduct.deliveryTime || ''}
                       onChange={(e) => setEditingProduct({ ...editingProduct, deliveryTime: e.target.value })}
-                      placeholder="Ej: Entrega 24-48 hrs"
+                      placeholder="Ej: Entrega 24-48 hrs o Activación Inmediata"
                     />
                   </div>
                 </div>
 
-                <div className="form-grid-2">
+                {/* Cálculo Dinámico de Descuento en Vivo */}
+                {editingProduct.originalPrice && editingProduct.originalPrice > editingProduct.price && (
+                  <div style={{
+                    background: '#ecfdf5',
+                    border: '1.5px solid #a7f3d0',
+                    color: '#047857',
+                    padding: '8px 14px',
+                    borderRadius: '8px',
+                    fontSize: '0.85rem',
+                    fontWeight: 700,
+                    marginTop: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    <span>🎉</span>
+                    <span>
+                      Descuento calculado para el cliente: Ahorro de <strong>Q {(editingProduct.originalPrice - editingProduct.price).toFixed(2)}</strong> ({Math.round(((editingProduct.originalPrice - editingProduct.price) / editingProduct.originalPrice) * 100)}% de rebaja)
+                    </span>
+                  </div>
+                )}
+
+                <div className="form-grid-3" style={{ marginTop: '14px' }}>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#cbd5e1', fontSize: '0.88rem' }}>
                     <input
                       type="checkbox"
                       checked={editingProduct.inStock ?? true}
                       onChange={(e) => setEditingProduct({ ...editingProduct, inStock: e.target.checked })}
                     />
-                    <span>🟢 Producto Disponible en Inventario (En Stock)</span>
+                    <span>🟢 En Stock / Disponible</span>
                   </label>
 
                   <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#cbd5e1', fontSize: '0.88rem' }}>
@@ -1922,7 +1956,16 @@ export default function AdminStorePage() {
                       checked={editingProduct.featured ?? false}
                       onChange={(e) => setEditingProduct({ ...editingProduct, featured: e.target.checked })}
                     />
-                    <span>⭐ Destacar en primera fila del catálogo</span>
+                    <span>⭐ Destacar en Portada</span>
+                  </label>
+
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#cbd5e1', fontSize: '0.88rem' }}>
+                    <input
+                      type="checkbox"
+                      checked={editingProduct.onlySoldAsPack ?? false}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, onlySoldAsPack: e.target.checked })}
+                    />
+                    <span>🔒 Exclusivo de Suite</span>
                   </label>
                 </div>
               </div>
@@ -2035,34 +2078,34 @@ export default function AdminStorePage() {
               {/* SECCIÓN 5: Descripciones y Ficha Pedagógica */}
               <div className="modal-section-box">
                 <h4 className="modal-section-title">
-                  <span>📝</span> 5. Descripciones y Contenidos del Paquete
+                  <span>📝</span> 5. Descripciones y Especificaciones
                 </h4>
 
                 <div className="mercado-input-group">
-                  <label>Descripción Breve (Resumen para la Tarjeta de Catálogo)</label>
+                  <label>Descripción Breve (Resumen para la Tarjeta de Catálogo y Carrito)</label>
                   <textarea
                     rows={2}
                     value={editingProduct.description}
                     onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
-                    placeholder="Resumen de 1-2 líneas que destaca el valor pedagógico principal..."
+                    placeholder="Resumen directo de 1-2 líneas que destaca la solución técnica..."
                   />
                 </div>
 
                 <div className="mercado-input-group">
-                  <label>Descripción Detallada (Ficha Pedagógica en Modal)</label>
+                  <label>Descripción Detallada (Ficha Técnica en Modal de Detalles)</label>
                   <textarea
                     rows={4}
                     value={editingProduct.longDescription}
                     onChange={(e) => setEditingProduct({ ...editingProduct, longDescription: e.target.value })}
-                    placeholder="Explicación completa de las metodologías, competencias y enfoque pedagógico..."
+                    placeholder="Explicación completa de características, compatibilidad y beneficios del producto..."
                   />
                 </div>
 
                 {/* Lista Dinámica de Características */}
                 <div className="mercado-input-group">
-                  <label>Características y Competencias Clave</label>
+                  <label>Características Clave de la Solución</label>
                   <p style={{ fontSize: '0.82rem', color: '#64748b', margin: '4px 0 12px 0' }}>
-                    Aspectos pedagógicos, habilidades y competencias que desarrolla el libro o material. Se mostrarán con distintivos de colores armónicos.
+                    Ventajas tecnológicas, protocolos, estándares y especificaciones clave.
                   </p>
                   <div className="collection-features-editor">
                     {(editingProduct.features || []).map((feat, fIdx) => {
@@ -2104,7 +2147,7 @@ export default function AdminStorePage() {
                               nextFeats[fIdx] = e.target.value;
                               setEditingProduct({ ...editingProduct, features: nextFeats });
                             }}
-                            placeholder="Ej: Actividades de comprensión lectora y competencias STEAM..."
+                            placeholder="Ej: Compatibilidad con Facturación Electrónica FEL de SAT..."
                             style={{ flex: 1, padding: '8px 12px', border: '1px solid #cbd5e1', borderRadius: '8px', fontSize: '0.86rem' }}
                           />
                           <button
@@ -2138,7 +2181,7 @@ export default function AdminStorePage() {
 
                 {/* Lista Dinámica de Contenidos del Paquete */}
                 <div className="mercado-input-group">
-                  <label>Contenido del Paquete / Set Incluido</label>
+                  <label>Contenido del Paquete / ¿Qué incluye?</label>
                   <div className="dynamic-items-list">
                     {(editingProduct.contents || []).map((item, cIdx) => (
                       <div key={cIdx} className="dynamic-item-row">
@@ -2150,7 +2193,7 @@ export default function AdminStorePage() {
                             nextContents[cIdx] = e.target.value;
                             setEditingProduct({ ...editingProduct, contents: nextContents });
                           }}
-                          placeholder="Ej: 1 Libro impreso de 64 páginas a color..."
+                          placeholder="Ej: 1 Lector láser USB con pedestal y cable reforzado..."
                         />
                         <button
                           type="button"
@@ -2175,103 +2218,85 @@ export default function AdminStorePage() {
                         });
                       }}
                     >
-                      ＋ Agregar Item a la Caja
+                      ＋ Agregar Item Incluido
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* SECCIÓN 6: Formato Literario & Colección Kindle (Editorial) */}
-              {editingProduct.category === 'cuentos' && (
-                <div className="modal-section-box">
-                  <h4 className="modal-section-title">
-                    <span>📖</span> 6. Datos Editoriales & Colección Kindle
-                  </h4>
+              {/* SECCIÓN 6: Ficha Técnica, Garantía y Compatibilidad */}
+              <div className="modal-section-box">
+                <h4 className="modal-section-title">
+                  <span>⚙️</span> 6. Ficha Técnica, Garantía y Soporte
+                </h4>
 
-                  <div className="form-grid-3">
-                    <div className="mercado-input-group">
-                      <label>Autor / Ilustrador</label>
-                      <input
-                        type="text"
-                        value={editingProduct.author || ''}
-                        onChange={(e) => setEditingProduct({ ...editingProduct, author: e.target.value })}
-                        placeholder="Ej: Tecno Volckánica"
-                      />
-                    </div>
-
-                    <div className="mercado-input-group">
-                      <label>Número de Páginas</label>
-                      <input
-                        type="number"
-                        min="1"
-                        value={editingProduct.pages || ''}
-                        onChange={(e) => setEditingProduct({ ...editingProduct, pages: e.target.value ? parseInt(e.target.value, 10) : undefined })}
-                        placeholder="Ej: 64"
-                      />
-                    </div>
-
-                    <div className="mercado-input-group">
-                      <label>Formato de Impresión / Digital</label>
-                      <input
-                        type="text"
-                        value={editingProduct.formatType || ''}
-                        onChange={(e) => setEditingProduct({ ...editingProduct, formatType: e.target.value })}
-                        placeholder="Ej: Kindle eBook & Tapa Dura"
-                      />
-                    </div>
+                <div className="form-grid-3">
+                  <div className="mercado-input-group">
+                    <label>Garantía y Soporte Técnico</label>
+                    <input
+                      type="text"
+                      value={editingProduct.warranty || ''}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, warranty: e.target.value })}
+                      placeholder="Ej: 1 Año de garantía y soporte remoto"
+                    />
                   </div>
 
-                  <div className="form-grid-3" style={{ marginTop: '14px' }}>
-                    <div className="mercado-input-group">
-                      <label>Colección Literaria Asociada</label>
-                      <select
-                        value={editingProduct.collectionId || ''}
-                        onChange={(e) => {
-                          const colId = e.target.value;
-                          let colName = '';
-                          if (colId === 'col-popol-vuh') colName = 'Saga Mítica Popol Vuh: Dioses & Creación';
-                          else if (colId === 'col-steam') colName = 'Colección STEAM: Sabiduría Ancestral';
-                          else if (colId === 'col-magna') colName = 'Gran Biblioteca Escolar: Antología Completa';
-                          setEditingProduct({
-                            ...editingProduct,
-                            collectionId: colId || undefined,
-                            collectionName: colName || undefined
-                          });
-                        }}
-                      >
-                        <option value="">Sin Colección (Título Individual)</option>
-                        <option value="col-popol-vuh">🏛️ Saga Mítica Popol Vuh (5 Libros)</option>
-                        <option value="col-steam">🚀 Colección STEAM (4 Libros)</option>
-                        <option value="col-magna">📦 Gran Biblioteca Escolar (9 Libros)</option>
-                      </select>
-                    </div>
+                  <div className="mercado-input-group">
+                    <label>Requisitos / Compatibilidad</label>
+                    <input
+                      type="text"
+                      value={editingProduct.formatType || ''}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, formatType: e.target.value })}
+                      placeholder="Ej: Windows 10/11, Android, iOS, Cloud"
+                    />
+                  </div>
 
-                    <div className="mercado-input-group">
-                      <label>Código ISBN (Opcional)</label>
-                      <input
-                        type="text"
-                        value={editingProduct.isbn || ''}
-                        onChange={(e) => setEditingProduct({ ...editingProduct, isbn: e.target.value })}
-                        placeholder="Ej: 978-99939-0-123-4"
-                      />
-                    </div>
-
-                    <div className="mercado-input-group">
-                      <label>Paleta de Portada Kindle 3D</label>
-                      <select
-                        value={editingProduct.coverTheme || 'amber'}
-                        onChange={(e) => setEditingProduct({ ...editingProduct, coverTheme: e.target.value as any })}
-                      >
-                        <option value="amber">🟠 Ámbar Dorado Maya (Cálido)</option>
-                        <option value="cyan">🔵 Cian Cósmico (Profundo)</option>
-                        <option value="emerald">🟢 Esmeralda Selva (Naturaleza)</option>
-                        <option value="purple">🟣 Púrpura Místico (Épico)</option>
-                        <option value="ruby">🔴 Rubí Ancestral (Intenso)</option>
-                      </select>
-                    </div>
+                  <div className="mercado-input-group">
+                    <label>Código SKU / Referencia</label>
+                    <input
+                      type="text"
+                      value={editingProduct.sku || ''}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, sku: e.target.value })}
+                      placeholder="Ej: VOLCKAN-POS-01"
+                    />
                   </div>
                 </div>
-              )}
+
+                <div className="form-grid-2" style={{ marginTop: '14px' }}>
+                  <div className="mercado-input-group">
+                    <label>Suite o Paquete Asociado (Opcional)</label>
+                    <select
+                      value={editingProduct.collectionId || ''}
+                      onChange={(e) => {
+                        const colId = e.target.value;
+                        const col = collections.find(c => c.id === colId);
+                        setEditingProduct({
+                          ...editingProduct,
+                          collectionId: colId || undefined,
+                          collectionName: col ? col.title : undefined
+                        });
+                      }}
+                    >
+                      <option value="">Sin Suite (Producto Individual)</option>
+                      {collections.map(col => (
+                        <option key={col.id} value={col.id}>
+                          📦 {col.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="mercado-input-group">
+                    <label>Proveedor / Desarrollador Oficial</label>
+                    <input
+                      type="text"
+                      value={editingProduct.author || 'Tecno Volckánica'}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, author: e.target.value })}
+                      placeholder="Ej: Tecno Volckánica"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Footer de Acciones del Modal */}

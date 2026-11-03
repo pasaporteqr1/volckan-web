@@ -20,6 +20,9 @@ export interface MercadoProduct {
   contents?: string[];
   featured?: boolean;
   inStock?: boolean;
+  productType?: 'fisico' | 'digital' | 'servicio';
+  sku?: string;
+  warranty?: string;
   collectionId?: string;
   collectionName?: string;
   author?: string;

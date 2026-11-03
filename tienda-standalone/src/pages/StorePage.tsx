@@ -1093,7 +1093,7 @@ export default function StorePage() {
                                     setDetailQuantity(1);
                                   }
                                 }}
-                                title="Ver la colección completa de este libro"
+                                title="Ver la suite completa de este producto"
                               >
                                 <span>📦 Ver Pack</span>
                               </button>
@@ -1602,7 +1602,7 @@ export default function StorePage() {
                 {/* Estante de Libros Compañeros de la misma Colección */}
                 {selectedProduct.collectionId && (
                   <div className="modal-companion-books-rack">
-                    <h4 className="companion-rack-title">Otros libros en esta misma colección:</h4>
+                    <h4 className="companion-rack-title">Otros componentes en esta misma suite:</h4>
                     <div className="companion-mini-shelf">
                       {getCollectionBooks(selectedProduct.collectionId, allProducts, allCollections)
                         .filter(b => b.id !== selectedProduct.id)
@@ -1630,9 +1630,79 @@ export default function StorePage() {
                   </div>
                 )}
 
-                <div className="modal-grade-target">
-                  <strong>🎯 Nivel / Edad recomendada:</strong> {selectedProduct.gradeOrAge}
+                {/* Metadatos técnicos y comerciales */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
+                  {selectedProduct.productType && (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
+                      background: 'rgba(59, 130, 246, 0.12)',
+                      border: '1px solid rgba(59, 130, 246, 0.3)',
+                      color: '#60a5fa'
+                    }}>
+                      {selectedProduct.productType === 'digital' ? '☁️ Licencia / Software SaaS' : selectedProduct.productType === 'servicio' ? '🛠️ Servicio Profesional' : '📦 Hardware / Dispositivo Físico'}
+                    </span>
+                  )}
+                  {selectedProduct.warranty && (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
+                      background: 'rgba(16, 185, 129, 0.12)',
+                      border: '1px solid rgba(16, 185, 129, 0.3)',
+                      color: '#34d399'
+                    }}>
+                      🛡️ {selectedProduct.warranty}
+                    </span>
+                  )}
+                  {selectedProduct.deliveryTime && (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      fontSize: '0.8rem',
+                      fontWeight: 600,
+                      background: 'rgba(245, 158, 11, 0.12)',
+                      border: '1px solid rgba(245, 158, 11, 0.3)',
+                      color: '#fbbf24'
+                    }}>
+                      ⚡ Entrega: {selectedProduct.deliveryTime}
+                    </span>
+                  )}
+                  {selectedProduct.sku && (
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                      padding: '4px 10px',
+                      borderRadius: '8px',
+                      fontSize: '0.78rem',
+                      fontWeight: 600,
+                      background: 'rgba(148, 163, 184, 0.12)',
+                      border: '1px solid rgba(148, 163, 184, 0.25)',
+                      color: '#94a3b8'
+                    }}>
+                      🏷️ SKU: {selectedProduct.sku}
+                    </span>
+                  )}
                 </div>
+
+                {selectedProduct.gradeOrAge && (
+                  <div className="modal-grade-target" style={{ marginBottom: '14px' }}>
+                    <strong>🎯 Sector / Dirigido a:</strong> {selectedProduct.gradeOrAge}
+                  </div>
+                )}
 
                 <p className="modal-description-paragraph">
                   {selectedProduct.longDescription}
