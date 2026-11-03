@@ -257,16 +257,20 @@ export default function AdminStorePage() {
   // Modal opcional para vincular credenciales de Google
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-  // Subpestaña activa (Productos vs Colecciones vs Departamentos vs Carnets vs Pedidos) con persistencia en recarga
-  const [adminSubTab, setAdminSubTab] = useState<'productos' | 'colecciones' | 'departamentos' | 'carnets' | 'pedidos'>(() => {
+  // Panel vertical emergente (Drawer) para Categorías y Ajustes de Tienda
+  const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = useState(false);
+  const [drawerActiveTab, setDrawerActiveTab] = useState<'categorias' | 'general' | 'pagos'>('categorias');
+
+  // Subpestaña activa (Productos vs Colecciones vs Carnets vs Pedidos) con persistencia en recarga
+  const [adminSubTab, setAdminSubTab] = useState<'productos' | 'colecciones' | 'carnets' | 'pedidos'>(() => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
       const subtabFromUrl = urlParams.get('subtab');
-      if (subtabFromUrl === 'productos' || subtabFromUrl === 'colecciones' || subtabFromUrl === 'departamentos' || subtabFromUrl === 'carnets' || subtabFromUrl === 'servicios-online' || subtabFromUrl === 'pedidos') {
+      if (subtabFromUrl === 'productos' || subtabFromUrl === 'colecciones' || subtabFromUrl === 'carnets' || subtabFromUrl === 'servicios-online' || subtabFromUrl === 'pedidos') {
         return (subtabFromUrl === 'servicios-online' ? 'carnets' : subtabFromUrl) as any;
       }
       const saved = localStorage.getItem('admin_tienda_subtab');
-      if (saved === 'productos' || saved === 'colecciones' || saved === 'departamentos' || saved === 'carnets' || saved === 'servicios-online' || saved === 'pedidos') {
+      if (saved === 'productos' || saved === 'colecciones' || saved === 'carnets' || saved === 'servicios-online' || saved === 'pedidos') {
         return (saved === 'servicios-online' ? 'carnets' : saved) as any;
       }
     } catch {
@@ -274,6 +278,21 @@ export default function AdminStorePage() {
     }
     return 'productos';
   });
+
+  // Si la URL traía ?subtab=departamentos o ?subtab=configuracion, abrir el drawer vertical directamente
+  useEffect(() => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const subtab = urlParams.get('subtab');
+      if (subtab === 'departamentos') {
+        setDrawerActiveTab('categorias');
+        setIsSettingsDrawerOpen(true);
+      } else if (subtab === 'configuracion' || subtab === 'ajustes') {
+        setDrawerActiveTab('general');
+        setIsSettingsDrawerOpen(true);
+      }
+    } catch {}
+  }, []);
 
   useEffect(() => {
     try {
@@ -1096,6 +1115,19 @@ export default function AdminStorePage() {
             </div>
           )}
 
+          <button
+            type="button"
+            className="btn-mercado-settings-drawer"
+            onClick={() => {
+              soundEffects.playClick();
+              setIsSettingsDrawerOpen(true);
+            }}
+            title="Abrir panel vertical de categorías y configuraciones"
+          >
+            <span>⚙️ Ajustes & Categorías</span>
+            <span className="drawer-pill-badge">{departments.length}</span>
+          </button>
+
           <button 
             type="button" 
             className="btn-mercado-save"
@@ -1136,25 +1168,6 @@ export default function AdminStorePage() {
                 ＋ Nueva Suite / Paquete
               </button>
             </>
-          ) : adminSubTab === 'departamentos' ? (
-            <>
-              <button 
-                type="button" 
-                className="btn-mercado-secondary"
-                onClick={handleRestoreDefaultDepartments}
-                title="Restaurar los departamentos base"
-              >
-                ♻️ Restaurar Departamentos Base
-              </button>
-              <button 
-                type="button" 
-                className="btn-mercado-primary"
-                onClick={handleOpenNewDepartment}
-                title="Crear un nuevo departamento o categoría"
-              >
-                ＋ Nuevo Departamento
-              </button>
-            </>
           ) : (
             <>
               {products.length > 0 && (
@@ -1188,64 +1201,7 @@ export default function AdminStorePage() {
         </div>
       </div>
 
-      {/* 2. Configuración Superior de la Tienda (Banner y WhatsApp) */}
-      <div className="admin-mercado-config-card">
-        <div className="config-card-header">
-          <h4 className="config-card-title">
-            <span>📢</span> Configuración General de la Tienda
-          </h4>
-          <span style={{ fontSize: '0.8rem', color: '#cbd5e1' }}>
-            Afecta la barra promocional y el canal de ventas directo
-          </span>
-        </div>
-
-        <div className="admin-mercado-grid-fields">
-          <div className="mercado-input-group">
-            <label>Cintillo de Anuncio Superior (Promociones / Avisos)</label>
-            <textarea
-              rows={2}
-              value={mercadoConfig.announcement || ''}
-              onChange={(e) => updateMercadoConfig('announcement', e.target.value)}
-              placeholder="Ej: Envíos a todo el país en 24-48 hrs · Descuentos por volumen para colegios y docentes"
-            />
-          </div>
-
-          <div className="mercado-input-group">
-            <label>WhatsApp Oficial de Pedidos (Código de país sin +)</label>
-            <input
-              type="text"
-              value={mercadoConfig.whatsappPhone || ''}
-              onChange={(e) => updateMercadoConfig('whatsappPhone', e.target.value)}
-              placeholder="Ej: 50246741239"
-            />
-          </div>
-
-          <div className="mercado-input-group">
-            <label>💳 Recurrente: Clave Secreta (X-SECRET-KEY)</label>
-            <input
-              type="password"
-              value={mercadoConfig.recurrenteSecretKey || ''}
-              onChange={(e) => updateMercadoConfig('recurrenteSecretKey', e.target.value)}
-              placeholder="Dejar en blanco para usar la clave Live predeterminada"
-            />
-            <small style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '4px' }}>
-              Utilizada para crear los checkouts con tarjeta y ACH. Si está vacía, se utiliza automáticamente la llave Live activa.
-            </small>
-          </div>
-
-          <div className="mercado-input-group">
-            <label>💳 Recurrente: Clave Pública / Test (Opcional)</label>
-            <input
-              type="text"
-              value={mercadoConfig.recurrentePublicKey || ''}
-              onChange={(e) => updateMercadoConfig('recurrentePublicKey', e.target.value)}
-              placeholder="Ej: sk_test_..."
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* 2.5 Selector de Sub-Pestaña: Productos vs Colecciones vs Departamentos */}
+      {/* 2. Sub-Pestañas Principales del Panel */}
       <div className="admin-tienda-subtabs-nav">
         <button
           type="button"
@@ -1270,18 +1226,6 @@ export default function AdminStorePage() {
           <span className="subtab-icon">📦</span>
           <span>Suites & Paquetes</span>
           <span className="subtab-count-badge">{collections.length}</span>
-        </button>
-        <button
-          type="button"
-          className={`admin-tienda-subtab-btn ${adminSubTab === 'departamentos' ? 'active' : ''}`}
-          onClick={() => {
-            soundEffects.playClick();
-            setAdminSubTab('departamentos');
-          }}
-        >
-          <span className="subtab-icon">🗂️</span>
-          <span>Departamentos & Categorías</span>
-          <span className="subtab-count-badge">{departments.length}</span>
         </button>
         <button
           type="button"
@@ -1427,126 +1371,6 @@ export default function AdminStorePage() {
             </div>
           )}
         </div>
-      ) : adminSubTab === 'departamentos' ? (
-        <div className="admin-departments-section animate-fade-in">
-          {/* Banner explicativo de Departamentos */}
-          <div style={{ background: 'rgba(255, 122, 0, 0.1)', border: '1px solid rgba(255, 122, 0, 0.35)', borderRadius: '14px', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: '16px', color: '#ffedd5', marginTop: '16px' }}>
-            <span style={{ fontSize: '2rem' }}>🗂️</span>
-            <div style={{ fontSize: '0.88rem', lineHeight: '1.45' }}>
-              <strong style={{ display: 'block', color: '#fb923c', fontSize: '0.98rem', marginBottom: '3px' }}>
-                Gestor de Departamentos y Categorías del Mercado
-              </strong>
-              Aquí puedes modificar los nombres, emojis y descripciones de las secciones de tu tienda, o crear nuevos departamentos pedagógicos (ej: Robótica, Instrumentos, Teatro, etc.). Todo cambio se refleja inmediatamente en el menú vertical de departamentos, el buscador y el catálogo público del Mercado.
-            </div>
-          </div>
-
-          {departments.length === 0 ? (
-            <div className="admin-empty-catalog-hero animate-fade-in" style={{ marginTop: '20px' }}>
-              <div className="admin-empty-icon-wrap">
-                <span>🗂️</span>
-              </div>
-              <h3>Sin Departamentos Configurados (0 departamentos)</h3>
-              <p>
-                No tienes categorías activas en el mercado. Puedes restaurar los 6 departamentos pedagógicos originales o crear uno nuevo.
-              </p>
-              <div className="admin-empty-hero-actions">
-                <button 
-                  type="button" 
-                  className="btn-mercado-secondary"
-                  onClick={handleRestoreDefaultDepartments}
-                >
-                  ♻️ Restaurar Departamentos Base
-                </button>
-                <button 
-                  type="button" 
-                  className="btn-mercado-primary"
-                  onClick={handleOpenNewDepartment}
-                >
-                  ＋ Crear Mi Primer Departamento
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="admin-departments-grid">
-              {departments.map((dept, idx) => {
-                const count = products.filter(p => p.category === dept.id).length;
-                const canMoveUp = idx > 0;
-                const canMoveDown = idx < departments.length - 1;
-
-                return (
-                  <div key={dept.id} className="admin-dept-card">
-                    <div>
-                      <div className="admin-dept-card-header">
-                        <div className="admin-dept-icon-wrap">
-                          <span>{dept.icon}</span>
-                        </div>
-                        <div className="admin-dept-card-meta">
-                          <div className="admin-dept-title-row">
-                            <h4 className="admin-dept-card-title">{dept.label}</h4>
-                            <span className="admin-dept-order-badge">#{idx + 1}</span>
-                          </div>
-                          <span className="admin-dept-slug-badge">ID: {dept.id}</span>
-                        </div>
-                      </div>
-
-                      {dept.description && (
-                        <p className="admin-dept-card-desc">{dept.description}</p>
-                      )}
-                    </div>
-
-                    <div className="admin-dept-card-footer">
-                      <span className={`admin-dept-count-badge ${count > 0 ? 'has-items' : 'empty'}`}>
-                        <span>🏷️</span>
-                        <span>{count} {count === 1 ? 'producto' : 'productos'}</span>
-                      </span>
-
-                      <div className="admin-dept-actions-group">
-                        <div className="admin-card-reorder-group">
-                          <button
-                            type="button"
-                            className="btn-card-icon"
-                            onClick={() => handleMoveDepartment(dept.id, -1)}
-                            disabled={!canMoveUp}
-                            title="Mover arriba en el menú"
-                          >
-                            ⬆️
-                          </button>
-                          <button
-                            type="button"
-                            className="btn-card-icon"
-                            onClick={() => handleMoveDepartment(dept.id, 1)}
-                            disabled={!canMoveDown}
-                            title="Mover abajo en el menú"
-                          >
-                            ⬇️
-                          </button>
-                        </div>
-
-                        <button
-                          type="button"
-                          className="btn-card-icon"
-                          onClick={() => handleOpenEditDepartment(dept)}
-                          title="Editar departamento"
-                        >
-                          ✏️
-                        </button>
-
-                        <button
-                          type="button"
-                          className="btn-card-icon danger"
-                          onClick={() => handlePromptDeleteDepartment(dept)}
-                          title="Eliminar departamento"
-                        >
-                          🗑️
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
       ) : (
         <>
           {/* 3. Filtros por Categoría y Buscador */}
@@ -1599,6 +1423,26 @@ export default function AdminStorePage() {
                   <span className="admin-cat-pill-count">{categoryCounts[cat.id] || 0}</span>
                 </button>
               ))}
+
+              {/* Acceso directo al panel emergente de categorías */}
+              <button
+                type="button"
+                className="admin-cat-pill-btn"
+                onClick={() => {
+                  soundEffects.playClick();
+                  setDrawerActiveTab('categorias');
+                  setIsSettingsDrawerOpen(true);
+                }}
+                style={{
+                  border: '1px dashed rgba(56, 189, 248, 0.45)',
+                  color: '#38bdf8',
+                  background: 'rgba(56, 189, 248, 0.1)'
+                }}
+                title="Gestionar y organizar categorías en el panel lateral emergente"
+              >
+                <span>⚙️</span>
+                <span>Gestionar Categorías</span>
+              </button>
             </div>
           </div>
 
@@ -3155,6 +2999,319 @@ export default function AdminStorePage() {
           <span>{toastMessage}</span>
         </div>
       )}
+      {/* ==============================================================
+          PANEL VERTICAL EMERGENTE (Ajustes de Tienda y Categorías)
+          ============================================================== */}
+      {isSettingsDrawerOpen && (
+        <div 
+          className="admin-settings-drawer-overlay animate-fade-in"
+          onClick={() => setIsSettingsDrawerOpen(false)}
+        >
+          <div 
+            className="admin-settings-drawer"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Panel de Ajustes y Categorías"
+          >
+            {/* Header del Panel Lateral */}
+            <div className="admin-drawer-header">
+              <div className="admin-drawer-title-group">
+                <div className="admin-drawer-icon-wrap">
+                  <span>⚙️</span>
+                </div>
+                <div>
+                  <h3 className="admin-drawer-title">Configuración & Categorías</h3>
+                  <p className="admin-drawer-subtitle">Departamentos, avisos generales y pasarela de pago</p>
+                </div>
+              </div>
+              <button 
+                type="button" 
+                className="admin-drawer-close-btn"
+                onClick={() => setIsSettingsDrawerOpen(false)}
+                title="Cerrar panel lateral"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Pestañas internas del Drawer */}
+            <div className="admin-drawer-tabs">
+              <button
+                type="button"
+                className={`admin-drawer-tab-btn ${drawerActiveTab === 'categorias' ? 'active' : ''}`}
+                onClick={() => {
+                  soundEffects.playClick();
+                  setDrawerActiveTab('categorias');
+                }}
+              >
+                <span>🗂️ Categorías</span>
+                <span className="drawer-tab-count">{departments.length}</span>
+              </button>
+              <button
+                type="button"
+                className={`admin-drawer-tab-btn ${drawerActiveTab === 'general' ? 'active' : ''}`}
+                onClick={() => {
+                  soundEffects.playClick();
+                  setDrawerActiveTab('general');
+                }}
+              >
+                <span>📢 Anuncios & WhatsApp</span>
+              </button>
+              <button
+                type="button"
+                className={`admin-drawer-tab-btn ${drawerActiveTab === 'pagos' ? 'active' : ''}`}
+                onClick={() => {
+                  soundEffects.playClick();
+                  setDrawerActiveTab('pagos');
+                }}
+              >
+                <span>💳 Pagos Recurrente</span>
+              </button>
+            </div>
+
+            {/* Contenido scrollable del Drawer */}
+            <div className="admin-drawer-body">
+              {drawerActiveTab === 'categorias' && (
+                <div className="drawer-config-section">
+                  <div className="drawer-categories-toolbar">
+                    <div>
+                      <h4 className="drawer-config-title">
+                        <span>🗂️</span> Departamentos del Catálogo
+                      </h4>
+                      <p className="drawer-config-desc">
+                        Organiza o crea nuevas categorías de productos para el catálogo y menú.
+                      </p>
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <button
+                        type="button"
+                        className="btn-mercado-secondary"
+                        onClick={handleRestoreDefaultDepartments}
+                        style={{ padding: '6px 12px', fontSize: '0.8rem' }}
+                        title="Restaurar departamentos base"
+                      >
+                        ♻️ Base
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-mercado-primary"
+                        onClick={handleOpenNewDepartment}
+                        style={{ padding: '6px 14px', fontSize: '0.82rem' }}
+                      >
+                        ＋ Nueva
+                      </button>
+                    </div>
+                  </div>
+
+                  {departments.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '30px 10px', color: '#94a3b8' }}>
+                      <span style={{ fontSize: '2rem', display: 'block', marginBottom: '8px' }}>🗂️</span>
+                      <p style={{ margin: 0, fontSize: '0.88rem' }}>Sin categorías configuradas.</p>
+                      <button
+                        type="button"
+                        className="btn-mercado-primary"
+                        onClick={handleOpenNewDepartment}
+                        style={{ marginTop: '12px' }}
+                      >
+                        Crear Primer Departamento
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="drawer-categories-list">
+                      {departments.map((dept, idx) => {
+                        const count = products.filter(p => p.category === dept.id).length;
+                        const canMoveUp = idx > 0;
+                        const canMoveDown = idx < departments.length - 1;
+
+                        return (
+                          <div key={dept.id} className="drawer-dept-card">
+                            <div className="drawer-dept-info">
+                              <div className="drawer-dept-icon">
+                                <span>{dept.icon}</span>
+                              </div>
+                              <div className="drawer-dept-texts">
+                                <div className="drawer-dept-title-row">
+                                  <h5 className="drawer-dept-title">{dept.label}</h5>
+                                  <span style={{
+                                    fontSize: '0.7rem',
+                                    color: '#38bdf8',
+                                    background: 'rgba(56, 189, 248, 0.15)',
+                                    padding: '1px 5px',
+                                    borderRadius: '4px',
+                                    fontWeight: 700
+                                  }}>
+                                    #{idx + 1}
+                                  </span>
+                                </div>
+                                <div className="drawer-dept-meta">
+                                  <span>ID: {dept.id}</span>
+                                  <span>•</span>
+                                  <span style={{ color: count > 0 ? '#34d399' : '#94a3b8', fontWeight: 600 }}>
+                                    {count} {count === 1 ? 'producto' : 'productos'}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="drawer-dept-actions">
+                              <button
+                                type="button"
+                                className="btn-card-icon"
+                                onClick={() => handleMoveDepartment(dept.id, -1)}
+                                disabled={!canMoveUp}
+                                title="Subir orden"
+                                style={{ padding: '5px 8px', fontSize: '0.78rem' }}
+                              >
+                                ⬆️
+                              </button>
+                              <button
+                                type="button"
+                                className="btn-card-icon"
+                                onClick={() => handleMoveDepartment(dept.id, 1)}
+                                disabled={!canMoveDown}
+                                title="Bajar orden"
+                                style={{ padding: '5px 8px', fontSize: '0.78rem' }}
+                              >
+                                ⬇️
+                              </button>
+                              <button
+                                type="button"
+                                className="btn-card-icon"
+                                onClick={() => handleOpenEditDepartment(dept)}
+                                title="Editar categoría"
+                                style={{ padding: '5px 8px', fontSize: '0.78rem' }}
+                              >
+                                ✏️
+                              </button>
+                              <button
+                                type="button"
+                                className="btn-card-icon danger"
+                                onClick={() => handlePromptDeleteDepartment(dept)}
+                                title="Eliminar categoría"
+                                style={{ padding: '5px 8px', fontSize: '0.78rem' }}
+                              >
+                                🗑️
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {drawerActiveTab === 'general' && (
+                <div className="drawer-config-section">
+                  <div>
+                    <h4 className="drawer-config-title">
+                      <span>📢</span> Anuncio Superior y Contacto
+                    </h4>
+                    <p className="drawer-config-desc">
+                      Personaliza el cintillo promocional y el canal de asesoría y pedidos.
+                    </p>
+                  </div>
+
+                  <div className="mercado-input-group">
+                    <label>Cintillo de Anuncio Superior (Promociones / Avisos)</label>
+                    <textarea
+                      rows={3}
+                      value={mercadoConfig.announcement || ''}
+                      onChange={(e) => updateMercadoConfig('announcement', e.target.value)}
+                      placeholder="Ej: Envíos a todo el país en 24-48 hrs · Descuentos por volumen para colegios y docentes"
+                    />
+                  </div>
+
+                  <div className="mercado-input-group">
+                    <label>WhatsApp Oficial de Pedidos (Código de país sin +)</label>
+                    <input
+                      type="text"
+                      value={mercadoConfig.whatsappPhone || ''}
+                      onChange={(e) => updateMercadoConfig('whatsappPhone', e.target.value)}
+                      placeholder="Ej: 50246741239"
+                    />
+                    <small style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '4px' }}>
+                      A este número se dirigirán los botones de "Comprar Ya en WhatsApp" del catálogo.
+                    </small>
+                  </div>
+                </div>
+              )}
+
+              {drawerActiveTab === 'pagos' && (
+                <div className="drawer-config-section">
+                  <div>
+                    <h4 className="drawer-config-title">
+                      <span>💳</span> Pasarela de Pago (Recurrente)
+                    </h4>
+                    <p className="drawer-config-desc">
+                      Configura las llaves API para cobro con tarjeta de crédito/débito y transferencias.
+                    </p>
+                  </div>
+
+                  <div className="mercado-input-group">
+                    <label>Clave Secreta (X-SECRET-KEY)</label>
+                    <input
+                      type="password"
+                      value={mercadoConfig.recurrenteSecretKey || ''}
+                      onChange={(e) => updateMercadoConfig('recurrenteSecretKey', e.target.value)}
+                      placeholder="Dejar en blanco para usar la clave Live predeterminada"
+                    />
+                    <small style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '4px' }}>
+                      Utilizada para crear los checkouts con tarjeta y ACH. Si está vacía, se utiliza automáticamente la llave Live activa.
+                    </small>
+                  </div>
+
+                  <div className="mercado-input-group">
+                    <label>Clave Pública / Test (Opcional)</label>
+                    <input
+                      type="text"
+                      value={mercadoConfig.recurrentePublicKey || ''}
+                      onChange={(e) => updateMercadoConfig('recurrentePublicKey', e.target.value)}
+                      placeholder="Ej: sk_test_..."
+                    />
+                  </div>
+
+                  <div style={{
+                    background: 'rgba(2, 132, 199, 0.1)',
+                    border: '1px solid rgba(2, 132, 199, 0.3)',
+                    borderRadius: '10px',
+                    padding: '12px 14px',
+                    fontSize: '0.8rem',
+                    color: '#93c5fd',
+                    lineHeight: '1.4'
+                  }}>
+                    💡 Recurrente permite procesar pagos mediante tarjetas Visa/Mastercard y transferencias ACH en Guatemala.
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Footer con Guardado */}
+            <div className="admin-drawer-footer">
+              <button
+                type="button"
+                className="btn-drawer-close"
+                onClick={() => setIsSettingsDrawerOpen(false)}
+              >
+                Cerrar
+              </button>
+              <button
+                type="button"
+                className="btn-drawer-save"
+                onClick={async () => {
+                  await handleSaveAll();
+                  setIsSettingsDrawerOpen(false);
+                }}
+                disabled={saving}
+              >
+                {saving ? '⏳ Guardando...' : '💾 Guardar y Aplicar'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Modal Opcional de Autenticación con Google */}
       <AdminLoginModal 
         isOpen={isAuthModalOpen} 
