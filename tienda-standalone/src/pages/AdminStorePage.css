@@ -187,6 +187,45 @@
   gap: 16px;
 }
 
+/* ==============================================================
+   REGLA GENERAL: CAMPOS EDITABLES EN BLANCO CON TEXTO NEGRO
+   Para máxima visibilidad, identificación y contraste en el panel
+   ============================================================== */
+.admin-mercado-wrapper input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="range"]):not([type="color"]),
+.admin-mercado-wrapper textarea,
+.admin-mercado-wrapper select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.admin-mercado-wrapper input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="range"]):not([type="color"]):focus,
+.admin-mercado-wrapper textarea:focus,
+.admin-mercado-wrapper select:focus {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ff5000 !important;
+  box-shadow: 0 0 0 3px rgba(255, 80, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+  outline: none !important;
+}
+
+.admin-mercado-wrapper input::placeholder,
+.admin-mercado-wrapper textarea::placeholder {
+  color: #64748b !important;
+  font-style: italic;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.admin-mercado-wrapper select option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  padding: 8px 12px;
+}
+
 .mercado-input-group {
   display: flex;
   flex-direction: column;
@@ -204,35 +243,39 @@
 .mercado-input-group input,
 .mercado-input-group textarea,
 .mercado-input-group select {
-  background: #0f172a;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
   border-radius: 8px;
   padding: 10px 14px;
-  color: #ffffff;
+  color: #0f172a !important;
   font-size: 0.92rem;
+  font-weight: 600;
   outline: none;
   transition: all 0.2s ease;
   font-family: inherit;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .mercado-input-group select option {
-  background-color: #0f172a;
-  color: #ffffff;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
   padding: 10px 14px;
 }
 
 .mercado-input-group input::placeholder,
 .mercado-input-group textarea::placeholder {
-  color: #64748b;
+  color: #64748b !important;
   font-style: italic;
+  font-weight: 400;
 }
 
 .mercado-input-group input:focus,
 .mercado-input-group textarea:focus,
 .mercado-input-group select:focus {
-  border-color: #ff5000;
-  box-shadow: 0 0 0 3px rgba(255, 80, 0, 0.25);
-  background: #1e293b;
+  border-color: #ff5000 !important;
+  box-shadow: 0 0 0 3px rgba(255, 80, 0, 0.25) !important;
+  background: #ffffff !important;
+  color: #000000 !important;
 }
 
 /* 3. Filtros y Búsqueda en Administración */
@@ -249,20 +292,29 @@
 .admin-mercado-search-bar {
   display: flex;
   align-items: center;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
   border-radius: 10px;
   padding: 6px 14px;
   gap: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .admin-mercado-search-bar input {
   flex: 1;
-  background: transparent;
-  border: none;
-  color: #ffffff;
+  background: transparent !important;
+  border: none !important;
+  color: #0f172a !important;
   font-size: 0.92rem;
+  font-weight: 600;
   outline: none;
+  box-shadow: none !important;
+}
+
+.admin-mercado-search-bar input::placeholder {
+  color: #64748b !important;
+  font-style: italic;
+  font-weight: 400;
 }
 
 .admin-mercado-categories-scroll {

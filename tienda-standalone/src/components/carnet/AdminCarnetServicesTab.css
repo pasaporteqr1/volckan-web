@@ -119,14 +119,15 @@
 .public-url-input {
   flex: 1;
   min-width: 260px;
-  background: rgba(2, 6, 23, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
   border-radius: 8px;
   padding: 10px 14px;
-  color: #38bdf8;
+  color: #0284c7 !important;
   font-family: monospace;
   font-size: 0.88rem;
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .btn-copy-carnet-link {
@@ -222,12 +223,30 @@
 
 .admin-field-group input,
 .admin-field-group textarea {
-  background: rgba(2, 6, 23, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
   border-radius: 8px;
   padding: 10px 14px;
-  color: #ffffff;
-  font-size: 0.88rem;
+  color: #0f172a !important;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.admin-field-group input:focus,
+.admin-field-group textarea:focus {
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25) !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  outline: none;
+}
+
+.admin-field-group input::placeholder,
+.admin-field-group textarea::placeholder {
+  color: #64748b !important;
+  font-style: italic;
+  font-weight: 400;
 }
 
 .logo-preview-upload-row {
@@ -483,20 +502,29 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(2, 6, 23, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
   border-radius: 8px;
   padding: 8px 14px;
   flex: 1;
   max-width: 420px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .submissions-search-wrap input {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 0.85rem;
+  background: transparent !important;
+  border: none !important;
+  color: #0f172a !important;
+  font-size: 0.88rem;
+  font-weight: 600;
   width: 100%;
+  box-shadow: none !important;
+}
+
+.submissions-search-wrap input::placeholder {
+  color: #64748b !important;
+  font-style: italic;
+  font-weight: 400;
 }
 
 .submissions-search-wrap input:focus {
