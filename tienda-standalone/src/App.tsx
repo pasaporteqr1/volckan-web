@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { StoreConfigProvider } from './context/StoreConfigContext';
 import StorePage from './pages/StorePage';
+import CheckoutPage from './pages/CheckoutPage';
 import AdminStorePage from './pages/AdminStorePage';
 import CarnetServicePage from './pages/CarnetServicePage';
 import CarnetVerifyPage from './pages/CarnetVerifyPage';
@@ -21,6 +22,9 @@ export default function App() {
             <Route path="/tienda" element={<StorePage />} />
             <Route path="/catalogo" element={<StorePage />} />
             <Route path="/producto/:productId" element={<StorePage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/pagar" element={<CheckoutPage />} />
+            <Route path="/pago" element={<CheckoutPage />} />
             <Route path="/carnet" element={<CarnetServicePage />} />
             <Route path="/carnets" element={<CarnetServicePage />} />
             <Route path="/registro" element={<CarnetServicePage />} />

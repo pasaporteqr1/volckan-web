@@ -1336,11 +1336,11 @@ export default function StorePage() {
                     className="amazon-proceed-card-btn"
                     onClick={() => {
                       soundEffects.playClick();
-                      setCheckoutInitialMethod('recurrente_card');
-                      setIsCheckoutModalOpen(true);
+                      setIsCartDrawerOpen(false);
+                      navigate('/checkout');
                     }}
                   >
-                    <span>💳 Pagar con Tarjeta (Recurrente)</span>
+                    <span>💳 Proceder al Pago (Recurrente / Transferencia)</span>
                   </button>
 
                   <button
@@ -1348,11 +1348,11 @@ export default function StorePage() {
                     className="amazon-proceed-wa-btn"
                     onClick={() => {
                       soundEffects.playClick();
-                      setCheckoutInitialMethod('whatsapp');
-                      setIsCheckoutModalOpen(true);
+                      setIsCartDrawerOpen(false);
+                      navigate('/checkout');
                     }}
                   >
-                    <span>💬 Pedido en WhatsApp / Transferencia</span>
+                    <span>📋 Revisar Pedido & Facturación FEL ➔</span>
                   </button>
 
                   <button

@@ -4,9 +4,12 @@ export interface OrderItem {
   productId: string;
   title: string;
   price: number;
+  originalPrice?: number;
   quantity: number;
   subtotal: number;
   categoryLabel?: string;
+  image?: string;
+  icon?: string;
 }
 
 export interface CustomerInfo {
@@ -19,7 +22,7 @@ export interface CustomerInfo {
 }
 
 export interface PaymentDetails {
-  method: 'whatsapp' | 'recurrente_card';
+  method: 'recurrente' | 'recurrente_card' | 'whatsapp';
   recurrenteCheckoutId?: string;
   recurrenteCheckoutUrl?: string;
   paidAt?: string;
