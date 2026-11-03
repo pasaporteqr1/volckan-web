@@ -38,6 +38,11 @@ export default function App() {
             <Route path="/pago-completado" element={<PaymentSuccessPage />} />
             <Route path="/pago-cancelado" element={<PaymentCancelPage />} />
             <Route path="/admin" element={<AdminStorePage />} />
+            <Route path="/admin/*" element={<AdminStorePage />} />
+            <Route path="/panel" element={<AdminStorePage />} />
+            <Route path="/panel/*" element={<AdminStorePage />} />
+            <Route path="/panel-admin" element={<AdminStorePage />} />
+            <Route path="/dashboard" element={<AdminStorePage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

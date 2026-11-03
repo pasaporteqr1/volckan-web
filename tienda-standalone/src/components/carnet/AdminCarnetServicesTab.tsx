@@ -32,6 +32,9 @@ export const AdminCarnetServicesTab: React.FC = () => {
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
 
+  // Vista activa dentro del módulo de Carnets: 'configuracion' | 'solicitudes' | 'todo'
+  const [carnetSubView, setCarnetSubView] = useState<'configuracion' | 'solicitudes' | 'todo'>('configuracion');
+
   // Estados de gestión de envíos recibidos
   const [statusFilter, setStatusFilter] = useState<'todos' | 'pendiente' | 'aprobado' | 'impreso'>('todos');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -45,7 +48,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
 
   // Enlace oficial directo para compartir (Formulario limpio sin vista previa lateral)
   const origin = window.location.origin;
-  const pathname = window.location.pathname.replace(/\/admin\/?$/, '');
+  const pathname = window.location.pathname.replace(/\/(admin|panel)\/?$/, '');
   const publicFormUrl = `${origin}${pathname}#/registro`;
 
   // Actualizar configuración local
@@ -503,8 +506,122 @@ export const AdminCarnetServicesTab: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Tarjeta del Enlace Compartible Directo */}
-      <div className="carnets-link-share-card">
+      {/* Sub-navegación interna de Carnets */}
+      <div className="carnets-subnav-bar" style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '12px',
+        margin: '18px 0',
+        padding: '8px 12px',
+        background: 'rgba(15, 23, 42, 0.75)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        borderRadius: '14px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => {
+              soundEffects.playClick();
+              setCarnetSubView('configuracion');
+            }}
+            style={{
+              padding: '9px 18px',
+              borderRadius: '9px',
+              fontWeight: 700,
+              fontSize: '0.88rem',
+              cursor: 'pointer',
+              border: carnetSubView === 'configuracion' ? '1px solid #38bdf8' : '1px solid transparent',
+              background: carnetSubView === 'configuracion' ? 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)' : 'rgba(255, 255, 255, 0.05)',
+              color: carnetSubView === 'configuracion' ? '#ffffff' : '#94a3b8',
+              boxShadow: carnetSubView === 'configuracion' ? '0 4px 14px rgba(2, 132, 199, 0.35)' : 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s'
+            }}
+          >
+            <span>⚙️</span>
+            <span>Configuración y Diseño de la Credencial</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              soundEffects.playClick();
+              setCarnetSubView('solicitudes');
+            }}
+            style={{
+              padding: '9px 18px',
+              borderRadius: '9px',
+              fontWeight: 700,
+              fontSize: '0.88rem',
+              cursor: 'pointer',
+              border: carnetSubView === 'solicitudes' ? '1px solid #fb923c' : '1px solid transparent',
+              background: carnetSubView === 'solicitudes' ? 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)' : 'rgba(255, 255, 255, 0.05)',
+              color: carnetSubView === 'solicitudes' ? '#ffffff' : '#94a3b8',
+              boxShadow: carnetSubView === 'solicitudes' ? '0 4px 14px rgba(249, 115, 22, 0.35)' : 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              transition: 'all 0.2s'
+            }}
+          >
+            <span>👥</span>
+            <span>Solicitudes Recibidas</span>
+            <span style={{
+              background: carnetSubView === 'solicitudes' ? 'rgba(0,0,0,0.3)' : '#f97316',
+              color: '#ffffff',
+              padding: '2px 8px',
+              borderRadius: '999px',
+              fontSize: '0.76rem',
+              fontWeight: 800
+            }}>
+              {carnetSubmissions.length}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              soundEffects.playClick();
+              setCarnetSubView('todo');
+            }}
+            style={{
+              padding: '9px 16px',
+              borderRadius: '9px',
+              fontWeight: 600,
+              fontSize: '0.84rem',
+              cursor: 'pointer',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: carnetSubView === 'todo' ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+              color: carnetSubView === 'todo' ? '#ffffff' : '#64748b',
+              transition: 'all 0.2s'
+            }}
+          >
+            <span>📑</span>
+            <span>Vista Completa</span>
+          </button>
+        </div>
+
+        {carnetSubView === 'configuracion' && (
+          <button
+            type="button"
+            className="btn-carnets-save-config"
+            onClick={handleSaveFormConfig}
+            disabled={isSavingConfig}
+            style={{ padding: '8px 16px', fontSize: '0.85rem' }}
+          >
+            {isSavingConfig ? '⏳ Guardando...' : '💾 Guardar Configuración'}
+          </button>
+        )}
+      </div>
+
+      {(carnetSubView === 'configuracion' || carnetSubView === 'todo') && (
+        <>
+          {/* 2. Tarjeta del Enlace Compartible Directo */}
+          <div className="carnets-link-share-card">
         <div className="link-share-info">
           <span className="link-badge">🔗 ENLACE OFICIAL DEL FORMULARIO PÚBLICO</span>
           <h4>Comparte este link con tus usuarios, estudiantes o colaboradores</h4>
@@ -722,10 +839,61 @@ export const AdminCarnetServicesTab: React.FC = () => {
             />
           </div>
         </div>
-      </div>
 
-      {/* 4. Lista de Carnets Recibidos y Gestión de Impresión */}
-      <div className="carnets-submissions-section">
+        {/* Barra de Guardado Rápido al final de la configuración */}
+        <div style={{
+          marginTop: '22px',
+          paddingTop: '18px',
+          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '12px'
+        }}>
+          <button
+            type="button"
+            className="btn-carnets-save-config"
+            onClick={handleSaveFormConfig}
+            disabled={isSavingConfig}
+            style={{
+              padding: '10px 22px',
+              fontSize: '0.95rem'
+            }}
+          >
+            {isSavingConfig ? '⏳ Guardando Configuración...' : '💾 Guardar Parámetros y Diseño'}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              soundEffects.playClick();
+              setCarnetSubView('solicitudes');
+            }}
+            style={{
+              background: 'rgba(249, 115, 22, 0.15)',
+              border: '1px solid rgba(249, 115, 22, 0.4)',
+              color: '#fb923c',
+              padding: '9px 18px',
+              borderRadius: '8px',
+              fontWeight: 700,
+              fontSize: '0.86rem',
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
+          >
+            <span>Ver Solicitudes Recibidas ({carnetSubmissions.length}) ➔</span>
+          </button>
+        </div>
+      </div>
+    </>
+  )}
+
+  {/* 4. Lista de Carnets Recibidos y Gestión de Impresión */}
+  {(carnetSubView === 'solicitudes' || carnetSubView === 'todo') && (
+    <div className="carnets-submissions-section">
         <div className="submissions-section-header">
           <div className="submissions-title-group">
             <h4><span>🗂️</span> Carnets Recibidos y Solicitudes ({carnetSubmissions.length})</h4>
@@ -934,6 +1102,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
           </div>
         )}
       </div>
+      )}
 
       {/* MODAL DE VISTA PREVIA Y EXPORTACIÓN INDIVIDUAL */}
       {previewSubmission && (

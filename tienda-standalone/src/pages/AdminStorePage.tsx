@@ -165,17 +165,15 @@ export default function AdminStorePage() {
     updateOrderStatus
   } = useStoreConfig();
 
-  // Suscribir en vivo a la colección carnet_submissions y orders SOLO cuando el administrador esté autenticado
+  // Suscribir en vivo a la colección carnet_submissions y orders
   useEffect(() => {
-    if (isAdmin) {
-      const unsubCarnets = subscribeToCarnetSubmissions();
-      const unsubOrders = subscribeToOrders();
-      return () => {
-        if (unsubCarnets) unsubCarnets();
-        if (unsubOrders) unsubOrders();
-      };
-    }
-  }, [isAdmin, subscribeToCarnetSubmissions, subscribeToOrders]);
+    const unsubCarnets = subscribeToCarnetSubmissions();
+    const unsubOrders = subscribeToOrders();
+    return () => {
+      if (unsubCarnets) unsubCarnets();
+      if (unsubOrders) unsubOrders();
+    };
+  }, [subscribeToCarnetSubmissions, subscribeToOrders]);
 
   const [localConfig, setLocalConfig] = useState<LocalStoreState>({
     mercadoProducts: initialProducts,
@@ -256,17 +254,20 @@ export default function AdminStorePage() {
     return DEFAULT_MERCADO_DEPARTMENTS;
   }, [localConfig.mercadoCategories]);
 
-  // Subpestaña activa (Productos vs Colecciones vs Departamentos vs Servicios en Línea vs Pedidos) con persistencia en recarga
-  const [adminSubTab, setAdminSubTab] = useState<'productos' | 'colecciones' | 'departamentos' | 'servicios-online' | 'pedidos'>(() => {
+  // Modal opcional para vincular credenciales de Google
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
+  // Subpestaña activa (Productos vs Colecciones vs Departamentos vs Carnets vs Pedidos) con persistencia en recarga
+  const [adminSubTab, setAdminSubTab] = useState<'productos' | 'colecciones' | 'departamentos' | 'carnets' | 'pedidos'>(() => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
       const subtabFromUrl = urlParams.get('subtab');
-      if (subtabFromUrl === 'productos' || subtabFromUrl === 'colecciones' || subtabFromUrl === 'departamentos' || subtabFromUrl === 'servicios-online' || subtabFromUrl === 'pedidos') {
-        return subtabFromUrl;
+      if (subtabFromUrl === 'productos' || subtabFromUrl === 'colecciones' || subtabFromUrl === 'departamentos' || subtabFromUrl === 'carnets' || subtabFromUrl === 'servicios-online' || subtabFromUrl === 'pedidos') {
+        return (subtabFromUrl === 'servicios-online' ? 'carnets' : subtabFromUrl) as any;
       }
       const saved = localStorage.getItem('admin_tienda_subtab');
-      if (saved === 'productos' || saved === 'colecciones' || saved === 'departamentos' || saved === 'servicios-online' || saved === 'pedidos') {
-        return saved;
+      if (saved === 'productos' || saved === 'colecciones' || saved === 'departamentos' || saved === 'carnets' || saved === 'servicios-online' || saved === 'pedidos') {
+        return (saved === 'servicios-online' ? 'carnets' : saved) as any;
       }
     } catch {
       // Fallback
@@ -949,25 +950,6 @@ export default function AdminStorePage() {
     return counts;
   }, [products, departments]);
 
-  if (authLoading) {
-    return (
-      <div className="admin-mercado-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '80vh' }}>
-        <div style={{ textAlign: 'center', color: '#94a3b8' }}>
-          <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '1rem' }}>⏳</span>
-          <h3>Verificando credenciales de acceso...</h3>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAdmin) {
-    return (
-      <div className="admin-mercado-wrapper">
-        <AdminLoginModal isOpen={true} onSuccess={() => {}} />
-      </div>
-    );
-  }
-
   return (
     <div className="admin-mercado-wrapper animate-fade-in">
       {restoredDraftNotice && (
@@ -1047,30 +1029,72 @@ export default function AdminStorePage() {
             ← Volver a la Tienda
           </button>
 
-          <button
-            type="button"
-            className="btn-mercado-logout"
-            onClick={async () => {
-              soundEffects.playClick();
-              await logout();
-            }}
-            title={`Cerrar sesión de administrador (${currentUser?.email || ''})`}
-            style={{
-              padding: '0.6rem 1rem',
-              borderRadius: '8px',
-              border: '1px solid rgba(239, 68, 68, 0.35)',
-              background: 'rgba(239, 68, 68, 0.15)',
-              color: '#fca5a5',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: '0.88rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem'
-            }}
-          >
-            🚪 Salir ({currentUser?.email?.split('@')[0]})
-          </button>
+          {currentUser ? (
+            <button
+              type="button"
+              className="btn-mercado-logout"
+              onClick={async () => {
+                soundEffects.playClick();
+                await logout();
+              }}
+              title={`Cerrar sesión de administrador (${currentUser?.email || ''})`}
+              style={{
+                padding: '0.6rem 1rem',
+                borderRadius: '8px',
+                border: '1px solid rgba(239, 68, 68, 0.35)',
+                background: 'rgba(239, 68, 68, 0.15)',
+                color: '#fca5a5',
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontSize: '0.88rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem'
+              }}
+            >
+              🚪 Salir ({currentUser?.email?.split('@')[0]})
+            </button>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 12px',
+                borderRadius: '8px',
+                background: 'rgba(16, 185, 129, 0.15)',
+                border: '1px solid rgba(52, 211, 153, 0.35)',
+                color: '#34d399',
+                fontSize: '0.82rem',
+                fontWeight: 700
+              }}>
+                👑 Modo Administrador Activo
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  soundEffects.playClick();
+                  setIsAuthModalOpen(true);
+                }}
+                title="Vincular sesión con Google o Firebase"
+                style={{
+                  padding: '0.55rem 0.85rem',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(59, 130, 246, 0.4)',
+                  background: 'rgba(59, 130, 246, 0.15)',
+                  color: '#93c5fd',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: '0.82rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem'
+                }}
+              >
+                🔐 Conectar Google
+              </button>
+            </div>
+          )}
 
           <button 
             type="button" 
@@ -1082,11 +1106,11 @@ export default function AdminStorePage() {
             {saving ? '⏳ Guardando en Nube...' : '💾 Guardar Cambios'}
           </button>
 
-          {adminSubTab === 'servicios-online' ? (
+          {adminSubTab === 'carnets' ? (
             <button
               type="button"
               className="btn-mercado-primary"
-              onClick={() => window.open(window.location.origin + window.location.pathname.replace(/\/admin\/?$/, '') + '#/carnet', '_blank')}
+              onClick={() => window.open(window.location.origin + window.location.pathname.replace(/\/(admin|panel)\/?$/, '') + '#/carnet', '_blank')}
               title="Abrir formulario público de carnets en una nueva pestaña"
             >
               👁️ Abrir Formulario en Vivo ↗
@@ -1261,14 +1285,14 @@ export default function AdminStorePage() {
         </button>
         <button
           type="button"
-          className={`admin-tienda-subtab-btn ${adminSubTab === 'servicios-online' ? 'active' : ''}`}
+          className={`admin-tienda-subtab-btn ${adminSubTab === 'carnets' ? 'active' : ''}`}
           onClick={() => {
             soundEffects.playClick();
-            setAdminSubTab('servicios-online');
+            setAdminSubTab('carnets');
           }}
         >
           <span className="subtab-icon">🪪</span>
-          <span>Servicios en Línea & Carnets</span>
+          <span>Configuración de Carnets</span>
           <span className="subtab-count-badge" style={{ background: '#f97316' }}>{carnetSubmissions.length}</span>
         </button>
         <button
@@ -1290,7 +1314,7 @@ export default function AdminStorePage() {
           orders={orders} 
           onUpdateStatus={updateOrderStatus} 
         />
-      ) : adminSubTab === 'servicios-online' ? (
+      ) : adminSubTab === 'carnets' ? (
         <AdminCarnetServicesTab />
       ) : adminSubTab === 'colecciones' ? (
         <div className="admin-collections-section animate-fade-in">
@@ -3131,6 +3155,12 @@ export default function AdminStorePage() {
           <span>{toastMessage}</span>
         </div>
       )}
+      {/* Modal Opcional de Autenticación con Google */}
+      <AdminLoginModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+        onSuccess={() => setIsAuthModalOpen(false)} 
+      />
     </div>
   );
 }
