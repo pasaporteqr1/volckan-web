@@ -75,6 +75,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -101,32 +102,32 @@
 
 <body class="antialiased font-sans bg-white text-slate-900 flex flex-col min-h-screen">
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="flex items-center justify-between h-24">
+            <div class="flex items-center justify-between h-20 md:h-24">
                 <a href="index.html" class="flex items-center group">
                     <img src="public/images/logo-volckan.png" alt="Tecno Volckánica"
-                        class="h-12 w-auto object-contain transition-transform group-hover:scale-105">
+                        class="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105">
                 </a>
-                <nav class="hidden md:flex items-center gap-10">
-                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
+                <nav class="hidden lg:flex items-center gap-7 xl:gap-9">
+                    <a class="font-bold text-sm uppercase text-slate-700 hover:text-brand-purple transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-purple hover:after:w-full after:transition-all after:duration-300"
                         href="index.html">Inicio</a>
 
                     <!-- Menú Desplegable: Soluciones -->
                     <div class="relative group">
                         <button
-                            class="font-bold text-sm uppercase hover:text-brand-purple transition-colors inline-flex items-center gap-1">
+                            class="font-bold text-sm uppercase text-slate-700 hover:text-brand-purple transition-colors inline-flex items-center gap-1 py-1">
                             Soluciones
                             <span
                                 class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
                         </button>
 
-                        <!-- Contenedor del Dropdown (Light Theme Update) -->
+                        <!-- Contenedor del Dropdown -->
                         <div
-                            class="absolute left-0 mt-6 w-64 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
+                            class="absolute left-0 mt-6 w-72 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
                             <div class="py-2">
                                 <a href="soluciones-sosqr.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors">
+                                    class="flex items-center gap-4 px-5 py-3.5 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors">
                                     <div
                                         class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red">
                                         <span class="material-symbols-outlined text-base">emergency</span>
@@ -137,7 +138,7 @@
                                     </div>
                                 </a>
                                 <a href="soluciones-parqueos.html"
-                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
+                                    class="flex items-center gap-4 px-5 py-3.5 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
                                     <div
                                         class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple">
                                         <span class="material-symbols-outlined text-base">local_parking</span>
@@ -147,46 +148,46 @@
                                         <span class="text-xs text-slate-800 mt-0.5">Control de acceso</span>
                                     </div>
                                 </a>
-                            <a href="soluciones-modulo-ventas.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">point_of_sale</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Módulo de Ventas</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Cero Fricción</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-tiendas.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">storefront</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-blue-600 transition-colors">Admin. de Tiendas</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Sincronización Omnicanal</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-personal.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">groups</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-green-600 transition-colors">Control de Personal</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Gestión de Equipos</span>
-                                </div>
-                            </a>
-                            <a href="soluciones-modulo-nutricion.html"
-                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
-                                <div class="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 flex-shrink-0">
-                                    <span class="material-symbols-outlined text-lg">favorite</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-pink-600 transition-colors">Nutrición de Clientes</span>
-                                    <span class="text-xs text-slate-400 mt-0.5">Post-Venta Activa</span>
-                                </div>
-                            </a>
+                                <a href="soluciones-modulo-ventas.html"
+                                    class="flex items-center gap-4 px-5 py-3 rounded-lg hover:bg-slate-50 transition-all group/sub">
+                                    <div class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                        <span class="material-symbols-outlined text-lg">point_of_sale</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Módulo de Ventas</span>
+                                        <span class="text-xs text-slate-400 mt-0.5">Cero Fricción</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-modulo-tiendas.html"
+                                    class="flex items-center gap-4 px-5 py-3 rounded-lg hover:bg-slate-50 transition-all group/sub">
+                                    <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                                        <span class="material-symbols-outlined text-lg">storefront</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-brand-dark group-hover/sub:text-blue-600 transition-colors">Admin. de Tiendas</span>
+                                        <span class="text-xs text-slate-400 mt-0.5">Sincronización Omnicanal</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-modulo-personal.html"
+                                    class="flex items-center gap-4 px-5 py-3 rounded-lg hover:bg-slate-50 transition-all group/sub">
+                                    <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                                        <span class="material-symbols-outlined text-lg">groups</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-brand-dark group-hover/sub:text-green-600 transition-colors">Control de Personal</span>
+                                        <span class="text-xs text-slate-400 mt-0.5">Gestión de Equipos</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-modulo-nutricion.html"
+                                    class="flex items-center gap-4 px-5 py-3 rounded-lg hover:bg-slate-50 transition-all group/sub">
+                                    <div class="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 flex-shrink-0">
+                                        <span class="material-symbols-outlined text-lg">favorite</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-brand-dark group-hover/sub:text-pink-600 transition-colors">Nutrición de Clientes</span>
+                                        <span class="text-xs text-slate-400 mt-0.5">Post-Venta Activa</span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -194,13 +195,12 @@
                     <!-- Menú Desplegable: Propuestas -->
                     <div class="relative group">
                         <button
-                            class="font-bold text-sm uppercase hover:text-brand-purple transition-colors inline-flex items-center gap-1">
+                            class="font-bold text-sm uppercase text-slate-700 hover:text-brand-purple transition-colors inline-flex items-center gap-1 py-1">
                             Propuestas
                             <span
                                 class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
                         </button>
 
-                        <!-- Contenedor del Dropdown -->
                         <div
                             class="absolute left-0 mt-6 w-80 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
                             <div class="py-2">
@@ -230,28 +230,33 @@
                         </div>
                     </div>
 
-                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
+                    <a class="font-bold text-sm uppercase text-slate-700 hover:text-brand-purple transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-purple hover:after:w-full after:transition-all after:duration-300"
                         href="soluciones-automatizaciones.html">Automatizaciones</a>
-                    <a class="font-bold text-sm uppercase hover:text-brand-purple transition-colors"
+                    <a class="font-bold text-sm uppercase text-slate-700 hover:text-brand-purple transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-purple hover:after:w-full after:transition-all after:duration-300"
                         href="soluciones-ciberseguridad.html">Ciberseguridad</a>
-                    <a class="font-bold text-sm uppercase text-brand-purple hover:text-purple-700 transition-colors inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-purple/10 border border-brand-purple/20 hover:bg-brand-purple/20"
-                        href="tienda/index.html">
-                        <span class="material-symbols-outlined text-base">shopping_bag</span>
-                        Tienda
-                    </a>
                 </nav>
 
-                <div class="flex items-center gap-4">
-                    <a href="https://wa.me/50246741239" target="_blank"
-                        class="hidden sm:block bg-green-500 text-white px-8 py-3 rounded-full font-bold text-sm hover:-translate-y-1 hover:bg-green-600 transition-all duration-300 shadow-lg shadow-green-500/30 hover:shadow-green-600/40 relative overflow-hidden group">
-                        <span class="relative z-10 flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined text-lg">chat</span> WHATSAPP
+                <!-- Acción Principal Destacada: BOTÓN TIENDA ONLINE -->
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <a href="tienda/index.html"
+                        class="relative inline-flex items-center gap-2.5 px-5 py-2.5 sm:px-7 sm:py-3.5 rounded-full font-black text-xs sm:text-sm uppercase tracking-wider text-white bg-gradient-to-r from-purple-900 via-brand-purple to-indigo-600 shadow-xl shadow-purple-900/30 hover:shadow-2xl hover:shadow-purple-700/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 overflow-hidden group border border-purple-300/40">
+                        <!-- Brillo dinámico en hover -->
+                        <div class="absolute inset-0 w-1/2 h-full bg-white/25 skew-x-12 -translate-x-full group-hover:translate-x-[350%] transition-transform duration-1000 ease-out pointer-events-none"></div>
+                        
+                        <span class="material-symbols-outlined text-lg sm:text-2xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">storefront</span>
+                        <span class="relative z-10 flex flex-col items-start leading-none">
+                            <span class="text-[9px] sm:text-[10px] font-semibold text-purple-200 uppercase tracking-widest">Ecosistema & Hardware</span>
+                            <span class="text-xs sm:text-sm font-black tracking-wider text-white">TIENDA ONLINE</span>
                         </span>
-                        <div
-                            class="absolute inset-0 h-full w-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded-full pointer-events-none">
-                        </div>
+                        
+                        <!-- Badge Destacado -->
+                        <span class="relative z-10 hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-brand-yellow text-slate-900 shadow-sm ml-1">
+                            OFICIAL
+                        </span>
                     </a>
-                    <button id="mobile-menu-btn" class="md:hidden text-brand-dark">
+
+                    <!-- Botón Menú Móvil -->
+                    <button id="mobile-menu-btn" class="lg:hidden text-brand-dark p-2 rounded-xl hover:bg-slate-100 transition-colors" aria-label="Abrir menú de navegación">
                         <span class="material-symbols-outlined text-3xl">menu</span>
                     </button>
                 </div>
@@ -725,6 +730,44 @@
                 </div>
             </div>
         </div>
+
+        <!-- Botón Flotante Premium de WhatsApp (Diseño Moderno) -->
+        <div id="floating-whatsapp-widget" class="fixed bottom-6 right-6 z-40 flex items-center gap-3">
+            <!-- Badge Expandible con Asesoría en Línea -->
+            <a href="https://wa.me/50246741239?text=Hola%20Tecno%20Volck%C3%A1nica%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20soluciones%20y%20tienda." 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="hidden sm:flex items-center gap-3 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-xl shadow-slate-950/15 border border-slate-200/90 hover:border-emerald-400 hover:shadow-2xl hover:shadow-emerald-500/20 hover:-translate-y-0.5 transition-all duration-300 group">
+                <div class="flex flex-col text-left">
+                    <div class="flex items-center gap-1.5">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <span class="text-[10px] font-black uppercase tracking-wider text-emerald-600">Asesoría en línea</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-800 group-hover:text-emerald-600 transition-colors">¿Dudas o pedidos? <span class="font-extrabold text-emerald-600 underline decoration-emerald-300">Escríbenos</span></span>
+                </div>
+            </a>
+
+            <!-- Botón Circular Principal con Halo de Pulso e Icono SVG Oficial -->
+            <a href="https://wa.me/50246741239?text=Hola%20Tecno%20Volck%C3%A1nica%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20soluciones%20y%20tienda." 
+               target="_blank" 
+               rel="noopener noreferrer"
+               aria-label="Contactar por WhatsApp Oficial"
+               class="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-emerald-600 via-green-500 to-emerald-400 text-white shadow-xl shadow-emerald-600/40 hover:shadow-2xl hover:shadow-emerald-500/60 hover:scale-105 active:scale-95 transition-all duration-300 group">
+                <!-- Anillo de pulso sutil -->
+                <span class="absolute inset-0 rounded-full bg-emerald-500/35 animate-ping opacity-60 pointer-events-none" style="animation-duration: 3s;"></span>
+                
+                <!-- Icono SVG oficial de WhatsApp -->
+                <svg class="w-7 h-7 sm:w-8 sm:h-8 relative z-10 fill-current drop-shadow-md transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110" viewBox="0 0 24 24">
+                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 7.03C9.36 7.03 9.09 7.1 8.86 7.33C8.63 7.56 8 8.16 8 9.37C8 10.58 8.89 11.75 9.01 11.92C9.14 12.09 10.74 14.56 13.18 15.62C13.76 15.87 14.21 16.02 14.57 16.13C15.16 16.32 15.69 16.29 16.12 16.23C16.6 16.16 17.59 15.63 17.8 15.05C18 14.47 18 13.97 17.94 13.87C17.87 13.77 17.69 13.71 17.43 13.58C17.16 13.45 15.86 12.81 15.62 12.72C15.38 12.63 15.21 12.59 15.03 12.85C14.86 13.12 14.36 13.71 14.21 13.88C14.06 14.06 13.92 14.08 13.65 13.95C13.39 13.82 12.54 13.54 11.53 12.64C10.74 11.94 10.21 11.07 10.06 10.81C9.9 10.55 10.04 10.4 10.18 10.26C10.3 10.14 10.44 9.95 10.58 9.79C10.71 9.63 10.76 9.5 10.85 9.34C10.94 9.17 10.89 9.02 10.83 8.9C10.76 8.78 10.26 7.56 10.06 7.07C9.86 6.59 9.65 6.65 9.5 6.65C9.36 6.65 9.19 6.65 9.01 6.65L9.53 7.03Z"/>
+                </svg>
+                
+                <!-- Badge notificación "1" -->
+                <span class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-black text-white shadow-md border-2 border-white animate-bounce" style="animation-duration: 2.5s;">1</span>
+            </a>
+        </div>
     </footer>
 
     <!-- Mobile Menu Overlay -->
@@ -925,14 +968,14 @@
 
             </nav>
 
-            <!-- CTA Button -->
-            <div class="p-5 flex-shrink-0 border-t border-slate-100">
-                <a href="https://wa.me/50246741239" target="_blank"
-                    class="group relative overflow-hidden w-full flex bg-green-500 text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-green-500/20 transition-all duration-300 hover:shadow-xl hover:shadow-green-500/40 hover:-translate-y-1 active:scale-[0.98]">
-                    <span class="relative z-10 flex items-center justify-center gap-2 w-full">
-                        <span
-                            class="material-symbols-outlined text-lg group-hover:-translate-y-0.5 group-hover:rotate-12 transition-transform">chat</span>
-                        WhatsApp
+            <!-- CTA Principal Móvil: Ir a la Tienda -->
+            <div class="p-5 flex-shrink-0 border-t border-slate-100 bg-slate-50/70">
+                <a href="tienda/index.html"
+                    class="group relative overflow-hidden w-full flex items-center justify-center gap-3 bg-gradient-to-r from-purple-900 via-brand-purple to-indigo-600 text-white py-4 rounded-xl font-black text-sm uppercase tracking-wider shadow-xl shadow-purple-900/30 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-700/50 hover:-translate-y-0.5 active:scale-[0.98]">
+                    <span class="material-symbols-outlined text-2xl group-hover:rotate-6 transition-transform">storefront</span>
+                    <span>EXPLORAR TIENDA ONLINE</span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-brand-yellow text-slate-900">
+                        NUEVO
                     </span>
                     <div
                         class="absolute inset-0 h-full w-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded-xl pointer-events-none">
