@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:lotificacion": "vite build --config vite.lotificacion.config.ts",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -34,3 +34,4 @@ tienda-standalone/dist/
 
 
 tienda-standalone/.env
+firebase-debug.log
