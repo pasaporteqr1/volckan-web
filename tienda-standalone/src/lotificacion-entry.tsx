@@ -13,3 +13,4 @@ if (container) {
 } else {
   console.error("No element with id 'lotificacion-root' found");
 }
+
