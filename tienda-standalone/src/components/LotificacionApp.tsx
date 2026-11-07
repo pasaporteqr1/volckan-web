@@ -554,7 +554,6 @@ export default function LotificacionApp() {
   // High-performance Gesture Engine State (in Container Screen Pixels)
   const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [scale, setScale] = useState<number>(1.0);
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
   // Financial Form State
   const [plazoAnios, setPlazoAnios] = useState<number>(10);
@@ -575,35 +574,72 @@ export default function LotificacionApp() {
   // DOM References
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const contentWrapperRef = useRef<HTMLDivElement>(null);
+  const scaleIndicatorRef = useRef<HTMLSpanElement>(null);
 
   // Mutable refs for touch tracking with 0-lag and active preventDefault
   const panRef = useRef({ x: 0, y: 0 });
   const scaleRef = useRef(1.0);
-  const touchStateRef = useRef<{
+
+  // Unified Clamping: keeps at least 45% of the map in viewport so it NEVER gets lost
+  const clampPan = useCallback((px: number, py: number, currentScale: number, containerW: number, containerH: number) => {
+    const marginX = containerW * 0.45;
+    const marginY = containerH * 0.45;
+    const contentW = containerW * currentScale;
+    const contentH = containerH * currentScale;
+
+    const minX = marginX - contentW;
+    const maxX = containerW - marginX;
+    const minY = marginY - contentH;
+    const maxY = containerH - marginY;
+
+    return {
+      x: Math.min(Math.max(px, minX), maxX),
+      y: Math.min(Math.max(py, minY), maxY)
+    };
+  }, []);
+
+  // Direct GPU Transform (60-120 FPS hardware accelerated, zero React re-render lag)
+  const applyTransformDirect = useCallback((px: number, py: number, s: number, animate = false) => {
+    panRef.current = { x: px, y: py };
+    scaleRef.current = s;
+
+    if (contentWrapperRef.current) {
+      contentWrapperRef.current.style.transition = animate
+        ? 'transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1)'
+        : 'none';
+      contentWrapperRef.current.style.transform = `translate3d(${px}px, ${py}px, 0px) scale(${s})`;
+    }
+    if (scaleIndicatorRef.current) {
+      scaleIndicatorRef.current.textContent = `${Math.round(s * 100)}%`;
+    }
+  }, []);
+
+  // Touch gesture session tracking
+  const touchSessionRef = useRef<{
+    mode: 'none' | 'pan' | 'pinch';
     startX: number;
     startY: number;
-    startTime: number;
-    panStart: { x: number; y: number };
-    scaleStart: number;
+    panStartX: number;
+    panStartY: number;
     initialDistance: number;
-    initialFocal: { x: number; y: number };
+    scaleStart: number;
     contentPoint: { x: number; y: number };
-    hasDragged: boolean;
+    hasMoved: boolean;
     lastTapTime: number;
   }>({
+    mode: 'none',
     startX: 0,
     startY: 0,
-    startTime: 0,
-    panStart: { x: 0, y: 0 },
-    scaleStart: 1.0,
+    panStartX: 0,
+    panStartY: 0,
     initialDistance: 0,
-    initialFocal: { x: 0, y: 0 },
+    scaleStart: 1.0,
     contentPoint: { x: 0, y: 0 },
-    hasDragged: false,
+    hasMoved: false,
     lastTapTime: 0
   });
 
-  // Keep refs in sync with state for access in native event listeners
+  // Keep refs in sync with state
   useEffect(() => {
     panRef.current = pan;
   }, [pan]);
@@ -683,7 +719,6 @@ export default function LotificacionApp() {
     const container = mapContainerRef.current;
     if (!container) return;
 
-    setIsAnimating(true);
     const rect = container.getBoundingClientRect();
     const W = rect.width;
     const H = rect.height;
@@ -697,18 +732,18 @@ export default function LotificacionApp() {
     const lotScreenY = offsetY + lot.centerY * ratio;
 
     const zoom = Math.min(Math.max(targetScale, 1.2), 3.5);
-    const newPanX = W / 2 - lotScreenX * zoom;
-    const newPanY = H / 2 - lotScreenY * zoom;
+    const rawPanX = W / 2 - lotScreenX * zoom;
+    const rawPanY = H / 2 - lotScreenY * zoom;
+    const clamped = clampPan(rawPanX, rawPanY, zoom, W, H);
 
+    applyTransformDirect(clamped.x, clamped.y, zoom, true);
     setScale(zoom);
-    setPan({ x: newPanX, y: newPanY });
-
-    setTimeout(() => setIsAnimating(false), 300);
-  }, []);
+    setPan(clamped);
+  }, [clampPan, applyTransformDirect]);
 
   const handleSelectLot = (lot: Lot) => {
     // If the finger was dragging/panning the map, ignore selection
-    if (touchStateRef.current.hasDragged) return;
+    if (touchSessionRef.current.hasMoved) return;
 
     setSelectedLotId(lot.id);
     setEngancheCustomPct(null);
@@ -717,16 +752,14 @@ export default function LotificacionApp() {
   };
 
   const handleResetView = () => {
-    setIsAnimating(true);
+    applyTransformDirect(0, 0, 1.0, true);
     setScale(1.0);
     setPan({ x: 0, y: 0 });
-    setTimeout(() => setIsAnimating(false), 300);
   };
 
   const handleZoom = (delta: number) => {
     const container = mapContainerRef.current;
     if (!container) return;
-    setIsAnimating(true);
 
     const rect = container.getBoundingClientRect();
     const midX = rect.width / 2;
@@ -736,145 +769,156 @@ export default function LotificacionApp() {
     const newScale = Math.min(Math.max(currScale + delta, 0.75), 4.5);
     const factor = newScale / currScale;
 
-    const newPanX = midX - (midX - panRef.current.x) * factor;
-    const newPanY = midY - (midY - panRef.current.y) * factor;
+    const rawPanX = midX - (midX - panRef.current.x) * factor;
+    const rawPanY = midY - (midY - panRef.current.y) * factor;
+    const clamped = clampPan(rawPanX, rawPanY, newScale, rect.width, rect.height);
 
+    applyTransformDirect(clamped.x, clamped.y, newScale, true);
     setScale(newScale);
-    setPan({ x: newPanX, y: newPanY });
-    setTimeout(() => setIsAnimating(false), 250);
+    setPan(clamped);
   };
 
   // =========================================================================
-  // NATIVE NON-PASSIVE TOUCH LISTENER REGISTRATION (100% Mobile Fluid Gestures)
+  // NATIVE NON-PASSIVE TOUCH LISTENER REGISTRATION (Fluid Pinch & Seamless Pan)
   // =========================================================================
   useEffect(() => {
     const el = mapContainerRef.current;
     if (!el) return;
 
     const onTouchStart = (e: TouchEvent) => {
-      // Prevent browser default gesture interference if inside map
-      if (e.touches.length > 1 && e.cancelable) {
-        e.preventDefault();
-      }
+      // Prevent browser scroll or gesture conflict inside the interactive canvas
+      if (e.cancelable) e.preventDefault();
 
       const rect = el.getBoundingClientRect();
-      const now = Date.now();
+      const W = rect.width;
+      const H = rect.height;
 
       if (e.touches.length === 1) {
         const t = e.touches[0];
-        const isDoubleTap = now - touchStateRef.current.lastTapTime < 280;
-
-        if (isDoubleTap) {
-          e.preventDefault();
-          setIsAnimating(true);
-          const focalX = t.clientX - rect.left;
-          const focalY = t.clientY - rect.top;
-
-          if (scaleRef.current > 1.8) {
-            setScale(1.0);
-            setPan({ x: 0, y: 0 });
-          } else {
-            const nextScale = 2.4;
-            const factor = nextScale / scaleRef.current;
-            const newPanX = focalX - (focalX - panRef.current.x) * factor;
-            const newPanY = focalY - (focalY - panRef.current.y) * factor;
-            setScale(nextScale);
-            setPan({ x: newPanX, y: newPanY });
-          }
-          setTimeout(() => setIsAnimating(false), 260);
-          touchStateRef.current.lastTapTime = 0;
-          return;
-        }
-
-        touchStateRef.current = {
-          ...touchStateRef.current,
-          startX: t.clientX,
-          startY: t.clientY,
-          startTime: now,
-          panStart: { ...panRef.current },
-          scaleStart: scaleRef.current,
-          hasDragged: false,
-          lastTapTime: now
-        };
-      } else if (e.touches.length === 2) {
+        touchSessionRef.current.mode = 'pan';
+        touchSessionRef.current.startX = t.clientX;
+        touchSessionRef.current.startY = t.clientY;
+        touchSessionRef.current.panStartX = panRef.current.x;
+        touchSessionRef.current.panStartY = panRef.current.y;
+        touchSessionRef.current.hasMoved = false;
+        applyTransformDirect(panRef.current.x, panRef.current.y, scaleRef.current, false);
+      } else if (e.touches.length >= 2) {
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         const dist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
         const midX = (t1.clientX + t2.clientX) / 2 - rect.left;
         const midY = (t1.clientY + t2.clientY) / 2 - rect.top;
 
-        // Content point under initial focal midpoint
-        const contentX = (midX - panRef.current.x) / scaleRef.current;
-        const contentY = (midY - panRef.current.y) / scaleRef.current;
-
-        touchStateRef.current = {
-          ...touchStateRef.current,
-          initialDistance: dist,
-          initialFocal: { x: midX, y: midY },
-          contentPoint: { x: contentX, y: contentY },
-          panStart: { ...panRef.current },
-          scaleStart: scaleRef.current,
-          hasDragged: true
+        touchSessionRef.current.mode = 'pinch';
+        touchSessionRef.current.initialDistance = Math.max(dist, 10);
+        touchSessionRef.current.scaleStart = scaleRef.current;
+        touchSessionRef.current.panStartX = panRef.current.x;
+        touchSessionRef.current.panStartY = panRef.current.y;
+        touchSessionRef.current.contentPoint = {
+          x: (midX - panRef.current.x) / scaleRef.current,
+          y: (midY - panRef.current.y) / scaleRef.current
         };
+        touchSessionRef.current.hasMoved = true;
+        applyTransformDirect(panRef.current.x, panRef.current.y, scaleRef.current, false);
       }
     };
 
     const onTouchMove = (e: TouchEvent) => {
-      // ALWAYS prevent default during touch move so mobile page does not scroll while manipulating the map
-      if (e.cancelable) {
-        e.preventDefault();
-      }
+      if (e.cancelable) e.preventDefault();
 
       const rect = el.getBoundingClientRect();
+      const W = rect.width;
+      const H = rect.height;
 
-      if (e.touches.length === 1) {
+      if (e.touches.length === 1 && touchSessionRef.current.mode === 'pan') {
         const t = e.touches[0];
-        const dx = t.clientX - touchStateRef.current.startX;
-        const dy = t.clientY - touchStateRef.current.startY;
+        const dx = t.clientX - touchSessionRef.current.startX;
+        const dy = t.clientY - touchSessionRef.current.startY;
 
-        if (Math.hypot(dx, dy) > 6) {
-          touchStateRef.current.hasDragged = true;
-          setPan({
-            x: touchStateRef.current.panStart.x + dx,
-            y: touchStateRef.current.panStart.y + dy
-          });
+        if (Math.hypot(dx, dy) > 5) {
+          touchSessionRef.current.hasMoved = true;
         }
-      } else if (e.touches.length === 2) {
+
+        const rawX = touchSessionRef.current.panStartX + dx;
+        const rawY = touchSessionRef.current.panStartY + dy;
+        const clamped = clampPan(rawX, rawY, scaleRef.current, W, H);
+        applyTransformDirect(clamped.x, clamped.y, scaleRef.current, false);
+      } else if (e.touches.length >= 2) {
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         const currentDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
         const currMidX = (t1.clientX + t2.clientX) / 2 - rect.left;
         const currMidY = (t1.clientY + t2.clientY) / 2 - rect.top;
 
-        const distanceRatio = currentDist / (touchStateRef.current.initialDistance || 1);
-        const nextScale = Math.min(
-          Math.max(touchStateRef.current.scaleStart * distanceRatio, 0.75),
-          4.8
-        );
+        const distanceRatio = currentDist / touchSessionRef.current.initialDistance;
+        const nextScale = Math.min(Math.max(touchSessionRef.current.scaleStart * distanceRatio, 0.75), 4.5);
 
-        // Flawless pinch zoom anchor formula: keeps terrain directly under fingers stationary
-        const newPanX = currMidX - touchStateRef.current.contentPoint.x * nextScale;
-        const newPanY = currMidY - touchStateRef.current.contentPoint.y * nextScale;
+        const targetPanX = currMidX - touchSessionRef.current.contentPoint.x * nextScale;
+        const targetPanY = currMidY - touchSessionRef.current.contentPoint.y * nextScale;
+        const clamped = clampPan(targetPanX, targetPanY, nextScale, W, H);
 
-        touchStateRef.current.hasDragged = true;
-        setScale(nextScale);
-        setPan({ x: newPanX, y: newPanY });
+        touchSessionRef.current.hasMoved = true;
+        applyTransformDirect(clamped.x, clamped.y, nextScale, false);
       }
     };
 
     const onTouchEnd = (e: TouchEvent) => {
-      if (e.touches.length === 0) {
-        setTimeout(() => {
-          touchStateRef.current.hasDragged = false;
-        }, 150);
+      const rect = el.getBoundingClientRect();
+      const W = rect.width;
+      const H = rect.height;
+
+      if (e.touches.length === 1) {
+        // SEAMLESS TRANSITION: If 1 finger was lifted during pinch, re-baseline immediately to prevent jumping!
+        const t = e.touches[0];
+        touchSessionRef.current.mode = 'pan';
+        touchSessionRef.current.startX = t.clientX;
+        touchSessionRef.current.startY = t.clientY;
+        touchSessionRef.current.panStartX = panRef.current.x;
+        touchSessionRef.current.panStartY = panRef.current.y;
+        touchSessionRef.current.hasMoved = true; // prevents false click
+      } else if (e.touches.length === 0) {
+        // All fingers lifted
+        const wasTap = !touchSessionRef.current.hasMoved;
+        touchSessionRef.current.mode = 'none';
+
+        // Clean double tap detector without accidental triggers
+        const now = Date.now();
+        if (wasTap) {
+          const timeSinceLast = now - touchSessionRef.current.lastTapTime;
+          if (timeSinceLast > 50 && timeSinceLast < 320) {
+            // Double-tap zoom/reset
+            const targetScale = scaleRef.current > 1.6 ? 1.0 : 2.2;
+            if (targetScale === 1.0) {
+              applyTransformDirect(0, 0, 1.0, true);
+              setPan({ x: 0, y: 0 });
+              setScale(1.0);
+            } else {
+              const midX = W / 2;
+              const midY = H / 2;
+              const factor = targetScale / scaleRef.current;
+              const newPanX = midX - (midX - panRef.current.x) * factor;
+              const newPanY = midY - (midY - panRef.current.y) * factor;
+              const clamped = clampPan(newPanX, newPanY, targetScale, W, H);
+              applyTransformDirect(clamped.x, clamped.y, targetScale, true);
+              setPan(clamped);
+              setScale(targetScale);
+            }
+            touchSessionRef.current.lastTapTime = 0;
+            return;
+          }
+          touchSessionRef.current.lastTapTime = now;
+        }
+
+        // Commit final coordinates to state
+        setPan({ x: panRef.current.x, y: panRef.current.y });
+        setScale(scaleRef.current);
       }
     };
 
-    // Attach active (non-passive) listeners so e.preventDefault works 100% on iOS and Android
     el.addEventListener('touchstart', onTouchStart, { passive: false });
     el.addEventListener('touchmove', onTouchMove, { passive: false });
-    el.addEventListener('touchend', onTouchEnd, { passive: true });
-    el.addEventListener('touchcancel', onTouchEnd, { passive: true });
+    el.addEventListener('touchend', onTouchEnd, { passive: false });
+    el.addEventListener('touchcancel', onTouchEnd, { passive: false });
 
     return () => {
       el.removeEventListener('touchstart', onTouchStart);
@@ -882,42 +926,47 @@ export default function LotificacionApp() {
       el.removeEventListener('touchend', onTouchEnd);
       el.removeEventListener('touchcancel', onTouchEnd);
     };
-  }, []);
+  }, [clampPan, applyTransformDirect]);
 
   // Desktop Mouse Drag and Wheel zoom
   const isMouseDownRef = useRef(false);
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     isMouseDownRef.current = true;
-    touchStateRef.current.startX = e.clientX;
-    touchStateRef.current.startY = e.clientY;
-    touchStateRef.current.panStart = { ...panRef.current };
-    touchStateRef.current.hasDragged = false;
+    touchSessionRef.current.startX = e.clientX;
+    touchSessionRef.current.startY = e.clientY;
+    touchSessionRef.current.panStartX = panRef.current.x;
+    touchSessionRef.current.panStartY = panRef.current.y;
+    touchSessionRef.current.hasMoved = false;
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isMouseDownRef.current) return;
-    const dx = e.clientX - touchStateRef.current.startX;
-    const dy = e.clientY - touchStateRef.current.startY;
+    const container = mapContainerRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+
+    const dx = e.clientX - touchSessionRef.current.startX;
+    const dy = e.clientY - touchSessionRef.current.startY;
 
     if (Math.hypot(dx, dy) > 4) {
-      touchStateRef.current.hasDragged = true;
-      setPan({
-        x: touchStateRef.current.panStart.x + dx,
-        y: touchStateRef.current.panStart.y + dy
-      });
+      touchSessionRef.current.hasMoved = true;
+      const rawX = touchSessionRef.current.panStartX + dx;
+      const rawY = touchSessionRef.current.panStartY + dy;
+      const clamped = clampPan(rawX, rawY, scaleRef.current, rect.width, rect.height);
+      applyTransformDirect(clamped.x, clamped.y, scaleRef.current, false);
     }
   };
 
   const handleMouseUp = () => {
+    if (!isMouseDownRef.current) return;
     isMouseDownRef.current = false;
-    setTimeout(() => {
-      touchStateRef.current.hasDragged = false;
-    }, 120);
+    setPan({ x: panRef.current.x, y: panRef.current.y });
+    setScale(scaleRef.current);
   };
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const zoomDelta = e.deltaY < 0 ? 0.18 : -0.18;
+    const zoomDelta = e.deltaY < 0 ? 0.2 : -0.2;
     handleZoom(zoomDelta);
   };
 
@@ -1374,7 +1423,7 @@ export default function LotificacionApp() {
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono text-[11px] font-bold"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>{Math.round(scale * 100)}%</span>
+                <span ref={scaleIndicatorRef}>{Math.round(scale * 100)}%</span>
               </div>
 
               {/* Desktop Only Zoom In / Out Buttons (HIDDEN ON MOBILE) */}
@@ -1418,7 +1467,6 @@ export default function LotificacionApp() {
               style={{
                 transform: `translate3d(${pan.x}px, ${pan.y}px, 0px) scale(${scale})`,
                 transformOrigin: '0 0',
-                transition: isAnimating ? 'transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none',
                 width: '100%',
                 height: '100%'
               }}

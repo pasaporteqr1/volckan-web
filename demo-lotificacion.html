@@ -5,6 +5,9 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <script>
         if (location.protocol === 'http:' && !['localhost', '127.0.0.1'].includes(location.hostname)) {
             location.replace('https://' + location.hostname + location.pathname + location.search + location.hash);
@@ -51,6 +54,7 @@
             },
         }
     </script>
+    
     
     
     
@@ -766,8 +770,16 @@
         // Placeholder for sync_inner_pages.py injection
     </script>
 
-    <!-- Lotificacion React Application Bundle -->
-    <script type="module" src="demo-lotificacion/lotificacion.bundle.js"></script>
+    <!-- Lotificacion React Application Bundle (Con Anti-Cache Móvil Dinámico) -->
+    <script type="module">
+        (function() {
+            var v = Date.now();
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.src = 'demo-lotificacion/lotificacion.bundle.js?v=' + v;
+            document.body.appendChild(script);
+        })();
+    </script>
 </body>
 
 </html>
