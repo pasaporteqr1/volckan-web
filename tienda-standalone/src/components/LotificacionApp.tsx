@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import {
   LuMapPin as MapPin,
   LuCompass as Compass,
@@ -24,6 +24,8 @@ import {
   LuShieldCheck as ShieldCheck,
   LuNavigation as Navigation,
   LuChevronRight as ChevronRight,
+  LuChevronUp as ChevronUp,
+  LuChevronDown as ChevronDown,
   LuInfo as Info,
   LuSlidersHorizontal as SlidersHorizontal,
   LuGitCompare as GitCompare,
@@ -34,7 +36,11 @@ import {
   LuTrendingUp as TrendingUp,
   LuZoomIn as ZoomIn,
   LuZoomOut as ZoomOut,
-  LuRotateCcw as RotateCcw
+  LuRotateCcw as RotateCcw,
+  LuMaximize as Maximize,
+  LuMinimize as Minimize,
+  LuLocateFixed as LocateFixed,
+  LuHand as Hand
 } from 'react-icons/lu';
 
 type LotStatus = 'disponible' | 'reservado' | 'vendido';
@@ -46,24 +52,24 @@ interface Lot {
   sector: string;
   numero: number;
   label: string;
-  frente: number; // metros
-  fondo: number; // metros
+  frente: number;
+  fondo: number;
   areaM2: number;
-  areaV2: number; // varas cuadradas (1 m2 = 1.43115 v2)
+  areaV2: number;
   orientacion: 'Norte' | 'Sur' | 'Este' | 'Oeste' | 'Noreste' | 'Noroeste' | 'Sureste';
   latitud: number;
   longitud: number;
-  altitud: number; // msnm
+  altitud: number;
   precioGTQ: number;
-  cuotaInicialPct: number; // % enganche
+  cuotaInicialPct: number;
   estado: LotStatus;
   categoria: LotTier;
   topografia: string;
   servicios: string[];
-  plusvaliaAnual: number; // %
+  plusvaliaAnual: number;
   asoleamiento: string;
   distanciaAmenidades: string;
-  points: string; // SVG polygon points
+  points: string;
   centerX: number;
   centerY: number;
   notasVendedor: string;
@@ -72,7 +78,7 @@ interface Lot {
 const TASA_CAMBIO_USD = 7.75; // 1 USD = 7.75 GTQ
 
 const LOTES_DATA: Lot[] = [
-  // MANZANA A (Norte - Frente a Bulevar Principal y Garita)
+  // MANZANA A (Norte - Bulevar Principal y Garita)
   {
     id: 'A-01',
     codigoCatastral: 'RET-2026-A001',
@@ -214,7 +220,7 @@ const LOTES_DATA: Lot[] = [
     notasVendedor: 'Lote esquinero premium con doble frente y vista directa a amenidades.'
   },
 
-  // MANZANA B (Oeste - Residencial Familiar Frente a Parque)
+  // MANZANA B (Oeste - Residencial Las Palmas)
   {
     id: 'B-01',
     codigoCatastral: 'RET-2026-B001',
@@ -328,7 +334,7 @@ const LOTES_DATA: Lot[] = [
     notasVendedor: 'Lote amplio con colindancia verde y máxima privacidad.'
   },
 
-  // MANZANA C (Este - Sector Casa Club y Reserva)
+  // MANZANA C (Este - Sector Vista Club)
   {
     id: 'C-01',
     codigoCatastral: 'RET-2026-C001',
@@ -414,7 +420,7 @@ const LOTES_DATA: Lot[] = [
     notasVendedor: 'Excelente para diseño arquitectónico en L con jardín interior.'
   },
 
-  // MANZANA D (Sur - Sector Reserva Ecológica)
+  // MANZANA D (Sur - Bosque Sur)
   {
     id: 'D-01',
     codigoCatastral: 'RET-2026-D001',
@@ -530,7 +536,7 @@ const LOTES_DATA: Lot[] = [
 ];
 
 export default function LotificacionApp() {
-  // Interactive State
+  // Main Data & Selection State
   const [lots, setLots] = useState<Lot[]>(LOTES_DATA);
   const [selectedLotId, setSelectedLotId] = useState<string>('A-01');
   const [currency, setCurrency] = useState<'GTQ' | 'USD'>('GTQ');
@@ -539,10 +545,18 @@ export default function LotificacionApp() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [mapLayer, setMapLayer] = useState<'estado' | 'categoria' | 'precio' | 'solar'>('estado');
   const [activeTab, setActiveTab] = useState<'ficha' | 'cotizador' | 'plusvalia' | 'ideas'>('ficha');
-  const [sunHour, setSunHour] = useState<number>(15); // 7 to 18 hrs
-  const [zoom, setZoom] = useState<number>(1);
+  const [sunHour, setSunHour] = useState<number>(15);
 
-  // Cotizador Financiero State
+  // Mobile Bottom Sheet state ('peek' | 'expanded' | 'hidden')
+  const [mobileSheet, setMobileSheet] = useState<'peek' | 'expanded'>('peek');
+  const [isMapFullscreen, setIsMapFullscreen] = useState<boolean>(false);
+
+  // Gesture Pan & Zoom Engine State
+  const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [scale, setScale] = useState<number>(1.0);
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+
+  // Financial Form State
   const [plazoAnios, setPlazoAnios] = useState<number>(10);
   const [tasaInteresAnual, setTasaInteresAnual] = useState<number>(8.5);
   const [engancheCustomPct, setEngancheCustomPct] = useState<number | null>(null);
@@ -550,13 +564,39 @@ export default function LotificacionApp() {
   const [clienteTelefono, setClienteTelefono] = useState<string>('+502 5544-8899');
   const [asesorNombre, setAsesorNombre] = useState<string>('Ing. Sofía Barrios');
 
-  // Comparador & Modals State
+  // Modals & Feedback
   const [compareList, setCompareList] = useState<string[]>(['A-01', 'B-01']);
   const [showCompareModal, setShowCompareModal] = useState<boolean>(false);
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
   const [showPdfModal, setShowPdfModal] = useState<boolean>(false);
   const [copiedText, setCopiedText] = useState<boolean>(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+
+  // References for touch gesture calculations
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const touchStateRef = useRef<{
+    startX: number;
+    startY: number;
+    startTime: number;
+    startPanX: number;
+    startPanY: number;
+    startScale: number;
+    initialDistance: number;
+    initialMidpoint: { x: number; y: number };
+    hasMoved: boolean;
+    lastTapTime: number;
+  }>({
+    startX: 0,
+    startY: 0,
+    startTime: 0,
+    startPanX: 0,
+    startPanY: 0,
+    startScale: 1,
+    initialDistance: 0,
+    initialMidpoint: { x: 0, y: 0 },
+    hasMoved: false,
+    lastTapTime: 0
+  });
 
   const selectedLot = useMemo(
     () => lots.find((l) => l.id === selectedLotId) || lots[0],
@@ -572,7 +612,6 @@ export default function LotificacionApp() {
     }, 3500);
   };
 
-  // Format currency helper
   const formatMoney = (amountGTQ: number) => {
     if (currency === 'GTQ') {
       return `Q${Math.round(amountGTQ).toLocaleString('es-GT')}`;
@@ -608,7 +647,7 @@ export default function LotificacionApp() {
         ? (saldoFinanciar * (tasaMensual * Math.pow(1 + tasaMensual, meses))) /
           (Math.pow(1 + tasaMensual, meses) - 1)
         : saldoFinanciar / meses;
-    const iusiTrimestral = (precioTotal * 0.009) / 4; // 9 por millar anual estimado
+    const iusiTrimestral = (precioTotal * 0.009) / 4;
     const valor5Anios = precioTotal * Math.pow(1 + selectedLot.plusvaliaAnual / 100, 5);
 
     return {
@@ -623,7 +662,212 @@ export default function LotificacionApp() {
     };
   }, [selectedLot, effectiveEnganchePct, plazoAnios, tasaInteresAnual]);
 
-  // Status Change Handler for Salesperson
+  // Center view on specific lot smoothly
+  const centerOnLot = useCallback((lot: Lot, zoomLevel = 1.6) => {
+    setIsAnimating(true);
+    // SVG viewBox is 720 x 590, center is (360, 295)
+    const targetScale = Math.min(Math.max(zoomLevel, 1.2), 3.2);
+    const targetX = 360 - lot.centerX * targetScale;
+    const targetY = 295 - lot.centerY * targetScale;
+    setScale(targetScale);
+    setPan({ x: targetX, y: targetY });
+    setTimeout(() => setIsAnimating(false), 300);
+  }, []);
+
+  // Handle lot selection
+  const handleSelectLot = (lot: Lot) => {
+    // If it was just a drag, don't trigger selection
+    if (touchStateRef.current.hasMoved) return;
+
+    setSelectedLotId(lot.id);
+    setEngancheCustomPct(null);
+    setMobileSheet('peek'); // Show bottom sheet in peek mode on mobile
+    centerOnLot(lot, 1.5);
+  };
+
+  // Reset full masterplan view
+  const handleResetView = () => {
+    setIsAnimating(true);
+    setScale(1.0);
+    setPan({ x: 0, y: 0 });
+    setTimeout(() => setIsAnimating(false), 300);
+  };
+
+  // Zoom controls (+ / -)
+  const handleZoom = (delta: number) => {
+    setIsAnimating(true);
+    setScale((prev) => {
+      const next = Math.min(Math.max(prev + delta, 0.75), 4.2);
+      // Zoom toward current center (360, 295)
+      setPan((currPan) => {
+        const factor = next / prev;
+        return {
+          x: 360 - (360 - currPan.x) * factor,
+          y: 295 - (295 - currPan.y) * factor
+        };
+      });
+      return next;
+    });
+    setTimeout(() => setIsAnimating(false), 250);
+  };
+
+  // =========================================================================
+  // GESTURE ENGINE: Touch Pan & Pinch-to-Zoom (Mobile & Tablet)
+  // =========================================================================
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    const container = mapContainerRef.current;
+    if (!container) return;
+
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      const now = Date.now();
+      const isDoubleTap = now - touchStateRef.current.lastTapTime < 280;
+
+      if (isDoubleTap) {
+        // Double tap: toggle zoom
+        setIsAnimating(true);
+        if (scale > 1.8) {
+          handleResetView();
+        } else {
+          const rect = container.getBoundingClientRect();
+          const clickX = ((touch.clientX - rect.left) / rect.width) * 720;
+          const clickY = ((touch.clientY - rect.top) / rect.height) * 590;
+          const newScale = 2.2;
+          setScale(newScale);
+          setPan({
+            x: 360 - ((clickX - pan.x) / scale) * newScale,
+            y: 295 - ((clickY - pan.y) / scale) * newScale
+          });
+          setTimeout(() => setIsAnimating(false), 260);
+        }
+        touchStateRef.current.lastTapTime = 0;
+        return;
+      }
+
+      touchStateRef.current = {
+        ...touchStateRef.current,
+        startX: touch.clientX,
+        startY: touch.clientY,
+        startTime: now,
+        startPanX: pan.x,
+        startPanY: pan.y,
+        startScale: scale,
+        hasMoved: false,
+        lastTapTime: now
+      };
+    } else if (e.touches.length === 2) {
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      const distance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+      const midpoint = {
+        x: (t1.clientX + t2.clientX) / 2,
+        y: (t1.clientY + t2.clientY) / 2
+      };
+
+      touchStateRef.current = {
+        ...touchStateRef.current,
+        initialDistance: distance,
+        initialMidpoint: midpoint,
+        startScale: scale,
+        startPanX: pan.x,
+        startPanY: pan.y,
+        hasMoved: true
+      };
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const container = mapContainerRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const svgRatio = 720 / rect.width;
+
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      const dx = (touch.clientX - touchStateRef.current.startX) * svgRatio;
+      const dy = (touch.clientY - touchStateRef.current.startY) * svgRatio;
+
+      if (Math.hypot(dx, dy) > 5) {
+        touchStateRef.current.hasMoved = true;
+        setPan({
+          x: touchStateRef.current.startPanX + dx,
+          y: touchStateRef.current.startPanY + dy
+        });
+      }
+    } else if (e.touches.length === 2) {
+      // 2 fingers pinch to zoom + drag midpoint
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      const distance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+      const midpoint = {
+        x: (t1.clientX + t2.clientX) / 2,
+        y: (t1.clientY + t2.clientY) / 2
+      };
+
+      const scaleFactor = distance / (touchStateRef.current.initialDistance || 1);
+      const newScale = Math.min(Math.max(touchStateRef.current.startScale * scaleFactor, 0.75), 4.2);
+
+      // Midpoint movement delta
+      const midDx = (midpoint.x - touchStateRef.current.initialMidpoint.x) * svgRatio;
+      const midDy = (midpoint.y - touchStateRef.current.initialMidpoint.y) * svgRatio;
+
+      setScale(newScale);
+      setPan({
+        x: touchStateRef.current.startPanX + midDx,
+        y: touchStateRef.current.startPanY + midDy
+      });
+      touchStateRef.current.hasMoved = true;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    // Reset interaction tracker gently
+    setTimeout(() => {
+      touchStateRef.current.hasMoved = false;
+    }, 150);
+  };
+
+  // Mouse drag support for desktop/trackpads
+  const isMouseDownRef = useRef(false);
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    isMouseDownRef.current = true;
+    touchStateRef.current.startX = e.clientX;
+    touchStateRef.current.startY = e.clientY;
+    touchStateRef.current.startPanX = pan.x;
+    touchStateRef.current.startPanY = pan.y;
+    touchStateRef.current.hasMoved = false;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isMouseDownRef.current || !mapContainerRef.current) return;
+    const rect = mapContainerRef.current.getBoundingClientRect();
+    const svgRatio = 720 / rect.width;
+    const dx = (e.clientX - touchStateRef.current.startX) * svgRatio;
+    const dy = (e.clientY - touchStateRef.current.startY) * svgRatio;
+
+    if (Math.hypot(dx, dy) > 4) {
+      touchStateRef.current.hasMoved = true;
+      setPan({
+        x: touchStateRef.current.startPanX + dx,
+        y: touchStateRef.current.startPanY + dy
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    isMouseDownRef.current = false;
+    setTimeout(() => {
+      touchStateRef.current.hasMoved = false;
+    }, 120);
+  };
+
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const zoomDelta = e.deltaY < 0 ? 0.15 : -0.15;
+    handleZoom(zoomDelta);
+  };
+
+  // Salesperson status toggle
   const handleToggleStatus = (newStatus: LotStatus) => {
     setLots((prev) =>
       prev.map((lot) => (lot.id === selectedLot.id ? { ...lot, estado: newStatus } : lot))
@@ -631,7 +875,7 @@ export default function LotificacionApp() {
     triggerToast(`Estado del Lote ${selectedLot.label} actualizado a ${newStatus.toUpperCase()}`);
   };
 
-  // Toggle Compare Lot
+  // Toggle compare lot
   const handleToggleCompare = (lotId: string) => {
     setCompareList((prev) => {
       if (prev.includes(lotId)) {
@@ -645,7 +889,7 @@ export default function LotificacionApp() {
     });
   };
 
-  // Polygon Fill Color by Layer
+  // Polygon Color Layer
   const getPolygonFill = (lot: Lot, isSelected: boolean, isMatched: boolean) => {
     if (!isMatched) return 'rgba(148, 163, 184, 0.22)';
 
@@ -671,12 +915,12 @@ export default function LotificacionApp() {
 
     // Solar comfort layer
     if (lot.orientacion === 'Norte' || lot.orientacion === 'Este' || lot.orientacion === 'Noreste') {
-      return isSelected ? '#0284c7' : '#38bdf8'; // Fresco en la tarde
+      return isSelected ? '#0284c7' : '#38bdf8';
     }
-    return isSelected ? '#ea580c' : '#fb923c'; // Cálido en la tarde
+    return isSelected ? '#ea580c' : '#fb923c';
   };
 
-  // Generate Digital Share Text (WhatsApp / Correo)
+  // Share Text Generator
   const shareText = useMemo(() => {
     return `🌴 *RESIDENCIAL PASEO LAS PALMAS - RETALHULEU, GUATEMALA* 🌴
 📍 *Cotización Oficial — Lote ${selectedLot.label} (${selectedLot.sector})*
@@ -720,7 +964,7 @@ export default function LotificacionApp() {
     }
   };
 
-  // Generate & Download Standalone Printable HTML/PDF Spec Sheet
+  // Download PDF / Print
   const handleDownloadPdfFile = () => {
     const fechaActual = new Date().toLocaleDateString('es-GT', {
       year: 'numeric',
@@ -838,10 +1082,9 @@ export default function LotificacionApp() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    triggerToast(`Ficha PDF/Imprimible del Lote ${selectedLot.label} descargada`);
+    triggerToast(`Ficha PDF del Lote ${selectedLot.label} descargada`);
   };
 
-  // Stats counters
   const stats = useMemo(() => {
     const disponibles = lots.filter((l) => l.estado === 'disponible').length;
     const reservados = lots.filter((l) => l.estado === 'reservado').length;
@@ -849,118 +1092,126 @@ export default function LotificacionApp() {
     return { disponibles, reservados, vendidos, total: lots.length };
   }, [lots]);
 
-  // Sun position calculation on SVG map based on sunHour (7 to 18)
   const sunPosition = useMemo(() => {
-    const progress = (sunHour - 7) / 11; // 0 (7am East) to 1 (6pm West)
-    const x = 670 - progress * 600; // East is right (670), West is left (70)
+    const progress = (sunHour - 7) / 11;
+    const x = 670 - progress * 600;
     const y = 75 + Math.sin(progress * Math.PI) * -45;
     return { x, y, progress };
   }, [sunHour]);
 
   return (
-    <div className="w-full bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-white rounded-2xl shadow-2xl border border-slate-800 overflow-hidden">
-      {/* Toast Notification */}
+    <div
+      className={`w-full bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-white transition-all ${
+        isMapFullscreen
+          ? 'fixed inset-0 z-50 overflow-hidden flex flex-col bg-slate-950'
+          : 'rounded-none sm:rounded-2xl shadow-2xl border-y sm:border border-slate-800'
+      }`}
+    >
+      {/* Toast Alert */}
       {toastMsg && (
-        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-3 bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-2xl border border-emerald-400/40 animate-bounce">
+        <div className="fixed top-20 right-4 sm:right-6 z-50 flex items-center gap-2.5 bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-2xl border border-emerald-400/40 animate-bounce">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
-          <span className="text-sm font-medium">{toastMsg}</span>
+          <span className="text-xs font-semibold">{toastMsg}</span>
         </div>
       )}
 
-      {/* Top Application Bar */}
-      <div className="border-b border-slate-800 bg-slate-900/95 backdrop-blur px-4 py-3">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center shadow-lg shadow-emerald-900/40 shrink-0">
-              <MapPin className="w-6 h-6 text-white" />
+      {/* Top Application Toolbar */}
+      <div className="border-b border-slate-800 bg-slate-900/95 backdrop-blur px-3 sm:px-4 py-2.5 sm:py-3 shrink-0">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2.5">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center shadow-lg shadow-emerald-900/40 shrink-0">
+              <MapPin className="w-5 h-5 text-white" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-lg font-bold tracking-tight text-white">
+            <div className="truncate">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <h1 className="text-sm sm:text-base font-bold tracking-tight text-white truncate">
                   Paseo Las Palmas • Retalhuleu
                 </h1>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-medium">
-                  Masterplan Interactivo v2.4
+                <span className="hidden xs:inline-block text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-medium shrink-0">
+                  v2.5 Móvil
                 </span>
               </div>
-              <p className="text-xs text-slate-400 flex flex-wrap items-center gap-2">
-                <span>Km 182.5 CA-2 Occidente, Retalhuleu, Guatemala</span>
-                <span className="hidden sm:inline">•</span>
-                <span>14.5414° N, 91.6738° W</span>
-                <span className="hidden sm:inline">•</span>
-                <span>Altitud: 241 msnm</span>
+              <p className="text-[11px] text-slate-400 truncate">
+                Km 182.5 CA-2 • 14.5414° N, 91.6738° W
               </p>
             </div>
           </div>
 
-          {/* KPI Status Pills & Currency Switcher */}
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="hidden sm:flex items-center gap-1.5 bg-slate-800/90 border border-slate-700/80 rounded-lg px-3 py-1.5 text-xs">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
-              <span className="text-slate-300">Disp:</span>
+          {/* Quick Controls: Currency, Status Pill & Compare */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 ml-auto">
+            {/* KPI Status Summary (Mobile compact) */}
+            <div className="flex items-center gap-1.5 bg-slate-800/80 border border-slate-700/80 rounded-lg px-2 py-1 text-[11px]">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
               <strong className="text-white">{stats.disponibles}</strong>
-              <span className="mx-1 text-slate-600">|</span>
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
-              <span className="text-slate-300">Res:</span>
+              <span className="text-slate-600">/</span>
+              <span className="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>
               <strong className="text-white">{stats.reservados}</strong>
-              <span className="mx-1 text-slate-600">|</span>
-              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>
-              <span className="text-slate-300">Vend:</span>
+              <span className="text-slate-600">/</span>
+              <span className="w-2 h-2 rounded-full bg-rose-500 inline-block"></span>
               <strong className="text-white">{stats.vendidos}</strong>
             </div>
 
             {/* Currency Toggle */}
-            <div className="flex items-center bg-slate-800 p-1 rounded-lg border border-slate-700">
+            <div className="flex items-center bg-slate-800 p-0.5 rounded-lg border border-slate-700">
               <button
                 onClick={() => setCurrency('GTQ')}
-                className={`px-2.5 py-1 rounded-md text-xs font-semibold transition ${
-                  currency === 'GTQ'
-                    ? 'bg-emerald-600 text-white shadow'
-                    : 'text-slate-400 hover:text-white'
+                className={`px-2 py-1 rounded-md text-[11px] font-bold transition ${
+                  currency === 'GTQ' ? 'bg-emerald-600 text-white shadow' : 'text-slate-400 hover:text-white'
                 }`}
               >
-                GTQ (Q)
+                GTQ
               </button>
               <button
                 onClick={() => setCurrency('USD')}
-                className={`px-2.5 py-1 rounded-md text-xs font-semibold transition ${
-                  currency === 'USD'
-                    ? 'bg-emerald-600 text-white shadow'
-                    : 'text-slate-400 hover:text-white'
+                className={`px-2 py-1 rounded-md text-[11px] font-bold transition ${
+                  currency === 'USD' ? 'bg-emerald-600 text-white shadow' : 'text-slate-400 hover:text-white'
                 }`}
               >
-                USD ($)
+                USD
               </button>
             </div>
 
-            {/* Compare Button */}
+            {/* Fullscreen Mobile Toggle */}
             <button
-              onClick={() => setShowCompareModal(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition"
+              onClick={() => setIsMapFullscreen((prev) => !prev)}
+              title={isMapFullscreen ? 'Salir de pantalla completa' : 'Pantalla completa móvil'}
+              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-semibold transition"
             >
-              <GitCompare className="w-4 h-4" />
-              <span>Comparar ({compareList.length})</span>
+              {isMapFullscreen ? <Minimize className="w-4 h-4 text-emerald-400" /> : <Maximize className="w-4 h-4" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Main Content Layout */}
-      <div className="max-w-7xl mx-auto px-4 py-5 grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* LEFT COLUMN: Interactive Polygon Lotificacion Map (7 cols) */}
-        <section className="lg:col-span-7 flex flex-col gap-4">
-          {/* Map Filter & Layer Bar */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3.5 flex flex-col gap-3 shadow-lg">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              {/* Search */}
-              <div className="relative flex-1 min-w-[180px]">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+      {/* Main App Body */}
+      <div
+        className={`w-full ${
+          isMapFullscreen
+            ? 'flex-grow relative overflow-hidden flex flex-col'
+            : 'grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 p-0 sm:p-4 lg:p-6'
+        }`}
+      >
+        {/* =================================================================== */}
+        {/* LEFT / MAIN COLUMN: Interactive Map with Full Mobile Gestures       */}
+        {/* =================================================================== */}
+        <section
+          className={`${
+            isMapFullscreen
+              ? 'flex-grow relative w-full h-full'
+              : 'lg:col-span-7 flex flex-col gap-3 sm:gap-4'
+          }`}
+        >
+          {/* Mobile Filter Strip (Horizontal touch-friendly scroll) */}
+          <div className="bg-slate-900 border-b lg:border lg:rounded-2xl border-slate-800 p-2.5 sm:p-3 flex flex-col gap-2 shadow-lg">
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1 min-w-[140px]">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Buscar lote (ej. A-01, Esquinero, Norte)..."
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-emerald-500"
+                  placeholder="Buscar lote (ej. A-01, Esquinero)..."
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-2 py-1.5 text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
@@ -968,9 +1219,9 @@ export default function LotificacionApp() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
               >
-                <option value="todos">Todos los estados ({lots.length})</option>
+                <option value="todos">Todos ({lots.length})</option>
                 <option value="disponible">Disponibles ({stats.disponibles})</option>
                 <option value="reservado">Reservados ({stats.reservados})</option>
                 <option value="vendido">Vendidos ({stats.vendidos})</option>
@@ -980,22 +1231,19 @@ export default function LotificacionApp() {
               <select
                 value={filterSector}
                 onChange={(e) => setFilterSector(e.target.value)}
-                className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 max-w-[130px] sm:max-w-none truncate"
               >
                 <option value="todos">Todas las Manzanas</option>
-                <option value="Manzana A (Bulevar)">Manzana A (Bulevar)</option>
-                <option value="Manzana B (Las Palmas)">Manzana B (Las Palmas)</option>
-                <option value="Manzana C (Vista Club)">Manzana C (Vista Club)</option>
-                <option value="Manzana D (Bosque Sur)">Manzana D (Bosque Sur)</option>
+                <option value="Manzana A (Bulevar)">Manzana A</option>
+                <option value="Manzana B (Las Palmas)">Manzana B</option>
+                <option value="Manzana C (Vista Club)">Manzana C</option>
+                <option value="Manzana D (Bosque Sur)">Manzana D</option>
               </select>
             </div>
 
-            {/* Thematic Layer Switcher + Sun Simulator */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800/80">
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-[11px] text-slate-400 flex items-center gap-1 mr-1">
-                  <Layers className="w-3.5 h-3.5 text-emerald-400" /> Capa del Mapa:
-                </span>
+            {/* Layer Buttons & Solar Simulation Slider */}
+            <div className="flex items-center justify-between gap-2 overflow-x-auto pb-0.5 text-xs">
+              <div className="flex items-center gap-1 shrink-0">
                 {(
                   [
                     { id: 'estado', label: 'Disponibilidad' },
@@ -1007,10 +1255,10 @@ export default function LotificacionApp() {
                   <button
                     key={layer.id}
                     onClick={() => setMapLayer(layer.id)}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-medium transition ${
+                    className={`px-2 py-1 rounded-md text-[11px] font-semibold whitespace-nowrap transition ${
                       mapLayer === layer.id
                         ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                        : 'bg-slate-800/70 text-slate-400 hover:text-slate-200'
+                        : 'bg-slate-800/80 text-slate-400 hover:text-slate-200'
                     }`}
                   >
                     {layer.label}
@@ -1018,11 +1266,11 @@ export default function LotificacionApp() {
                 ))}
               </div>
 
-              {/* Sun Position Slider for Retalhuleu Climate */}
-              <div className="flex items-center gap-2 bg-slate-950/90 px-3 py-1 rounded-xl border border-slate-800">
-                <Sun className="w-4 h-4 text-amber-400" />
-                <span className="text-[11px] text-slate-300 font-medium">
-                  Sol {sunHour}:00 hrs
+              {/* Solar Slider */}
+              <div className="flex items-center gap-1.5 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800 shrink-0">
+                <Sun className="w-3.5 h-3.5 text-amber-400" />
+                <span className="text-[11px] text-slate-300 font-bold whitespace-nowrap">
+                  {sunHour}:00h
                 </span>
                 <input
                   type="range"
@@ -1031,85 +1279,123 @@ export default function LotificacionApp() {
                   step={1}
                   value={sunHour}
                   onChange={(e) => setSunHour(Number(e.target.value))}
-                  className="w-20 accent-amber-400 cursor-pointer"
+                  className="w-16 sm:w-20 accent-amber-400 cursor-pointer"
                 />
               </div>
             </div>
           </div>
 
-          {/* Interactive SVG Masterplan Canvas */}
-          <div className="relative bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
-            {/* Floating Map Controls (Compass & Zoom) */}
-            <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
-              <div className="bg-slate-950/90 backdrop-blur border border-slate-800 rounded-xl px-3 py-2 flex items-center gap-2 shadow-lg">
-                <Compass className="w-5 h-5 text-emerald-400" />
-                <div className="text-[11px] leading-tight">
+          {/* =================================================================== */}
+          {/* MASTERPLAN CANVAS: Full Touch Gestures (Pinch to Zoom & Drag Pan)    */}
+          {/* =================================================================== */}
+          <div
+            ref={mapContainerRef}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onWheel={handleWheel}
+            className={`relative w-full bg-slate-950 overflow-hidden select-none border-b sm:border border-slate-800 sm:rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing touch-none ${
+              isMapFullscreen
+                ? 'flex-grow h-full'
+                : 'h-[52vh] sm:h-[580px] lg:h-[620px]'
+            }`}
+          >
+            {/* Gesture Tip Overlay (Disappears on touch) */}
+            <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-2 pointer-events-none">
+              <div className="bg-slate-950/85 backdrop-blur border border-slate-800 rounded-xl px-2.5 py-1.5 flex items-center gap-2 shadow-lg">
+                <Compass className="w-4 h-4 text-emerald-400 shrink-0" />
+                <div className="text-[10px] leading-tight">
                   <div className="font-bold text-white">NORTE ↑</div>
-                  <div className="text-slate-400">Brisa Sur → Norte</div>
+                  <div className="text-slate-400 hidden xs:block">Brisa Sur → Norte</div>
                 </div>
+              </div>
+              <div className="hidden sm:flex items-center gap-1.5 bg-slate-950/85 backdrop-blur border border-slate-800 rounded-xl px-2.5 py-1.5 text-[10px] text-slate-400 shadow-lg">
+                <Hand className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Pellizca para zoom • Arrastra con 1 dedo</span>
               </div>
             </div>
 
-            <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 bg-slate-950/90 backdrop-blur border border-slate-800 rounded-xl p-1.5 shadow-lg">
+            {/* Floating Action Controls (+, -, Center, Fullscreen, Reset) */}
+            <div className="absolute top-2.5 right-2.5 z-20 flex flex-col gap-1.5 bg-slate-950/90 backdrop-blur border border-slate-800 rounded-xl p-1 shadow-xl">
               <button
-                onClick={() => setZoom((z) => Math.min(1.35, Number((z + 0.15).toFixed(2))))}
-                title="Acercar"
-                className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300"
+                onClick={() => handleZoom(0.3)}
+                title="Acercar (Zoom In)"
+                className="w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-200 transition"
               >
                 <ZoomIn className="w-4 h-4" />
               </button>
               <button
-                onClick={() => setZoom((z) => Math.max(0.85, Number((z - 0.15).toFixed(2))))}
-                title="Alejar"
-                className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300"
+                onClick={() => handleZoom(-0.3)}
+                title="Alejar (Zoom Out)"
+                className="w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-200 transition"
               >
                 <ZoomOut className="w-4 h-4" />
               </button>
               <button
-                onClick={() => setZoom(1)}
-                title="Restablecer vista"
-                className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300"
+                onClick={() => centerOnLot(selectedLot, 1.8)}
+                title="Centrar en Lote Seleccionado"
+                className="w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-emerald-400 transition"
+              >
+                <LocateFixed className="w-4 h-4" />
+              </button>
+              <button
+                onClick={handleResetView}
+                title="Restablecer vista completa"
+                className="w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-200 transition"
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
+              <div className="text-[9px] font-mono text-center text-slate-400 pt-0.5 border-t border-slate-800">
+                {Math.round(scale * 100)}%
+              </div>
             </div>
 
-            {/* SVG Urbanization Masterplan */}
-            <div className="w-full overflow-x-auto bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-950/30 p-2">
-              <svg
-                viewBox="0 0 720 590"
-                className="w-full h-auto select-none transition-transform duration-300"
-                style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }}
+            {/* SVG Urbanization Canvas with Scaled & Panned Group */}
+            <svg
+              viewBox="0 0 720 590"
+              preserveAspectRatio="xMidYMid meet"
+              className="w-full h-full select-none"
+            >
+              <defs>
+                <pattern id="grassPattern2" width="24" height="24" patternUnits="userSpaceOnUse">
+                  <circle cx="4" cy="4" r="1" fill="#065f46" opacity="0.35" />
+                  <circle cx="16" cy="14" r="1.2" fill="#047857" opacity="0.35" />
+                </pattern>
+                <linearGradient id="riverGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#0284c7" stopOpacity="0.45" />
+                  <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.65" />
+                  <stop offset="100%" stopColor="#0369a1" stopOpacity="0.45" />
+                </linearGradient>
+                <filter id="glowSelected2" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#34d399" floodOpacity="0.95" />
+                </filter>
+              </defs>
+
+              {/* Dynamic Transform Group (Smooth animations on click/center) */}
+              <g
+                transform={`translate(${pan.x}, ${pan.y}) scale(${scale})`}
+                style={{
+                  transformOrigin: '0 0',
+                  transition: isAnimating ? 'transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none'
+                }}
               >
-                <defs>
-                  <pattern id="grassPattern" width="24" height="24" patternUnits="userSpaceOnUse">
-                    <circle cx="4" cy="4" r="1" fill="#065f46" opacity="0.35" />
-                    <circle cx="16" cy="14" r="1.2" fill="#047857" opacity="0.35" />
-                  </pattern>
-                  <linearGradient id="riverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#0284c7" stopOpacity="0.45" />
-                    <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.65" />
-                    <stop offset="100%" stopColor="#0369a1" stopOpacity="0.45" />
-                  </linearGradient>
-                  <filter id="glowSelected" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="0" stdDeviation="5" floodColor="#34d399" floodOpacity="0.85" />
-                  </filter>
-                </defs>
-
                 {/* Background Terrain */}
-                <rect x="0" y="0" width="720" height="590" fill="url(#grassPattern)" />
+                <rect x="0" y="0" width="720" height="590" fill="url(#grassPattern2)" />
 
-                {/* Top Highway: Carretera CA-2 Retalhuleu - Quetzaltenango */}
+                {/* Carretera CA-2 Occidente */}
                 <rect x="0" y="18" width="720" height="42" fill="#1e293b" stroke="#334155" strokeWidth="1.5" />
                 <line x1="0" y1="39" x2="720" y2="39" stroke="#fbbf24" strokeWidth="2" strokeDasharray="14,10" />
                 <text x="24" y="34" fill="#94a3b8" fontSize="10" fontWeight="700" letterSpacing="1">
-                  ← HACIA CENTRO DE RETALHULEU / IRTRA (8 MIN)
+                  ← HACIA RETALHULEU / IRTRA (8 MIN)
                 </text>
                 <text x="445" y="54" fill="#94a3b8" fontSize="10" fontWeight="700" letterSpacing="1">
-                  CA-2 OCCIDENTE • HACIA COATEPEQUE / XELA →
+                  CA-2 OCCIDENTE • HACIA COATEPEQUE →
                 </text>
 
-                {/* Garita de Acceso Principal */}
+                {/* Garita de Acceso */}
                 <rect x="52" y="60" width="44" height="55" rx="6" fill="#0f766e" stroke="#2dd4bf" strokeWidth="1.5" />
                 <text x="74" y="85" textAnchor="middle" fill="#ffffff" fontSize="8.5" fontWeight="700">
                   GARITA
@@ -1118,7 +1404,7 @@ export default function LotificacionApp() {
                   CONTROL
                 </text>
 
-                {/* Internal Paved Roads (Calles y Avenidas) */}
+                {/* Paved Roads */}
                 <path
                   d="M 74 60 L 74 525 L 650 525 L 650 190 L 74 190"
                   fill="none"
@@ -1131,20 +1417,19 @@ export default function LotificacionApp() {
                 <line x1="502" y1="190" x2="502" y2="430" stroke="#334155" strokeWidth="26" />
                 <line x1="215" y1="418" x2="515" y2="418" stroke="#334155" strokeWidth="26" />
 
-                {/* Road Center Dashed Lines */}
+                {/* Road Dashed Lines */}
                 <line x1="95" y1="198" x2="630" y2="198" stroke="#64748b" strokeWidth="1.2" strokeDasharray="6,6" />
                 <line x1="215" y1="210" x2="215" y2="505" stroke="#64748b" strokeWidth="1.2" strokeDasharray="6,6" />
                 <line x1="230" y1="418" x2="495" y2="418" stroke="#64748b" strokeWidth="1.2" strokeDasharray="6,6" />
 
-                {/* Road Labels */}
                 <text x="310" y="202" textAnchor="middle" fill="#cbd5e1" fontSize="9" fontWeight="600" letterSpacing="1.5">
-                  BULEVAR PRINCIPAL LAS PALMAS (CALZADA 12M)
+                  BULEVAR PRINCIPAL LAS PALMAS (12M)
                 </text>
                 <text x="365" y="421" textAnchor="middle" fill="#cbd5e1" fontSize="8.5" fontWeight="600" letterSpacing="1">
                   CALLE DEL BOSQUE SUR
                 </text>
 
-                {/* Central Amenity: Parque Central La Ceiba & Cancha */}
+                {/* Parque Central La Ceiba */}
                 <rect
                   x="235"
                   y="225"
@@ -1165,7 +1450,7 @@ export default function LotificacionApp() {
                   &quot;LA CEIBA&quot; (ÁREA VERDE)
                 </text>
 
-                {/* Cancha Polideportiva inside Central Park */}
+                {/* Cancha Polideportiva */}
                 <rect
                   x="395"
                   y="252"
@@ -1182,7 +1467,7 @@ export default function LotificacionApp() {
                   CANCHA
                 </text>
 
-                {/* Casa Club & Piscina (Noreste) */}
+                {/* Casa Club & Piscina */}
                 <rect
                   x="520"
                   y="92"
@@ -1210,13 +1495,13 @@ export default function LotificacionApp() {
                   CASA CLUB SOCIAL
                 </text>
 
-                {/* Ecological Reserve & River (Sur) */}
+                {/* Reserva Ecológica y Río Bolas */}
                 <path
                   d="M 20 555 Q 190 535, 360 555 T 700 548 L 720 590 L 0 590 Z"
-                  fill="url(#riverGrad)"
+                  fill="url(#riverGrad2)"
                 />
                 <text x="360" y="575" textAnchor="middle" fill="#bae6fd" fontSize="10" fontWeight="700" letterSpacing="1.5">
-                  🌿 RESERVA ECOLÓGICA Y CORREDOR RÍO BOLAS (ZONA PROTEGIDA)
+                  🌿 RESERVA ECOLÓGICA Y CORREDOR RÍO BOLAS
                 </text>
 
                 {/* Sun Trajectory Arc */}
@@ -1242,20 +1527,15 @@ export default function LotificacionApp() {
                   const isMatched = filteredLots.some((fl) => fl.id === lot.id);
                   const isCompared = compareList.includes(lot.id);
                   const fillColor = getPolygonFill(lot, isSelected, isMatched);
-
-                  // Dynamic solar shadow offset based on sunHour
                   const shadowDx = (12.5 - sunHour) * 1.4;
 
                   return (
                     <g
                       key={lot.id}
-                      onClick={() => {
-                        setSelectedLotId(lot.id);
-                        setEngancheCustomPct(null);
-                      }}
+                      onClick={() => handleSelectLot(lot)}
                       className="cursor-pointer group"
                     >
-                      {/* Subtle Solar Shadow Projection */}
+                      {/* Dynamic Solar Shadow */}
                       <polygon
                         points={lot.points}
                         transform={`translate(${shadowDx}, 3)`}
@@ -1268,137 +1548,77 @@ export default function LotificacionApp() {
                         points={lot.points}
                         fill={fillColor}
                         stroke={isSelected ? '#ffffff' : isCompared ? '#818cf8' : '#0f172a'}
-                        strokeWidth={isSelected ? 3 : isCompared ? 2.2 : 1.5}
-                        filter={isSelected ? 'url(#glowSelected)' : undefined}
-                        className="transition-all duration-200 hover:brightness-110"
+                        strokeWidth={isSelected ? 3.5 : isCompared ? 2.5 : 1.5}
+                        filter={isSelected ? 'url(#glowSelected2)' : undefined}
+                        className="transition-all duration-150 hover:brightness-110 active:scale-[0.99]"
                       />
 
-                      {/* Lot Letter & Number Label */}
+                      {/* Lot Label */}
                       <text
                         x={lot.centerX}
                         y={lot.centerY - 5}
                         textAnchor="middle"
                         fill="#ffffff"
-                        fontSize={isSelected ? '13' : '11.5'}
+                        fontSize={isSelected ? '14' : '12'}
                         fontWeight="800"
-                        style={{ textShadow: '0px 1px 3px rgba(0,0,0,0.85)' }}
+                        style={{ textShadow: '0px 1px 3px rgba(0,0,0,0.9)' }}
                       >
                         {lot.label}
                       </text>
 
-                      {/* Sub-label: Area or Price */}
+                      {/* Sub-label Area / Frente */}
                       <text
                         x={lot.centerX}
                         y={lot.centerY + 10}
                         textAnchor="middle"
                         fill="#f8fafc"
-                        fontSize="8.5"
+                        fontSize="9"
                         fontWeight="600"
-                        opacity={isMatched ? 0.92 : 0.4}
-                        style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.85)' }}
+                        opacity={isMatched ? 0.95 : 0.45}
+                        style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.9)' }}
                       >
                         {lot.areaM2}m² • {lot.frente}×{lot.fondo}
                       </text>
 
-                      {/* Selection Pin Indicator */}
+                      {/* Pulse Circle for Selected Lot */}
                       {isSelected && (
                         <circle
                           cx={lot.centerX}
                           cy={lot.centerY - 22}
-                          r="4.5"
+                          r="5"
                           fill="#ffffff"
                           stroke="#059669"
-                          strokeWidth="2"
+                          strokeWidth="2.5"
                         />
                       )}
                     </g>
                   );
                 })}
-              </svg>
-            </div>
+              </g>
+            </svg>
 
-            {/* Map Legend Footer */}
-            <div className="bg-slate-950/90 border-t border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs">
-              {mapLayer === 'estado' && (
-                <div className="flex items-center gap-4 flex-wrap">
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-emerald-500 inline-block"></span> Disponible
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-amber-500 inline-block"></span> Reservado
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-rose-500 inline-block"></span> Vendido
-                  </span>
-                </div>
-              )}
-              {mapLayer === 'categoria' && (
-                <div className="flex items-center gap-4 flex-wrap">
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-violet-500 inline-block"></span> Comercial
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-sky-500 inline-block"></span> Esquinero
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-teal-500 inline-block"></span> Frente a Parque
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-slate-500 inline-block"></span> Estándar
-                  </span>
-                </div>
-              )}
-              {mapLayer === 'precio' && (
-                <div className="flex items-center gap-4 flex-wrap">
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-emerald-400 inline-block"></span> &lt; Q880/m²
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-sky-400 inline-block"></span> Q880 - Q910/m²
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-indigo-500 inline-block"></span> &gt; Q910/m² (Comercial)
-                  </span>
-                </div>
-              )}
-              {mapLayer === 'solar' && (
-                <div className="flex items-center gap-4 flex-wrap">
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-sky-400 inline-block"></span> Fachada Fresca en la Tarde (Norte / Este)
-                  </span>
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <span className="w-3 h-3 rounded bg-orange-400 inline-block"></span> Sol Directo Vespertino (Sur / Oeste)
-                  </span>
-                </div>
-              )}
-              <span className="text-slate-400 text-[11px]">
-                Haz clic en cualquier lote para inspeccionar su ficha técnica y financiera
+            {/* Quick Strip of Lots (Swipeable in map) */}
+            <div className="absolute bottom-2 left-2 right-2 z-20 flex items-center gap-1.5 overflow-x-auto py-1 px-1.5 bg-slate-950/85 backdrop-blur border border-slate-800 rounded-xl">
+              <span className="text-[10px] text-slate-400 font-semibold px-1 whitespace-nowrap hidden sm:inline">
+                Ir a lote:
               </span>
-            </div>
-          </div>
-
-          {/* Quick Lot Selector Strip */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3">
-            <div className="text-xs font-semibold text-slate-400 mb-2 flex items-center justify-between">
-              <span>Acceso Rápido por Polígono ({filteredLots.length} lotes visibles)</span>
-              <span className="text-[11px] text-emerald-400">Lote activo: {selectedLot.label}</span>
-            </div>
-            <div className="flex items-center gap-2 overflow-x-auto pb-1">
               {filteredLots.map((lot) => (
                 <button
                   key={lot.id}
                   onClick={() => {
                     setSelectedLotId(lot.id);
                     setEngancheCustomPct(null);
+                    setMobileSheet('peek');
+                    centerOnLot(lot, 1.5);
                   }}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 border transition flex items-center gap-1.5 ${
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 border transition flex items-center gap-1 ${
                     selectedLot.id === lot.id
-                      ? 'bg-emerald-600 text-white border-emerald-400 shadow-md'
-                      : 'bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700'
+                      ? 'bg-emerald-600 text-white border-emerald-400 shadow'
+                      : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
                   }`}
                 >
                   <span
-                    className={`w-2 h-2 rounded-full ${
+                    className={`w-1.5 h-1.5 rounded-full ${
                       lot.estado === 'disponible'
                         ? 'bg-emerald-400'
                         : lot.estado === 'reservado'
@@ -1413,10 +1633,12 @@ export default function LotificacionApp() {
           </div>
         </section>
 
-        {/* RIGHT COLUMN: Selected Lot Details, Financial Simulator, Share & PDF (5 cols) */}
-        <section className="lg:col-span-5 flex flex-col gap-4">
-          {/* Selected Lot Header Card */}
+        {/* =================================================================== */}
+        {/* RIGHT COLUMN: Desktop Detailed View (Visible on lg: screens)        */}
+        {/* =================================================================== */}
+        <section className="hidden lg:flex lg:col-span-5 flex-col gap-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+            {/* Header info */}
             <div className="flex items-start justify-between gap-3 mb-4">
               <div>
                 <div className="flex items-center gap-2">
@@ -1432,7 +1654,6 @@ export default function LotificacionApp() {
                 </h2>
               </div>
 
-              {/* Status Badge */}
               <span
                 className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${
                   selectedLot.estado === 'disponible'
@@ -1446,7 +1667,7 @@ export default function LotificacionApp() {
               </span>
             </div>
 
-            {/* Price & Down Payment Highlight Banner */}
+            {/* Price highlight */}
             <div className="grid grid-cols-2 gap-3 p-3.5 rounded-xl bg-gradient-to-br from-emerald-950/90 via-slate-900 to-slate-950 border border-emerald-500/30 mb-4">
               <div>
                 <span className="text-[11px] uppercase tracking-wider text-slate-400 block">
@@ -1472,7 +1693,7 @@ export default function LotificacionApp() {
               </div>
             </div>
 
-            {/* Primary Action Buttons: Share Digital & Download PDF */}
+            {/* Primary Action Buttons */}
             <div className="grid grid-cols-2 gap-2.5 mb-4">
               <button
                 onClick={() => setShowShareModal(true)}
@@ -1490,7 +1711,7 @@ export default function LotificacionApp() {
               </button>
             </div>
 
-            {/* Sub-navigation Tabs for Salesperson Tools */}
+            {/* Tab navigation */}
             <div className="grid grid-cols-4 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 mb-4">
               {(
                 [
@@ -1514,7 +1735,7 @@ export default function LotificacionApp() {
               ))}
             </div>
 
-            {/* TAB 1: FICHA TÉCNICA COMPLETA */}
+            {/* Content Tabs */}
             {activeTab === 'ficha' && (
               <div className="space-y-3 text-xs">
                 <div className="grid grid-cols-2 gap-2.5">
@@ -1567,7 +1788,6 @@ export default function LotificacionApp() {
                   </div>
                 </div>
 
-                {/* Infrastructure & Salesperson Notes */}
                 <div className="bg-slate-950/90 border border-slate-800/90 p-3.5 rounded-xl space-y-2">
                   <div className="font-semibold text-slate-200 flex items-center justify-between">
                     <span>Servicios a Pie de Lote</span>
@@ -1588,18 +1808,16 @@ export default function LotificacionApp() {
                   </p>
                 </div>
 
-                {/* Quick Status Control & Compare Action for Salesperson */}
+                {/* Salesperson Quick Controls */}
                 <div className="bg-slate-950/90 border border-slate-800/90 p-3.5 rounded-xl flex flex-col gap-2.5">
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-slate-300">
-                      Control Rápido de Sala de Ventas:
-                    </span>
+                    <span className="font-semibold text-slate-300">Control de Sala de Ventas:</span>
                     <button
                       onClick={() => handleToggleCompare(selectedLot.id)}
                       className="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1"
                     >
                       <GitCompare className="w-3.5 h-3.5" />
-                      {compareList.includes(selectedLot.id) ? 'Quitar de comparar' : '+ Añadir a comparar'}
+                      {compareList.includes(selectedLot.id) ? 'Quitar de comparar' : '+ Comparar lote'}
                     </button>
                   </div>
                   <div className="grid grid-cols-3 gap-2">
@@ -1638,7 +1856,6 @@ export default function LotificacionApp() {
               </div>
             )}
 
-            {/* TAB 2: COTIZADOR FINANCIERO BANCARIO / PROPIO */}
             {activeTab === 'cotizador' && (
               <div className="space-y-3.5 text-xs">
                 <div className="grid grid-cols-2 gap-2.5">
@@ -1662,11 +1879,10 @@ export default function LotificacionApp() {
                   </div>
                 </div>
 
-                {/* Sliders for Enganche, Plazo & Tasa */}
                 <div className="bg-slate-950 border border-slate-800 p-3.5 rounded-xl space-y-3">
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-slate-300">Porcentaje de Cuota Inicial (Enganche):</span>
+                      <span className="text-slate-300">Cuota Inicial (Enganche):</span>
                       <strong className="text-emerald-400">
                         {effectiveEnganchePct}% ({formatMoney(financialData.cuotaInicial)})
                       </strong>
@@ -1700,7 +1916,7 @@ export default function LotificacionApp() {
 
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-slate-300">Tasa de Interés Anual:</span>
+                      <span className="text-slate-300">Tasa Anual Referencial:</span>
                       <strong className="text-white">{tasaInteresAnual}% anual</strong>
                     </div>
                     <input
@@ -1715,7 +1931,6 @@ export default function LotificacionApp() {
                   </div>
                 </div>
 
-                {/* Resulting Financial Breakdown */}
                 <div className="bg-slate-950 border border-slate-800 p-3.5 rounded-xl space-y-2">
                   <div className="flex justify-between">
                     <span className="text-slate-400">Saldo a Financiar:</span>
@@ -1728,7 +1943,7 @@ export default function LotificacionApp() {
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Ingreso Familiar Sugerido (3x cuota):</span>
+                    <span className="text-slate-400">Ingreso Familiar Sugerido:</span>
                     <span className="font-semibold text-slate-200">
                       {formatMoney(financialData.cuotaMensual * 3)} / mes
                     </span>
@@ -1743,19 +1958,17 @@ export default function LotificacionApp() {
               </div>
             )}
 
-            {/* TAB 3: PLUSVALÍA Y BIOCLIMA (RETALHULEU) */}
             {activeTab === 'plusvalia' && (
               <div className="space-y-3 text-xs">
                 <div className="bg-slate-950 border border-slate-800 p-3.5 rounded-xl">
                   <div className="font-semibold text-emerald-400 mb-1 flex items-center gap-1.5">
-                    <Sun className="w-4 h-4" /> Análisis Bioclimático en Retalhuleu (241 msnm)
+                    <Sun className="w-4 h-4" /> Análisis Bioclimático en Retalhuleu
                   </div>
                   <p className="text-slate-300 leading-relaxed mb-2">
                     {selectedLot.asoleamiento}.
                   </p>
                   <div className="text-[11px] text-slate-400 bg-slate-900 p-2.5 rounded-lg border border-slate-800">
-                    💡 <strong>Tip Arquitectónico:</strong> En el clima cálido de Retalhuleu, la orientación{' '}
-                    <strong>{selectedLot.orientacion}</strong> permite ubicar dormitorios y terraza hacia la sombra vespertina, reduciendo hasta un 28% el consumo de aire acondicionado.
+                    💡 <strong>Tip Arquitectónico:</strong> Orientación <strong>{selectedLot.orientacion}</strong> permite ubicar dormitorios hacia la sombra vespertina, ahorrando energía en climatización.
                   </div>
                 </div>
 
@@ -1766,56 +1979,27 @@ export default function LotificacionApp() {
                   </div>
                   <div className="grid grid-cols-2 gap-2 pt-1">
                     <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
-                      <span className="text-slate-400 block text-[11px]">Valor Actual (2026)</span>
+                      <span className="text-slate-400 block text-[11px]">Valor Actual</span>
                       <strong className="text-sm text-white">{formatMoney(financialData.precioTotal)}</strong>
                     </div>
                     <div className="bg-emerald-950/50 p-2.5 rounded-lg border border-emerald-500/30">
-                      <span className="text-emerald-300 block text-[11px]">Valor Estimado (2031)</span>
+                      <span className="text-emerald-300 block text-[11px]">Valor Proyectado (5A)</span>
                       <strong className="text-sm text-emerald-400">{formatMoney(financialData.valor5Anios)}</strong>
                     </div>
-                  </div>
-                  <div className="text-[11px] text-slate-400">
-                    Ganancia patrimonial estimada en 5 años:{' '}
-                    <strong className="text-emerald-400">+{formatMoney(financialData.gananciaPlusvalia5A)}</strong>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* TAB 4: SUGERENCIAS CREATIVAS INTEGRADAS */}
             {activeTab === 'ideas' && (
-              <div className="space-y-2.5 text-xs max-h-72 overflow-y-auto pr-1">
+              <div className="space-y-2 text-xs">
                 <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <div className="font-bold text-emerald-400 mb-0.5">
-                    1. Simulador Solar y Vientos en Tiempo Real (Ya activo arriba ☀️)
-                  </div>
-                  <p className="text-slate-400">
-                    En Retalhuleu el calor vespertino es decisivo. El deslizador de hora muestra al comprador cómo incide el sol y hacia dónde proyecta sombra su futuro lote.
-                  </p>
+                  <div className="font-bold text-emerald-400">Gestos Táctiles 100% Móviles</div>
+                  <p className="text-slate-400 mt-0.5">Pellizca con 2 dedos para zoom fluido o desliza con 1 dedo. En tablets y smartphones el mapa es totalmente libre y sensible.</p>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <div className="font-bold text-sky-400 mb-0.5">
-                    2. Conversión Automática m² ↔ Varas² y Quetzales ↔ USD (Activo)
-                  </div>
-                  <p className="text-slate-400">
-                    Permite atender tanto a compradores locales en Retalhuleu (acostumbrados a varas cuadradas y Quetzales) como a guatemaltecos en EE. UU. que envían remesas en USD.
-                  </p>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <div className="font-bold text-indigo-400 mb-0.5">
-                    3. Bloqueo Temporal con QR de Reserva en Vivo (48 hrs)
-                  </div>
-                  <p className="text-slate-400">
-                    Integrar pasarela (recurrente/Visanet GT) para congelar un lote por 48 horas con Q2,000 desde la tablet del vendedor y sincronizar en tiempo real con el CRM.
-                  </p>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <div className="font-bold text-amber-400 mb-0.5">
-                    4. Superposición de Drones Ortomosaicos + Street View 360°
-                  </div>
-                  <p className="text-slate-400">
-                    Permitir alternar el plano vectorial con fotografías aéreas reales tomadas con dron cada mes para evidenciar el avance de calles, garita y drenajes.
-                  </p>
+                  <div className="font-bold text-sky-400">Bottom Sheet para Vendedores</div>
+                  <p className="text-slate-400 mt-0.5">Permite a los asesores tocar cualquier lote y desplegar cotización instantánea sin perder visibilidad del masterplan.</p>
                 </div>
               </div>
             )}
@@ -1823,143 +2007,301 @@ export default function LotificacionApp() {
         </section>
       </div>
 
-      {/* MODAL 1: SHARE DIGITAL FORMAT (WHATSAPP / LINK / QR CARD) */}
-      {showShareModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-5 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <div className="flex items-center gap-2">
-                <Share2 className="w-5 h-5 text-emerald-400" />
-                <h3 className="font-bold text-white text-base">
-                  Compartir Ficha Digital — Lote {selectedLot.label}
-                </h3>
-              </div>
-              <button
-                onClick={() => setShowShareModal(false)}
-                className="p-1 rounded-lg hover:bg-slate-800 text-slate-400"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <p className="text-xs text-slate-400">
-              Envía esta tarjeta técnica interactiva por WhatsApp, correo o código QR al cliente{' '}
-              <strong className="text-white">{clienteNombre}</strong>:
-            </p>
-
-            <pre className="bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-[11px] text-slate-200 whitespace-pre-wrap font-mono max-h-64 overflow-y-auto">
-              {shareText}
-            </pre>
-
-            <div className="flex flex-wrap items-center justify-end gap-2 pt-2">
-              <button
-                onClick={handleCopyShareText}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition"
-              >
-                {copiedText ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedText ? '¡Copiado al Portapapeles!' : 'Copiar Resumen para WhatsApp'}</span>
-              </button>
-              <button
-                onClick={() => setShowShareModal(false)}
-                className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
-              >
-                Cerrar
-              </button>
+      {/* =================================================================== */}
+      {/* MOBILE BOTTOM SHEET: Interactive Floating Drawer for Touch Screens  */}
+      {/* =================================================================== */}
+      <div className="block lg:hidden">
+        {/* PEEK BAR: Always visible compact card when a lot is selected */}
+        <div
+          className={`fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 shadow-2xl transition-all duration-300 ${
+            mobileSheet === 'expanded' ? 'h-[85vh] rounded-t-3xl overflow-y-auto' : 'h-auto rounded-t-2xl'
+          }`}
+        >
+          {/* Sheet Handle */}
+          <div
+            onClick={() => setMobileSheet((prev) => (prev === 'peek' ? 'expanded' : 'peek'))}
+            className="w-full pt-2 pb-1.5 flex flex-col items-center justify-center cursor-pointer select-none active:bg-slate-800/50 rounded-t-2xl"
+          >
+            <div className="w-12 h-1.5 bg-slate-700 rounded-full mb-1"></div>
+            <div className="flex items-center gap-1 text-[11px] font-bold text-slate-400">
+              {mobileSheet === 'peek' ? (
+                <>
+                  <span>Ver cotizador y ficha completa</span>
+                  <ChevronUp className="w-3.5 h-3.5 text-emerald-400" />
+                </>
+              ) : (
+                <>
+                  <span>Ocultar detalles (Ver mapa)</span>
+                  <ChevronDown className="w-3.5 h-3.5 text-emerald-400" />
+                </>
+              )}
             </div>
           </div>
-        </div>
-      )}
 
-      {/* MODAL 2: PDF PREVIEW & DOWNLOAD */}
-      {showPdfModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-xl w-full p-5 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          {/* Compact Peek Summary Bar */}
+          <div className="px-3.5 pb-3 pt-1">
+            <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <FileDown className="w-5 h-5 text-emerald-400" />
-                <h3 className="font-bold text-white text-base">
-                  Vista Previa de Ficha Oficial PDF — Lote {selectedLot.label}
-                </h3>
-              </div>
-              <button
-                onClick={() => setShowPdfModal(false)}
-                className="p-1 rounded-lg hover:bg-slate-800 text-slate-400"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Miniature White Paper Sheet Preview */}
-            <div className="bg-white text-slate-900 rounded-xl p-5 border border-slate-300 shadow-inner space-y-3 text-xs">
-              <div className="flex justify-between items-start border-b-2 border-emerald-600 pb-2">
-                <div>
-                  <div className="font-extrabold text-sm text-emerald-900">
-                    URBANIZACIÓN PASEO LAS PALMAS • RETALHULEU
-                  </div>
-                  <div className="text-[11px] text-slate-600">
-                    Km 182.5 CA-2 Occidente, Retalhuleu, Guatemala • Cód: {selectedLot.codigoCatastral}
-                  </div>
-                </div>
-                <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[11px]">
-                  LOTE {selectedLot.label}
+                <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-black">
+                  {selectedLot.label}
+                </span>
+                <span
+                  className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${
+                    selectedLot.estado === 'disponible'
+                      ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
+                      : selectedLot.estado === 'reservado'
+                      ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
+                      : 'bg-rose-500/15 text-rose-300 border-rose-500/40'
+                  }`}
+                >
+                  {selectedLot.estado}
+                </span>
+                <span className="text-[11px] text-slate-400 hidden xs:inline truncate">
+                  {selectedLot.frente}×{selectedLot.fondo}m ({selectedLot.areaM2}m²)
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
-                <div>
-                  <div className="text-[10px] text-slate-500 uppercase">Medidas y Superficie</div>
-                  <div className="font-bold text-slate-900">
-                    {selectedLot.frente}m × {selectedLot.fondo}m ({selectedLot.areaM2} m² / {selectedLot.areaV2.toFixed(1)} v²)
-                  </div>
-                  <div className="text-[11px] text-slate-600 mt-1">
-                    Orientación: <strong>{selectedLot.orientacion}</strong> ({selectedLot.categoria})
-                  </div>
+              {/* Price & Monthly quote */}
+              <div className="text-right">
+                <div className="text-base font-extrabold text-white leading-tight">
+                  {formatMoney(financialData.precioTotal)}
                 </div>
-                <div>
-                  <div className="text-[10px] text-slate-500 uppercase">Coordenadas y Altitud</div>
-                  <div className="font-bold text-slate-900">
-                    {selectedLot.latitud}° N, {selectedLot.longitud}° W
-                  </div>
-                  <div className="text-[11px] text-slate-600 mt-1">
-                    Altitud: <strong>{selectedLot.altitud} msnm</strong>
-                  </div>
+                <div className="text-[10px] font-semibold text-emerald-400">
+                  Desde {formatMoney(financialData.cuotaMensual)}/m
                 </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2 bg-emerald-900 text-white p-3 rounded-lg">
-                <div>
-                  <div className="text-[10px] text-emerald-200">Precio Total</div>
-                  <div className="font-extrabold text-sm">{formatMoney(financialData.precioTotal)}</div>
-                </div>
-                <div>
-                  <div className="text-[10px] text-emerald-200">Cuota Inicial ({effectiveEnganchePct}%)</div>
-                  <div className="font-extrabold text-sm text-emerald-300">
-                    {formatMoney(financialData.cuotaInicial)}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-[10px] text-emerald-200">Mensualidad ({plazoAnios} años)</div>
-                  <div className="font-extrabold text-sm">{formatMoney(financialData.cuotaMensual)}/mes</div>
-                </div>
-              </div>
-
-              <div className="text-[11px] text-slate-600 flex justify-between pt-1">
-                <span>Cliente: <strong>{clienteNombre}</strong></span>
-                <span>Asesor: <strong>{asesorNombre}</strong></span>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2">
+            {/* Quick Actions Row */}
+            <div className="grid grid-cols-4 gap-1.5 mt-2.5">
               <button
-                onClick={handleDownloadPdfFile}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-lg transition"
+                onClick={() => setMobileSheet((prev) => (prev === 'peek' ? 'expanded' : 'peek'))}
+                className="col-span-2 py-2 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700"
               >
-                <FileDown className="w-4 h-4" />
-                <span>Descargar Documento Listo para PDF / Impresión</span>
+                <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400" />
+                <span>{mobileSheet === 'expanded' ? 'Minimizar' : 'Cotizar / Ficha'}</span>
               </button>
               <button
-                onClick={() => setShowPdfModal(false)}
-                className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
+                onClick={handleCopyShareText}
+                className="py-2 px-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                <span>WhatsApp</span>
+              </button>
+              <button
+                onClick={handleDownloadPdfFile}
+                className="py-2 px-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1 border border-slate-700"
+              >
+                <FileDown className="w-3.5 h-3.5 text-emerald-400" />
+                <span>PDF</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Expanded Drawer Content (When swiped up) */}
+          {mobileSheet === 'expanded' && (
+            <div className="px-4 pb-8 space-y-4 pt-1 border-t border-slate-800">
+              {/* Tab Selector */}
+              <div className="grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+                {(
+                  [
+                    { id: 'ficha', label: 'Ficha Técnica' },
+                    { id: 'cotizador', label: 'Cotizador' },
+                    { id: 'plusvalia', label: 'Clima & ROI' }
+                  ] as const
+                ).map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`py-1.5 rounded-lg text-xs font-semibold transition ${
+                      activeTab === tab.id ? 'bg-slate-800 text-emerald-400 shadow' : 'text-slate-400'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Mobile Tab 1: Ficha */}
+              {activeTab === 'ficha' && (
+                <div className="space-y-3 text-xs">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                      <span className="text-slate-400 text-[10px] block">Medidas</span>
+                      <strong className="text-white text-xs">{selectedLot.frente}m × {selectedLot.fondo}m</strong>
+                      <div className="text-[10px] text-slate-400 mt-0.5">{selectedLot.areaM2} m² ({selectedLot.areaV2.toFixed(1)} v²)</div>
+                    </div>
+                    <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                      <span className="text-slate-400 text-[10px] block">Orientación</span>
+                      <strong className="text-white text-xs">{selectedLot.orientacion}</strong>
+                      <div className="text-[10px] text-emerald-400 mt-0.5">{selectedLot.categoria}</div>
+                    </div>
+                    <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                      <span className="text-slate-400 text-[10px] block">Topografía</span>
+                      <strong className="text-white text-xs">{selectedLot.topografia}</strong>
+                    </div>
+                    <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                      <span className="text-slate-400 text-[10px] block">Altitud GPS</span>
+                      <strong className="text-white text-xs">{selectedLot.altitud} msnm</strong>
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div className="text-[11px] font-bold text-slate-200 mb-1">Servicios Incluidos</div>
+                    <div className="flex flex-wrap gap-1">
+                      {selectedLot.servicios.map((s, i) => (
+                        <span key={i} className="px-2 py-0.5 bg-slate-900 border border-slate-800 text-[10px] text-slate-300 rounded">
+                          ✓ {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Status Toggle for mobile sales agent */}
+                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+                    <div className="text-[11px] font-bold text-slate-300">Cambiar Estado (Sala de Ventas):</div>
+                    <div className="grid grid-cols-3 gap-1.5">
+                      <button
+                        onClick={() => handleToggleStatus('disponible')}
+                        className={`py-1.5 rounded-lg text-xs font-bold border ${
+                          selectedLot.estado === 'disponible' ? 'bg-emerald-600 text-white border-emerald-400' : 'bg-slate-900 text-slate-400 border-slate-800'
+                        }`}
+                      >
+                        Disponible
+                      </button>
+                      <button
+                        onClick={() => handleToggleStatus('reservado')}
+                        className={`py-1.5 rounded-lg text-xs font-bold border ${
+                          selectedLot.estado === 'reservado' ? 'bg-amber-600 text-white border-amber-400' : 'bg-slate-900 text-slate-400 border-slate-800'
+                        }`}
+                      >
+                        Reservar
+                      </button>
+                      <button
+                        onClick={() => handleToggleStatus('vendido')}
+                        className={`py-1.5 rounded-lg text-xs font-bold border ${
+                          selectedLot.estado === 'vendido' ? 'bg-rose-600 text-white border-rose-400' : 'bg-slate-900 text-slate-400 border-slate-800'
+                        }`}
+                      >
+                        Vendido
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Mobile Tab 2: Cotizador */}
+              {activeTab === 'cotizador' && (
+                <div className="space-y-3 text-xs">
+                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-3">
+                    <div>
+                      <div className="flex justify-between mb-1">
+                        <span className="text-slate-300">Enganche ({effectiveEnganchePct}%):</span>
+                        <strong className="text-emerald-400">{formatMoney(financialData.cuotaInicial)}</strong>
+                      </div>
+                      <input
+                        type="range"
+                        min={10}
+                        max={50}
+                        step={5}
+                        value={effectiveEnganchePct}
+                        onChange={(e) => setEngancheCustomPct(Number(e.target.value))}
+                        className="w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between mb-1">
+                        <span className="text-slate-300">Plazo:</span>
+                        <strong className="text-white">{plazoAnios} años ({financialData.meses} meses)</strong>
+                      </div>
+                      <input
+                        type="range"
+                        min={1}
+                        max={20}
+                        step={1}
+                        value={plazoAnios}
+                        onChange={(e) => setPlazoAnios(Number(e.target.value))}
+                        className="w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-slate-400">Saldo a Financiar:</span>
+                      <strong className="text-white">{formatMoney(financialData.saldoFinanciar)}</strong>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-slate-400">Cuota Mensual Estimada:</span>
+                      <strong className="text-emerald-400 text-sm">{formatMoney(financialData.cuotaMensual)}/mes</strong>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Mobile Tab 3: Clima & ROI */}
+              {activeTab === 'plusvalia' && (
+                <div className="space-y-3 text-xs">
+                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div className="font-bold text-amber-400 mb-1 flex items-center gap-1">
+                      <Sun className="w-4 h-4" /> Confort Bioclimático
+                    </div>
+                    <p className="text-slate-300 leading-relaxed text-[11px]">
+                      {selectedLot.asoleamiento}.
+                    </p>
+                  </div>
+                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Plusvalía estimada:</span>
+                      <strong className="text-emerald-400">+{selectedLot.plusvaliaAnual}% anual</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Proyección a 5 años:</span>
+                      <strong className="text-white">{formatMoney(financialData.valor5Anios)}</strong>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* MODAL 1: SHARE DIGITAL */}
+      {showShareModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <Share2 className="w-5 h-5 text-emerald-400" />
+                <h3 className="font-bold text-white text-sm sm:text-base">
+                  Compartir Ficha — Lote {selectedLot.label}
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowShareModal(false)}
+                className="p-1 rounded-lg hover:bg-slate-800 text-slate-400"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <pre className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-[11px] text-slate-200 whitespace-pre-wrap font-mono max-h-56 overflow-y-auto">
+              {shareText}
+            </pre>
+
+            <div className="flex items-center justify-end gap-2 pt-1">
+              <button
+                onClick={handleCopyShareText}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition"
+              >
+                {copiedText ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                <span>{copiedText ? '¡Copiado!' : 'Copiar para WhatsApp'}</span>
+              </button>
+              <button
+                onClick={() => setShowShareModal(false)}
+                className="px-3 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold"
               >
                 Cerrar
               </button>
@@ -1968,15 +2310,76 @@ export default function LotificacionApp() {
         </div>
       )}
 
-      {/* MODAL 3: MULTI-LOT COMPARATOR */}
+      {/* MODAL 2: PDF PREVIEW */}
+      {showPdfModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-xl w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+              <div className="flex items-center gap-2">
+                <FileDown className="w-5 h-5 text-emerald-400" />
+                <h3 className="font-bold text-white text-sm sm:text-base">
+                  Ficha Oficial PDF — Lote {selectedLot.label}
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowPdfModal(false)}
+                className="p-1 rounded-lg hover:bg-slate-800 text-slate-400"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="bg-white text-slate-900 rounded-xl p-4 border border-slate-300 space-y-2 text-xs">
+              <div className="font-extrabold text-sm text-emerald-900 border-b pb-1">
+                PASEO LAS PALMAS • LOTE {selectedLot.label}
+              </div>
+              <div className="text-[11px] text-slate-600">
+                {selectedLot.frente}m × {selectedLot.fondo}m ({selectedLot.areaM2}m² / {selectedLot.areaV2.toFixed(1)} v²) • {selectedLot.orientacion}
+              </div>
+              <div className="flex justify-between bg-emerald-900 text-white p-2.5 rounded-lg">
+                <div>
+                  <div className="text-[9px] text-emerald-200">Precio</div>
+                  <strong className="text-xs">{formatMoney(financialData.precioTotal)}</strong>
+                </div>
+                <div>
+                  <div className="text-[9px] text-emerald-200">Enganche ({effectiveEnganchePct}%)</div>
+                  <strong className="text-xs text-emerald-300">{formatMoney(financialData.cuotaInicial)}</strong>
+                </div>
+                <div>
+                  <div className="text-[9px] text-emerald-200">Mensualidad</div>
+                  <strong className="text-xs">{formatMoney(financialData.cuotaMensual)}/mes</strong>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-1">
+              <button
+                onClick={handleDownloadPdfFile}
+                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-lg transition"
+              >
+                <FileDown className="w-4 h-4" />
+                <span>Descargar PDF</span>
+              </button>
+              <button
+                onClick={() => setShowPdfModal(false)}
+                className="px-3 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 3: COMPARE */}
       {showCompareModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-3xl w-full p-5 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-4 sm:p-5 shadow-2xl space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
               <div className="flex items-center gap-2">
                 <GitCompare className="w-5 h-5 text-indigo-400" />
-                <h3 className="font-bold text-white text-base">
-                  Comparador de Lotes Seleccionados ({compareList.length}/3)
+                <h3 className="font-bold text-white text-sm sm:text-base">
+                  Comparador ({compareList.length}/3)
                 </h3>
               </div>
               <button
@@ -1988,78 +2391,48 @@ export default function LotificacionApp() {
             </div>
 
             {compareList.length === 0 ? (
-              <p className="text-xs text-slate-400 py-6 text-center">
-                No has seleccionado lotes para comparar. Usa el botón &quot;+ Añadir a comparar&quot; en la ficha técnica.
+              <p className="text-xs text-slate-400 py-4 text-center">
+                No hay lotes en el comparador. Usa &quot;+ Comparar lote&quot; en la ficha técnica.
               </p>
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
+                <table className="w-full text-left text-xs border-collapse">
                   <thead>
                     <tr className="border-b border-slate-800 text-slate-400">
-                      <th className="py-2 px-3">Atributo</th>
-                      {compareList.map((id) => {
-                        const l = lots.find((item) => item.id === id);
-                        if (!l) return null;
-                        return (
-                          <th key={id} className="py-2 px-3 text-white font-bold">
-                            Lote {l.label} ({l.categoria})
-                          </th>
-                        );
-                      })}
+                      <th className="py-1.5 px-2">Dato</th>
+                      {compareList.map((id) => (
+                        <th key={id} className="py-1.5 px-2 text-white font-bold">
+                          Lote {id}
+                        </th>
+                      ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/70">
+                  <tbody className="divide-y divide-slate-800/60">
                     <tr>
-                      <td className="py-2 px-3 text-slate-400">Medidas y Área</td>
+                      <td className="py-1.5 px-2 text-slate-400">Área</td>
                       {compareList.map((id) => {
-                        const l = lots.find((item) => item.id === id);
-                        return (
-                          <td key={id} className="py-2 px-3 text-slate-200">
-                            {l?.frente}×{l?.fondo}m ({l?.areaM2} m² / {l?.areaV2.toFixed(1)} v²)
-                          </td>
-                        );
+                        const l = lots.find((x) => x.id === id);
+                        return <td key={id} className="py-1.5 px-2 text-slate-200">{l?.areaM2} m²</td>;
                       })}
                     </tr>
                     <tr>
-                      <td className="py-2 px-3 text-slate-400">Orientación y Altitud</td>
+                      <td className="py-1.5 px-2 text-slate-400">Precio</td>
                       {compareList.map((id) => {
-                        const l = lots.find((item) => item.id === id);
+                        const l = lots.find((x) => x.id === id);
                         return (
-                          <td key={id} className="py-2 px-3 text-slate-200">
-                            {l?.orientacion} • {l?.altitud} msnm
-                          </td>
-                        );
-                      })}
-                    </tr>
-                    <tr>
-                      <td className="py-2 px-3 text-slate-400">Precio de Lista</td>
-                      {compareList.map((id) => {
-                        const l = lots.find((item) => item.id === id);
-                        return (
-                          <td key={id} className="py-2 px-3 font-bold text-emerald-400">
+                          <td key={id} className="py-1.5 px-2 font-bold text-emerald-400">
                             {l ? formatMoney(l.precioGTQ) : '-'}
                           </td>
                         );
                       })}
                     </tr>
                     <tr>
-                      <td className="py-2 px-3 text-slate-400">Cuota Inicial</td>
+                      <td className="py-1.5 px-2 text-slate-400">Enganche</td>
                       {compareList.map((id) => {
-                        const l = lots.find((item) => item.id === id);
+                        const l = lots.find((x) => x.id === id);
                         return (
-                          <td key={id} className="py-2 px-3 font-semibold text-white">
-                            {l ? `${formatMoney((l.precioGTQ * l.cuotaInicialPct) / 100)} (${l.cuotaInicialPct}%)` : '-'}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                    <tr>
-                      <td className="py-2 px-3 text-slate-400">Plusvalía Anual</td>
-                      {compareList.map((id) => {
-                        const l = lots.find((item) => item.id === id);
-                        return (
-                          <td key={id} className="py-2 px-3 text-emerald-300">
-                            +{l?.plusvaliaAnual}% anual
+                          <td key={id} className="py-1.5 px-2 text-slate-200">
+                            {l ? formatMoney((l.precioGTQ * l.cuotaInicialPct) / 100) : '-'}
                           </td>
                         );
                       })}
@@ -2069,12 +2442,12 @@ export default function LotificacionApp() {
               </div>
             )}
 
-            <div className="flex justify-end">
+            <div className="flex justify-end pt-1">
               <button
                 onClick={() => setShowCompareModal(false)}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold"
+                className="px-4 py-1.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-semibold"
               >
-                Cerrar Comparador
+                Cerrar
               </button>
             </div>
           </div>
@@ -2083,4 +2456,3 @@ export default function LotificacionApp() {
     </div>
   );
 }
-
