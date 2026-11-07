@@ -12151,334 +12151,342 @@ function je() {
 			}),
 			/* @__PURE__ */ (0, D.jsx)("div", {
 				className: "block lg:hidden",
-				children: /* @__PURE__ */ (0, D.jsxs)("div", {
-					className: `fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 shadow-2xl transition-all duration-300 ${y === "expanded" ? "h-[85vh] rounded-t-3xl overflow-y-auto" : "h-auto rounded-t-2xl"}`,
-					children: [
-						/* @__PURE__ */ (0, D.jsxs)("div", {
-							onClick: () => b((e) => e === "peek" ? "expanded" : "peek"),
-							className: "w-full pt-2 pb-1.5 flex flex-col items-center justify-center cursor-pointer select-none active:bg-slate-800/50 rounded-t-2xl",
-							children: [/* @__PURE__ */ (0, D.jsx)("div", { className: "w-12 h-1.5 bg-slate-700 rounded-full mb-1" }), /* @__PURE__ */ (0, D.jsx)("div", {
-								className: "flex items-center gap-1 text-[11px] font-bold text-slate-400",
-								children: y === "peek" ? /* @__PURE__ */ (0, D.jsxs)(D.Fragment, { children: [/* @__PURE__ */ (0, D.jsx)("span", { children: "Ver cotizador y ficha completa" }), /* @__PURE__ */ (0, D.jsx)(Ee, { className: "w-3.5 h-3.5 text-emerald-400" })] }) : /* @__PURE__ */ (0, D.jsxs)(D.Fragment, { children: [/* @__PURE__ */ (0, D.jsx)("span", { children: "Ocultar detalles (Ver mapa)" }), /* @__PURE__ */ (0, D.jsx)(De, { className: "w-3.5 h-3.5 text-emerald-400" })] })
-							})]
-						}),
-						/* @__PURE__ */ (0, D.jsxs)("div", {
-							className: "px-3.5 pb-3 pt-1",
-							children: [/* @__PURE__ */ (0, D.jsxs)("div", {
-								className: "flex items-center justify-between gap-2",
-								children: [/* @__PURE__ */ (0, D.jsxs)("div", {
-									className: "flex items-center gap-2",
-									children: [
-										/* @__PURE__ */ (0, D.jsx)("span", {
-											className: "px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-black",
-											children: A.label
-										}),
-										/* @__PURE__ */ (0, D.jsx)("span", {
-											className: `px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${A.estado === "disponible" ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40" : A.estado === "reservado" ? "bg-amber-500/15 text-amber-300 border-amber-500/40" : "bg-rose-500/15 text-rose-300 border-rose-500/40"}`,
-											children: A.estado
-										}),
-										/* @__PURE__ */ (0, D.jsxs)("span", {
-											className: "text-[11px] text-slate-400 hidden xs:inline truncate",
-											children: [
-												A.frente,
-												"×",
-												A.fondo,
-												"m (",
-												A.areaM2,
-												"m²)"
-											]
-										})
-									]
-								}), /* @__PURE__ */ (0, D.jsxs)("div", {
-									className: "text-right",
-									children: [/* @__PURE__ */ (0, D.jsx)("div", {
-										className: "text-base font-extrabold text-white leading-tight",
-										children: j(M.precioTotal)
-									}), /* @__PURE__ */ (0, D.jsxs)("div", {
-										className: "text-[10px] font-semibold text-emerald-400",
-										children: [
-											"Desde ",
-											j(M.cuotaMensual),
-											"/m"
-										]
-									})]
+				children: /* @__PURE__ */ (0, D.jsx)("div", {
+					className: "fixed bottom-0 left-0 right-0 z-40 w-full max-w-full pointer-events-none flex justify-center",
+					children: /* @__PURE__ */ (0, D.jsxs)("div", {
+						className: `pointer-events-auto w-full max-w-xl bg-slate-900/98 backdrop-blur-2xl border-t sm:border-x border-slate-800 shadow-[0_-10px_35px_rgba(0,0,0,0.6)] transition-all duration-300 overflow-x-hidden ${y === "expanded" ? "h-[82vh] max-h-[82vh] rounded-t-3xl overflow-y-auto" : "h-auto rounded-t-2xl"}`,
+						children: [
+							/* @__PURE__ */ (0, D.jsxs)("div", {
+								onClick: () => b((e) => e === "peek" ? "expanded" : "peek"),
+								className: "w-full pt-2.5 pb-1 flex flex-col items-center justify-center cursor-pointer select-none active:bg-slate-800/60 rounded-t-2xl",
+								children: [/* @__PURE__ */ (0, D.jsx)("div", { className: "w-10 h-1.5 bg-slate-700/80 rounded-full mb-1" }), /* @__PURE__ */ (0, D.jsx)("div", {
+									className: "flex items-center gap-1 text-[11px] font-bold text-slate-400",
+									children: y === "peek" ? /* @__PURE__ */ (0, D.jsxs)(D.Fragment, { children: [/* @__PURE__ */ (0, D.jsx)("span", { children: "Ver cotizador y ficha completa" }), /* @__PURE__ */ (0, D.jsx)(Ee, { className: "w-3.5 h-3.5 text-emerald-400" })] }) : /* @__PURE__ */ (0, D.jsxs)(D.Fragment, { children: [/* @__PURE__ */ (0, D.jsx)("span", { children: "Minimizar (Ver mapa completo)" }), /* @__PURE__ */ (0, D.jsx)(De, { className: "w-3.5 h-3.5 text-emerald-400" })] })
 								})]
-							}), /* @__PURE__ */ (0, D.jsxs)("div", {
-								className: "grid grid-cols-4 gap-1.5 mt-2.5",
-								children: [
-									/* @__PURE__ */ (0, D.jsxs)("button", {
-										onClick: () => b((e) => e === "peek" ? "expanded" : "peek"),
-										className: "col-span-2 py-2 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700",
-										children: [/* @__PURE__ */ (0, D.jsx)(pe, { className: "w-3.5 h-3.5 text-emerald-400" }), /* @__PURE__ */ (0, D.jsx)("span", { children: y === "expanded" ? "Minimizar" : "Cotizar / Ficha" })]
-									}),
-									/* @__PURE__ */ (0, D.jsxs)("button", {
-										onClick: gt,
-										className: "py-2 px-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1",
-										children: [/* @__PURE__ */ (0, D.jsx)(me, { className: "w-3.5 h-3.5" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "WhatsApp" })]
-									}),
-									/* @__PURE__ */ (0, D.jsxs)("button", {
-										onClick: _t,
-										className: "py-2 px-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1 border border-slate-700",
-										children: [/* @__PURE__ */ (0, D.jsx)(we, { className: "w-3.5 h-3.5 text-emerald-400" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "PDF" })]
-									})
-								]
-							})]
-						}),
-						y === "expanded" && /* @__PURE__ */ (0, D.jsxs)("div", {
-							className: "px-4 pb-8 space-y-4 pt-1 border-t border-slate-800",
-							children: [
-								/* @__PURE__ */ (0, D.jsx)("div", {
-									className: "grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800",
-									children: [
-										{
-											id: "ficha",
-											label: "Ficha Técnica"
-										},
-										{
-											id: "cotizador",
-											label: "Cotizador"
-										},
-										{
-											id: "plusvalia",
-											label: "Clima & ROI"
-										}
-									].map((e) => /* @__PURE__ */ (0, D.jsx)("button", {
-										onClick: () => h(e.id),
-										className: `py-1.5 rounded-lg text-xs font-semibold transition ${m === e.id ? "bg-slate-800 text-emerald-400 shadow" : "text-slate-400"}`,
-										children: e.label
-									}, e.id))
-								}),
-								m === "ficha" && /* @__PURE__ */ (0, D.jsxs)("div", {
-									className: "space-y-3 text-xs",
-									children: [
-										/* @__PURE__ */ (0, D.jsxs)("div", {
-											className: "grid grid-cols-2 gap-2",
+							}),
+							/* @__PURE__ */ (0, D.jsxs)("div", {
+								className: "px-3.5 pb-3 pt-1 w-full max-w-full overflow-hidden",
+								children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+									className: "flex items-center justify-between gap-2 w-full",
+									children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+										className: "flex items-center gap-1.5 min-w-0 flex-1",
+										children: [
+											/* @__PURE__ */ (0, D.jsx)("span", {
+												className: "px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-black shrink-0",
+												children: A.label
+											}),
+											/* @__PURE__ */ (0, D.jsx)("span", {
+												className: `px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border shrink-0 ${A.estado === "disponible" ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40" : A.estado === "reservado" ? "bg-amber-500/15 text-amber-300 border-amber-500/40" : "bg-rose-500/15 text-rose-300 border-rose-500/40"}`,
+												children: A.estado
+											}),
+											/* @__PURE__ */ (0, D.jsxs)("span", {
+												className: "text-[11px] text-slate-400 truncate hidden sm:inline",
+												children: [
+													A.frente,
+													"×",
+													A.fondo,
+													"m (",
+													A.areaM2,
+													"m²)"
+												]
+											})
+										]
+									}), /* @__PURE__ */ (0, D.jsxs)("div", {
+										className: "text-right shrink-0",
+										children: [/* @__PURE__ */ (0, D.jsx)("div", {
+											className: "text-sm sm:text-base font-extrabold text-white leading-tight",
+											children: j(M.precioTotal)
+										}), /* @__PURE__ */ (0, D.jsxs)("div", {
+											className: "text-[10px] font-semibold text-emerald-400",
 											children: [
-												/* @__PURE__ */ (0, D.jsxs)("div", {
-													className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800",
-													children: [
-														/* @__PURE__ */ (0, D.jsx)("span", {
-															className: "text-slate-400 text-[10px] block",
-															children: "Medidas"
-														}),
-														/* @__PURE__ */ (0, D.jsxs)("strong", {
-															className: "text-white text-xs",
-															children: [
-																A.frente,
-																"m × ",
-																A.fondo,
-																"m"
-															]
-														}),
-														/* @__PURE__ */ (0, D.jsxs)("div", {
-															className: "text-[10px] text-slate-400 mt-0.5",
-															children: [
-																A.areaM2,
-																" m² (",
-																A.areaV2.toFixed(1),
-																" v²)"
-															]
-														})
-													]
-												}),
-												/* @__PURE__ */ (0, D.jsxs)("div", {
-													className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800",
-													children: [
-														/* @__PURE__ */ (0, D.jsx)("span", {
-															className: "text-slate-400 text-[10px] block",
-															children: "Orientación"
-														}),
-														/* @__PURE__ */ (0, D.jsx)("strong", {
-															className: "text-white text-xs",
-															children: A.orientacion
-														}),
-														/* @__PURE__ */ (0, D.jsx)("div", {
-															className: "text-[10px] text-emerald-400 mt-0.5",
-															children: A.categoria
-														})
-													]
-												}),
-												/* @__PURE__ */ (0, D.jsxs)("div", {
-													className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800",
-													children: [/* @__PURE__ */ (0, D.jsx)("span", {
-														className: "text-slate-400 text-[10px] block",
-														children: "Topografía"
-													}), /* @__PURE__ */ (0, D.jsx)("strong", {
-														className: "text-white text-xs",
-														children: A.topografia
-													})]
-												}),
-												/* @__PURE__ */ (0, D.jsxs)("div", {
-													className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800",
-													children: [/* @__PURE__ */ (0, D.jsx)("span", {
-														className: "text-slate-400 text-[10px] block",
-														children: "Altitud GPS"
-													}), /* @__PURE__ */ (0, D.jsxs)("strong", {
-														className: "text-white text-xs",
-														children: [A.altitud, " msnm"]
-													})]
-												})
+												"Desde ",
+												j(M.cuotaMensual),
+												"/m"
 											]
-										}),
-										/* @__PURE__ */ (0, D.jsxs)("div", {
-											className: "bg-slate-950 p-3 rounded-xl border border-slate-800",
-											children: [/* @__PURE__ */ (0, D.jsx)("div", {
-												className: "text-[11px] font-bold text-slate-200 mb-1",
-												children: "Servicios Incluidos"
-											}), /* @__PURE__ */ (0, D.jsx)("div", {
-												className: "flex flex-wrap gap-1",
-												children: A.servicios.map((e, t) => /* @__PURE__ */ (0, D.jsxs)("span", {
-													className: "px-2 py-0.5 bg-slate-900 border border-slate-800 text-[10px] text-slate-300 rounded",
-													children: ["✓ ", e]
-												}, t))
+										})]
+									})]
+								}), /* @__PURE__ */ (0, D.jsxs)("div", {
+									className: "flex items-center gap-2 mt-2 w-full",
+									children: [
+										/* @__PURE__ */ (0, D.jsxs)("button", {
+											onClick: () => b((e) => e === "peek" ? "expanded" : "peek"),
+											className: "flex-1 min-w-0 py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition active:scale-[0.98]",
+											children: [/* @__PURE__ */ (0, D.jsx)(pe, { className: "w-3.5 h-3.5 text-emerald-400 shrink-0" }), /* @__PURE__ */ (0, D.jsx)("span", {
+												className: "truncate",
+												children: y === "expanded" ? "Minimizar" : "Cotizar y Ficha"
 											})]
 										}),
-										/* @__PURE__ */ (0, D.jsxs)("div", {
-											className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2",
-											children: [/* @__PURE__ */ (0, D.jsx)("div", {
-												className: "text-[11px] font-bold text-slate-300",
-												children: "Cambiar Estado (Sala de Ventas):"
-											}), /* @__PURE__ */ (0, D.jsxs)("div", {
-												className: "grid grid-cols-3 gap-1.5",
+										/* @__PURE__ */ (0, D.jsxs)("button", {
+											onClick: gt,
+											className: "py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1 shadow-md shadow-emerald-900/30 transition active:scale-[0.98] shrink-0",
+											title: "Compartir datos del lote",
+											children: [/* @__PURE__ */ (0, D.jsx)(me, { className: "w-3.5 h-3.5 shrink-0" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "Compartir" })]
+										}),
+										/* @__PURE__ */ (0, D.jsxs)("button", {
+											onClick: _t,
+											className: "py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1 border border-slate-700 transition active:scale-[0.98] shrink-0",
+											title: "Descargar Ficha PDF",
+											children: [/* @__PURE__ */ (0, D.jsx)(we, { className: "w-3.5 h-3.5 text-emerald-400 shrink-0" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "PDF" })]
+										})
+									]
+								})]
+							}),
+							y === "expanded" && /* @__PURE__ */ (0, D.jsxs)("div", {
+								className: "px-3.5 sm:px-4 pb-8 space-y-3.5 pt-1 border-t border-slate-800/80 overflow-x-hidden max-w-full",
+								children: [
+									/* @__PURE__ */ (0, D.jsx)("div", {
+										className: "grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 w-full max-w-full",
+										children: [
+											{
+												id: "ficha",
+												label: "Ficha Técnica"
+											},
+											{
+												id: "cotizador",
+												label: "Cotizador"
+											},
+											{
+												id: "plusvalia",
+												label: "Clima & ROI"
+											}
+										].map((e) => /* @__PURE__ */ (0, D.jsx)("button", {
+											onClick: () => h(e.id),
+											className: `py-1.5 px-1 rounded-lg text-[11px] sm:text-xs font-bold transition text-center truncate min-w-0 ${m === e.id ? "bg-slate-800 text-emerald-400 shadow" : "text-slate-400"}`,
+											children: e.label
+										}, e.id))
+									}),
+									m === "ficha" && /* @__PURE__ */ (0, D.jsxs)("div", {
+										className: "space-y-3 text-xs w-full max-w-full",
+										children: [
+											/* @__PURE__ */ (0, D.jsxs)("div", {
+												className: "grid grid-cols-2 gap-2 w-full max-w-full",
 												children: [
-													/* @__PURE__ */ (0, D.jsx)("button", {
-														onClick: () => ft("disponible"),
-														className: `py-1.5 rounded-lg text-xs font-bold border ${A.estado === "disponible" ? "bg-emerald-600 text-white border-emerald-400" : "bg-slate-900 text-slate-400 border-slate-800"}`,
-														children: "Disponible"
+													/* @__PURE__ */ (0, D.jsxs)("div", {
+														className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800 min-w-0 overflow-hidden",
+														children: [
+															/* @__PURE__ */ (0, D.jsx)("span", {
+																className: "text-slate-400 text-[10px] block",
+																children: "Medidas"
+															}),
+															/* @__PURE__ */ (0, D.jsxs)("strong", {
+																className: "text-white text-xs block truncate",
+																children: [
+																	A.frente,
+																	"m × ",
+																	A.fondo,
+																	"m"
+																]
+															}),
+															/* @__PURE__ */ (0, D.jsxs)("div", {
+																className: "text-[10px] text-slate-400 mt-0.5 truncate",
+																children: [
+																	A.areaM2,
+																	" m² (",
+																	A.areaV2.toFixed(1),
+																	" v²)"
+																]
+															})
+														]
 													}),
-													/* @__PURE__ */ (0, D.jsx)("button", {
-														onClick: () => ft("reservado"),
-														className: `py-1.5 rounded-lg text-xs font-bold border ${A.estado === "reservado" ? "bg-amber-600 text-white border-amber-400" : "bg-slate-900 text-slate-400 border-slate-800"}`,
-														children: "Reservar"
+													/* @__PURE__ */ (0, D.jsxs)("div", {
+														className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800 min-w-0 overflow-hidden",
+														children: [
+															/* @__PURE__ */ (0, D.jsx)("span", {
+																className: "text-slate-400 text-[10px] block",
+																children: "Orientación"
+															}),
+															/* @__PURE__ */ (0, D.jsx)("strong", {
+																className: "text-white text-xs block truncate",
+																children: A.orientacion
+															}),
+															/* @__PURE__ */ (0, D.jsx)("div", {
+																className: "text-[10px] text-emerald-400 mt-0.5 truncate",
+																children: A.categoria
+															})
+														]
 													}),
-													/* @__PURE__ */ (0, D.jsx)("button", {
-														onClick: () => ft("vendido"),
-														className: `py-1.5 rounded-lg text-xs font-bold border ${A.estado === "vendido" ? "bg-rose-600 text-white border-rose-400" : "bg-slate-900 text-slate-400 border-slate-800"}`,
-														children: "Vendido"
+													/* @__PURE__ */ (0, D.jsxs)("div", {
+														className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800 min-w-0 overflow-hidden",
+														children: [/* @__PURE__ */ (0, D.jsx)("span", {
+															className: "text-slate-400 text-[10px] block",
+															children: "Topografía"
+														}), /* @__PURE__ */ (0, D.jsx)("strong", {
+															className: "text-white text-xs block break-words leading-tight",
+															children: A.topografia
+														})]
+													}),
+													/* @__PURE__ */ (0, D.jsxs)("div", {
+														className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800 min-w-0 overflow-hidden",
+														children: [/* @__PURE__ */ (0, D.jsx)("span", {
+															className: "text-slate-400 text-[10px] block",
+															children: "Altitud GPS"
+														}), /* @__PURE__ */ (0, D.jsxs)("strong", {
+															className: "text-white text-xs block truncate",
+															children: [A.altitud, " msnm"]
+														})]
 													})
 												]
-											})]
-										})
-									]
-								}),
-								m === "cotizador" && /* @__PURE__ */ (0, D.jsxs)("div", {
-									className: "space-y-3 text-xs",
-									children: [/* @__PURE__ */ (0, D.jsxs)("div", {
-										className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-3",
-										children: [/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
-											className: "flex justify-between mb-1",
-											children: [/* @__PURE__ */ (0, D.jsxs)("span", {
-												className: "text-slate-300",
-												children: [
-													"Enganche (",
-													et,
-													"%):"
-												]
-											}), /* @__PURE__ */ (0, D.jsx)("strong", {
-												className: "text-emerald-400",
-												children: j(M.cuotaInicial)
-											})]
-										}), /* @__PURE__ */ (0, D.jsx)("input", {
-											type: "range",
-											min: 10,
-											max: 50,
-											step: 5,
-											value: et,
-											onChange: (e) => je(Number(e.target.value)),
-											className: "w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
-										})] }), /* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
-											className: "flex justify-between mb-1",
-											children: [/* @__PURE__ */ (0, D.jsx)("span", {
-												className: "text-slate-300",
-												children: "Plazo:"
-											}), /* @__PURE__ */ (0, D.jsxs)("strong", {
-												className: "text-white",
-												children: [
-													C,
-													" años (",
-													M.meses,
-													" meses)"
-												]
-											})]
-										}), /* @__PURE__ */ (0, D.jsx)("input", {
-											type: "range",
-											min: 1,
-											max: 20,
-											step: 1,
-											value: C,
-											onChange: (e) => w(Number(e.target.value)),
-											className: "w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
-										})] })]
-									}), /* @__PURE__ */ (0, D.jsxs)("div", {
-										className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2",
+											}),
+											/* @__PURE__ */ (0, D.jsxs)("div", {
+												className: "bg-slate-950 p-3 rounded-xl border border-slate-800 w-full max-w-full overflow-hidden",
+												children: [/* @__PURE__ */ (0, D.jsx)("div", {
+													className: "text-[11px] font-bold text-slate-200 mb-1",
+													children: "Servicios Incluidos"
+												}), /* @__PURE__ */ (0, D.jsx)("div", {
+													className: "flex flex-wrap gap-1 max-w-full",
+													children: A.servicios.map((e, t) => /* @__PURE__ */ (0, D.jsxs)("span", {
+														className: "px-2 py-0.5 bg-slate-900 border border-slate-800 text-[10px] text-slate-300 rounded max-w-full truncate",
+														children: ["✓ ", e]
+													}, t))
+												})]
+											}),
+											/* @__PURE__ */ (0, D.jsxs)("div", {
+												className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2 w-full max-w-full",
+												children: [/* @__PURE__ */ (0, D.jsx)("div", {
+													className: "text-[11px] font-bold text-slate-300",
+													children: "Cambiar Estado (Sala de Ventas):"
+												}), /* @__PURE__ */ (0, D.jsxs)("div", {
+													className: "grid grid-cols-3 gap-1.5 w-full max-w-full",
+													children: [
+														/* @__PURE__ */ (0, D.jsx)("button", {
+															onClick: () => ft("disponible"),
+															className: `py-1.5 px-1 rounded-lg text-xs font-bold border truncate min-w-0 ${A.estado === "disponible" ? "bg-emerald-600 text-white border-emerald-400" : "bg-slate-900 text-slate-400 border-slate-800"}`,
+															children: "Disponible"
+														}),
+														/* @__PURE__ */ (0, D.jsx)("button", {
+															onClick: () => ft("reservado"),
+															className: `py-1.5 px-1 rounded-lg text-xs font-bold border truncate min-w-0 ${A.estado === "reservado" ? "bg-amber-600 text-white border-amber-400" : "bg-slate-900 text-slate-400 border-slate-800"}`,
+															children: "Reservar"
+														}),
+														/* @__PURE__ */ (0, D.jsx)("button", {
+															onClick: () => ft("vendido"),
+															className: `py-1.5 px-1 rounded-lg text-xs font-bold border truncate min-w-0 ${A.estado === "vendido" ? "bg-rose-600 text-white border-rose-400" : "bg-slate-900 text-slate-400 border-slate-800"}`,
+															children: "Vendido"
+														})
+													]
+												})]
+											})
+										]
+									}),
+									m === "cotizador" && /* @__PURE__ */ (0, D.jsxs)("div", {
+										className: "space-y-3 text-xs w-full max-w-full",
 										children: [/* @__PURE__ */ (0, D.jsxs)("div", {
-											className: "flex justify-between text-xs",
-											children: [/* @__PURE__ */ (0, D.jsx)("span", {
-												className: "text-slate-400",
-												children: "Saldo a Financiar:"
-											}), /* @__PURE__ */ (0, D.jsx)("strong", {
-												className: "text-white",
-												children: j(M.saldoFinanciar)
+											className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-3 w-full max-w-full",
+											children: [/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+												className: "flex justify-between items-center mb-1 text-xs",
+												children: [/* @__PURE__ */ (0, D.jsxs)("span", {
+													className: "text-slate-300",
+													children: [
+														"Enganche (",
+														et,
+														"%):"
+													]
+												}), /* @__PURE__ */ (0, D.jsx)("strong", {
+													className: "text-emerald-400",
+													children: j(M.cuotaInicial)
+												})]
+											}), /* @__PURE__ */ (0, D.jsx)("input", {
+												type: "range",
+												min: 10,
+												max: 50,
+												step: 5,
+												value: et,
+												onChange: (e) => je(Number(e.target.value)),
+												className: "w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
+											})] }), /* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+												className: "flex justify-between items-center mb-1 text-xs",
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
+													className: "text-slate-300",
+													children: "Plazo:"
+												}), /* @__PURE__ */ (0, D.jsxs)("strong", {
+													className: "text-white",
+													children: [
+														C,
+														" años (",
+														M.meses,
+														" meses)"
+													]
+												})]
+											}), /* @__PURE__ */ (0, D.jsx)("input", {
+												type: "range",
+												min: 1,
+												max: 20,
+												step: 1,
+												value: C,
+												onChange: (e) => w(Number(e.target.value)),
+												className: "w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
+											})] })]
+										}), /* @__PURE__ */ (0, D.jsxs)("div", {
+											className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2 w-full max-w-full",
+											children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+												className: "flex justify-between text-xs",
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
+													className: "text-slate-400",
+													children: "Saldo a Financiar:"
+												}), /* @__PURE__ */ (0, D.jsx)("strong", {
+													className: "text-white",
+													children: j(M.saldoFinanciar)
+												})]
+											}), /* @__PURE__ */ (0, D.jsxs)("div", {
+												className: "flex justify-between text-xs items-center",
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
+													className: "text-slate-400",
+													children: "Cuota Mensual Estimada:"
+												}), /* @__PURE__ */ (0, D.jsxs)("strong", {
+													className: "text-emerald-400 text-sm",
+													children: [j(M.cuotaMensual), "/mes"]
+												})]
+											})]
+										})]
+									}),
+									m === "plusvalia" && /* @__PURE__ */ (0, D.jsxs)("div", {
+										className: "space-y-3 text-xs w-full max-w-full",
+										children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+											className: "bg-slate-950 p-3 rounded-xl border border-slate-800 w-full max-w-full",
+											children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+												className: "font-bold text-amber-400 mb-1 flex items-center gap-1",
+												children: [/* @__PURE__ */ (0, D.jsx)(fe, { className: "w-4 h-4 shrink-0" }), " Confort Bioclimático"]
+											}), /* @__PURE__ */ (0, D.jsxs)("p", {
+												className: "text-slate-300 leading-relaxed text-[11px] break-words",
+												children: [A.asoleamiento, "."]
 											})]
 										}), /* @__PURE__ */ (0, D.jsxs)("div", {
-											className: "flex justify-between text-xs",
-											children: [/* @__PURE__ */ (0, D.jsx)("span", {
-												className: "text-slate-400",
-												children: "Cuota Mensual Estimada:"
-											}), /* @__PURE__ */ (0, D.jsxs)("strong", {
-												className: "text-emerald-400 text-sm",
-												children: [j(M.cuotaMensual), "/mes"]
+											className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5 w-full max-w-full",
+											children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+												className: "flex justify-between text-xs",
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
+													className: "text-slate-400",
+													children: "Plusvalía estimada:"
+												}), /* @__PURE__ */ (0, D.jsxs)("strong", {
+													className: "text-emerald-400",
+													children: [
+														"+",
+														A.plusvaliaAnual,
+														"% anual"
+													]
+												})]
+											}), /* @__PURE__ */ (0, D.jsxs)("div", {
+												className: "flex justify-between text-xs",
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
+													className: "text-slate-400",
+													children: "Proyección a 5 años:"
+												}), /* @__PURE__ */ (0, D.jsx)("strong", {
+													className: "text-white",
+													children: j(M.valor5Anios)
+												})]
 											})]
 										})]
-									})]
-								}),
-								m === "plusvalia" && /* @__PURE__ */ (0, D.jsxs)("div", {
-									className: "space-y-3 text-xs",
-									children: [/* @__PURE__ */ (0, D.jsxs)("div", {
-										className: "bg-slate-950 p-3 rounded-xl border border-slate-800",
-										children: [/* @__PURE__ */ (0, D.jsxs)("div", {
-											className: "font-bold text-amber-400 mb-1 flex items-center gap-1",
-											children: [/* @__PURE__ */ (0, D.jsx)(fe, { className: "w-4 h-4" }), " Confort Bioclimático"]
-										}), /* @__PURE__ */ (0, D.jsxs)("p", {
-											className: "text-slate-300 leading-relaxed text-[11px]",
-											children: [A.asoleamiento, "."]
-										})]
-									}), /* @__PURE__ */ (0, D.jsxs)("div", {
-										className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5",
-										children: [/* @__PURE__ */ (0, D.jsxs)("div", {
-											className: "flex justify-between",
-											children: [/* @__PURE__ */ (0, D.jsx)("span", {
-												className: "text-slate-400",
-												children: "Plusvalía estimada:"
-											}), /* @__PURE__ */ (0, D.jsxs)("strong", {
-												className: "text-emerald-400",
-												children: [
-													"+",
-													A.plusvaliaAnual,
-													"% anual"
-												]
-											})]
-										}), /* @__PURE__ */ (0, D.jsxs)("div", {
-											className: "flex justify-between",
-											children: [/* @__PURE__ */ (0, D.jsx)("span", {
-												className: "text-slate-400",
-												children: "Proyección a 5 años:"
-											}), /* @__PURE__ */ (0, D.jsx)("strong", {
-												className: "text-white",
-												children: j(M.valor5Anios)
-											})]
-										})]
-									})]
-								})
-							]
-						})
-					]
+									})
+								]
+							})
+						]
+					})
 				})
 			}),
 			He && /* @__PURE__ */ (0, D.jsx)("div", {
-				className: "fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4",
+				className: "fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto",
 				children: /* @__PURE__ */ (0, D.jsxs)("div", {
-					className: "bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4",
+					className: "bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4 max-w-[calc(100vw-1.5rem)] overflow-hidden",
 					children: [
 						/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "flex items-center justify-between border-b border-slate-800 pb-3",
@@ -12495,7 +12503,7 @@ function je() {
 							})]
 						}),
 						/* @__PURE__ */ (0, D.jsx)("pre", {
-							className: "bg-slate-950 border border-slate-800 rounded-xl p-3 text-[11px] text-slate-200 whitespace-pre-wrap font-mono max-h-56 overflow-y-auto",
+							className: "bg-slate-950 border border-slate-800 rounded-xl p-3 text-[11px] text-slate-200 whitespace-pre-wrap font-mono max-h-56 overflow-y-auto break-all max-w-full",
 							children: ht
 						}),
 						/* @__PURE__ */ (0, D.jsxs)("div", {
@@ -12514,9 +12522,9 @@ function je() {
 				})
 			}),
 			We && /* @__PURE__ */ (0, D.jsx)("div", {
-				className: "fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4",
+				className: "fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto",
 				children: /* @__PURE__ */ (0, D.jsxs)("div", {
-					className: "bg-slate-900 border border-slate-700 rounded-2xl max-w-xl w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4",
+					className: "bg-slate-900 border border-slate-700 rounded-2xl max-w-xl w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4 max-w-[calc(100vw-1.5rem)] overflow-hidden",
 					children: [
 						/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "flex items-center justify-between border-b border-slate-800 pb-2",
@@ -12601,9 +12609,9 @@ function je() {
 				})
 			}),
 			Be && /* @__PURE__ */ (0, D.jsx)("div", {
-				className: "fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4",
+				className: "fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto",
 				children: /* @__PURE__ */ (0, D.jsxs)("div", {
-					className: "bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-4 sm:p-5 shadow-2xl space-y-3",
+					className: "bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-4 sm:p-5 shadow-2xl space-y-3 max-w-[calc(100vw-1.5rem)] overflow-hidden",
 					children: [
 						/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "flex items-center justify-between border-b border-slate-800 pb-2",

@@ -2073,267 +2073,273 @@ export default function LotificacionApp() {
       {/* MOBILE BOTTOM SHEET: Interactive Floating Drawer for Touch Screens  */}
       {/* =================================================================== */}
       <div className="block lg:hidden">
-        {/* PEEK BAR: Always visible compact card when a lot is selected */}
-        <div
-          className={`fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 shadow-2xl transition-all duration-300 ${
-            mobileSheet === 'expanded' ? 'h-[85vh] rounded-t-3xl overflow-y-auto' : 'h-auto rounded-t-2xl'
-          }`}
-        >
-          {/* Sheet Handle */}
+        {/* Bottom Drawer Wrapper with strict max width and centered alignment */}
+        <div className="fixed bottom-0 left-0 right-0 z-40 w-full max-w-full pointer-events-none flex justify-center">
           <div
-            onClick={() => setMobileSheet((prev) => (prev === 'peek' ? 'expanded' : 'peek'))}
-            className="w-full pt-2 pb-1.5 flex flex-col items-center justify-center cursor-pointer select-none active:bg-slate-800/50 rounded-t-2xl"
+            className={`pointer-events-auto w-full max-w-xl bg-slate-900/98 backdrop-blur-2xl border-t sm:border-x border-slate-800 shadow-[0_-10px_35px_rgba(0,0,0,0.6)] transition-all duration-300 overflow-x-hidden ${
+              mobileSheet === 'expanded'
+                ? 'h-[82vh] max-h-[82vh] rounded-t-3xl overflow-y-auto'
+                : 'h-auto rounded-t-2xl'
+            }`}
           >
-            <div className="w-12 h-1.5 bg-slate-700 rounded-full mb-1"></div>
-            <div className="flex items-center gap-1 text-[11px] font-bold text-slate-400">
-              {mobileSheet === 'peek' ? (
-                <>
-                  <span>Ver cotizador y ficha completa</span>
-                  <ChevronUp className="w-3.5 h-3.5 text-emerald-400" />
-                </>
-              ) : (
-                <>
-                  <span>Ocultar detalles (Ver mapa)</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-emerald-400" />
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Compact Peek Summary Bar */}
-          <div className="px-3.5 pb-3 pt-1">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-black">
-                  {selectedLot.label}
-                </span>
-                <span
-                  className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${
-                    selectedLot.estado === 'disponible'
-                      ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
-                      : selectedLot.estado === 'reservado'
-                      ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
-                      : 'bg-rose-500/15 text-rose-300 border-rose-500/40'
-                  }`}
-                >
-                  {selectedLot.estado}
-                </span>
-                <span className="text-[11px] text-slate-400 hidden xs:inline truncate">
-                  {selectedLot.frente}×{selectedLot.fondo}m ({selectedLot.areaM2}m²)
-                </span>
-              </div>
-
-              {/* Price & Monthly quote */}
-              <div className="text-right">
-                <div className="text-base font-extrabold text-white leading-tight">
-                  {formatMoney(financialData.precioTotal)}
-                </div>
-                <div className="text-[10px] font-semibold text-emerald-400">
-                  Desde {formatMoney(financialData.cuotaMensual)}/m
-                </div>
+            {/* Sheet Handle */}
+            <div
+              onClick={() => setMobileSheet((prev) => (prev === 'peek' ? 'expanded' : 'peek'))}
+              className="w-full pt-2.5 pb-1 flex flex-col items-center justify-center cursor-pointer select-none active:bg-slate-800/60 rounded-t-2xl"
+            >
+              <div className="w-10 h-1.5 bg-slate-700/80 rounded-full mb-1"></div>
+              <div className="flex items-center gap-1 text-[11px] font-bold text-slate-400">
+                {mobileSheet === 'peek' ? (
+                  <>
+                    <span>Ver cotizador y ficha completa</span>
+                    <ChevronUp className="w-3.5 h-3.5 text-emerald-400" />
+                  </>
+                ) : (
+                  <>
+                    <span>Minimizar (Ver mapa completo)</span>
+                    <ChevronDown className="w-3.5 h-3.5 text-emerald-400" />
+                  </>
+                )}
               </div>
             </div>
 
-            {/* Quick Actions Row */}
-            <div className="grid grid-cols-4 gap-1.5 mt-2.5">
-              <button
-                onClick={() => setMobileSheet((prev) => (prev === 'peek' ? 'expanded' : 'peek'))}
-                className="col-span-2 py-2 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700"
-              >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400" />
-                <span>{mobileSheet === 'expanded' ? 'Minimizar' : 'Cotizar / Ficha'}</span>
-              </button>
-              <button
-                onClick={handleCopyShareText}
-                className="py-2 px-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1"
-              >
-                <Share2 className="w-3.5 h-3.5" />
-                <span>WhatsApp</span>
-              </button>
-              <button
-                onClick={handleDownloadPdfFile}
-                className="py-2 px-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1 border border-slate-700"
-              >
-                <FileDown className="w-3.5 h-3.5 text-emerald-400" />
-                <span>PDF</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Expanded Drawer Content (When swiped up) */}
-          {mobileSheet === 'expanded' && (
-            <div className="px-4 pb-8 space-y-4 pt-1 border-t border-slate-800">
-              {/* Tab Selector */}
-              <div className="grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
-                {(
-                  [
-                    { id: 'ficha', label: 'Ficha Técnica' },
-                    { id: 'cotizador', label: 'Cotizador' },
-                    { id: 'plusvalia', label: 'Clima & ROI' }
-                  ] as const
-                ).map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`py-1.5 rounded-lg text-xs font-semibold transition ${
-                      activeTab === tab.id ? 'bg-slate-800 text-emerald-400 shadow' : 'text-slate-400'
+            {/* Compact Peek Summary Bar */}
+            <div className="px-3.5 pb-3 pt-1 w-full max-w-full overflow-hidden">
+              <div className="flex items-center justify-between gap-2 w-full">
+                <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                  <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-black shrink-0">
+                    {selectedLot.label}
+                  </span>
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border shrink-0 ${
+                      selectedLot.estado === 'disponible'
+                        ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
+                        : selectedLot.estado === 'reservado'
+                        ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
+                        : 'bg-rose-500/15 text-rose-300 border-rose-500/40'
                     }`}
                   >
-                    {tab.label}
-                  </button>
-                ))}
+                    {selectedLot.estado}
+                  </span>
+                  <span className="text-[11px] text-slate-400 truncate hidden sm:inline">
+                    {selectedLot.frente}×{selectedLot.fondo}m ({selectedLot.areaM2}m²)
+                  </span>
+                </div>
+
+                {/* Price & Monthly quote */}
+                <div className="text-right shrink-0">
+                  <div className="text-sm sm:text-base font-extrabold text-white leading-tight">
+                    {formatMoney(financialData.precioTotal)}
+                  </div>
+                  <div className="text-[10px] font-semibold text-emerald-400">
+                    Desde {formatMoney(financialData.cuotaMensual)}/m
+                  </div>
+                </div>
               </div>
 
-              {/* Mobile Tab 1: Ficha */}
-              {activeTab === 'ficha' && (
-                <div className="space-y-3 text-xs">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                      <span className="text-slate-400 text-[10px] block">Medidas</span>
-                      <strong className="text-white text-xs">{selectedLot.frente}m × {selectedLot.fondo}m</strong>
-                      <div className="text-[10px] text-slate-400 mt-0.5">{selectedLot.areaM2} m² ({selectedLot.areaV2.toFixed(1)} v²)</div>
-                    </div>
-                    <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                      <span className="text-slate-400 text-[10px] block">Orientación</span>
-                      <strong className="text-white text-xs">{selectedLot.orientacion}</strong>
-                      <div className="text-[10px] text-emerald-400 mt-0.5">{selectedLot.categoria}</div>
-                    </div>
-                    <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                      <span className="text-slate-400 text-[10px] block">Topografía</span>
-                      <strong className="text-white text-xs">{selectedLot.topografia}</strong>
-                    </div>
-                    <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                      <span className="text-slate-400 text-[10px] block">Altitud GPS</span>
-                      <strong className="text-white text-xs">{selectedLot.altitud} msnm</strong>
-                    </div>
-                  </div>
-
-                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                    <div className="text-[11px] font-bold text-slate-200 mb-1">Servicios Incluidos</div>
-                    <div className="flex flex-wrap gap-1">
-                      {selectedLot.servicios.map((s, i) => (
-                        <span key={i} className="px-2 py-0.5 bg-slate-900 border border-slate-800 text-[10px] text-slate-300 rounded">
-                          ✓ {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Status Toggle for mobile sales agent */}
-                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
-                    <div className="text-[11px] font-bold text-slate-300">Cambiar Estado (Sala de Ventas):</div>
-                    <div className="grid grid-cols-3 gap-1.5">
-                      <button
-                        onClick={() => handleToggleStatus('disponible')}
-                        className={`py-1.5 rounded-lg text-xs font-bold border ${
-                          selectedLot.estado === 'disponible' ? 'bg-emerald-600 text-white border-emerald-400' : 'bg-slate-900 text-slate-400 border-slate-800'
-                        }`}
-                      >
-                        Disponible
-                      </button>
-                      <button
-                        onClick={() => handleToggleStatus('reservado')}
-                        className={`py-1.5 rounded-lg text-xs font-bold border ${
-                          selectedLot.estado === 'reservado' ? 'bg-amber-600 text-white border-amber-400' : 'bg-slate-900 text-slate-400 border-slate-800'
-                        }`}
-                      >
-                        Reservar
-                      </button>
-                      <button
-                        onClick={() => handleToggleStatus('vendido')}
-                        className={`py-1.5 rounded-lg text-xs font-bold border ${
-                          selectedLot.estado === 'vendido' ? 'bg-rose-600 text-white border-rose-400' : 'bg-slate-900 text-slate-400 border-slate-800'
-                        }`}
-                      >
-                        Vendido
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Mobile Tab 2: Cotizador */}
-              {activeTab === 'cotizador' && (
-                <div className="space-y-3 text-xs">
-                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-3">
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="text-slate-300">Enganche ({effectiveEnganchePct}%):</span>
-                        <strong className="text-emerald-400">{formatMoney(financialData.cuotaInicial)}</strong>
-                      </div>
-                      <input
-                        type="range"
-                        min={10}
-                        max={50}
-                        step={5}
-                        value={effectiveEnganchePct}
-                        onChange={(e) => setEngancheCustomPct(Number(e.target.value))}
-                        className="w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
-                      />
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="text-slate-300">Plazo:</span>
-                        <strong className="text-white">{plazoAnios} años ({financialData.meses} meses)</strong>
-                      </div>
-                      <input
-                        type="range"
-                        min={1}
-                        max={20}
-                        step={1}
-                        value={plazoAnios}
-                        onChange={(e) => setPlazoAnios(Number(e.target.value))}
-                        className="w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
-                    <div className="flex justify-between text-xs">
-                      <span className="text-slate-400">Saldo a Financiar:</span>
-                      <strong className="text-white">{formatMoney(financialData.saldoFinanciar)}</strong>
-                    </div>
-                    <div className="flex justify-between text-xs">
-                      <span className="text-slate-400">Cuota Mensual Estimada:</span>
-                      <strong className="text-emerald-400 text-sm">{formatMoney(financialData.cuotaMensual)}/mes</strong>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Mobile Tab 3: Clima & ROI */}
-              {activeTab === 'plusvalia' && (
-                <div className="space-y-3 text-xs">
-                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                    <div className="font-bold text-amber-400 mb-1 flex items-center gap-1">
-                      <Sun className="w-4 h-4" /> Confort Bioclimático
-                    </div>
-                    <p className="text-slate-300 leading-relaxed text-[11px]">
-                      {selectedLot.asoleamiento}.
-                    </p>
-                  </div>
-                  <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5">
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">Plusvalía estimada:</span>
-                      <strong className="text-emerald-400">+{selectedLot.plusvaliaAnual}% anual</strong>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">Proyección a 5 años:</span>
-                      <strong className="text-white">{formatMoney(financialData.valor5Anios)}</strong>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {/* Quick Actions Row: fluid flex without rigid grids that overflow */}
+              <div className="flex items-center gap-2 mt-2 w-full">
+                <button
+                  onClick={() => setMobileSheet((prev) => (prev === 'peek' ? 'expanded' : 'peek'))}
+                  className="flex-1 min-w-0 py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition active:scale-[0.98]"
+                >
+                  <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <span className="truncate">{mobileSheet === 'expanded' ? 'Minimizar' : 'Cotizar y Ficha'}</span>
+                </button>
+                <button
+                  onClick={handleCopyShareText}
+                  className="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1 shadow-md shadow-emerald-900/30 transition active:scale-[0.98] shrink-0"
+                  title="Compartir datos del lote"
+                >
+                  <Share2 className="w-3.5 h-3.5 shrink-0" />
+                  <span>Compartir</span>
+                </button>
+                <button
+                  onClick={handleDownloadPdfFile}
+                  className="py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1 border border-slate-700 transition active:scale-[0.98] shrink-0"
+                  title="Descargar Ficha PDF"
+                >
+                  <FileDown className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <span>PDF</span>
+                </button>
+              </div>
             </div>
-          )}
+
+            {/* Expanded Drawer Content (When swiped up) */}
+            {mobileSheet === 'expanded' && (
+              <div className="px-3.5 sm:px-4 pb-8 space-y-3.5 pt-1 border-t border-slate-800/80 overflow-x-hidden max-w-full">
+                {/* Tab Selector */}
+                <div className="grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 w-full max-w-full">
+                  {(
+                    [
+                      { id: 'ficha', label: 'Ficha Técnica' },
+                      { id: 'cotizador', label: 'Cotizador' },
+                      { id: 'plusvalia', label: 'Clima & ROI' }
+                    ] as const
+                  ).map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`py-1.5 px-1 rounded-lg text-[11px] sm:text-xs font-bold transition text-center truncate min-w-0 ${
+                        activeTab === tab.id ? 'bg-slate-800 text-emerald-400 shadow' : 'text-slate-400'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Mobile Tab 1: Ficha */}
+                {activeTab === 'ficha' && (
+                  <div className="space-y-3 text-xs w-full max-w-full">
+                    <div className="grid grid-cols-2 gap-2 w-full max-w-full">
+                      <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 min-w-0 overflow-hidden">
+                        <span className="text-slate-400 text-[10px] block">Medidas</span>
+                        <strong className="text-white text-xs block truncate">{selectedLot.frente}m × {selectedLot.fondo}m</strong>
+                        <div className="text-[10px] text-slate-400 mt-0.5 truncate">{selectedLot.areaM2} m² ({selectedLot.areaV2.toFixed(1)} v²)</div>
+                      </div>
+                      <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 min-w-0 overflow-hidden">
+                        <span className="text-slate-400 text-[10px] block">Orientación</span>
+                        <strong className="text-white text-xs block truncate">{selectedLot.orientacion}</strong>
+                        <div className="text-[10px] text-emerald-400 mt-0.5 truncate">{selectedLot.categoria}</div>
+                      </div>
+                      <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 min-w-0 overflow-hidden">
+                        <span className="text-slate-400 text-[10px] block">Topografía</span>
+                        <strong className="text-white text-xs block break-words leading-tight">{selectedLot.topografia}</strong>
+                      </div>
+                      <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 min-w-0 overflow-hidden">
+                        <span className="text-slate-400 text-[10px] block">Altitud GPS</span>
+                        <strong className="text-white text-xs block truncate">{selectedLot.altitud} msnm</strong>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 w-full max-w-full overflow-hidden">
+                      <div className="text-[11px] font-bold text-slate-200 mb-1">Servicios Incluidos</div>
+                      <div className="flex flex-wrap gap-1 max-w-full">
+                        {selectedLot.servicios.map((s, i) => (
+                          <span key={i} className="px-2 py-0.5 bg-slate-900 border border-slate-800 text-[10px] text-slate-300 rounded max-w-full truncate">
+                            ✓ {s}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Status Toggle for mobile sales agent */}
+                    <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2 w-full max-w-full">
+                      <div className="text-[11px] font-bold text-slate-300">Cambiar Estado (Sala de Ventas):</div>
+                      <div className="grid grid-cols-3 gap-1.5 w-full max-w-full">
+                        <button
+                          onClick={() => handleToggleStatus('disponible')}
+                          className={`py-1.5 px-1 rounded-lg text-xs font-bold border truncate min-w-0 ${
+                            selectedLot.estado === 'disponible' ? 'bg-emerald-600 text-white border-emerald-400' : 'bg-slate-900 text-slate-400 border-slate-800'
+                          }`}
+                        >
+                          Disponible
+                        </button>
+                        <button
+                          onClick={() => handleToggleStatus('reservado')}
+                          className={`py-1.5 px-1 rounded-lg text-xs font-bold border truncate min-w-0 ${
+                            selectedLot.estado === 'reservado' ? 'bg-amber-600 text-white border-amber-400' : 'bg-slate-900 text-slate-400 border-slate-800'
+                          }`}
+                        >
+                          Reservar
+                        </button>
+                        <button
+                          onClick={() => handleToggleStatus('vendido')}
+                          className={`py-1.5 px-1 rounded-lg text-xs font-bold border truncate min-w-0 ${
+                            selectedLot.estado === 'vendido' ? 'bg-rose-600 text-white border-rose-400' : 'bg-slate-900 text-slate-400 border-slate-800'
+                          }`}
+                        >
+                          Vendido
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Mobile Tab 2: Cotizador */}
+                {activeTab === 'cotizador' && (
+                  <div className="space-y-3 text-xs w-full max-w-full">
+                    <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-3 w-full max-w-full">
+                      <div>
+                        <div className="flex justify-between items-center mb-1 text-xs">
+                          <span className="text-slate-300">Enganche ({effectiveEnganchePct}%):</span>
+                          <strong className="text-emerald-400">{formatMoney(financialData.cuotaInicial)}</strong>
+                        </div>
+                        <input
+                          type="range"
+                          min={10}
+                          max={50}
+                          step={5}
+                          value={effectiveEnganchePct}
+                          onChange={(e) => setEngancheCustomPct(Number(e.target.value))}
+                          className="w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
+                        />
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between items-center mb-1 text-xs">
+                          <span className="text-slate-300">Plazo:</span>
+                          <strong className="text-white">{plazoAnios} años ({financialData.meses} meses)</strong>
+                        </div>
+                        <input
+                          type="range"
+                          min={1}
+                          max={20}
+                          step={1}
+                          value={plazoAnios}
+                          onChange={(e) => setPlazoAnios(Number(e.target.value))}
+                          className="w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2 w-full max-w-full">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Saldo a Financiar:</span>
+                        <strong className="text-white">{formatMoney(financialData.saldoFinanciar)}</strong>
+                      </div>
+                      <div className="flex justify-between text-xs items-center">
+                        <span className="text-slate-400">Cuota Mensual Estimada:</span>
+                        <strong className="text-emerald-400 text-sm">{formatMoney(financialData.cuotaMensual)}/mes</strong>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Mobile Tab 3: Clima & ROI */}
+                {activeTab === 'plusvalia' && (
+                  <div className="space-y-3 text-xs w-full max-w-full">
+                    <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 w-full max-w-full">
+                      <div className="font-bold text-amber-400 mb-1 flex items-center gap-1">
+                        <Sun className="w-4 h-4 shrink-0" /> Confort Bioclimático
+                      </div>
+                      <p className="text-slate-300 leading-relaxed text-[11px] break-words">
+                        {selectedLot.asoleamiento}.
+                      </p>
+                    </div>
+                    <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5 w-full max-w-full">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Plusvalía estimada:</span>
+                        <strong className="text-emerald-400">+{selectedLot.plusvaliaAnual}% anual</strong>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Proyección a 5 años:</span>
+                        <strong className="text-white">{formatMoney(financialData.valor5Anios)}</strong>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       {/* MODAL 1: SHARE DIGITAL */}
       {showShareModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4">
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4 max-w-[calc(100vw-1.5rem)] overflow-hidden">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <div className="flex items-center gap-2">
                 <Share2 className="w-5 h-5 text-emerald-400" />
@@ -2349,7 +2355,7 @@ export default function LotificacionApp() {
               </button>
             </div>
 
-            <pre className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-[11px] text-slate-200 whitespace-pre-wrap font-mono max-h-56 overflow-y-auto">
+            <pre className="bg-slate-950 border border-slate-800 rounded-xl p-3 text-[11px] text-slate-200 whitespace-pre-wrap font-mono max-h-56 overflow-y-auto break-all max-w-full">
               {shareText}
             </pre>
 
@@ -2374,8 +2380,8 @@ export default function LotificacionApp() {
 
       {/* MODAL 2: PDF PREVIEW */}
       {showPdfModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-xl w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4">
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-xl w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4 max-w-[calc(100vw-1.5rem)] overflow-hidden">
             <div className="flex items-center justify-between border-b border-slate-800 pb-2">
               <div className="flex items-center gap-2">
                 <FileDown className="w-5 h-5 text-emerald-400" />
@@ -2435,8 +2441,8 @@ export default function LotificacionApp() {
 
       {/* MODAL 3: COMPARE */}
       {showCompareModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-4 sm:p-5 shadow-2xl space-y-3">
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-4 sm:p-5 shadow-2xl space-y-3 max-w-[calc(100vw-1.5rem)] overflow-hidden">
             <div className="flex items-center justify-between border-b border-slate-800 pb-2">
               <div className="flex items-center gap-2">
                 <GitCompare className="w-5 h-5 text-indigo-400" />

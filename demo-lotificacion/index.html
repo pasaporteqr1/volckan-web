@@ -56,6 +56,7 @@
     
     
     
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -240,69 +241,21 @@
         </div>
     </header>
 
-    <main class="flex-grow bg-slate-950">
-        <!-- Showcase Header Banner -->
-        <section class="relative bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800/80 py-10 md:py-14">
+    <main class="flex-grow bg-slate-950 overflow-x-hidden w-full max-w-full">
+        <!-- Showcase Header Banner (Compact & Clean) -->
+        <section class="relative bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800/80 py-5 sm:py-7">
             <div class="max-w-7xl mx-auto px-4 sm:px-6">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2.5">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block"></span>
                     Demo en Vivo • Desarrollo Inmobiliario
                 </div>
-                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-                    <div class="max-w-3xl">
-                        <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
-                            Masterplan Interactivo & <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Cotizador de Lotes</span>
-                        </h1>
-                        <p class="mt-4 text-slate-300 text-sm md:text-base leading-relaxed">
-                            Plataforma de alta tecnología desarrollada por <strong>Tecno Volckánica</strong> para salas de venta, promotores y asesores inmobiliarios. Facilita la exploración interactiva de lotes sobre plano georreferenciado, simulación de sombra y asoleamiento por hora, cálculo financiero con enganche y cuota mensual en GTQ / USD, y emisión de fichas técnicas en PDF.
-                        </p>
-                    </div>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button class="agendar-demo-btn inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-brand-red to-orange-600 hover:from-brand-red hover:to-orange-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-red/30 transition-all hover:-translate-y-0.5">
-                            <span class="material-symbols-outlined text-lg">calendar_month</span>
-                            <span>Solicitar Demo para mi Proyecto</span>
-                        </button>
-                        <a href="https://wa.me/50246741239?text=Hola%20Tecno%20Volck%C3%A1nica%2C%20vi%20la%20demo%20del%20Masterplan%20de%20Lotificaci%C3%B3n%20y%20quisiera%20cotizarlo%20para%20un%20proyecto."
-                           target="_blank" rel="noopener noreferrer"
-                           class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-900/40 transition-all hover:-translate-y-0.5">
-                            <span class="material-symbols-outlined text-lg">chat</span>
-                            <span>WhatsApp Directo</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Feature Pills -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-8 pt-6 border-t border-slate-800/80">
-                    <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
-                        <div class="text-emerald-400 text-xs font-bold flex items-center gap-1.5 mb-1">
-                            <span class="material-symbols-outlined text-sm">map</span> Plano Vectorial
-                        </div>
-                        <div class="text-[11px] text-slate-400">Polígonos interactivos con selección y zoom</div>
-                    </div>
-                    <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
-                        <div class="text-amber-400 text-xs font-bold flex items-center gap-1.5 mb-1">
-                            <span class="material-symbols-outlined text-sm">wb_sunny</span> Confort Solar
-                        </div>
-                        <div class="text-[11px] text-slate-400">Simulador de sombra y brisa por hora</div>
-                    </div>
-                    <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
-                        <div class="text-teal-400 text-xs font-bold flex items-center gap-1.5 mb-1">
-                            <span class="material-symbols-outlined text-sm">calculate</span> Cotizador en Vivo
-                        </div>
-                        <div class="text-[11px] text-slate-400">Cálculo de enganche, cuota e IUSI</div>
-                    </div>
-                    <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
-                        <div class="text-sky-400 text-xs font-bold flex items-center gap-1.5 mb-1">
-                            <span class="material-symbols-outlined text-sm">picture_as_pdf</span> Ficha PDF / WhatsApp
-                        </div>
-                        <div class="text-[11px] text-slate-400">Exportación formal e intercambio rápido</div>
-                    </div>
-                    <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl col-span-2 sm:col-span-1">
-                        <div class="text-indigo-400 text-xs font-bold flex items-center gap-1.5 mb-1">
-                            <span class="material-symbols-outlined text-sm">compare</span> Comparador
-                        </div>
-                        <div class="text-[11px] text-slate-400">Comparativa técnica de hasta 3 lotes</div>
-                    </div>
+                <div class="max-w-3xl">
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
+                        Masterplan Interactivo & <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Cotizador de Lotes</span>
+                    </h1>
+                    <p class="mt-2 text-slate-400 text-xs sm:text-sm leading-relaxed">
+                        Exploración interactiva sobre plano georreferenciado, cálculo financiero de enganche y cuotas en tiempo real, y exportación de fichas técnicas para salas de venta.
+                    </p>
                 </div>
             </div>
         </section>
