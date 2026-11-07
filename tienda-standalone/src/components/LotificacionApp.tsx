@@ -43,502 +43,24 @@ import {
   LuHand as Hand
 } from 'react-icons/lu';
 
-type LotStatus = 'disponible' | 'reservado' | 'vendido';
-type LotTier = 'Comercial' | 'Esquinero' | 'Frente a Parque' | 'Estándar';
+import {
+  REAL_LOTS_DATA,
+  RealLot,
+  RealLot as Lot,
+  LotStatus,
+  LotTier,
+  LotQuotaTable
+} from '../data/realLotsData';
+import { PLAN_IMAGE_URI } from '../data/planImage';
 
-interface Lot {
-  id: string;
-  codigoCatastral: string;
-  sector: string;
-  numero: number;
-  label: string;
-  frente: number;
-  fondo: number;
-  areaM2: number;
-  areaV2: number;
-  orientacion: 'Norte' | 'Sur' | 'Este' | 'Oeste' | 'Noreste' | 'Noroeste' | 'Sureste';
-  latitud: number;
-  longitud: number;
-  altitud: number;
-  precioGTQ: number;
-  cuotaInicialPct: number;
-  estado: LotStatus;
-  categoria: LotTier;
-  topografia: string;
-  servicios: string[];
-  plusvaliaAnual: number;
-  asoleamiento: string;
-  distanciaAmenidades: string;
-  points: string;
-  centerX: number;
-  centerY: number;
-  notasVendedor: string;
-}
+export type { RealLot as Lot, LotStatus, LotTier, LotQuotaTable };
 
-const TASA_CAMBIO_USD = 7.75; // 1 USD = 7.75 GTQ
-
-const LOTES_DATA: Lot[] = [
-  // MANZANA A (Norte - Bulevar Principal y Garita)
-  {
-    id: 'A-01',
-    codigoCatastral: 'RET-2026-A001',
-    sector: 'Manzana A (Bulevar)',
-    numero: 1,
-    label: 'A-01',
-    frente: 12,
-    fondo: 22,
-    areaM2: 264,
-    areaV2: 377.82,
-    orientacion: 'Sur',
-    latitud: 14.54182,
-    longitud: -91.67412,
-    altitud: 244,
-    precioGTQ: 245000,
-    cuotaInicialPct: 15,
-    estado: 'disponible',
-    categoria: 'Comercial',
-    topografia: '100% Plano (Nivel de calzada)',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V subterránea', 'Drenaje pluvial y biodigestor', 'Fibra óptica'],
-    plusvaliaAnual: 12.5,
-    asoleamiento: 'Fachada iluminada por la mañana, sombra natural en jardín trasero por la tarde',
-    distanciaAmenidades: 'A 35m de Garita Principal y Plazoleta Comercial',
-    points: '110,95 185,95 185,180 110,180',
-    centerX: 147,
-    centerY: 137,
-    notasVendedor: 'Ideal para inversión mixta o local comercial en planta baja. Alto tráfico peatonal.'
-  },
-  {
-    id: 'A-02',
-    codigoCatastral: 'RET-2026-A002',
-    sector: 'Manzana A (Bulevar)',
-    numero: 2,
-    label: 'A-02',
-    frente: 10,
-    fondo: 22,
-    areaM2: 220,
-    areaV2: 314.85,
-    orientacion: 'Sur',
-    latitud: 14.54182,
-    longitud: -91.67398,
-    altitud: 244,
-    precioGTQ: 198000,
-    cuotaInicialPct: 15,
-    estado: 'disponible',
-    categoria: 'Estándar',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 11.2,
-    asoleamiento: 'Ventilación cruzada dominante Sur-Norte fresca en tardes cálidas de Retalhuleu',
-    distanciaAmenidades: 'A 50m de Garita Principal y 80m de Casa Club',
-    points: '190,95 255,95 255,180 190,180',
-    centerX: 222,
-    centerY: 137,
-    notasVendedor: 'Excelente relación precio/ubicación cerca del acceso principal.'
-  },
-  {
-    id: 'A-03',
-    codigoCatastral: 'RET-2026-A003',
-    sector: 'Manzana A (Bulevar)',
-    numero: 3,
-    label: 'A-03',
-    frente: 10,
-    fondo: 22,
-    areaM2: 220,
-    areaV2: 314.85,
-    orientacion: 'Sur',
-    latitud: 14.54182,
-    longitud: -91.67384,
-    altitud: 243,
-    precioGTQ: 198000,
-    cuotaInicialPct: 15,
-    estado: 'reservado',
-    categoria: 'Estándar',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 11.2,
-    asoleamiento: 'Orientación Sur con brisa directa del corredor ecológico',
-    distanciaAmenidades: 'A 65m de Casa Club y Piscina',
-    points: '260,95 325,95 325,180 260,180',
-    centerX: 292,
-    centerY: 137,
-    notasVendedor: 'Reservado por Familia Morales (vence bloqueo en 48 hrs).'
-  },
-  {
-    id: 'A-04',
-    codigoCatastral: 'RET-2026-A004',
-    sector: 'Manzana A (Bulevar)',
-    numero: 4,
-    label: 'A-04',
-    frente: 10,
-    fondo: 22,
-    areaM2: 220,
-    areaV2: 314.85,
-    orientacion: 'Sur',
-    latitud: 14.54181,
-    longitud: -91.67370,
-    altitud: 243,
-    precioGTQ: 205000,
-    cuotaInicialPct: 15,
-    estado: 'vendido',
-    categoria: 'Frente a Parque',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 11.8,
-    asoleamiento: 'Vista despejada hacia el Parque Central La Ceiba',
-    distanciaAmenidades: 'Frente al acceso norte del Parque Central',
-    points: '330,95 395,95 395,180 330,180',
-    centerX: 362,
-    centerY: 137,
-    notasVendedor: 'Escriturado en octubre 2026.'
-  },
-  {
-    id: 'A-05',
-    codigoCatastral: 'RET-2026-A005',
-    sector: 'Manzana A (Bulevar)',
-    numero: 5,
-    label: 'A-05',
-    frente: 14,
-    fondo: 22,
-    areaM2: 308,
-    areaV2: 440.79,
-    orientacion: 'Sureste',
-    latitud: 14.54180,
-    longitud: -91.67352,
-    altitud: 242,
-    precioGTQ: 268000,
-    cuotaInicialPct: 20,
-    estado: 'disponible',
-    categoria: 'Esquinero',
-    topografia: 'Plano con suave elevación panorámica (+0.5m)',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V subterránea', 'Drenaje pluvial', 'Fibra óptica', 'Doble acometida'],
-    plusvaliaAnual: 13.0,
-    asoleamiento: 'Doble fachada ventilada, ideal para casa con terraza mirador hacia Volcán Santiaguito',
-    distanciaAmenidades: 'Frente a Casa Club y Piscina Semi-Olímpica',
-    points: '400,95 485,95 495,180 400,180',
-    centerX: 445,
-    centerY: 137,
-    notasVendedor: 'Lote esquinero premium con doble frente y vista directa a amenidades.'
-  },
-
-  // MANZANA B (Oeste - Residencial Las Palmas)
-  {
-    id: 'B-01',
-    codigoCatastral: 'RET-2026-B001',
-    sector: 'Manzana B (Las Palmas)',
-    numero: 1,
-    label: 'B-01',
-    frente: 11,
-    fondo: 20,
-    areaM2: 220,
-    areaV2: 314.85,
-    orientacion: 'Este',
-    latitud: 14.54145,
-    longitud: -91.67415,
-    altitud: 241,
-    precioGTQ: 215000,
-    cuotaInicialPct: 15,
-    estado: 'disponible',
-    categoria: 'Esquinero',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 12.0,
-    asoleamiento: 'Sol de mañana en fachada principal; fachada totalmente fresca toda la tarde',
-    distanciaAmenidades: 'Frente a Parque Central y Cancha Polideportiva',
-    points: '110,230 195,230 195,295 110,295',
-    centerX: 152,
-    centerY: 262,
-    notasVendedor: 'Orientación Este (la más buscada en clima cálido de Retalhuleu por sombra vespertina).'
-  },
-  {
-    id: 'B-02',
-    codigoCatastral: 'RET-2026-B002',
-    sector: 'Manzana B (Las Palmas)',
-    numero: 2,
-    label: 'B-02',
-    frente: 10,
-    fondo: 20,
-    areaM2: 200,
-    areaV2: 286.23,
-    orientacion: 'Este',
-    latitud: 14.54132,
-    longitud: -91.67415,
-    altitud: 241,
-    precioGTQ: 192000,
-    cuotaInicialPct: 15,
-    estado: 'disponible',
-    categoria: 'Frente a Parque',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 11.8,
-    asoleamiento: 'Sombra vespertina garantizada y brisa desde los jardines centrales',
-    distanciaAmenidades: 'A 15m de Juegos Infantiles y Caminamientos',
-    points: '110,300 195,300 195,365 110,365',
-    centerX: 152,
-    centerY: 332,
-    notasVendedor: 'Perfecto para familias jóvenes; salida directa frente al área verde.'
-  },
-  {
-    id: 'B-03',
-    codigoCatastral: 'RET-2026-B003',
-    sector: 'Manzana B (Las Palmas)',
-    numero: 3,
-    label: 'B-03',
-    frente: 10,
-    fondo: 20,
-    areaM2: 200,
-    areaV2: 286.23,
-    orientacion: 'Este',
-    latitud: 14.54118,
-    longitud: -91.67415,
-    altitud: 240,
-    precioGTQ: 185000,
-    cuotaInicialPct: 15,
-    estado: 'vendido',
-    categoria: 'Estándar',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 11.0,
-    asoleamiento: 'Orientación Este fresca',
-    distanciaAmenidades: 'A 40m de Parque Central',
-    points: '110,370 195,370 195,435 110,435',
-    centerX: 152,
-    centerY: 402,
-    notasVendedor: 'Vendido - Construcción de vivienda modelo iniciada.'
-  },
-  {
-    id: 'B-04',
-    codigoCatastral: 'RET-2026-B004',
-    sector: 'Manzana B (Las Palmas)',
-    numero: 4,
-    label: 'B-04',
-    frente: 12,
-    fondo: 20,
-    areaM2: 240,
-    areaV2: 343.48,
-    orientacion: 'Noreste',
-    latitud: 14.54104,
-    longitud: -91.67415,
-    altitud: 239,
-    precioGTQ: 210000,
-    cuotaInicialPct: 15,
-    estado: 'disponible',
-    categoria: 'Esquinero',
-    topografia: 'Plano, colinda con sendero arborizado',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 11.9,
-    asoleamiento: 'Rodeado de vegetación madura al sur, microclima 2°C más fresco',
-    distanciaAmenidades: 'A 30m del Sendero Ecológico Río Bolas',
-    points: '110,440 195,440 195,510 110,510',
-    centerX: 152,
-    centerY: 475,
-    notasVendedor: 'Lote amplio con colindancia verde y máxima privacidad.'
-  },
-
-  // MANZANA C (Este - Sector Vista Club)
-  {
-    id: 'C-01',
-    codigoCatastral: 'RET-2026-C001',
-    sector: 'Manzana C (Vista Club)',
-    numero: 1,
-    label: 'C-01',
-    frente: 12,
-    fondo: 21,
-    areaM2: 252,
-    areaV2: 360.65,
-    orientacion: 'Oeste',
-    latitud: 14.54145,
-    longitud: -91.67335,
-    altitud: 242,
-    precioGTQ: 228000,
-    cuotaInicialPct: 15,
-    estado: 'disponible',
-    categoria: 'Frente a Parque',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V subterránea', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 12.2,
-    asoleamiento: 'Vista frontal al Parque Central y a pasos de la Piscina',
-    distanciaAmenidades: 'A 20m de Casa Club y Piscina',
-    points: '520,230 615,230 615,310 520,310',
-    centerX: 567,
-    centerY: 270,
-    notasVendedor: 'Ubicación privilegiada junto a la Casa Club.'
-  },
-  {
-    id: 'C-02',
-    codigoCatastral: 'RET-2026-C002',
-    sector: 'Manzana C (Vista Club)',
-    numero: 2,
-    label: 'C-02',
-    frente: 10,
-    fondo: 21,
-    areaM2: 210,
-    areaV2: 300.54,
-    orientacion: 'Oeste',
-    latitud: 14.54130,
-    longitud: -91.67335,
-    altitud: 241,
-    precioGTQ: 195000,
-    cuotaInicialPct: 15,
-    estado: 'reservado',
-    categoria: 'Frente a Parque',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 11.7,
-    asoleamiento: 'Frente a pérgola social y jardines de ceibas',
-    distanciaAmenidades: 'A 25m del Parque Central',
-    points: '520,315 615,315 615,390 520,390',
-    centerX: 567,
-    centerY: 352,
-    notasVendedor: 'Reserva activa con enganche fraccionado en revisión.'
-  },
-  {
-    id: 'C-03',
-    codigoCatastral: 'RET-2026-C003',
-    sector: 'Manzana C (Vista Club)',
-    numero: 3,
-    label: 'C-03',
-    frente: 11,
-    fondo: 21,
-    areaM2: 231,
-    areaV2: 330.60,
-    orientacion: 'Noroeste',
-    latitud: 14.54115,
-    longitud: -91.67335,
-    altitud: 240,
-    precioGTQ: 208000,
-    cuotaInicialPct: 15,
-    estado: 'disponible',
-    categoria: 'Esquinero',
-    topografia: 'Plano en esquina tranquila',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 12.0,
-    asoleamiento: 'Iluminación natural todo el día, sin vecinos en colindancia sur',
-    distanciaAmenidades: 'A 45m de Cancha Polideportiva y Sendero',
-    points: '520,395 615,395 605,475 520,475',
-    centerX: 565,
-    centerY: 435,
-    notasVendedor: 'Excelente para diseño arquitectónico en L con jardín interior.'
-  },
-
-  // MANZANA D (Sur - Bosque Sur)
-  {
-    id: 'D-01',
-    codigoCatastral: 'RET-2026-D001',
-    sector: 'Manzana D (Bosque Sur)',
-    numero: 1,
-    label: 'D-01',
-    frente: 10,
-    fondo: 19,
-    areaM2: 190,
-    areaV2: 271.92,
-    orientacion: 'Norte',
-    latitud: 14.54095,
-    longitud: -91.67395,
-    altitud: 238,
-    precioGTQ: 172000,
-    cuotaInicialPct: 10,
-    estado: 'disponible',
-    categoria: 'Estándar',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 11.4,
-    asoleamiento: 'Orientación Norte (fachada en sombra constante todo el año)',
-    distanciaAmenidades: 'Frente a Parque Central y respaldado por Bosque Ecológico',
-    points: '235,435 300,435 300,515 235,515',
-    centerX: 267,
-    centerY: 475,
-    notasVendedor: 'El lote de menor enganche (10%) disponible en todo el proyecto.'
-  },
-  {
-    id: 'D-02',
-    codigoCatastral: 'RET-2026-D002',
-    sector: 'Manzana D (Bosque Sur)',
-    numero: 2,
-    label: 'D-02',
-    frente: 10,
-    fondo: 19,
-    areaM2: 190,
-    areaV2: 271.92,
-    orientacion: 'Norte',
-    latitud: 14.54095,
-    longitud: -91.67380,
-    altitud: 238,
-    precioGTQ: 175000,
-    cuotaInicialPct: 10,
-    estado: 'disponible',
-    categoria: 'Frente a Parque',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 11.5,
-    asoleamiento: 'Orientación Norte con vista al centro del parque y reserva atrás',
-    distanciaAmenidades: 'A 10m de la rotonda peatonal del Parque Central',
-    points: '305,435 370,435 370,515 305,515',
-    centerX: 337,
-    centerY: 475,
-    notasVendedor: 'Enganche promocional del 10%. Alta demanda para primera vivienda.'
-  },
-  {
-    id: 'D-03',
-    codigoCatastral: 'RET-2026-D003',
-    sector: 'Manzana D (Bosque Sur)',
-    numero: 3,
-    label: 'D-03',
-    frente: 10,
-    fondo: 19,
-    areaM2: 190,
-    areaV2: 271.92,
-    orientacion: 'Norte',
-    latitud: 14.54095,
-    longitud: -91.67365,
-    altitud: 238,
-    precioGTQ: 175000,
-    cuotaInicialPct: 10,
-    estado: 'vendido',
-    categoria: 'Frente a Parque',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 11.5,
-    asoleamiento: 'Orientación Norte fresca',
-    distanciaAmenidades: 'Frente a Parque Central',
-    points: '375,435 440,435 440,515 375,515',
-    centerX: 407,
-    centerY: 475,
-    notasVendedor: 'Vendido al contado.'
-  },
-  {
-    id: 'D-04',
-    codigoCatastral: 'RET-2026-D004',
-    sector: 'Manzana D (Bosque Sur)',
-    numero: 4,
-    label: 'D-04',
-    frente: 11,
-    fondo: 19,
-    areaM2: 209,
-    areaV2: 299.11,
-    orientacion: 'Norte',
-    latitud: 14.54095,
-    longitud: -91.67350,
-    altitud: 239,
-    precioGTQ: 189000,
-    cuotaInicialPct: 10,
-    estado: 'disponible',
-    categoria: 'Esquinero',
-    topografia: '100% Plano',
-    servicios: ['Agua de pozo propio', 'Energía 110/220V', 'Drenaje pluvial', 'Fibra óptica'],
-    plusvaliaAnual: 12.1,
-    asoleamiento: 'Esquina Norte-Este: las dos orientaciones más frescas combinadas',
-    distanciaAmenidades: 'Acceso inmediato a Sendero Ecológico y Parque',
-    points: '445,435 505,435 505,515 445,515',
-    centerX: 475,
-    centerY: 475,
-    notasVendedor: 'Joya bioclimática: esquina Norte-Este junto a reserva natural.'
-  }
-];
+const TASA_CAMBIO_USD = 7.75;
 
 export default function LotificacionApp() {
   // Main Data & Selection State
-  const [lots, setLots] = useState<Lot[]>(LOTES_DATA);
-  const [selectedLotId, setSelectedLotId] = useState<string>('A-01');
+  const [lots, setLots] = useState<Lot[]>(REAL_LOTS_DATA);
+  const [selectedLotId, setSelectedLotId] = useState<string>('G-1');
   const [currency, setCurrency] = useState<'GTQ' | 'USD'>('GTQ');
   const [filterStatus, setFilterStatus] = useState<string>('todos');
   const [filterSector, setFilterSector] = useState<string>('todos');
@@ -556,15 +78,15 @@ export default function LotificacionApp() {
   const [scale, setScale] = useState<number>(1.0);
 
   // Financial Form State
-  const [plazoAnios, setPlazoAnios] = useState<number>(10);
-  const [tasaInteresAnual, setTasaInteresAnual] = useState<number>(8.5);
+  const [plazoAnios, setPlazoAnios] = useState<number>(8);
+  const [tasaInteresAnual, setTasaInteresAnual] = useState<number>(18.0);
   const [engancheCustomPct, setEngancheCustomPct] = useState<number | null>(null);
   const [clienteNombre, setClienteNombre] = useState<string>('Carlos Méndez');
   const [clienteTelefono, setClienteTelefono] = useState<string>('+502 5544-8899');
   const [asesorNombre, setAsesorNombre] = useState<string>('Ing. Sofía Barrios');
 
   // Modals & Feedback
-  const [compareList, setCompareList] = useState<string[]>(['A-01', 'B-01']);
+  const [compareList, setCompareList] = useState<string[]>(['F-1', 'G-1']);
   const [showCompareModal, setShowCompareModal] = useState<boolean>(false);
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
   const [showPdfModal, setShowPdfModal] = useState<boolean>(false);
@@ -723,13 +245,27 @@ export default function LotificacionApp() {
     const precioTotal = selectedLot.precioGTQ;
     const cuotaInicial = (precioTotal * effectiveEnganchePct) / 100;
     const saldoFinanciar = precioTotal - cuotaInicial;
-    const meses = plazoAnios * 12;
-    const tasaMensual = tasaInteresAnual / 100 / 12;
-    const cuotaMensual =
-      tasaMensual > 0
-        ? (saldoFinanciar * (tasaMensual * Math.pow(1 + tasaMensual, meses))) /
-          (Math.pow(1 + tasaMensual, meses) - 1)
-        : saldoFinanciar / meses;
+    const meses = Math.round(plazoAnios * 12);
+
+    // Exact official spreadsheet quota at 10% enganche and 18% level interest
+    const isStandardSheet =
+      effectiveEnganchePct === 10 &&
+      Math.abs(tasaInteresAnual - 18.0) < 0.01 &&
+      selectedLot.cuotasNiveladas &&
+      (meses in selectedLot.cuotasNiveladas);
+
+    let cuotaMensual = 0;
+    if (isStandardSheet) {
+      cuotaMensual = selectedLot.cuotasNiveladas[meses as keyof LotQuotaTable];
+    } else {
+      const tasaMensual = tasaInteresAnual / 100 / 12;
+      cuotaMensual =
+        tasaMensual > 0
+          ? (saldoFinanciar * (tasaMensual * Math.pow(1 + tasaMensual, meses))) /
+            (Math.pow(1 + tasaMensual, meses) - 1)
+          : saldoFinanciar / meses;
+    }
+
     const iusiTrimestral = (precioTotal * 0.009) / 4;
     const valor5Anios = precioTotal * Math.pow(1 + selectedLot.plusvaliaAnual / 100, 5);
 
@@ -756,10 +292,10 @@ export default function LotificacionApp() {
     const W = rect.width;
     const H = rect.height;
 
-    // SVG aspect ratio calculation (viewBox 0 0 720 590)
-    const ratio = Math.min(W / 720, H / 590);
-    const offsetX = (W - 720 * ratio) / 2;
-    const offsetY = (H - 590 * ratio) / 2;
+    // SVG aspect ratio calculation (viewBox 0 0 1280 720)
+    const ratio = Math.min(W / 1280, H / 720);
+    const offsetX = (W - 1280 * ratio) / 2;
+    const offsetY = (H - 720 * ratio) / 2;
 
     const lotScreenX = offsetX + lot.centerX * ratio;
     const lotScreenY = offsetY + lot.centerY * ratio;
@@ -1040,21 +576,19 @@ export default function LotificacionApp() {
     }
 
     if (mapLayer === 'categoria') {
-      if (lot.categoria === 'Comercial') return isSelected ? '#7c3aed' : '#8b5cf6';
-      if (lot.categoria === 'Esquinero') return isSelected ? '#0284c7' : '#0ea5e9';
-      if (lot.categoria === 'Frente a Parque') return isSelected ? '#0d9488' : '#14b8a6';
-      return isSelected ? '#475569' : '#64748b';
+      if (lot.categoria === 'Esquinero' || lot.irregular) return isSelected ? '#0284c7' : '#0ea5e9';
+      return isSelected ? '#059669' : '#10b981';
     }
 
     if (mapLayer === 'precio') {
-      const priceM2 = lot.precioGTQ / lot.areaM2;
-      if (priceM2 > 910) return isSelected ? '#4f46e5' : '#6366f1';
-      if (priceM2 > 880) return isSelected ? '#0284c7' : '#38bdf8';
+      const priceM2 = lot.precioM2 || (lot.precioGTQ / lot.areaM2);
+      if (priceM2 >= 735) return isSelected ? '#7c3aed' : '#8b5cf6';
+      if (priceM2 >= 665) return isSelected ? '#0284c7' : '#38bdf8';
       return isSelected ? '#059669' : '#34d399';
     }
 
     // Solar comfort layer
-    if (lot.orientacion === 'Norte' || lot.orientacion === 'Este' || lot.orientacion === 'Noreste') {
+    if (lot.orientacion === 'Norte' || lot.orientacion === 'Este') {
       return isSelected ? '#0284c7' : '#38bdf8';
     }
     return isSelected ? '#ea580c' : '#fb923c';
@@ -1062,27 +596,41 @@ export default function LotificacionApp() {
 
   // Share Text Generator
   const shareText = useMemo(() => {
-    return `🌴 *RESIDENCIAL PASEO LAS PALMAS - RETALHULEU, GUATEMALA* 🌴
+    return `🌳 *RESIDENCIALES LAS MACADAMIAS - FASE 2* 🌳
 📍 *Cotización Oficial — Lote ${selectedLot.label} (${selectedLot.sector})*
 👤 Preparado para: ${clienteNombre}
 
 📐 *MEDIDAS Y UBICACIÓN:*
-• Código Catastral: ${selectedLot.codigoCatastral}
-• Dimensiones: ${selectedLot.frente}m de frente × ${selectedLot.fondo}m de fondo
+• Código de Terreno: ${selectedLot.codigoCatastral}
+• Dimensiones: ${selectedLot.frente}m frente × ${selectedLot.fondo}m fondo
 • Área Total: ${selectedLot.areaM2} m² (${selectedLot.areaV2.toFixed(2)} varas²)
-• Orientación: ${selectedLot.orientacion} (${selectedLot.categoria})
-• Coordenadas GPS: ${selectedLot.latitud}° N, ${selectedLot.longitud}° W
-• Altitud: ${selectedLot.altitud} msnm (Clima cálido tropical, Retalhuleu)
+• Categoría: ${selectedLot.categoria} (${selectedLot.irregular ? 'Lote irregular / esquinero' : 'Lote rectangular estándar'})
+• Orientación Solar: ${selectedLot.orientacion}
+• Coordenadas GPS: ${selectedLot.latitud}° N, ${selectedLot.longitud}° W (Retalhuleu)
 
-💰 *PLAN FINANCIERO (${currency}):*
+💰 *PLAN FINANCIERO OFICIAL (${currency}):*
 • Precio de Lista: ${formatMoney(financialData.precioTotal)}
-• Cuota Inicial (${effectiveEnganchePct}%): *${formatMoney(financialData.cuotaInicial)}*
+• Precio por M²: ${formatMoney(selectedLot.precioM2)}/m²
+• Enganche (${effectiveEnganchePct}%): *${formatMoney(financialData.cuotaInicial)}*
 • Saldo a Financiar: ${formatMoney(financialData.saldoFinanciar)}
-• Cuota Mensual Estimada (${plazoAnios} años al ${tasaInteresAnual}%): *${formatMoney(financialData.cuotaMensual)}/mes*
-• Proyección de Valor a 5 años (+${selectedLot.plusvaliaAnual}% anual): ${formatMoney(financialData.valor5Anios)}
+• Cuota Mensual Nivelada (${financialData.meses} meses al ${tasaInteresAnual}%): *${formatMoney(financialData.cuotaMensual)}/mes*
 
-✨ *Servicios Incluidos:* ${selectedLot.servicios.join(', ')}.
-📞 *Asesor Inmobiliario:* ${asesorNombre} | Tel: ${clienteTelefono}`;
+📋 *TABLA OFICIAL DE CUOTAS AL 18% NIVELADO:*
+• 12 Meses: ${formatMoney(selectedLot.cuotasNiveladas?.[12] || 0)}/mes
+• 24 Meses: ${formatMoney(selectedLot.cuotasNiveladas?.[24] || 0)}/mes
+• 36 Meses: ${formatMoney(selectedLot.cuotasNiveladas?.[36] || 0)}/mes
+• 48 Meses: ${formatMoney(selectedLot.cuotasNiveladas?.[48] || 0)}/mes
+• 60 Meses: ${formatMoney(selectedLot.cuotasNiveladas?.[60] || 0)}/mes
+• 72 Meses: ${formatMoney(selectedLot.cuotasNiveladas?.[72] || 0)}/mes
+• 84 Meses: ${formatMoney(selectedLot.cuotasNiveladas?.[84] || 0)}/mes
+• 96 Meses: ${formatMoney(selectedLot.cuotasNiveladas?.[96] || 0)}/mes
+
+🏗️ *SERVICIOS Y URBANIZACIÓN:*
+• ${selectedLot.servicios.join(' • ')}
+
+💼 Asesor Inmobiliario: ${asesorNombre}
+📱 Contacto Directo: https://wa.me/502${clienteTelefono.replace(/\D/g, '')}
+📅 Vigente según listado oficial octubre 2025`;
   }, [selectedLot, clienteNombre, currency, effectiveEnganchePct, financialData, plazoAnios, tasaInteresAnual, asesorNombre, clienteTelefono]);
 
   const handleCopyShareText = () => {
@@ -1145,8 +693,8 @@ export default function LotificacionApp() {
   <div class="sheet">
     <div class="header">
       <div class="brand">
-        <h1>PASEO LAS PALMAS — RETALHULEU</h1>
-        <p>Km 182.5 Carretera CA-2 Occidente, Santa Cruz Muluá / Retalhuleu, Guatemala</p>
+        <h1>RESIDENCIALES LAS MACADAMIAS — FASE 2</h1>
+        <p>Retalhuleu, Guatemala • Manzanas F, G, H, I</p>
         <p style="margin-top:4px;font-weight:600;color:#0f172a;">Cliente: ${clienteNombre} | Fecha: ${fechaActual}</p>
       </div>
       <div class="badge">Lote ${selectedLot.label} • ${selectedLot.estado.toUpperCase()}</div>
@@ -1170,7 +718,7 @@ export default function LotificacionApp() {
         <h3>📐 Medidas y Datos Catastrales</h3>
         <div class="row"><span>Identificación del Lote:</span><span>Lote ${selectedLot.label} (${selectedLot.sector})</span></div>
         <div class="row"><span>Código Catastral:</span><span>${selectedLot.codigoCatastral}</span></div>
-        <div class="row"><span>Frente × Fondo:</span><span>${selectedLot.frente}.00 m × ${selectedLot.fondo}.00 m</span></div>
+        <div class="row"><span>Frente × Fondo:</span><span>${selectedLot.frente} m × ${selectedLot.fondo} m</span></div>
         <div class="row"><span>Área en Metros Cuadrados:</span><span>${selectedLot.areaM2.toFixed(2)} m²</span></div>
         <div class="row"><span>Área en Varas Cuadradas:</span><span>${selectedLot.areaV2.toFixed(2)} v²</span></div>
         <div class="row"><span>Topografía:</span><span>${selectedLot.topografia}</span></div>
@@ -1234,8 +782,8 @@ export default function LotificacionApp() {
 
   const sunPosition = useMemo(() => {
     const progress = (sunHour - 7) / 11;
-    const x = 670 - progress * 600;
-    const y = 75 + Math.sin(progress * Math.PI) * -45;
+    const x = 1180 - progress * 1080;
+    const y = 80 + Math.sin(progress * Math.PI) * -50;
     return { x, y, progress };
   }, [sunHour]);
 
@@ -1265,14 +813,14 @@ export default function LotificacionApp() {
             <div className="truncate">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <h1 className="text-sm sm:text-base font-bold tracking-tight text-white truncate">
-                  Paseo Las Palmas • Retalhuleu
+                  Residenciales Las Macadamias • Fase 2
                 </h1>
                 <span className="hidden xs:inline-block text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-medium shrink-0">
-                  v2.6 Gestos
+                  97 Lotes Reales
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 truncate">
-                Km 182.5 CA-2 • 14.5414° N, 91.6738° W
+                Retalhuleu, Guatemala • Manzanas F, G, H, I
               </p>
             </div>
           </div>
@@ -1350,7 +898,7 @@ export default function LotificacionApp() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Buscar lote (ej. A-01, Esquinero)..."
+                  placeholder="Buscar lote (ej. F-1, G-15, H-30)..."
                   className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-2 py-1.5 text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-emerald-500"
                 />
               </div>
@@ -1374,10 +922,10 @@ export default function LotificacionApp() {
                 className="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 max-w-[130px] sm:max-w-none truncate"
               >
                 <option value="todos">Todas las Manzanas</option>
-                <option value="Manzana A (Bulevar)">Manzana A</option>
-                <option value="Manzana B (Las Palmas)">Manzana B</option>
-                <option value="Manzana C (Vista Club)">Manzana C</option>
-                <option value="Manzana D (Bosque Sur)">Manzana D</option>
+                <option value="Manzana F">Manzana F (13 lotes)</option>
+                <option value="Manzana G">Manzana G (47 lotes)</option>
+                <option value="Manzana H">Manzana H (34 lotes)</option>
+                <option value="Manzana I">Manzana I (3 lotes)</option>
               </select>
             </div>
 
@@ -1510,171 +1058,49 @@ export default function LotificacionApp() {
               className="w-full h-full select-none"
             >
               <svg
-                viewBox="0 0 720 590"
+                viewBox="0 0 1280 720"
                 preserveAspectRatio="xMidYMid meet"
                 className="w-full h-full select-none"
               >
                 <defs>
-                  <pattern id="grassPattern3" width="24" height="24" patternUnits="userSpaceOnUse">
-                    <circle cx="4" cy="4" r="1" fill="#065f46" opacity="0.35" />
-                    <circle cx="16" cy="14" r="1.2" fill="#047857" opacity="0.35" />
-                  </pattern>
-                  <linearGradient id="riverGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#0284c7" stopOpacity="0.45" />
-                    <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.65" />
-                    <stop offset="100%" stopColor="#0369a1" stopOpacity="0.45" />
-                  </linearGradient>
                   <filter id="glowSelected3" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#34d399" floodOpacity="0.95" />
+                    <feDropShadow dx="0" dy="0" stdDeviation="5" floodColor="#38bdf8" floodOpacity="0.95" />
                   </filter>
                 </defs>
 
-                {/* Background Terrain */}
-                <rect x="0" y="0" width="720" height="590" fill="url(#grassPattern3)" />
-
-                {/* Carretera CA-2 Occidente */}
-                <rect x="0" y="18" width="720" height="42" fill="#1e293b" stroke="#334155" strokeWidth="1.5" />
-                <line x1="0" y1="39" x2="720" y2="39" stroke="#fbbf24" strokeWidth="2" strokeDasharray="14,10" />
-                <text x="24" y="34" fill="#94a3b8" fontSize="10" fontWeight="700" letterSpacing="1">
-                  ← HACIA RETALHULEU / IRTRA (8 MIN)
-                </text>
-                <text x="445" y="54" fill="#94a3b8" fontSize="10" fontWeight="700" letterSpacing="1">
-                  CA-2 OCCIDENTE • HACIA COATEPEQUE →
-                </text>
-
-                {/* Garita de Acceso */}
-                <rect x="52" y="60" width="44" height="55" rx="6" fill="#0f766e" stroke="#2dd4bf" strokeWidth="1.5" />
-                <text x="74" y="85" textAnchor="middle" fill="#ffffff" fontSize="8.5" fontWeight="700">
-                  GARITA
-                </text>
-                <text x="74" y="96" textAnchor="middle" fill="#99f6e4" fontSize="7.5">
-                  CONTROL
-                </text>
-
-                {/* Paved Roads */}
-                <path
-                  d="M 74 60 L 74 525 L 650 525 L 650 190 L 74 190"
-                  fill="none"
-                  stroke="#334155"
-                  strokeWidth="34"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                {/* Architectural Blueprint Base Image */}
+                <image
+                  href={PLAN_IMAGE_URI}
+                  width="1280"
+                  height="720"
+                  style={{ opacity: 0.92 }}
+                  preserveAspectRatio="none"
                 />
-                <line x1="215" y1="190" x2="215" y2="525" stroke="#334155" strokeWidth="28" />
-                <line x1="502" y1="190" x2="502" y2="430" stroke="#334155" strokeWidth="26" />
-                <line x1="215" y1="418" x2="515" y2="418" stroke="#334155" strokeWidth="26" />
-
-                {/* Road Dashed Lines */}
-                <line x1="95" y1="198" x2="630" y2="198" stroke="#64748b" strokeWidth="1.2" strokeDasharray="6,6" />
-                <line x1="215" y1="210" x2="215" y2="505" stroke="#64748b" strokeWidth="1.2" strokeDasharray="6,6" />
-                <line x1="230" y1="418" x2="495" y2="418" stroke="#64748b" strokeWidth="1.2" strokeDasharray="6,6" />
-
-                <text x="310" y="202" textAnchor="middle" fill="#cbd5e1" fontSize="9" fontWeight="600" letterSpacing="1.5">
-                  BULEVAR PRINCIPAL LAS PALMAS (12M)
-                </text>
-                <text x="365" y="421" textAnchor="middle" fill="#cbd5e1" fontSize="8.5" fontWeight="600" letterSpacing="1">
-                  CALLE DEL BOSQUE SUR
-                </text>
-
-                {/* Parque Central La Ceiba */}
-                <rect
-                  x="235"
-                  y="225"
-                  width="250"
-                  height="172"
-                  rx="16"
-                  fill="#064e3b"
-                  stroke="#10b981"
-                  strokeWidth="1.5"
-                  strokeDasharray="4,3"
-                />
-                <circle cx="315" cy="310" r="36" fill="#047857" opacity="0.6" />
-                <circle cx="315" cy="310" r="18" fill="#10b981" opacity="0.5" />
-                <text x="315" y="307" textAnchor="middle" fill="#ecfdf5" fontSize="10" fontWeight="700">
-                  PARQUE CENTRAL
-                </text>
-                <text x="315" y="320" textAnchor="middle" fill="#a7f3d0" fontSize="8.5">
-                  &quot;LA CEIBA&quot; (ÁREA VERDE)
-                </text>
-
-                {/* Cancha Polideportiva */}
-                <rect
-                  x="395"
-                  y="252"
-                  width="72"
-                  height="115"
-                  rx="6"
-                  fill="#0f766e"
-                  stroke="#5eead4"
-                  strokeWidth="1.5"
-                />
-                <line x1="395" y1="310" x2="467" y2="310" stroke="#5eead4" strokeWidth="1" />
-                <circle cx="431" cy="310" r="12" fill="none" stroke="#5eead4" strokeWidth="1" />
-                <text x="431" y="245" textAnchor="middle" fill="#99f6e4" fontSize="8" fontWeight="700">
-                  CANCHA
-                </text>
-
-                {/* Casa Club & Piscina */}
-                <rect
-                  x="520"
-                  y="92"
-                  width="135"
-                  height="88"
-                  rx="12"
-                  fill="#0f172a"
-                  stroke="#38bdf8"
-                  strokeWidth="1.5"
-                />
-                <rect
-                  x="535"
-                  y="108"
-                  width="55"
-                  height="32"
-                  rx="8"
-                  fill="#0284c7"
-                  stroke="#7dd3fc"
-                  strokeWidth="1.5"
-                />
-                <text x="562" y="128" textAnchor="middle" fill="#e0f2fe" fontSize="8" fontWeight="700">
-                  PISCINA
-                </text>
-                <text x="588" y="162" textAnchor="middle" fill="#bae6fd" fontSize="9.5" fontWeight="700">
-                  CASA CLUB SOCIAL
-                </text>
-
-                {/* Reserva Ecológica y Río Bolas */}
-                <path
-                  d="M 20 555 Q 190 535, 360 555 T 700 548 L 720 590 L 0 590 Z"
-                  fill="url(#riverGrad3)"
-                />
-                <text x="360" y="575" textAnchor="middle" fill="#bae6fd" fontSize="10" fontWeight="700" letterSpacing="1.5">
-                  🌿 RESERVA ECOLÓGICA Y CORREDOR RÍO BOLAS
-                </text>
 
                 {/* Sun Trajectory Arc */}
                 <path
-                  d="M 670 75 Q 370 15, 70 75"
+                  d="M 1180 80 Q 640 10, 100 80"
                   fill="none"
                   stroke="#fbbf24"
-                  strokeWidth="1.2"
-                  strokeDasharray="4,4"
-                  opacity="0.55"
+                  strokeWidth="1.5"
+                  strokeDasharray="5,5"
+                  opacity="0.60"
                 />
                 <g transform={`translate(${sunPosition.x}, ${sunPosition.y})`}>
-                  <circle cx="0" cy="0" r="14" fill="#f59e0b" opacity="0.28" />
+                  <circle cx="0" cy="0" r="15" fill="#f59e0b" opacity="0.30" />
                   <circle cx="0" cy="0" r="8" fill="#fbbf24" />
                   <text x="0" y="-13" textAnchor="middle" fill="#fde68a" fontSize="8.5" fontWeight="700">
                     ☀️ {sunHour}:00
                   </text>
                 </g>
 
-                {/* LOT POLYGONS */}
+                {/* All 97 Real Interactive Lot Polygons */}
                 {lots.map((lot) => {
                   const isSelected = lot.id === selectedLot.id;
                   const isMatched = filteredLots.some((fl) => fl.id === lot.id);
                   const isCompared = compareList.includes(lot.id);
                   const fillColor = getPolygonFill(lot, isSelected, isMatched);
-                  const shadowDx = (12.5 - sunHour) * 1.4;
+                  const shadowDx = (12.5 - sunHour) * 1.2;
 
                   return (
                     <g
@@ -1691,57 +1117,57 @@ export default function LotificacionApp() {
                       {/* Dynamic Solar Shadow */}
                       <polygon
                         points={lot.points}
-                        transform={`translate(${shadowDx}, 3)`}
+                        transform={`translate(${shadowDx}, 2)`}
                         fill="#020617"
-                        opacity="0.35"
+                        opacity={isMatched ? '0.32' : '0.08'}
                       />
 
                       {/* Main Lot Polygon */}
                       <polygon
                         points={lot.points}
                         fill={fillColor}
+                        fillOpacity={isSelected ? 0.85 : isMatched ? 0.52 : 0.12}
                         stroke={isSelected ? '#ffffff' : isCompared ? '#818cf8' : '#0f172a'}
-                        strokeWidth={isSelected ? 3.5 : isCompared ? 2.5 : 1.5}
+                        strokeWidth={isSelected ? 3.0 : isCompared ? 2.5 : 1.2}
                         filter={isSelected ? 'url(#glowSelected3)' : undefined}
-                        className="transition-all duration-150 hover:brightness-110 active:scale-[0.99]"
+                        className="transition-all duration-150 hover:brightness-125"
                       />
 
-                      {/* Lot Label */}
-                      <text
-                        x={lot.centerX}
-                        y={lot.centerY - 5}
-                        textAnchor="middle"
-                        fill="#ffffff"
-                        fontSize={isSelected ? '14' : '12'}
-                        fontWeight="800"
-                        style={{ textShadow: '0px 1px 3px rgba(0,0,0,0.9)' }}
-                      >
-                        {lot.label}
-                      </text>
-
-                      {/* Sub-label Area / Frente */}
-                      <text
-                        x={lot.centerX}
-                        y={lot.centerY + 10}
-                        textAnchor="middle"
-                        fill="#f8fafc"
-                        fontSize="9"
-                        fontWeight="600"
-                        opacity={isMatched ? 0.95 : 0.45}
-                        style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.9)' }}
-                      >
-                        {lot.areaM2}m² • {lot.frente}×{lot.fondo}
-                      </text>
+                      {/* Vector ID Pill badge inside lot */}
+                      {isMatched && (
+                        <g className="pointer-events-none select-none">
+                          <rect
+                            x={lot.centerX - 16}
+                            y={lot.centerY - 8}
+                            width={32}
+                            height={16}
+                            rx={4}
+                            fill={isSelected ? '#0f172a' : 'rgba(15, 23, 42, 0.88)'}
+                            stroke={isSelected ? '#38bdf8' : fillColor}
+                            strokeWidth={isSelected ? 1.5 : 0.9}
+                          />
+                          <text
+                            x={lot.centerX}
+                            y={lot.centerY + 3.5}
+                            textAnchor="middle"
+                            fill={isSelected ? '#38bdf8' : '#f8fafc'}
+                            fontSize="8.5"
+                            fontWeight="800"
+                          >
+                            {lot.label}
+                          </text>
+                        </g>
+                      )}
 
                       {/* Pulse Circle for Selected Lot */}
                       {isSelected && (
                         <circle
                           cx={lot.centerX}
-                          cy={lot.centerY - 22}
-                          r="5"
+                          cy={lot.centerY - 16}
+                          r="4"
                           fill="#ffffff"
                           stroke="#059669"
-                          strokeWidth="2.5"
+                          strokeWidth="2"
                         />
                       )}
                     </g>
@@ -1897,7 +1323,7 @@ export default function LotificacionApp() {
                       <Maximize2 className="w-3.5 h-3.5 text-emerald-400" /> Medidas (Frente × Fondo)
                     </span>
                     <div className="text-sm font-bold text-white">
-                      {selectedLot.frente}.00 m × {selectedLot.fondo}.00 m
+                      {selectedLot.frente} m × {selectedLot.fondo} m
                     </div>
                     <div className="text-[11px] text-slate-400 mt-0.5">
                       {selectedLot.areaM2} m² • {selectedLot.areaV2.toFixed(2)} varas²
@@ -2052,14 +1478,30 @@ export default function LotificacionApp() {
                   </div>
 
                   <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-slate-300">Plazo de Financiamiento:</span>
-                      <strong className="text-white">{plazoAnios} años ({financialData.meses} meses)</strong>
+                    <div className="flex justify-between mb-1.5">
+                      <span className="text-slate-300">Plazo Oficial de Financiamiento:</span>
+                      <strong className="text-white">{financialData.meses} meses ({plazoAnios} {plazoAnios === 1 ? 'año' : 'años'})</strong>
+                    </div>
+                    <div className="grid grid-cols-4 gap-1.5 mb-2">
+                      {[12, 24, 36, 48, 60, 72, 84, 96].map((m) => (
+                        <button
+                          key={m}
+                          type="button"
+                          onClick={() => setPlazoAnios(m / 12)}
+                          className={`py-1 px-1 rounded-lg text-[10px] font-bold border transition ${
+                            Math.round(plazoAnios * 12) === m
+                              ? 'bg-emerald-600 text-white border-emerald-400 shadow-sm'
+                              : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
+                          }`}
+                        >
+                          {m}m ({m / 12}a)
+                        </button>
+                      ))}
                     </div>
                     <input
                       type="range"
                       min={1}
-                      max={20}
+                      max={8}
                       step={1}
                       value={plazoAnios}
                       onChange={(e) => setPlazoAnios(Number(e.target.value))}
@@ -2069,13 +1511,13 @@ export default function LotificacionApp() {
 
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-slate-300">Tasa Anual Referencial:</span>
+                      <span className="text-slate-300">Tasa Anual Nivelada:</span>
                       <strong className="text-white">{tasaInteresAnual}% anual</strong>
                     </div>
                     <input
                       type="range"
-                      min={6.5}
-                      max={12.5}
+                      min={10}
+                      max={22}
                       step={0.5}
                       value={tasaInteresAnual}
                       onChange={(e) => setTasaInteresAnual(Number(e.target.value))}
@@ -2086,12 +1528,20 @@ export default function LotificacionApp() {
 
                 <div className="bg-slate-950 border border-slate-800 p-3.5 rounded-xl space-y-2">
                   <div className="flex justify-between">
+                    <span className="text-slate-400">Precio de Lista:</span>
+                    <span className="font-bold text-white">{formatMoney(financialData.precioTotal)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Enganche 10%:</span>
+                    <span className="font-semibold text-emerald-400">{formatMoney(financialData.cuotaInicial)}</span>
+                  </div>
+                  <div className="flex justify-between">
                     <span className="text-slate-400">Saldo a Financiar:</span>
                     <span className="font-bold text-white">{formatMoney(financialData.saldoFinanciar)}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Cuota Mensual Nivelada:</span>
-                    <span className="font-bold text-emerald-400 text-sm">
+                  <div className="flex justify-between items-center pt-1 border-t border-slate-800/80">
+                    <span className="text-slate-300 font-semibold">Cuota Mensual Nivelada ({financialData.meses}m):</span>
+                    <span className="font-extrabold text-emerald-400 text-sm">
                       {formatMoney(financialData.cuotaMensual)} / mes
                     </span>
                   </div>
@@ -2101,17 +1551,41 @@ export default function LotificacionApp() {
                       {formatMoney(financialData.cuotaMensual * 3)} / mes
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">IUSI Trimestral Estimado:</span>
-                    <span className="font-semibold text-slate-300">
-                      {formatMoney(financialData.iusiTrimestral)}
-                    </span>
+                </div>
+
+                {/* Tabla de Cuotas Oficiales */}
+                <div className="bg-slate-950 border border-slate-800 p-3 rounded-xl">
+                  <div className="text-[11px] font-bold text-slate-300 mb-2 flex items-center justify-between">
+                    <span>Tabla Oficial de Cuotas ({selectedLot.label})</span>
+                    <span className="text-[10px] text-emerald-400 font-normal">18% Nivelado</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                    {[12, 24, 36, 48, 60, 72, 84, 96].map((m) => {
+                      const cuotaOficial = selectedLot.cuotasNiveladas?.[m as keyof LotQuotaTable];
+                      const isCurrent = Math.round(plazoAnios * 12) === m;
+                      return (
+                        <div
+                          key={m}
+                          onClick={() => setPlazoAnios(m / 12)}
+                          className={`p-1.5 rounded-lg border flex justify-between items-center cursor-pointer transition ${
+                            isCurrent
+                              ? 'bg-emerald-950/70 border-emerald-500/60 text-white font-bold'
+                              : 'bg-slate-900/60 border-slate-800/60 text-slate-300 hover:border-slate-700'
+                          }`}
+                        >
+                          <span className="text-slate-400">{m} meses:</span>
+                          <span className={isCurrent ? 'text-emerald-300' : 'text-slate-200'}>
+                            {formatMoney(cuotaOficial || 0)}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
             )}
 
-            {activeTab === 'plusvalia' && (
+            {activeTab === 'plusvalia'  && (
               <div className="space-y-3 text-xs">
                 <div className="bg-slate-950 border border-slate-800 p-3.5 rounded-xl">
                   <div className="font-semibold text-emerald-400 mb-1 flex items-center gap-1.5">
@@ -2388,14 +1862,30 @@ export default function LotificacionApp() {
                       </div>
 
                       <div>
-                        <div className="flex justify-between items-center mb-1 text-xs">
-                          <span className="text-slate-300">Plazo:</span>
-                          <strong className="text-white">{plazoAnios} años ({financialData.meses} meses)</strong>
+                        <div className="flex justify-between items-center mb-1.5 text-xs">
+                          <span className="text-slate-300">Plazo ({financialData.meses} meses):</span>
+                          <strong className="text-white">{plazoAnios} {plazoAnios === 1 ? 'año' : 'años'}</strong>
+                        </div>
+                        <div className="grid grid-cols-4 gap-1 mb-2">
+                          {[12, 24, 36, 48, 60, 72, 84, 96].map((m) => (
+                            <button
+                              key={m}
+                              type="button"
+                              onClick={() => setPlazoAnios(m / 12)}
+                              className={`py-1 px-1 rounded-md text-[10px] font-bold border transition ${
+                                Math.round(plazoAnios * 12) === m
+                                  ? 'bg-emerald-600 text-white border-emerald-400'
+                                  : 'bg-slate-900 text-slate-300 border-slate-800'
+                              }`}
+                            >
+                              {m}m
+                            </button>
+                          ))}
                         </div>
                         <input
                           type="range"
                           min={1}
-                          max={20}
+                          max={8}
                           step={1}
                           value={plazoAnios}
                           onChange={(e) => setPlazoAnios(Number(e.target.value))}
@@ -2410,8 +1900,38 @@ export default function LotificacionApp() {
                         <strong className="text-white">{formatMoney(financialData.saldoFinanciar)}</strong>
                       </div>
                       <div className="flex justify-between text-xs items-center">
-                        <span className="text-slate-400">Cuota Mensual Estimada:</span>
+                        <span className="text-slate-400">Cuota Mensual Nivelada:</span>
                         <strong className="text-emerald-400 text-sm">{formatMoney(financialData.cuotaMensual)}/mes</strong>
+                      </div>
+                    </div>
+
+                    {/* Tabla Oficial de Cuotas */}
+                    <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 space-y-1.5 w-full max-w-full">
+                      <div className="text-[10px] font-bold text-slate-300 mb-1 flex justify-between">
+                        <span>Cuotas Oficiales al 18%</span>
+                        <span className="text-emerald-400">Lote {selectedLot.label}</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-1 text-[10px]">
+                        {[12, 24, 36, 48, 60, 72, 84, 96].map((m) => {
+                          const cuotaOficial = selectedLot.cuotasNiveladas?.[m as keyof LotQuotaTable];
+                          const isCurrent = Math.round(plazoAnios * 12) === m;
+                          return (
+                            <div
+                              key={m}
+                              onClick={() => setPlazoAnios(m / 12)}
+                              className={`p-1 rounded border flex justify-between items-center cursor-pointer ${
+                                isCurrent
+                                  ? 'bg-emerald-950/80 border-emerald-500 text-white font-bold'
+                                  : 'bg-slate-900 border-slate-800 text-slate-300'
+                              }`}
+                            >
+                              <span className="text-slate-400">{m}m:</span>
+                              <span className={isCurrent ? 'text-emerald-300' : 'text-slate-200'}>
+                                {formatMoney(cuotaOficial || 0)}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
@@ -2509,7 +2029,7 @@ export default function LotificacionApp() {
 
             <div className="bg-white text-slate-900 rounded-xl p-4 border border-slate-300 space-y-2 text-xs">
               <div className="font-extrabold text-sm text-emerald-900 border-b pb-1">
-                PASEO LAS PALMAS • LOTE {selectedLot.label}
+                RESIDENCIALES LAS MACADAMIAS - FASE 2 • LOTE {selectedLot.label}
               </div>
               <div className="text-[11px] text-slate-600">
                 {selectedLot.frente}m × {selectedLot.fondo}m ({selectedLot.areaM2}m² / {selectedLot.areaV2.toFixed(1)} v²) • {selectedLot.orientacion}
