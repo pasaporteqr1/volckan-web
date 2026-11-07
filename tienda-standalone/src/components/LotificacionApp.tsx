@@ -1695,12 +1695,32 @@ export default function LotificacionApp() {
       {/* =================================================================== */}
       {/* MOBILE BOTTOM SHEET: Interactive Floating Drawer for Touch Screens */}
       <div className="block lg:hidden">
-        {/* Bottom Drawer Wrapper with strict max width and centered alignment */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 w-full max-w-full pointer-events-none flex justify-center">
+        {/* Backdrop overlay when expanded (tapping outside collapses back to map) */}
+        {mobileSheet === 'expanded' && (
           <div
+            onClick={() => setMobileSheet('peek')}
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-[2px] z-40 transition-opacity duration-300"
+          />
+        )}
+
+        {/* Bottom Drawer Wrapper: Pinned with top-[5.5rem] (88px) so it stays strictly below the 80px main menu */}
+        <div
+          className={`fixed bottom-0 left-0 right-0 z-40 w-full max-w-full pointer-events-none flex justify-center items-end ${
+            mobileSheet === 'expanded' ? 'top-[5.5rem] md:top-[6.5rem]' : ''
+          }`}
+        >
+          <div
+            style={
+              mobileSheet === 'expanded'
+                ? {
+                    height: 'calc(100dvh - 5.5rem)',
+                    maxHeight: 'calc(100dvh - 5.5rem)'
+                  }
+                : undefined
+            }
             className={`pointer-events-auto w-full max-w-xl bg-slate-900/98 backdrop-blur-2xl border-t sm:border-x border-slate-800 shadow-[0_-10px_35px_rgba(0,0,0,0.6)] transition-all duration-300 overflow-hidden flex flex-col ${
               mobileSheet === 'expanded'
-                ? 'h-[85vh] max-h-[85vh] rounded-t-3xl'
+                ? 'h-full max-h-full rounded-t-3xl'
                 : 'h-auto rounded-t-2xl'
             }`}
           >

@@ -16134,12 +16134,19 @@ function Ne() {
 					})
 				})]
 			}),
-			/* @__PURE__ */ (0, D.jsx)("div", {
+			/* @__PURE__ */ (0, D.jsxs)("div", {
 				className: "block lg:hidden",
-				children: /* @__PURE__ */ (0, D.jsx)("div", {
-					className: "fixed bottom-0 left-0 right-0 z-40 w-full max-w-full pointer-events-none flex justify-center",
+				children: [y === "expanded" && /* @__PURE__ */ (0, D.jsx)("div", {
+					onClick: () => b("peek"),
+					className: "fixed inset-0 bg-slate-950/60 backdrop-blur-[2px] z-40 transition-opacity duration-300"
+				}), /* @__PURE__ */ (0, D.jsx)("div", {
+					className: `fixed bottom-0 left-0 right-0 z-40 w-full max-w-full pointer-events-none flex justify-center items-end ${y === "expanded" ? "top-[5.5rem] md:top-[6.5rem]" : ""}`,
 					children: /* @__PURE__ */ (0, D.jsxs)("div", {
-						className: `pointer-events-auto w-full max-w-xl bg-slate-900/98 backdrop-blur-2xl border-t sm:border-x border-slate-800 shadow-[0_-10px_35px_rgba(0,0,0,0.6)] transition-all duration-300 overflow-hidden flex flex-col ${y === "expanded" ? "h-[85vh] max-h-[85vh] rounded-t-3xl" : "h-auto rounded-t-2xl"}`,
+						style: y === "expanded" ? {
+							height: "calc(100dvh - 5.5rem)",
+							maxHeight: "calc(100dvh - 5.5rem)"
+						} : void 0,
+						className: `pointer-events-auto w-full max-w-xl bg-slate-900/98 backdrop-blur-2xl border-t sm:border-x border-slate-800 shadow-[0_-10px_35px_rgba(0,0,0,0.6)] transition-all duration-300 overflow-hidden flex flex-col ${y === "expanded" ? "h-full max-h-full rounded-t-3xl" : "h-auto rounded-t-2xl"}`,
 						children: [
 							/* @__PURE__ */ (0, D.jsxs)("div", {
 								onClick: () => b((e) => e === "peek" ? "expanded" : "peek"),
@@ -16611,7 +16618,7 @@ function Ne() {
 							})
 						]
 					})
-				})
+				})]
 			}),
 			He && /* @__PURE__ */ (0, D.jsx)("div", {
 				className: "fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto",
