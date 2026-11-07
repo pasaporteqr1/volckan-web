@@ -891,8 +891,9 @@ export default function LotificacionApp() {
         >
           {/* Mobile Filter Strip (Horizontal touch-friendly scroll) */}
           <div className="bg-slate-900 border-b lg:border lg:rounded-2xl border-slate-800 p-2.5 sm:p-3 flex flex-col gap-2 shadow-lg">
-            <div className="flex items-center gap-2">
-              <div className="relative flex-1 min-w-[140px]">
+            {/* Search and Filters: Responsive stack on mobile to prevent dropdown overflow */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+              <div className="relative flex-1 min-w-0">
                 <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
@@ -903,33 +904,36 @@ export default function LotificacionApp() {
                 />
               </div>
 
-              {/* Status Filter */}
-              <select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
-              >
-                <option value="todos">Todos ({lots.length})</option>
-                <option value="disponible">Disponibles ({stats.disponibles})</option>
-                <option value="reservado">Reservados ({stats.reservados})</option>
-                <option value="vendido">Vendidos ({stats.vendidos})</option>
-              </select>
+              {/* Status & Sector Dropdowns in 2 equal columns on mobile so neither overflows */}
+              <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 shrink-0">
+                {/* Status Filter */}
+                <select
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  className="w-full sm:w-auto bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 truncate"
+                >
+                  <option value="todos">Todos ({lots.length})</option>
+                  <option value="disponible">Disponibles ({stats.disponibles})</option>
+                  <option value="reservado">Reservados ({stats.reservados})</option>
+                  <option value="vendido">Vendidos ({stats.vendidos})</option>
+                </select>
 
-              {/* Sector Filter */}
-              <select
-                value={filterSector}
-                onChange={(e) => setFilterSector(e.target.value)}
-                className="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 max-w-[130px] sm:max-w-none truncate"
-              >
-                <option value="todos">Todas las Manzanas</option>
-                <option value="Manzana F">Manzana F (13 lotes)</option>
-                <option value="Manzana G">Manzana G (47 lotes)</option>
-                <option value="Manzana H">Manzana H (34 lotes)</option>
-                <option value="Manzana I">Manzana I (3 lotes)</option>
-              </select>
+                {/* Sector Filter */}
+                <select
+                  value={filterSector}
+                  onChange={(e) => setFilterSector(e.target.value)}
+                  className="w-full sm:w-auto bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 truncate"
+                >
+                  <option value="todos">Todas las Manzanas</option>
+                  <option value="Manzana F">Manzana F (13 lotes)</option>
+                  <option value="Manzana G">Manzana G (47 lotes)</option>
+                  <option value="Manzana H">Manzana H (34 lotes)</option>
+                  <option value="Manzana I">Manzana I (3 lotes)</option>
+                </select>
+              </div>
             </div>
 
-            {/* Layer Buttons & Solar Simulation Slider */}
+            {/* Layer Buttons & Solar Simulation Quick Toggle */}
             <div className="flex items-center justify-between gap-2 overflow-x-auto pb-0.5 text-xs">
               <div className="flex items-center gap-1 shrink-0">
                 {(
@@ -937,15 +941,17 @@ export default function LotificacionApp() {
                     { id: 'estado', label: 'Disponibilidad' },
                     { id: 'categoria', label: 'Categoría' },
                     { id: 'precio', label: 'Valor m²' },
-                    { id: 'solar', label: 'Confort Solar' }
+                    { id: 'solar', label: '☀️ Confort Solar' }
                   ] as const
                 ).map((layer) => (
                   <button
                     key={layer.id}
                     onClick={() => setMapLayer(layer.id)}
-                    className={`px-2 py-1 rounded-md text-[11px] font-semibold whitespace-nowrap transition ${
+                    className={`px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition ${
                       mapLayer === layer.id
-                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                        ? layer.id === 'solar'
+                          ? 'bg-amber-500/25 text-amber-300 border border-amber-500/50 shadow-sm'
+                          : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
                         : 'bg-slate-800/80 text-slate-400 hover:text-slate-200'
                     }`}
                   >
@@ -954,26 +960,78 @@ export default function LotificacionApp() {
                 ))}
               </div>
 
-              {/* Solar Slider */}
-              <div className="flex items-center gap-1.5 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800 shrink-0">
-                <Sun className="w-3.5 h-3.5 text-amber-400" />
-                <span className="text-[11px] text-slate-300 font-bold whitespace-nowrap">
-                  {sunHour}:00h
-                </span>
-                <input
-                  type="range"
-                  min={7}
-                  max={18}
-                  step={1}
-                  value={sunHour}
-                  onChange={(e) => setSunHour(Number(e.target.value))}
-                  className="w-16 sm:w-20 accent-amber-400 cursor-pointer"
-                />
-              </div>
+              {/* Quick Solar time pill (Toggles solar layer) */}
+              <button
+                type="button"
+                onClick={() => setMapLayer((prev) => (prev === 'solar' ? 'estado' : 'solar'))}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-bold shrink-0 transition ${
+                  mapLayer === 'solar'
+                    ? 'bg-amber-500/25 text-amber-300 border-amber-500/50 shadow'
+                    : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-amber-300 hover:border-slate-700'
+                }`}
+                title="Activar / Desactivar Simulación Solar"
+              >
+                <Sun className={`w-3.5 h-3.5 text-amber-400 ${mapLayer === 'solar' ? 'animate-pulse' : ''}`} />
+                <span className="text-[11px] font-mono">{sunHour}:00h</span>
+              </button>
             </div>
+
+            {/* EXPANDED INTERACTIVE SOLAR CONTROL BAR: Shown when 'solar' layer is active */}
+            {mapLayer === 'solar' && (
+              <div className="bg-slate-950/95 border border-amber-500/30 rounded-xl p-2.5 flex flex-col gap-2 shadow-inner transition-all animate-fadeIn">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <Sun className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span className="text-xs font-bold text-amber-200 truncate">
+                      Simulación Solar: {sunHour}:00h
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 font-medium whitespace-nowrap">
+                      {sunHour < 11 ? '🌅 Mañana' : sunHour <= 13 ? '☀️ Mediodía' : '🌇 Tarde'}
+                    </span>
+                  </div>
+
+                  {/* Preset quick buttons */}
+                  <div className="flex items-center gap-1 shrink-0">
+                    {[
+                      { h: 8, label: '8h' },
+                      { h: 12, label: '12h' },
+                      { h: 15, label: '15h' },
+                      { h: 17, label: '17h' }
+                    ].map((p) => (
+                      <button
+                        key={p.h}
+                        type="button"
+                        onClick={() => setSunHour(p.h)}
+                        className={`px-2 py-0.5 rounded-md text-[10px] font-bold border transition ${
+                          sunHour === p.h
+                            ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-sm font-extrabold'
+                            : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
+                        }`}
+                      >
+                        {p.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Touch friendly slider */}
+                <div className="flex items-center gap-2 pt-0.5">
+                  <span className="text-[10px] text-slate-400 font-mono shrink-0">07:00</span>
+                  <input
+                    type="range"
+                    min={7}
+                    max={18}
+                    step={1}
+                    value={sunHour}
+                    onChange={(e) => setSunHour(Number(e.target.value))}
+                    className="w-full h-2.5 bg-slate-800 rounded-lg accent-amber-400 cursor-pointer"
+                  />
+                  <span className="text-[10px] text-slate-400 font-mono shrink-0">18:00</span>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* =================================================================== */}
           {/* MASTERPLAN CANVAS: Full Touch Gestures (Pinch to Zoom & Drag Pan)    */}
           {/* =================================================================== */}
           <div
@@ -1635,22 +1693,21 @@ export default function LotificacionApp() {
       </div>
 
       {/* =================================================================== */}
-      {/* MOBILE BOTTOM SHEET: Interactive Floating Drawer for Touch Screens  */}
-      {/* =================================================================== */}
+      {/* MOBILE BOTTOM SHEET: Interactive Floating Drawer for Touch Screens */}
       <div className="block lg:hidden">
         {/* Bottom Drawer Wrapper with strict max width and centered alignment */}
         <div className="fixed bottom-0 left-0 right-0 z-40 w-full max-w-full pointer-events-none flex justify-center">
           <div
-            className={`pointer-events-auto w-full max-w-xl bg-slate-900/98 backdrop-blur-2xl border-t sm:border-x border-slate-800 shadow-[0_-10px_35px_rgba(0,0,0,0.6)] transition-all duration-300 overflow-x-hidden ${
+            className={`pointer-events-auto w-full max-w-xl bg-slate-900/98 backdrop-blur-2xl border-t sm:border-x border-slate-800 shadow-[0_-10px_35px_rgba(0,0,0,0.6)] transition-all duration-300 overflow-hidden flex flex-col ${
               mobileSheet === 'expanded'
-                ? 'h-[82vh] max-h-[82vh] rounded-t-3xl overflow-y-auto'
+                ? 'h-[85vh] max-h-[85vh] rounded-t-3xl'
                 : 'h-auto rounded-t-2xl'
             }`}
           >
-            {/* DYNAMIC COLORED MODAL HEADER: Changes color with every selected terrain for instant visual confirmation */}
+            {/* STICKY DYNAMIC COLORED MODAL HEADER: ALWAYS IN VIEW EVEN WHEN EXPANDED AND SCROLLED */}
             <div
               onClick={() => setMobileSheet((prev) => (prev === 'peek' ? 'expanded' : 'peek'))}
-              className={`w-full pt-2 pb-2.5 px-3.5 flex flex-col cursor-pointer select-none rounded-t-2xl border-b transition-all duration-300 ${
+              className={`w-full pt-2 pb-2.5 px-3.5 flex flex-col cursor-pointer select-none rounded-t-2xl border-b transition-all duration-300 shrink-0 sticky top-0 z-30 shadow-md ${
                 lotHeaderTheme.headerBg
               } ${lotHeaderTheme.borderColor} ${
                 selectFlash ? 'brightness-125 ring-2 ring-white/70 shadow-xl' : 'shadow'
@@ -1661,7 +1718,7 @@ export default function LotificacionApp() {
                 <div className={`w-10 h-1 rounded-full ${lotHeaderTheme.handleBg}`}></div>
               </div>
 
-              {/* Title & Status Badge Bar */}
+              {/* Title, Status Badge & Close/Return Button */}
               <div className="flex items-center justify-between gap-2 text-white">
                 <div className="flex items-center gap-1.5 min-w-0">
                   <span className="relative flex h-2 w-2 shrink-0">
@@ -1676,82 +1733,108 @@ export default function LotificacionApp() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1 text-[11px] font-bold text-white/95 shrink-0">
-                  <span>{mobileSheet === 'peek' ? 'Ver Ficha' : 'Minimizar'}</span>
-                  {mobileSheet === 'peek' ? (
-                    <ChevronUp className="w-3.5 h-3.5 text-white" />
+                <div className="flex items-center gap-1 shrink-0">
+                  {mobileSheet === 'expanded' ? (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setMobileSheet('peek');
+                      }}
+                      className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-950/70 hover:bg-slate-950 active:scale-95 text-white text-[11px] font-bold border border-white/20 shadow-sm transition"
+                    >
+                      <span>Volver al mapa</span>
+                      <ChevronDown className="w-3.5 h-3.5 text-white" />
+                    </button>
                   ) : (
-                    <ChevronDown className="w-3.5 h-3.5 text-white" />
+                    <div className="flex items-center gap-1 text-[11px] font-bold text-white/95">
+                      <span>Ver Ficha</span>
+                      <ChevronUp className="w-3.5 h-3.5 text-white" />
+                    </div>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Compact Peek Summary Bar */}
-            <div className="px-3.5 pb-3 pt-1 w-full max-w-full overflow-hidden">
-              <div className="flex items-center justify-between gap-2 w-full">
-                <div className="flex items-center gap-1.5 min-w-0 flex-1">
-                  <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-black shrink-0">
-                    {selectedLot.label}
-                  </span>
-                  <span
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border shrink-0 ${
-                      selectedLot.estado === 'disponible'
-                        ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
-                        : selectedLot.estado === 'reservado'
-                        ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
-                        : 'bg-rose-500/15 text-rose-300 border-rose-500/40'
-                    }`}
+            {/* PEEK VIEW: Compact Summary Bar (Only rendered in peek mode) */}
+            {mobileSheet === 'peek' && (
+              <div className="px-3.5 pb-3 pt-1 w-full max-w-full overflow-hidden shrink-0">
+                <div className="flex items-center justify-between gap-2 w-full">
+                  <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                    <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-black shrink-0">
+                      {selectedLot.label}
+                    </span>
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border shrink-0 ${
+                        selectedLot.estado === 'disponible'
+                          ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
+                          : selectedLot.estado === 'reservado'
+                          ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
+                          : 'bg-rose-500/15 text-rose-300 border-rose-500/40'
+                      }`}
+                    >
+                      {selectedLot.estado}
+                    </span>
+                    <span className="text-[11px] text-slate-400 truncate hidden sm:inline">
+                      {selectedLot.frente}×{selectedLot.fondo}m ({selectedLot.areaM2}m²)
+                    </span>
+                  </div>
+
+                  {/* Price & Monthly quote */}
+                  <div className="text-right shrink-0">
+                    <div className="text-sm sm:text-base font-extrabold text-white leading-tight">
+                      {formatMoney(financialData.precioTotal)}
+                    </div>
+                    <div className="text-[10px] font-semibold text-emerald-400">
+                      Desde {formatMoney(financialData.cuotaMensual)}/m
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quick Actions Row */}
+                <div className="flex items-center gap-2 mt-2 w-full">
+                  <button
+                    onClick={() => setMobileSheet('expanded')}
+                    className="flex-1 min-w-0 py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition active:scale-[0.98]"
                   >
-                    {selectedLot.estado}
-                  </span>
-                  <span className="text-[11px] text-slate-400 truncate hidden sm:inline">
-                    {selectedLot.frente}×{selectedLot.fondo}m ({selectedLot.areaM2}m²)
-                  </span>
-                </div>
-
-                {/* Price & Monthly quote */}
-                <div className="text-right shrink-0">
-                  <div className="text-sm sm:text-base font-extrabold text-white leading-tight">
-                    {formatMoney(financialData.precioTotal)}
-                  </div>
-                  <div className="text-[10px] font-semibold text-emerald-400">
-                    Desde {formatMoney(financialData.cuotaMensual)}/m
-                  </div>
+                    <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span className="truncate">Cotizar y Ficha</span>
+                  </button>
+                  <button
+                    onClick={handleCopyShareText}
+                    className="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1 shadow-md shadow-emerald-900/30 transition active:scale-[0.98] shrink-0"
+                    title="Compartir datos del lote"
+                  >
+                    <Share2 className="w-3.5 h-3.5 shrink-0" />
+                    <span>Compartir</span>
+                  </button>
+                  <button
+                    onClick={handleDownloadPdfFile}
+                    className="py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1 border border-slate-700 transition active:scale-[0.98] shrink-0"
+                    title="Descargar Ficha PDF"
+                  >
+                    <FileDown className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>PDF</span>
+                  </button>
                 </div>
               </div>
+            )}
 
-              {/* Quick Actions Row: fluid flex without rigid grids that overflow */}
-              <div className="flex items-center gap-2 mt-2 w-full">
-                <button
-                  onClick={() => setMobileSheet((prev) => (prev === 'peek' ? 'expanded' : 'peek'))}
-                  className="flex-1 min-w-0 py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition active:scale-[0.98]"
-                >
-                  <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span className="truncate">{mobileSheet === 'expanded' ? 'Minimizar' : 'Cotizar y Ficha'}</span>
-                </button>
-                <button
-                  onClick={handleCopyShareText}
-                  className="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1 shadow-md shadow-emerald-900/30 transition active:scale-[0.98] shrink-0"
-                  title="Compartir datos del lote"
-                >
-                  <Share2 className="w-3.5 h-3.5 shrink-0" />
-                  <span>Compartir</span>
-                </button>
-                <button
-                  onClick={handleDownloadPdfFile}
-                  className="py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1 border border-slate-700 transition active:scale-[0.98] shrink-0"
-                  title="Descargar Ficha PDF"
-                >
-                  <FileDown className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span>PDF</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Expanded Drawer Content (When swiped up) */}
+            {/* EXPANDED VIEW: Body scrolls independently while sticky header stays permanently in view */}
             {mobileSheet === 'expanded' && (
-              <div className="px-3.5 sm:px-4 pb-8 space-y-3.5 pt-1 border-t border-slate-800/80 overflow-x-hidden max-w-full">
+              <div className="flex-1 overflow-y-auto overscroll-contain px-3.5 sm:px-4 pb-10 space-y-3.5 pt-2 max-w-full">
+                {/* Mini price overview card */}
+                <div className="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 shrink-0">
+                  <div className="min-w-0">
+                    <span className="text-[10px] text-slate-400 block">Precio Total de Lista</span>
+                    <strong className="text-white text-sm block font-extrabold">{formatMoney(financialData.precioTotal)}</strong>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <span className="text-[10px] text-slate-400 block">Cuota ({financialData.meses}m al {tasaInteresAnual}%)</span>
+                    <strong className="text-emerald-400 text-sm block font-extrabold">{formatMoney(financialData.cuotaMensual)}/m</strong>
+                  </div>
+                </div>
+
                 {/* Tab Selector */}
                 <div className="grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 w-full max-w-full">
                   {(
@@ -1960,6 +2043,34 @@ export default function LotificacionApp() {
                     </div>
                   </div>
                 )}
+
+                {/* Actions at bottom of expanded drawer */}
+                <div className="flex items-center gap-2 pt-2">
+                  <button
+                    onClick={handleCopyShareText}
+                    className="flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-900/30 transition active:scale-[0.98]"
+                  >
+                    <Share2 className="w-3.5 h-3.5 shrink-0" />
+                    <span>Compartir WhatsApp</span>
+                  </button>
+                  <button
+                    onClick={handleDownloadPdfFile}
+                    className="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition active:scale-[0.98]"
+                  >
+                    <FileDown className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>Descargar PDF</span>
+                  </button>
+                </div>
+
+                {/* Return to Map button */}
+                <button
+                  type="button"
+                  onClick={() => setMobileSheet('peek')}
+                  className="w-full py-2.5 px-4 rounded-xl bg-slate-950 hover:bg-slate-900 active:bg-slate-850 text-slate-200 font-bold text-xs flex items-center justify-center gap-2 border border-slate-800 shadow transition"
+                >
+                  <ChevronDown className="w-4 h-4 text-emerald-400" />
+                  <span>Volver al Mapa Interactivo</span>
+                </button>
               </div>
             )}
           </div>

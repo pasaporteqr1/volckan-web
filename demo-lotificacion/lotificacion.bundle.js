@@ -15173,11 +15173,11 @@ function Ne() {
 					className: `${ee ? "flex-grow relative w-full h-full" : "lg:col-span-7 flex flex-col gap-3 sm:gap-4"}`,
 					children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 						className: "bg-slate-900 border-b lg:border lg:rounded-2xl border-slate-800 p-2.5 sm:p-3 flex flex-col gap-2 shadow-lg",
-						children: [/* @__PURE__ */ (0, D.jsxs)("div", {
-							className: "flex items-center gap-2",
-							children: [
-								/* @__PURE__ */ (0, D.jsxs)("div", {
-									className: "relative flex-1 min-w-[140px]",
+						children: [
+							/* @__PURE__ */ (0, D.jsxs)("div", {
+								className: "flex flex-col sm:flex-row items-stretch sm:items-center gap-2",
+								children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+									className: "relative flex-1 min-w-0",
 									children: [/* @__PURE__ */ (0, D.jsx)(ge, { className: "w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" }), /* @__PURE__ */ (0, D.jsx)("input", {
 										type: "text",
 										value: u,
@@ -15185,120 +15185,183 @@ function Ne() {
 										placeholder: "Buscar lote (ej. F-1, G-15, H-30)...",
 										className: "w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-2 py-1.5 text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-emerald-500"
 									})]
-								}),
-								/* @__PURE__ */ (0, D.jsxs)("select", {
-									value: o,
-									onChange: (e) => s(e.target.value),
-									className: "bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500",
+								}), /* @__PURE__ */ (0, D.jsxs)("div", {
+									className: "grid grid-cols-2 sm:flex sm:items-center gap-2 shrink-0",
+									children: [/* @__PURE__ */ (0, D.jsxs)("select", {
+										value: o,
+										onChange: (e) => s(e.target.value),
+										className: "w-full sm:w-auto bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 truncate",
+										children: [
+											/* @__PURE__ */ (0, D.jsxs)("option", {
+												value: "todos",
+												children: [
+													"Todos (",
+													e.length,
+													")"
+												]
+											}),
+											/* @__PURE__ */ (0, D.jsxs)("option", {
+												value: "disponible",
+												children: [
+													"Disponibles (",
+													St.disponibles,
+													")"
+												]
+											}),
+											/* @__PURE__ */ (0, D.jsxs)("option", {
+												value: "reservado",
+												children: [
+													"Reservados (",
+													St.reservados,
+													")"
+												]
+											}),
+											/* @__PURE__ */ (0, D.jsxs)("option", {
+												value: "vendido",
+												children: [
+													"Vendidos (",
+													St.vendidos,
+													")"
+												]
+											})
+										]
+									}), /* @__PURE__ */ (0, D.jsxs)("select", {
+										value: c,
+										onChange: (e) => l(e.target.value),
+										className: "w-full sm:w-auto bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 truncate",
+										children: [
+											/* @__PURE__ */ (0, D.jsx)("option", {
+												value: "todos",
+												children: "Todas las Manzanas"
+											}),
+											/* @__PURE__ */ (0, D.jsx)("option", {
+												value: "Manzana F",
+												children: "Manzana F (13 lotes)"
+											}),
+											/* @__PURE__ */ (0, D.jsx)("option", {
+												value: "Manzana G",
+												children: "Manzana G (47 lotes)"
+											}),
+											/* @__PURE__ */ (0, D.jsx)("option", {
+												value: "Manzana H",
+												children: "Manzana H (34 lotes)"
+											}),
+											/* @__PURE__ */ (0, D.jsx)("option", {
+												value: "Manzana I",
+												children: "Manzana I (3 lotes)"
+											})
+										]
+									})]
+								})]
+							}),
+							/* @__PURE__ */ (0, D.jsxs)("div", {
+								className: "flex items-center justify-between gap-2 overflow-x-auto pb-0.5 text-xs",
+								children: [/* @__PURE__ */ (0, D.jsx)("div", {
+									className: "flex items-center gap-1 shrink-0",
 									children: [
-										/* @__PURE__ */ (0, D.jsxs)("option", {
-											value: "todos",
-											children: [
-												"Todos (",
-												e.length,
-												")"
-											]
-										}),
-										/* @__PURE__ */ (0, D.jsxs)("option", {
-											value: "disponible",
-											children: [
-												"Disponibles (",
-												St.disponibles,
-												")"
-											]
-										}),
-										/* @__PURE__ */ (0, D.jsxs)("option", {
-											value: "reservado",
-											children: [
-												"Reservados (",
-												St.reservados,
-												")"
-											]
-										}),
-										/* @__PURE__ */ (0, D.jsxs)("option", {
-											value: "vendido",
-											children: [
-												"Vendidos (",
-												St.vendidos,
-												")"
-											]
-										})
-									]
-								}),
-								/* @__PURE__ */ (0, D.jsxs)("select", {
-									value: c,
-									onChange: (e) => l(e.target.value),
-									className: "bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 max-w-[130px] sm:max-w-none truncate",
-									children: [
-										/* @__PURE__ */ (0, D.jsx)("option", {
-											value: "todos",
-											children: "Todas las Manzanas"
-										}),
-										/* @__PURE__ */ (0, D.jsx)("option", {
-											value: "Manzana F",
-											children: "Manzana F (13 lotes)"
-										}),
-										/* @__PURE__ */ (0, D.jsx)("option", {
-											value: "Manzana G",
-											children: "Manzana G (47 lotes)"
-										}),
-										/* @__PURE__ */ (0, D.jsx)("option", {
-											value: "Manzana H",
-											children: "Manzana H (34 lotes)"
-										}),
-										/* @__PURE__ */ (0, D.jsx)("option", {
-											value: "Manzana I",
-											children: "Manzana I (3 lotes)"
-										})
-									]
-								})
-							]
-						}), /* @__PURE__ */ (0, D.jsxs)("div", {
-							className: "flex items-center justify-between gap-2 overflow-x-auto pb-0.5 text-xs",
-							children: [/* @__PURE__ */ (0, D.jsx)("div", {
-								className: "flex items-center gap-1 shrink-0",
-								children: [
-									{
-										id: "estado",
-										label: "Disponibilidad"
-									},
-									{
-										id: "categoria",
-										label: "Categoría"
-									},
-									{
-										id: "precio",
-										label: "Valor m²"
-									},
-									{
-										id: "solar",
-										label: "Confort Solar"
-									}
-								].map((e) => /* @__PURE__ */ (0, D.jsx)("button", {
-									onClick: () => p(e.id),
-									className: `px-2 py-1 rounded-md text-[11px] font-semibold whitespace-nowrap transition ${f === e.id ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" : "bg-slate-800/80 text-slate-400 hover:text-slate-200"}`,
-									children: e.label
-								}, e.id))
-							}), /* @__PURE__ */ (0, D.jsxs)("div", {
-								className: "flex items-center gap-1.5 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800 shrink-0",
-								children: [
-									/* @__PURE__ */ (0, D.jsx)(pe, { className: "w-3.5 h-3.5 text-amber-400" }),
-									/* @__PURE__ */ (0, D.jsxs)("span", {
-										className: "text-[11px] text-slate-300 font-bold whitespace-nowrap",
+										{
+											id: "estado",
+											label: "Disponibilidad"
+										},
+										{
+											id: "categoria",
+											label: "Categoría"
+										},
+										{
+											id: "precio",
+											label: "Valor m²"
+										},
+										{
+											id: "solar",
+											label: "☀️ Confort Solar"
+										}
+									].map((e) => /* @__PURE__ */ (0, D.jsx)("button", {
+										onClick: () => p(e.id),
+										className: `px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition ${f === e.id ? e.id === "solar" ? "bg-amber-500/25 text-amber-300 border border-amber-500/50 shadow-sm" : "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" : "bg-slate-800/80 text-slate-400 hover:text-slate-200"}`,
+										children: e.label
+									}, e.id))
+								}), /* @__PURE__ */ (0, D.jsxs)("button", {
+									type: "button",
+									onClick: () => p((e) => e === "solar" ? "estado" : "solar"),
+									className: `flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-bold shrink-0 transition ${f === "solar" ? "bg-amber-500/25 text-amber-300 border-amber-500/50 shadow" : "bg-slate-950 text-slate-400 border-slate-800 hover:text-amber-300 hover:border-slate-700"}`,
+									title: "Activar / Desactivar Simulación Solar",
+									children: [/* @__PURE__ */ (0, D.jsx)(pe, { className: `w-3.5 h-3.5 text-amber-400 ${f === "solar" ? "animate-pulse" : ""}` }), /* @__PURE__ */ (0, D.jsxs)("span", {
+										className: "text-[11px] font-mono",
 										children: [g, ":00h"]
-									}),
-									/* @__PURE__ */ (0, D.jsx)("input", {
-										type: "range",
-										min: 7,
-										max: 18,
-										step: 1,
-										value: g,
-										onChange: (e) => v(Number(e.target.value)),
-										className: "w-16 sm:w-20 accent-amber-400 cursor-pointer"
-									})
-								]
-							})]
-						})]
+									})]
+								})]
+							}),
+							f === "solar" && /* @__PURE__ */ (0, D.jsxs)("div", {
+								className: "bg-slate-950/95 border border-amber-500/30 rounded-xl p-2.5 flex flex-col gap-2 shadow-inner transition-all animate-fadeIn",
+								children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+									className: "flex items-center justify-between gap-2",
+									children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+										className: "flex items-center gap-1.5 min-w-0",
+										children: [
+											/* @__PURE__ */ (0, D.jsx)(pe, { className: "w-4 h-4 text-amber-400 shrink-0" }),
+											/* @__PURE__ */ (0, D.jsxs)("span", {
+												className: "text-xs font-bold text-amber-200 truncate",
+												children: [
+													"Simulación Solar: ",
+													g,
+													":00h"
+												]
+											}),
+											/* @__PURE__ */ (0, D.jsx)("span", {
+												className: "text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 font-medium whitespace-nowrap",
+												children: g < 11 ? "🌅 Mañana" : g <= 13 ? "☀️ Mediodía" : "🌇 Tarde"
+											})
+										]
+									}), /* @__PURE__ */ (0, D.jsx)("div", {
+										className: "flex items-center gap-1 shrink-0",
+										children: [
+											{
+												h: 8,
+												label: "8h"
+											},
+											{
+												h: 12,
+												label: "12h"
+											},
+											{
+												h: 15,
+												label: "15h"
+											},
+											{
+												h: 17,
+												label: "17h"
+											}
+										].map((e) => /* @__PURE__ */ (0, D.jsx)("button", {
+											type: "button",
+											onClick: () => v(e.h),
+											className: `px-2 py-0.5 rounded-md text-[10px] font-bold border transition ${g === e.h ? "bg-amber-500 text-slate-950 border-amber-400 shadow-sm font-extrabold" : "bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700"}`,
+											children: e.label
+										}, e.h))
+									})]
+								}), /* @__PURE__ */ (0, D.jsxs)("div", {
+									className: "flex items-center gap-2 pt-0.5",
+									children: [
+										/* @__PURE__ */ (0, D.jsx)("span", {
+											className: "text-[10px] text-slate-400 font-mono shrink-0",
+											children: "07:00"
+										}),
+										/* @__PURE__ */ (0, D.jsx)("input", {
+											type: "range",
+											min: 7,
+											max: 18,
+											step: 1,
+											value: g,
+											onChange: (e) => v(Number(e.target.value)),
+											className: "w-full h-2.5 bg-slate-800 rounded-lg accent-amber-400 cursor-pointer"
+										}),
+										/* @__PURE__ */ (0, D.jsx)("span", {
+											className: "text-[10px] text-slate-400 font-mono shrink-0",
+											children: "18:00"
+										})
+									]
+								})]
+							})
+						]
 					}), /* @__PURE__ */ (0, D.jsxs)("div", {
 						ref: Qe,
 						onMouseDown: ft,
@@ -16076,11 +16139,11 @@ function Ne() {
 				children: /* @__PURE__ */ (0, D.jsx)("div", {
 					className: "fixed bottom-0 left-0 right-0 z-40 w-full max-w-full pointer-events-none flex justify-center",
 					children: /* @__PURE__ */ (0, D.jsxs)("div", {
-						className: `pointer-events-auto w-full max-w-xl bg-slate-900/98 backdrop-blur-2xl border-t sm:border-x border-slate-800 shadow-[0_-10px_35px_rgba(0,0,0,0.6)] transition-all duration-300 overflow-x-hidden ${y === "expanded" ? "h-[82vh] max-h-[82vh] rounded-t-3xl overflow-y-auto" : "h-auto rounded-t-2xl"}`,
+						className: `pointer-events-auto w-full max-w-xl bg-slate-900/98 backdrop-blur-2xl border-t sm:border-x border-slate-800 shadow-[0_-10px_35px_rgba(0,0,0,0.6)] transition-all duration-300 overflow-hidden flex flex-col ${y === "expanded" ? "h-[85vh] max-h-[85vh] rounded-t-3xl" : "h-auto rounded-t-2xl"}`,
 						children: [
 							/* @__PURE__ */ (0, D.jsxs)("div", {
 								onClick: () => b((e) => e === "peek" ? "expanded" : "peek"),
-								className: `w-full pt-2 pb-2.5 px-3.5 flex flex-col cursor-pointer select-none rounded-t-2xl border-b transition-all duration-300 ${it.headerBg} ${it.borderColor} ${Xe ? "brightness-125 ring-2 ring-white/70 shadow-xl" : "shadow"}`,
+								className: `w-full pt-2 pb-2.5 px-3.5 flex flex-col cursor-pointer select-none rounded-t-2xl border-b transition-all duration-300 shrink-0 sticky top-0 z-30 shadow-md ${it.headerBg} ${it.borderColor} ${Xe ? "brightness-125 ring-2 ring-white/70 shadow-xl" : "shadow"}`,
 								children: [/* @__PURE__ */ (0, D.jsx)("div", {
 									className: "flex justify-center mb-1.5",
 									children: /* @__PURE__ */ (0, D.jsx)("div", { className: `w-10 h-1 rounded-full ${it.handleBg}` })
@@ -16107,14 +16170,24 @@ function Ne() {
 												children: it.label
 											})
 										]
-									}), /* @__PURE__ */ (0, D.jsxs)("div", {
-										className: "flex items-center gap-1 text-[11px] font-bold text-white/95 shrink-0",
-										children: [/* @__PURE__ */ (0, D.jsx)("span", { children: y === "peek" ? "Ver Ficha" : "Minimizar" }), y === "peek" ? /* @__PURE__ */ (0, D.jsx)(De, { className: "w-3.5 h-3.5 text-white" }) : /* @__PURE__ */ (0, D.jsx)(Oe, { className: "w-3.5 h-3.5 text-white" })]
+									}), /* @__PURE__ */ (0, D.jsx)("div", {
+										className: "flex items-center gap-1 shrink-0",
+										children: y === "expanded" ? /* @__PURE__ */ (0, D.jsxs)("button", {
+											type: "button",
+											onClick: (e) => {
+												e.stopPropagation(), b("peek");
+											},
+											className: "flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-950/70 hover:bg-slate-950 active:scale-95 text-white text-[11px] font-bold border border-white/20 shadow-sm transition",
+											children: [/* @__PURE__ */ (0, D.jsx)("span", { children: "Volver al mapa" }), /* @__PURE__ */ (0, D.jsx)(Oe, { className: "w-3.5 h-3.5 text-white" })]
+										}) : /* @__PURE__ */ (0, D.jsxs)("div", {
+											className: "flex items-center gap-1 text-[11px] font-bold text-white/95",
+											children: [/* @__PURE__ */ (0, D.jsx)("span", { children: "Ver Ficha" }), /* @__PURE__ */ (0, D.jsx)(De, { className: "w-3.5 h-3.5 text-white" })]
+										})
 									})]
 								})]
 							}),
-							/* @__PURE__ */ (0, D.jsxs)("div", {
-								className: "px-3.5 pb-3 pt-1 w-full max-w-full overflow-hidden",
+							y === "peek" && /* @__PURE__ */ (0, D.jsxs)("div", {
+								className: "px-3.5 pb-3 pt-1 w-full max-w-full overflow-hidden shrink-0",
 								children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "flex items-center justify-between gap-2 w-full",
 									children: [/* @__PURE__ */ (0, D.jsxs)("div", {
@@ -16158,11 +16231,11 @@ function Ne() {
 									className: "flex items-center gap-2 mt-2 w-full",
 									children: [
 										/* @__PURE__ */ (0, D.jsxs)("button", {
-											onClick: () => b((e) => e === "peek" ? "expanded" : "peek"),
+											onClick: () => b("expanded"),
 											className: "flex-1 min-w-0 py-2 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition active:scale-[0.98]",
 											children: [/* @__PURE__ */ (0, D.jsx)(me, { className: "w-3.5 h-3.5 text-emerald-400 shrink-0" }), /* @__PURE__ */ (0, D.jsx)("span", {
 												className: "truncate",
-												children: y === "expanded" ? "Minimizar" : "Cotizar y Ficha"
+												children: "Cotizar y Ficha"
 											})]
 										}),
 										/* @__PURE__ */ (0, D.jsxs)("button", {
@@ -16181,8 +16254,36 @@ function Ne() {
 								})]
 							}),
 							y === "expanded" && /* @__PURE__ */ (0, D.jsxs)("div", {
-								className: "px-3.5 sm:px-4 pb-8 space-y-3.5 pt-1 border-t border-slate-800/80 overflow-x-hidden max-w-full",
+								className: "flex-1 overflow-y-auto overscroll-contain px-3.5 sm:px-4 pb-10 space-y-3.5 pt-2 max-w-full",
 								children: [
+									/* @__PURE__ */ (0, D.jsxs)("div", {
+										className: "flex items-center justify-between gap-2 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 shrink-0",
+										children: [/* @__PURE__ */ (0, D.jsxs)("div", {
+											className: "min-w-0",
+											children: [/* @__PURE__ */ (0, D.jsx)("span", {
+												className: "text-[10px] text-slate-400 block",
+												children: "Precio Total de Lista"
+											}), /* @__PURE__ */ (0, D.jsx)("strong", {
+												className: "text-white text-sm block font-extrabold",
+												children: M(N.precioTotal)
+											})]
+										}), /* @__PURE__ */ (0, D.jsxs)("div", {
+											className: "text-right shrink-0",
+											children: [/* @__PURE__ */ (0, D.jsxs)("span", {
+												className: "text-[10px] text-slate-400 block",
+												children: [
+													"Cuota (",
+													N.meses,
+													"m al ",
+													oe,
+													"%)"
+												]
+											}), /* @__PURE__ */ (0, D.jsxs)("strong", {
+												className: "text-emerald-400 text-sm block font-extrabold",
+												children: [M(N.cuotaMensual), "/m"]
+											})]
+										})]
+									}),
 									/* @__PURE__ */ (0, D.jsx)("div", {
 										className: "grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 w-full max-w-full",
 										children: [
@@ -16487,6 +16588,24 @@ function Ne() {
 												})]
 											})]
 										})]
+									}),
+									/* @__PURE__ */ (0, D.jsxs)("div", {
+										className: "flex items-center gap-2 pt-2",
+										children: [/* @__PURE__ */ (0, D.jsxs)("button", {
+											onClick: bt,
+											className: "flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-900/30 transition active:scale-[0.98]",
+											children: [/* @__PURE__ */ (0, D.jsx)(he, { className: "w-3.5 h-3.5 shrink-0" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "Compartir WhatsApp" })]
+										}), /* @__PURE__ */ (0, D.jsxs)("button", {
+											onClick: xt,
+											className: "py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700 transition active:scale-[0.98]",
+											children: [/* @__PURE__ */ (0, D.jsx)(Te, { className: "w-3.5 h-3.5 text-emerald-400 shrink-0" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "Descargar PDF" })]
+										})]
+									}),
+									/* @__PURE__ */ (0, D.jsxs)("button", {
+										type: "button",
+										onClick: () => b("peek"),
+										className: "w-full py-2.5 px-4 rounded-xl bg-slate-950 hover:bg-slate-900 active:bg-slate-850 text-slate-200 font-bold text-xs flex items-center justify-center gap-2 border border-slate-800 shadow transition",
+										children: [/* @__PURE__ */ (0, D.jsx)(Oe, { className: "w-4 h-4 text-emerald-400" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "Volver al Mapa Interactivo" })]
 									})
 								]
 							})
