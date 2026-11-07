@@ -649,6 +649,11 @@ export default function LotificacionApp() {
     scaleRef.current = scale;
   }, [scale]);
 
+  const selectedLot = useMemo(
+    () => lots.find((l) => l.id === selectedLotId) || lots[0],
+    [lots, selectedLotId]
+  );
+
   // Dynamic Theme according to selected lot status and category
   const lotHeaderTheme = useMemo(() => {
     if (selectedLot.estado === 'disponible') {
@@ -680,11 +685,6 @@ export default function LotificacionApp() {
       };
     }
   }, [selectedLot.estado]);
-
-  const selectedLot = useMemo(
-    () => lots.find((l) => l.id === selectedLotId) || lots[0],
-    [lots, selectedLotId]
-  );
 
   const effectiveEnganchePct = engancheCustomPct !== null ? engancheCustomPct : selectedLot.cuotaInicialPct;
 

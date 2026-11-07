@@ -1011,10 +1011,10 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			return "\nError generating stack: " + e.message + "\n" + e.stack;
 		}
 	}
-	var Ke = Object.prototype.hasOwnProperty, qe = t.unstable_scheduleCallback, Je = t.unstable_cancelCallback, Ye = t.unstable_shouldYield, Xe = t.unstable_requestPaint, Ze = t.unstable_now, Qe = t.unstable_getCurrentPriorityLevel, $e = t.unstable_ImmediatePriority, O = t.unstable_UserBlockingPriority, et = t.unstable_NormalPriority, tt = t.unstable_LowPriority, nt = t.unstable_IdlePriority, k = t.log, rt = t.unstable_setDisableYieldValue, A = null, j = null;
+	var Ke = Object.prototype.hasOwnProperty, qe = t.unstable_scheduleCallback, Je = t.unstable_cancelCallback, Ye = t.unstable_shouldYield, Xe = t.unstable_requestPaint, Ze = t.unstable_now, Qe = t.unstable_getCurrentPriorityLevel, $e = t.unstable_ImmediatePriority, O = t.unstable_UserBlockingPriority, et = t.unstable_NormalPriority, tt = t.unstable_LowPriority, nt = t.unstable_IdlePriority, k = t.log, A = t.unstable_setDisableYieldValue, rt = null, j = null;
 	function it(e) {
-		if (typeof k == "function" && rt(e), j && typeof j.setStrictMode == "function") try {
-			j.setStrictMode(A, e);
+		if (typeof k == "function" && A(e), j && typeof j.setStrictMode == "function") try {
+			j.setStrictMode(rt, e);
 		} catch {}
 	}
 	var M = Math.clz32 ? Math.clz32 : ot, at = Math.log, N = Math.LN2;
@@ -5344,7 +5344,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	}
 	function Tu(e, t, n) {
 		if (j && typeof j.onCommitFiberUnmount == "function") try {
-			j.onCommitFiberUnmount(A, n);
+			j.onCommitFiberUnmount(rt, n);
 		} catch {}
 		switch (n.tag) {
 			case 26:
@@ -6479,7 +6479,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			Ed = null, Xe();
 			var t = bd, n = xd, r = Sd, i = Td, a = (r & 335544064) === r ? 10262 : 10256;
 			if ((n.subtreeFlags & a) !== 0 || (n.flags & a) !== 0 ? X = 5 : (X = 0, xd = bd = null, uf(t, t.pendingLanes)), a = t.pendingLanes, a === 0 && (yd = null), Ct(r), n = n.stateNode, j && typeof j.onCommitFiberRoot == "function") try {
-				j.onCommitFiberRoot(A, n, void 0, (n.current.flags & 128) == 128);
+				j.onCommitFiberRoot(rt, n, void 0, (n.current.flags & 128) == 128);
 			} catch {}
 			if (i !== null) {
 				n = w.T, a = T.p, T.p = 2, w.T = null;
@@ -6513,7 +6513,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			if (X = 0, xd = bd = null, Sd = 0, W & 6) throw Error(i(331));
 			var c = W;
 			if (W |= 4, Zu(o.current), Uu(o, o.current, s, n), W = c, Df(0, !1), j && typeof j.onPostCommitFiberRoot == "function") try {
-				j.onPostCommitFiberRoot(A, o);
+				j.onPostCommitFiberRoot(rt, o);
 			} catch {}
 			return !0;
 		} finally {
@@ -9025,7 +9025,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u") {
 		var Jh = __REACT_DEVTOOLS_GLOBAL_HOOK__;
 		if (!Jh.isDisabled && Jh.supportsFiber) try {
-			A = Jh.inject(qh), j = Jh;
+			rt = Jh.inject(qh), j = Jh;
 		} catch {}
 	}
 	e.createRoot = function(e, t) {
@@ -10601,7 +10601,7 @@ function Me() {
 	}, [ne]), (0, _.useEffect)(() => {
 		et.current = x;
 	}, [x]);
-	let rt = (0, _.useMemo)(() => A.estado === "disponible" ? {
+	let A = (0, _.useMemo)(() => e.find((e) => e.id === n) || e[0], [e, n]), rt = (0, _.useMemo)(() => A.estado === "disponible" ? {
 		headerBg: "bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700",
 		borderColor: "border-emerald-400/50",
 		dotColor: "bg-emerald-300",
@@ -10622,7 +10622,7 @@ function Me() {
 		statusBadge: "bg-rose-950/60 text-rose-200 border-rose-400/30",
 		handleBg: "bg-rose-300/80",
 		label: "VENDIDO"
-	}, [A.estado]), A = (0, _.useMemo)(() => e.find((e) => e.id === n) || e[0], [e, n]), j = se === null ? A.cuotaInicialPct : se, it = (e) => {
+	}, [A.estado]), j = se === null ? A.cuotaInicialPct : se, it = (e) => {
 		Je(e), setTimeout(() => {
 			Je((t) => t === e ? null : t);
 		}, 3500);
