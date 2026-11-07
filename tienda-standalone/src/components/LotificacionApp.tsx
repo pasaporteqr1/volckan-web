@@ -570,6 +570,7 @@ export default function LotificacionApp() {
   const [showPdfModal, setShowPdfModal] = useState<boolean>(false);
   const [copiedText, setCopiedText] = useState<boolean>(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [selectFlash, setSelectFlash] = useState<boolean>(false);
 
   // DOM References
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -647,6 +648,38 @@ export default function LotificacionApp() {
   useEffect(() => {
     scaleRef.current = scale;
   }, [scale]);
+
+  // Dynamic Theme according to selected lot status and category
+  const lotHeaderTheme = useMemo(() => {
+    if (selectedLot.estado === 'disponible') {
+      return {
+        headerBg: 'bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700',
+        borderColor: 'border-emerald-400/50',
+        dotColor: 'bg-emerald-300',
+        statusBadge: 'bg-emerald-950/60 text-emerald-200 border-emerald-400/30',
+        handleBg: 'bg-emerald-300/80',
+        label: 'DISPONIBLE'
+      };
+    } else if (selectedLot.estado === 'reservado') {
+      return {
+        headerBg: 'bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700',
+        borderColor: 'border-amber-400/50',
+        dotColor: 'bg-amber-300',
+        statusBadge: 'bg-amber-950/60 text-amber-200 border-amber-400/30',
+        handleBg: 'bg-amber-300/80',
+        label: 'RESERVADO'
+      };
+    } else {
+      return {
+        headerBg: 'bg-gradient-to-r from-rose-700 via-red-700 to-rose-800',
+        borderColor: 'border-rose-400/50',
+        dotColor: 'bg-rose-300',
+        statusBadge: 'bg-rose-950/60 text-rose-200 border-rose-400/30',
+        handleBg: 'bg-rose-300/80',
+        label: 'VENDIDO'
+      };
+    }
+  }, [selectedLot.estado]);
 
   const selectedLot = useMemo(
     () => lots.find((l) => l.id === selectedLotId) || lots[0],
@@ -742,10 +775,12 @@ export default function LotificacionApp() {
   }, [clampPan, applyTransformDirect]);
 
   const handleSelectLot = (lot: Lot) => {
-    // If the finger was dragging/panning the map, ignore selection
+    // If the finger was deliberately dragging/panning the map, ignore selection
     if (touchSessionRef.current.hasMoved) return;
 
     setSelectedLotId(lot.id);
+    setSelectFlash(true);
+    setTimeout(() => setSelectFlash(false), 700);
     setEngancheCustomPct(null);
     setMobileSheet('peek');
     centerOnLot(lot, 1.5);
@@ -786,8 +821,11 @@ export default function LotificacionApp() {
     if (!el) return;
 
     const onTouchStart = (e: TouchEvent) => {
-      // Prevent browser scroll or gesture conflict inside the interactive canvas
-      if (e.cancelable) e.preventDefault();
+      // ONLY prevent default on multi-touch pinch to avoid browser-level page zoom
+      // DO NOT prevent default on 1 finger, allowing mobile click and tap events to pass through
+      if (e.touches.length > 1 && e.cancelable) {
+        e.preventDefault();
+      }
 
       const rect = el.getBoundingClientRect();
       const W = rect.width;
@@ -801,7 +839,6 @@ export default function LotificacionApp() {
         touchSessionRef.current.panStartX = panRef.current.x;
         touchSessionRef.current.panStartY = panRef.current.y;
         touchSessionRef.current.hasMoved = false;
-        applyTransformDirect(panRef.current.x, panRef.current.y, scaleRef.current, false);
       } else if (e.touches.length >= 2) {
         const t1 = e.touches[0];
         const t2 = e.touches[1];
@@ -819,13 +856,10 @@ export default function LotificacionApp() {
           y: (midY - panRef.current.y) / scaleRef.current
         };
         touchSessionRef.current.hasMoved = true;
-        applyTransformDirect(panRef.current.x, panRef.current.y, scaleRef.current, false);
       }
     };
 
     const onTouchMove = (e: TouchEvent) => {
-      if (e.cancelable) e.preventDefault();
-
       const rect = el.getBoundingClientRect();
       const W = rect.width;
       const H = rect.height;
@@ -835,15 +869,19 @@ export default function LotificacionApp() {
         const dx = t.clientX - touchSessionRef.current.startX;
         const dy = t.clientY - touchSessionRef.current.startY;
 
-        if (Math.hypot(dx, dy) > 5) {
+        // Threshold of 10px prevents finger squish/tap from triggering pan mode
+        if (Math.hypot(dx, dy) > 10) {
           touchSessionRef.current.hasMoved = true;
-        }
+          // Prevent webpage scroll while actively panning the map
+          if (e.cancelable) e.preventDefault();
 
-        const rawX = touchSessionRef.current.panStartX + dx;
-        const rawY = touchSessionRef.current.panStartY + dy;
-        const clamped = clampPan(rawX, rawY, scaleRef.current, W, H);
-        applyTransformDirect(clamped.x, clamped.y, scaleRef.current, false);
+          const rawX = touchSessionRef.current.panStartX + dx;
+          const rawY = touchSessionRef.current.panStartY + dy;
+          const clamped = clampPan(rawX, rawY, scaleRef.current, W, H);
+          applyTransformDirect(clamped.x, clamped.y, scaleRef.current, false);
+        }
       } else if (e.touches.length >= 2) {
+        if (e.cancelable) e.preventDefault();
         const t1 = e.touches[0];
         const t2 = e.touches[1];
         const currentDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
@@ -875,9 +913,8 @@ export default function LotificacionApp() {
         touchSessionRef.current.startY = t.clientY;
         touchSessionRef.current.panStartX = panRef.current.x;
         touchSessionRef.current.panStartY = panRef.current.y;
-        touchSessionRef.current.hasMoved = true; // prevents false click
+        touchSessionRef.current.hasMoved = true;
       } else if (e.touches.length === 0) {
-        // All fingers lifted
         const wasTap = !touchSessionRef.current.hasMoved;
         touchSessionRef.current.mode = 'none';
 
@@ -1643,6 +1680,12 @@ export default function LotificacionApp() {
                     <g
                       key={lot.id}
                       onClick={() => handleSelectLot(lot)}
+                      onTouchEnd={(e) => {
+                        if (!touchSessionRef.current.hasMoved) {
+                          e.stopPropagation();
+                          handleSelectLot(lot);
+                        }
+                      }}
                       className="cursor-pointer group"
                     >
                       {/* Dynamic Solar Shadow */}
@@ -1747,7 +1790,7 @@ export default function LotificacionApp() {
         {/* RIGHT COLUMN: Desktop Detailed View (Visible on lg: screens)        */}
         {/* =================================================================== */}
         <section className="hidden lg:flex lg:col-span-5 flex-col gap-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+          <div className={`bg-slate-900 border rounded-2xl p-5 shadow-xl transition-all duration-300 ${lotHeaderTheme.borderColor} ${selectFlash ? 'ring-2 ring-white/50' : 'border-slate-800'}`}>
             {/* Header info */}
             <div className="flex items-start justify-between gap-3 mb-4">
               <div>
@@ -2130,24 +2173,43 @@ export default function LotificacionApp() {
                 : 'h-auto rounded-t-2xl'
             }`}
           >
-            {/* Sheet Handle */}
+            {/* DYNAMIC COLORED MODAL HEADER: Changes color with every selected terrain for instant visual confirmation */}
             <div
               onClick={() => setMobileSheet((prev) => (prev === 'peek' ? 'expanded' : 'peek'))}
-              className="w-full pt-2.5 pb-1 flex flex-col items-center justify-center cursor-pointer select-none active:bg-slate-800/60 rounded-t-2xl"
+              className={`w-full pt-2 pb-2.5 px-3.5 flex flex-col cursor-pointer select-none rounded-t-2xl border-b transition-all duration-300 ${
+                lotHeaderTheme.headerBg
+              } ${lotHeaderTheme.borderColor} ${
+                selectFlash ? 'brightness-125 ring-2 ring-white/70 shadow-xl' : 'shadow'
+              }`}
             >
-              <div className="w-10 h-1.5 bg-slate-700/80 rounded-full mb-1"></div>
-              <div className="flex items-center gap-1 text-[11px] font-bold text-slate-400">
-                {mobileSheet === 'peek' ? (
-                  <>
-                    <span>Ver cotizador y ficha completa</span>
-                    <ChevronUp className="w-3.5 h-3.5 text-emerald-400" />
-                  </>
-                ) : (
-                  <>
-                    <span>Minimizar (Ver mapa completo)</span>
-                    <ChevronDown className="w-3.5 h-3.5 text-emerald-400" />
-                  </>
-                )}
+              {/* Center Handle Bar */}
+              <div className="flex justify-center mb-1.5">
+                <div className={`w-10 h-1 rounded-full ${lotHeaderTheme.handleBg}`}></div>
+              </div>
+
+              {/* Title & Status Badge Bar */}
+              <div className="flex items-center justify-between gap-2 text-white">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                  </span>
+                  <span className="text-xs font-black tracking-wide uppercase truncate">
+                    LOTE {selectedLot.label} • {selectedLot.sector}
+                  </span>
+                  <span className={`text-[9px] font-black px-2 py-0.5 rounded-full border uppercase shrink-0 ${lotHeaderTheme.statusBadge}`}>
+                    {lotHeaderTheme.label}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-1 text-[11px] font-bold text-white/95 shrink-0">
+                  <span>{mobileSheet === 'peek' ? 'Ver Ficha' : 'Minimizar'}</span>
+                  {mobileSheet === 'peek' ? (
+                    <ChevronUp className="w-3.5 h-3.5 text-white" />
+                  ) : (
+                    <ChevronDown className="w-3.5 h-3.5 text-white" />
+                  )}
+                </div>
               </div>
             </div>
 
