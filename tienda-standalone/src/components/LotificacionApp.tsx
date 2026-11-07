@@ -551,7 +551,7 @@ export default function LotificacionApp() {
   const [mobileSheet, setMobileSheet] = useState<'peek' | 'expanded'>('peek');
   const [isMapFullscreen, setIsMapFullscreen] = useState<boolean>(false);
 
-  // Gesture Pan & Zoom Engine State
+  // High-performance Gesture Engine State (in Container Screen Pixels)
   const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [scale, setScale] = useState<number>(1.0);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
@@ -572,31 +572,45 @@ export default function LotificacionApp() {
   const [copiedText, setCopiedText] = useState<boolean>(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
 
-  // References for touch gesture calculations
+  // DOM References
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
+
+  // Mutable refs for touch tracking with 0-lag and active preventDefault
+  const panRef = useRef({ x: 0, y: 0 });
+  const scaleRef = useRef(1.0);
   const touchStateRef = useRef<{
     startX: number;
     startY: number;
     startTime: number;
-    startPanX: number;
-    startPanY: number;
-    startScale: number;
+    panStart: { x: number; y: number };
+    scaleStart: number;
     initialDistance: number;
-    initialMidpoint: { x: number; y: number };
-    hasMoved: boolean;
+    initialFocal: { x: number; y: number };
+    contentPoint: { x: number; y: number };
+    hasDragged: boolean;
     lastTapTime: number;
   }>({
     startX: 0,
     startY: 0,
     startTime: 0,
-    startPanX: 0,
-    startPanY: 0,
-    startScale: 1,
+    panStart: { x: 0, y: 0 },
+    scaleStart: 1.0,
     initialDistance: 0,
-    initialMidpoint: { x: 0, y: 0 },
-    hasMoved: false,
+    initialFocal: { x: 0, y: 0 },
+    contentPoint: { x: 0, y: 0 },
+    hasDragged: false,
     lastTapTime: 0
   });
+
+  // Keep refs in sync with state for access in native event listeners
+  useEffect(() => {
+    panRef.current = pan;
+  }, [pan]);
+
+  useEffect(() => {
+    scaleRef.current = scale;
+  }, [scale]);
 
   const selectedLot = useMemo(
     () => lots.find((l) => l.id === selectedLotId) || lots[0],
@@ -662,30 +676,46 @@ export default function LotificacionApp() {
     };
   }, [selectedLot, effectiveEnganchePct, plazoAnios, tasaInteresAnual]);
 
-  // Center view on specific lot smoothly
-  const centerOnLot = useCallback((lot: Lot, zoomLevel = 1.6) => {
+  // =========================================================================
+  // CENTER LOT ACCURATELY ON ANY SCREEN
+  // =========================================================================
+  const centerOnLot = useCallback((lot: Lot, targetScale = 1.6) => {
+    const container = mapContainerRef.current;
+    if (!container) return;
+
     setIsAnimating(true);
-    // SVG viewBox is 720 x 590, center is (360, 295)
-    const targetScale = Math.min(Math.max(zoomLevel, 1.2), 3.2);
-    const targetX = 360 - lot.centerX * targetScale;
-    const targetY = 295 - lot.centerY * targetScale;
-    setScale(targetScale);
-    setPan({ x: targetX, y: targetY });
+    const rect = container.getBoundingClientRect();
+    const W = rect.width;
+    const H = rect.height;
+
+    // SVG aspect ratio calculation (viewBox 0 0 720 590)
+    const ratio = Math.min(W / 720, H / 590);
+    const offsetX = (W - 720 * ratio) / 2;
+    const offsetY = (H - 590 * ratio) / 2;
+
+    const lotScreenX = offsetX + lot.centerX * ratio;
+    const lotScreenY = offsetY + lot.centerY * ratio;
+
+    const zoom = Math.min(Math.max(targetScale, 1.2), 3.5);
+    const newPanX = W / 2 - lotScreenX * zoom;
+    const newPanY = H / 2 - lotScreenY * zoom;
+
+    setScale(zoom);
+    setPan({ x: newPanX, y: newPanY });
+
     setTimeout(() => setIsAnimating(false), 300);
   }, []);
 
-  // Handle lot selection
   const handleSelectLot = (lot: Lot) => {
-    // If it was just a drag, don't trigger selection
-    if (touchStateRef.current.hasMoved) return;
+    // If the finger was dragging/panning the map, ignore selection
+    if (touchStateRef.current.hasDragged) return;
 
     setSelectedLotId(lot.id);
     setEngancheCustomPct(null);
-    setMobileSheet('peek'); // Show bottom sheet in peek mode on mobile
+    setMobileSheet('peek');
     centerOnLot(lot, 1.5);
   };
 
-  // Reset full masterplan view
   const handleResetView = () => {
     setIsAnimating(true);
     setScale(1.0);
@@ -693,163 +723,187 @@ export default function LotificacionApp() {
     setTimeout(() => setIsAnimating(false), 300);
   };
 
-  // Zoom controls (+ / -)
   const handleZoom = (delta: number) => {
+    const container = mapContainerRef.current;
+    if (!container) return;
     setIsAnimating(true);
-    setScale((prev) => {
-      const next = Math.min(Math.max(prev + delta, 0.75), 4.2);
-      // Zoom toward current center (360, 295)
-      setPan((currPan) => {
-        const factor = next / prev;
-        return {
-          x: 360 - (360 - currPan.x) * factor,
-          y: 295 - (295 - currPan.y) * factor
-        };
-      });
-      return next;
-    });
+
+    const rect = container.getBoundingClientRect();
+    const midX = rect.width / 2;
+    const midY = rect.height / 2;
+
+    const currScale = scaleRef.current;
+    const newScale = Math.min(Math.max(currScale + delta, 0.75), 4.5);
+    const factor = newScale / currScale;
+
+    const newPanX = midX - (midX - panRef.current.x) * factor;
+    const newPanY = midY - (midY - panRef.current.y) * factor;
+
+    setScale(newScale);
+    setPan({ x: newPanX, y: newPanY });
     setTimeout(() => setIsAnimating(false), 250);
   };
 
   // =========================================================================
-  // GESTURE ENGINE: Touch Pan & Pinch-to-Zoom (Mobile & Tablet)
+  // NATIVE NON-PASSIVE TOUCH LISTENER REGISTRATION (100% Mobile Fluid Gestures)
   // =========================================================================
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    const container = mapContainerRef.current;
-    if (!container) return;
+  useEffect(() => {
+    const el = mapContainerRef.current;
+    if (!el) return;
 
-    if (e.touches.length === 1) {
-      const touch = e.touches[0];
+    const onTouchStart = (e: TouchEvent) => {
+      // Prevent browser default gesture interference if inside map
+      if (e.touches.length > 1 && e.cancelable) {
+        e.preventDefault();
+      }
+
+      const rect = el.getBoundingClientRect();
       const now = Date.now();
-      const isDoubleTap = now - touchStateRef.current.lastTapTime < 280;
 
-      if (isDoubleTap) {
-        // Double tap: toggle zoom
-        setIsAnimating(true);
-        if (scale > 1.8) {
-          handleResetView();
-        } else {
-          const rect = container.getBoundingClientRect();
-          const clickX = ((touch.clientX - rect.left) / rect.width) * 720;
-          const clickY = ((touch.clientY - rect.top) / rect.height) * 590;
-          const newScale = 2.2;
-          setScale(newScale);
-          setPan({
-            x: 360 - ((clickX - pan.x) / scale) * newScale,
-            y: 295 - ((clickY - pan.y) / scale) * newScale
-          });
+      if (e.touches.length === 1) {
+        const t = e.touches[0];
+        const isDoubleTap = now - touchStateRef.current.lastTapTime < 280;
+
+        if (isDoubleTap) {
+          e.preventDefault();
+          setIsAnimating(true);
+          const focalX = t.clientX - rect.left;
+          const focalY = t.clientY - rect.top;
+
+          if (scaleRef.current > 1.8) {
+            setScale(1.0);
+            setPan({ x: 0, y: 0 });
+          } else {
+            const nextScale = 2.4;
+            const factor = nextScale / scaleRef.current;
+            const newPanX = focalX - (focalX - panRef.current.x) * factor;
+            const newPanY = focalY - (focalY - panRef.current.y) * factor;
+            setScale(nextScale);
+            setPan({ x: newPanX, y: newPanY });
+          }
           setTimeout(() => setIsAnimating(false), 260);
+          touchStateRef.current.lastTapTime = 0;
+          return;
         }
-        touchStateRef.current.lastTapTime = 0;
-        return;
+
+        touchStateRef.current = {
+          ...touchStateRef.current,
+          startX: t.clientX,
+          startY: t.clientY,
+          startTime: now,
+          panStart: { ...panRef.current },
+          scaleStart: scaleRef.current,
+          hasDragged: false,
+          lastTapTime: now
+        };
+      } else if (e.touches.length === 2) {
+        const t1 = e.touches[0];
+        const t2 = e.touches[1];
+        const dist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+        const midX = (t1.clientX + t2.clientX) / 2 - rect.left;
+        const midY = (t1.clientY + t2.clientY) / 2 - rect.top;
+
+        // Content point under initial focal midpoint
+        const contentX = (midX - panRef.current.x) / scaleRef.current;
+        const contentY = (midY - panRef.current.y) / scaleRef.current;
+
+        touchStateRef.current = {
+          ...touchStateRef.current,
+          initialDistance: dist,
+          initialFocal: { x: midX, y: midY },
+          contentPoint: { x: contentX, y: contentY },
+          panStart: { ...panRef.current },
+          scaleStart: scaleRef.current,
+          hasDragged: true
+        };
+      }
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      // ALWAYS prevent default during touch move so mobile page does not scroll while manipulating the map
+      if (e.cancelable) {
+        e.preventDefault();
       }
 
-      touchStateRef.current = {
-        ...touchStateRef.current,
-        startX: touch.clientX,
-        startY: touch.clientY,
-        startTime: now,
-        startPanX: pan.x,
-        startPanY: pan.y,
-        startScale: scale,
-        hasMoved: false,
-        lastTapTime: now
-      };
-    } else if (e.touches.length === 2) {
-      const t1 = e.touches[0];
-      const t2 = e.touches[1];
-      const distance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-      const midpoint = {
-        x: (t1.clientX + t2.clientX) / 2,
-        y: (t1.clientY + t2.clientY) / 2
-      };
+      const rect = el.getBoundingClientRect();
 
-      touchStateRef.current = {
-        ...touchStateRef.current,
-        initialDistance: distance,
-        initialMidpoint: midpoint,
-        startScale: scale,
-        startPanX: pan.x,
-        startPanY: pan.y,
-        hasMoved: true
-      };
-    }
-  };
+      if (e.touches.length === 1) {
+        const t = e.touches[0];
+        const dx = t.clientX - touchStateRef.current.startX;
+        const dy = t.clientY - touchStateRef.current.startY;
 
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    const container = mapContainerRef.current;
-    if (!container) return;
-    const rect = container.getBoundingClientRect();
-    const svgRatio = 720 / rect.width;
+        if (Math.hypot(dx, dy) > 6) {
+          touchStateRef.current.hasDragged = true;
+          setPan({
+            x: touchStateRef.current.panStart.x + dx,
+            y: touchStateRef.current.panStart.y + dy
+          });
+        }
+      } else if (e.touches.length === 2) {
+        const t1 = e.touches[0];
+        const t2 = e.touches[1];
+        const currentDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+        const currMidX = (t1.clientX + t2.clientX) / 2 - rect.left;
+        const currMidY = (t1.clientY + t2.clientY) / 2 - rect.top;
 
-    if (e.touches.length === 1) {
-      const touch = e.touches[0];
-      const dx = (touch.clientX - touchStateRef.current.startX) * svgRatio;
-      const dy = (touch.clientY - touchStateRef.current.startY) * svgRatio;
+        const distanceRatio = currentDist / (touchStateRef.current.initialDistance || 1);
+        const nextScale = Math.min(
+          Math.max(touchStateRef.current.scaleStart * distanceRatio, 0.75),
+          4.8
+        );
 
-      if (Math.hypot(dx, dy) > 5) {
-        touchStateRef.current.hasMoved = true;
-        setPan({
-          x: touchStateRef.current.startPanX + dx,
-          y: touchStateRef.current.startPanY + dy
-        });
+        // Flawless pinch zoom anchor formula: keeps terrain directly under fingers stationary
+        const newPanX = currMidX - touchStateRef.current.contentPoint.x * nextScale;
+        const newPanY = currMidY - touchStateRef.current.contentPoint.y * nextScale;
+
+        touchStateRef.current.hasDragged = true;
+        setScale(nextScale);
+        setPan({ x: newPanX, y: newPanY });
       }
-    } else if (e.touches.length === 2) {
-      // 2 fingers pinch to zoom + drag midpoint
-      const t1 = e.touches[0];
-      const t2 = e.touches[1];
-      const distance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-      const midpoint = {
-        x: (t1.clientX + t2.clientX) / 2,
-        y: (t1.clientY + t2.clientY) / 2
-      };
+    };
 
-      const scaleFactor = distance / (touchStateRef.current.initialDistance || 1);
-      const newScale = Math.min(Math.max(touchStateRef.current.startScale * scaleFactor, 0.75), 4.2);
+    const onTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length === 0) {
+        setTimeout(() => {
+          touchStateRef.current.hasDragged = false;
+        }, 150);
+      }
+    };
 
-      // Midpoint movement delta
-      const midDx = (midpoint.x - touchStateRef.current.initialMidpoint.x) * svgRatio;
-      const midDy = (midpoint.y - touchStateRef.current.initialMidpoint.y) * svgRatio;
+    // Attach active (non-passive) listeners so e.preventDefault works 100% on iOS and Android
+    el.addEventListener('touchstart', onTouchStart, { passive: false });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    el.addEventListener('touchend', onTouchEnd, { passive: true });
+    el.addEventListener('touchcancel', onTouchEnd, { passive: true });
 
-      setScale(newScale);
-      setPan({
-        x: touchStateRef.current.startPanX + midDx,
-        y: touchStateRef.current.startPanY + midDy
-      });
-      touchStateRef.current.hasMoved = true;
-    }
-  };
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+      el.removeEventListener('touchend', onTouchEnd);
+      el.removeEventListener('touchcancel', onTouchEnd);
+    };
+  }, []);
 
-  const handleTouchEnd = () => {
-    // Reset interaction tracker gently
-    setTimeout(() => {
-      touchStateRef.current.hasMoved = false;
-    }, 150);
-  };
-
-  // Mouse drag support for desktop/trackpads
+  // Desktop Mouse Drag and Wheel zoom
   const isMouseDownRef = useRef(false);
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     isMouseDownRef.current = true;
     touchStateRef.current.startX = e.clientX;
     touchStateRef.current.startY = e.clientY;
-    touchStateRef.current.startPanX = pan.x;
-    touchStateRef.current.startPanY = pan.y;
-    touchStateRef.current.hasMoved = false;
+    touchStateRef.current.panStart = { ...panRef.current };
+    touchStateRef.current.hasDragged = false;
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isMouseDownRef.current || !mapContainerRef.current) return;
-    const rect = mapContainerRef.current.getBoundingClientRect();
-    const svgRatio = 720 / rect.width;
-    const dx = (e.clientX - touchStateRef.current.startX) * svgRatio;
-    const dy = (e.clientY - touchStateRef.current.startY) * svgRatio;
+    if (!isMouseDownRef.current) return;
+    const dx = e.clientX - touchStateRef.current.startX;
+    const dy = e.clientY - touchStateRef.current.startY;
 
     if (Math.hypot(dx, dy) > 4) {
-      touchStateRef.current.hasMoved = true;
+      touchStateRef.current.hasDragged = true;
       setPan({
-        x: touchStateRef.current.startPanX + dx,
-        y: touchStateRef.current.startPanY + dy
+        x: touchStateRef.current.panStart.x + dx,
+        y: touchStateRef.current.panStart.y + dy
       });
     }
   };
@@ -857,13 +911,13 @@ export default function LotificacionApp() {
   const handleMouseUp = () => {
     isMouseDownRef.current = false;
     setTimeout(() => {
-      touchStateRef.current.hasMoved = false;
+      touchStateRef.current.hasDragged = false;
     }, 120);
   };
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const zoomDelta = e.deltaY < 0 ? 0.15 : -0.15;
+    const zoomDelta = e.deltaY < 0 ? 0.18 : -0.18;
     handleZoom(zoomDelta);
   };
 
@@ -1128,7 +1182,7 @@ export default function LotificacionApp() {
                   Paseo Las Palmas • Retalhuleu
                 </h1>
                 <span className="hidden xs:inline-block text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-medium shrink-0">
-                  v2.5 Móvil
+                  v2.6 Gestos
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 truncate">
@@ -1290,9 +1344,6 @@ export default function LotificacionApp() {
           {/* =================================================================== */}
           <div
             ref={mapContainerRef}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
@@ -1300,10 +1351,10 @@ export default function LotificacionApp() {
             className={`relative w-full bg-slate-950 overflow-hidden select-none border-b sm:border border-slate-800 sm:rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing touch-none ${
               isMapFullscreen
                 ? 'flex-grow h-full'
-                : 'h-[52vh] sm:h-[580px] lg:h-[620px]'
+                : 'h-[54vh] sm:h-[580px] lg:h-[620px]'
             }`}
           >
-            {/* Gesture Tip Overlay (Disappears on touch) */}
+            {/* North Compass Indicator */}
             <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-2 pointer-events-none">
               <div className="bg-slate-950/85 backdrop-blur border border-slate-800 rounded-xl px-2.5 py-1.5 flex items-center gap-2 shadow-lg">
                 <Compass className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -1312,78 +1363,89 @@ export default function LotificacionApp() {
                   <div className="text-slate-400 hidden xs:block">Brisa Sur → Norte</div>
                 </div>
               </div>
-              <div className="hidden sm:flex items-center gap-1.5 bg-slate-950/85 backdrop-blur border border-slate-800 rounded-xl px-2.5 py-1.5 text-[10px] text-slate-400 shadow-lg">
-                <Hand className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Pellizca para zoom • Arrastra con 1 dedo</span>
-              </div>
             </div>
 
-            {/* Floating Action Controls (+, -, Center, Fullscreen, Reset) */}
-            <div className="absolute top-2.5 right-2.5 z-20 flex flex-col gap-1.5 bg-slate-950/90 backdrop-blur border border-slate-800 rounded-xl p-1 shadow-xl">
+            {/* REAL-TIME SCALE INDICATOR & QUICK TOOLS */}
+            {/* (Notice: Zoom + and - are completely hidden on mobile as requested!) */}
+            <div className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 bg-slate-950/90 backdrop-blur border border-slate-800 rounded-xl p-1 shadow-xl">
+              {/* Dynamic Scale Indicator responding in real time to pinch gestures */}
+              <div
+                title="Escala actual del mapa (usa 2 dedos para pellizcar y escalar)"
+                className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono text-[11px] font-bold"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>{Math.round(scale * 100)}%</span>
+              </div>
+
+              {/* Desktop Only Zoom In / Out Buttons (HIDDEN ON MOBILE) */}
               <button
                 onClick={() => handleZoom(0.3)}
-                title="Acercar (Zoom In)"
-                className="w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-200 transition"
+                title="Acercar (Solo escritorio)"
+                className="hidden sm:flex w-7 h-7 rounded-lg hover:bg-slate-800 active:bg-slate-700 items-center justify-center text-slate-200 transition"
               >
-                <ZoomIn className="w-4 h-4" />
+                <ZoomIn className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => handleZoom(-0.3)}
-                title="Alejar (Zoom Out)"
-                className="w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-200 transition"
+                title="Alejar (Solo escritorio)"
+                className="hidden sm:flex w-7 h-7 rounded-lg hover:bg-slate-800 active:bg-slate-700 items-center justify-center text-slate-200 transition"
               >
-                <ZoomOut className="w-4 h-4" />
+                <ZoomOut className="w-3.5 h-3.5" />
               </button>
+
+              {/* Center on Selected Lot button */}
               <button
                 onClick={() => centerOnLot(selectedLot, 1.8)}
-                title="Centrar en Lote Seleccionado"
-                className="w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-emerald-400 transition"
+                title="Centrar en lote seleccionado"
+                className="w-7 h-7 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-emerald-400 transition"
               >
                 <LocateFixed className="w-4 h-4" />
               </button>
+
+              {/* Reset to 100% Full View */}
               <button
                 onClick={handleResetView}
-                title="Restablecer vista completa"
-                className="w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-200 transition"
+                title="Restablecer vista a 100%"
+                className="w-7 h-7 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-300 transition"
               >
-                <RotateCcw className="w-4 h-4" />
+                <RotateCcw className="w-3.5 h-3.5" />
               </button>
-              <div className="text-[9px] font-mono text-center text-slate-400 pt-0.5 border-t border-slate-800">
-                {Math.round(scale * 100)}%
-              </div>
             </div>
 
-            {/* SVG Urbanization Canvas with Scaled & Panned Group */}
-            <svg
-              viewBox="0 0 720 590"
-              preserveAspectRatio="xMidYMid meet"
+            {/* Transformed Content Wrapper: Hardware accelerated with translate3d and scale */}
+            <div
+              ref={contentWrapperRef}
+              style={{
+                transform: `translate3d(${pan.x}px, ${pan.y}px, 0px) scale(${scale})`,
+                transformOrigin: '0 0',
+                transition: isAnimating ? 'transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none',
+                width: '100%',
+                height: '100%'
+              }}
               className="w-full h-full select-none"
             >
-              <defs>
-                <pattern id="grassPattern2" width="24" height="24" patternUnits="userSpaceOnUse">
-                  <circle cx="4" cy="4" r="1" fill="#065f46" opacity="0.35" />
-                  <circle cx="16" cy="14" r="1.2" fill="#047857" opacity="0.35" />
-                </pattern>
-                <linearGradient id="riverGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#0284c7" stopOpacity="0.45" />
-                  <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.65" />
-                  <stop offset="100%" stopColor="#0369a1" stopOpacity="0.45" />
-                </linearGradient>
-                <filter id="glowSelected2" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#34d399" floodOpacity="0.95" />
-                </filter>
-              </defs>
-
-              {/* Dynamic Transform Group (Smooth animations on click/center) */}
-              <g
-                transform={`translate(${pan.x}, ${pan.y}) scale(${scale})`}
-                style={{
-                  transformOrigin: '0 0',
-                  transition: isAnimating ? 'transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none'
-                }}
+              <svg
+                viewBox="0 0 720 590"
+                preserveAspectRatio="xMidYMid meet"
+                className="w-full h-full select-none"
               >
+                <defs>
+                  <pattern id="grassPattern3" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <circle cx="4" cy="4" r="1" fill="#065f46" opacity="0.35" />
+                    <circle cx="16" cy="14" r="1.2" fill="#047857" opacity="0.35" />
+                  </pattern>
+                  <linearGradient id="riverGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#0284c7" stopOpacity="0.45" />
+                    <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.65" />
+                    <stop offset="100%" stopColor="#0369a1" stopOpacity="0.45" />
+                  </linearGradient>
+                  <filter id="glowSelected3" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#34d399" floodOpacity="0.95" />
+                  </filter>
+                </defs>
+
                 {/* Background Terrain */}
-                <rect x="0" y="0" width="720" height="590" fill="url(#grassPattern2)" />
+                <rect x="0" y="0" width="720" height="590" fill="url(#grassPattern3)" />
 
                 {/* Carretera CA-2 Occidente */}
                 <rect x="0" y="18" width="720" height="42" fill="#1e293b" stroke="#334155" strokeWidth="1.5" />
@@ -1498,7 +1560,7 @@ export default function LotificacionApp() {
                 {/* Reserva Ecológica y Río Bolas */}
                 <path
                   d="M 20 555 Q 190 535, 360 555 T 700 548 L 720 590 L 0 590 Z"
-                  fill="url(#riverGrad2)"
+                  fill="url(#riverGrad3)"
                 />
                 <text x="360" y="575" textAnchor="middle" fill="#bae6fd" fontSize="10" fontWeight="700" letterSpacing="1.5">
                   🌿 RESERVA ECOLÓGICA Y CORREDOR RÍO BOLAS
@@ -1549,7 +1611,7 @@ export default function LotificacionApp() {
                         fill={fillColor}
                         stroke={isSelected ? '#ffffff' : isCompared ? '#818cf8' : '#0f172a'}
                         strokeWidth={isSelected ? 3.5 : isCompared ? 2.5 : 1.5}
-                        filter={isSelected ? 'url(#glowSelected2)' : undefined}
+                        filter={isSelected ? 'url(#glowSelected3)' : undefined}
                         className="transition-all duration-150 hover:brightness-110 active:scale-[0.99]"
                       />
 
@@ -1594,8 +1656,8 @@ export default function LotificacionApp() {
                     </g>
                   );
                 })}
-              </g>
-            </svg>
+              </svg>
+            </div>
 
             {/* Quick Strip of Lots (Swipeable in map) */}
             <div className="absolute bottom-2 left-2 right-2 z-20 flex items-center gap-1.5 overflow-x-auto py-1 px-1.5 bg-slate-950/85 backdrop-blur border border-slate-800 rounded-xl">

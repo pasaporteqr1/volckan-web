@@ -37,15 +37,15 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	}
 	var te = ee.prototype = new b();
 	te.constructor = ee, _(te, y.prototype), te.isPureReactComponent = !0;
-	var x = Array.isArray;
-	function ne() {}
-	var S = {
+	var ne = Array.isArray;
+	function re() {}
+	var x = {
 		H: null,
 		A: null,
 		T: null,
 		S: null
-	}, re = Object.prototype.hasOwnProperty;
-	function C(e, n, r) {
+	}, ie = Object.prototype.hasOwnProperty;
+	function S(e, n, r) {
 		var i = r.ref;
 		return {
 			$$typeof: t,
@@ -55,13 +55,13 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			props: r
 		};
 	}
-	function ie(e, t) {
-		return C(e.type, t, e.props);
+	function ae(e, t) {
+		return S(e.type, t, e.props);
 	}
-	function w(e) {
+	function C(e) {
 		return typeof e == "object" && !!e && e.$$typeof === t;
 	}
-	function T(e) {
+	function w(e) {
 		var t = {
 			"=": "=0",
 			":": "=2"
@@ -70,15 +70,15 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			return t[e];
 		});
 	}
-	var ae = /\/+/g;
-	function oe(e, t) {
-		return typeof e == "object" && e && e.key != null ? T("" + e.key) : t.toString(36);
+	var oe = /\/+/g;
+	function se(e, t) {
+		return typeof e == "object" && e && e.key != null ? w("" + e.key) : t.toString(36);
 	}
-	function se(e) {
+	function ce(e) {
 		switch (e.status) {
 			case "fulfilled": return e.value;
 			case "rejected": throw e.reason;
-			default: switch (typeof e.status == "string" ? e.then(ne, ne) : (e.status = "pending", e.then(function(t) {
+			default: switch (typeof e.status == "string" ? e.then(re, re) : (e.status = "pending", e.then(function(t) {
 				e.status === "pending" && (e.status = "fulfilled", e.value = t);
 			}, function(t) {
 				e.status === "pending" && (e.status = "rejected", e.reason = t);
@@ -89,7 +89,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		}
 		throw e;
 	}
-	function ce(e, r, i, a, o) {
+	function le(e, r, i, a, o) {
 		var s = typeof e;
 		(s === "undefined" || s === "boolean") && (e = null);
 		var c = !1;
@@ -105,30 +105,30 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				case n:
 					c = !0;
 					break;
-				case d: return c = e._init, ce(c(e._payload), r, i, a, o);
+				case d: return c = e._init, le(c(e._payload), r, i, a, o);
 			}
 		}
-		if (c) return o = o(e), c = a === "" ? "." + oe(e, 0) : a, x(o) ? (i = "", c != null && (i = c.replace(ae, "$&/") + "/"), ce(o, r, i, "", function(e) {
+		if (c) return o = o(e), c = a === "" ? "." + se(e, 0) : a, ne(o) ? (i = "", c != null && (i = c.replace(oe, "$&/") + "/"), le(o, r, i, "", function(e) {
 			return e;
-		})) : o != null && (w(o) && (o = ie(o, i + (o.key == null || e && e.key === o.key ? "" : ("" + o.key).replace(ae, "$&/") + "/") + c)), r.push(o)), 1;
+		})) : o != null && (C(o) && (o = ae(o, i + (o.key == null || e && e.key === o.key ? "" : ("" + o.key).replace(oe, "$&/") + "/") + c)), r.push(o)), 1;
 		c = 0;
 		var l = a === "" ? "." : a + ":";
-		if (x(e)) for (var u = 0; u < e.length; u++) a = e[u], s = l + oe(a, u), c += ce(a, r, i, s, o);
-		else if (u = h(e), typeof u == "function") for (e = u.call(e), u = 0; !(a = e.next()).done;) a = a.value, s = l + oe(a, u++), c += ce(a, r, i, s, o);
+		if (ne(e)) for (var u = 0; u < e.length; u++) a = e[u], s = l + se(a, u), c += le(a, r, i, s, o);
+		else if (u = h(e), typeof u == "function") for (e = u.call(e), u = 0; !(a = e.next()).done;) a = a.value, s = l + se(a, u++), c += le(a, r, i, s, o);
 		else if (s === "object") {
-			if (typeof e.then == "function") return ce(se(e), r, i, a, o);
+			if (typeof e.then == "function") return le(ce(e), r, i, a, o);
 			throw r = String(e), Error("Objects are not valid as a React child (found: " + (r === "[object Object]" ? "object with keys {" + Object.keys(e).join(", ") + "}" : r) + "). If you meant to render a collection of children, use an array instead.");
 		}
 		return c;
 	}
-	function le(e, t, n) {
+	function ue(e, t, n) {
 		if (e == null) return e;
 		var r = [], i = 0;
-		return ce(e, r, "", "", function(e) {
+		return le(e, r, "", "", function(e) {
 			return t.call(n, e, i++);
 		}), r;
 	}
-	function ue(e) {
+	function de(e) {
 		if (e._status === -1) {
 			var t = e._result, n = t();
 			n.then(function(t) {
@@ -140,7 +140,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		if (e._status === 1) return e._result.default;
 		throw e._result;
 	}
-	var de = typeof reportError == "function" ? reportError : function(e) {
+	var fe = typeof reportError == "function" ? reportError : function(e) {
 		if (typeof window == "object" && typeof window.ErrorEvent == "function") {
 			var t = new window.ErrorEvent("error", {
 				bubbles: !0,
@@ -155,54 +155,54 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		}
 		console.error(e);
 	};
-	function fe(e) {
-		var t = S.T, n = {};
-		n.types = t === null ? null : t.types, S.T = n;
+	function pe(e) {
+		var t = x.T, n = {};
+		n.types = t === null ? null : t.types, x.T = n;
 		try {
-			var r = e(), i = S.S;
-			i !== null && i(n, r), typeof r == "object" && r && typeof r.then == "function" && r.then(ne, de);
+			var r = e(), i = x.S;
+			i !== null && i(n, r), typeof r == "object" && r && typeof r.then == "function" && r.then(re, fe);
 		} catch (e) {
-			de(e);
+			fe(e);
 		} finally {
-			t !== null && n.types !== null && (t.types = n.types), S.T = t;
+			t !== null && n.types !== null && (t.types = n.types), x.T = t;
 		}
 	}
-	function pe(e) {
-		var t = S.T;
+	function me(e) {
+		var t = x.T;
 		if (t !== null) {
 			var n = t.types;
 			n === null ? t.types = [e] : n.indexOf(e) === -1 && n.push(e);
-		} else fe(pe.bind(null, e));
+		} else pe(me.bind(null, e));
 	}
-	var me = {
-		map: le,
+	var he = {
+		map: ue,
 		forEach: function(e, t, n) {
-			le(e, function() {
+			ue(e, function() {
 				t.apply(this, arguments);
 			}, n);
 		},
 		count: function(e) {
 			var t = 0;
-			return le(e, function() {
+			return ue(e, function() {
 				t++;
 			}), t;
 		},
 		toArray: function(e) {
-			return le(e, function(e) {
+			return ue(e, function(e) {
 				return e;
 			}) || [];
 		},
 		only: function(e) {
-			if (!w(e)) throw Error("React.Children.only expected to receive a single React element child.");
+			if (!C(e)) throw Error("React.Children.only expected to receive a single React element child.");
 			return e;
 		}
 	};
-	e.Activity = f, e.Children = me, e.Component = y, e.Fragment = r, e.Profiler = a, e.PureComponent = ee, e.StrictMode = i, e.Suspense = l, e.ViewTransition = p, e.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = S, e.__COMPILER_RUNTIME = {
+	e.Activity = f, e.Children = he, e.Component = y, e.Fragment = r, e.Profiler = a, e.PureComponent = ee, e.StrictMode = i, e.Suspense = l, e.ViewTransition = p, e.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE = x, e.__COMPILER_RUNTIME = {
 		__proto__: null,
 		c: function(e) {
-			return S.H.useMemoCache(e);
+			return x.H.useMemoCache(e);
 		}
-	}, e.addTransitionType = pe, e.cache = function(e) {
+	}, e.addTransitionType = me, e.cache = function(e) {
 		return function() {
 			return e.apply(null, arguments);
 		};
@@ -211,14 +211,14 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	}, e.cloneElement = function(e, t, n) {
 		if (e == null) throw Error("The argument must be a React element, but you passed " + e + ".");
 		var r = _({}, e.props), i = e.key;
-		if (t != null) for (a in t.key !== void 0 && (i = "" + t.key), t) !re.call(t, a) || a === "key" || a === "__self" || a === "__source" || a === "ref" && t.ref === void 0 || (r[a] = t[a]);
+		if (t != null) for (a in t.key !== void 0 && (i = "" + t.key), t) !ie.call(t, a) || a === "key" || a === "__self" || a === "__source" || a === "ref" && t.ref === void 0 || (r[a] = t[a]);
 		var a = arguments.length - 2;
 		if (a === 1) r.children = n;
 		else if (1 < a) {
 			for (var o = Array(a), s = 0; s < a; s++) o[s] = arguments[s + 2];
 			r.children = o;
 		}
-		return C(e.type, i, r);
+		return S(e.type, i, r);
 	}, e.createContext = function(e) {
 		return e = {
 			$$typeof: s,
@@ -233,7 +233,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		}, e;
 	}, e.createElement = function(e, t, n) {
 		var r, i = {}, a = null;
-		if (t != null) for (r in t.key !== void 0 && (a = "" + t.key), t) re.call(t, r) && r !== "key" && r !== "__self" && r !== "__source" && (i[r] = t[r]);
+		if (t != null) for (r in t.key !== void 0 && (a = "" + t.key), t) ie.call(t, r) && r !== "key" && r !== "__self" && r !== "__source" && (i[r] = t[r]);
 		var o = arguments.length - 2;
 		if (o === 1) i.children = n;
 		else if (1 < o) {
@@ -241,7 +241,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			i.children = s;
 		}
 		if (e && e.defaultProps) for (r in o = e.defaultProps, o) i[r] === void 0 && (i[r] = o[r]);
-		return C(e, a, i);
+		return S(e, a, i);
 	}, e.createRef = function() {
 		return { current: null };
 	}, e.forwardRef = function(e) {
@@ -249,14 +249,14 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			$$typeof: c,
 			render: e
 		};
-	}, e.isValidElement = w, e.lazy = function(e) {
+	}, e.isValidElement = C, e.lazy = function(e) {
 		return {
 			$$typeof: d,
 			_payload: {
 				_status: -1,
 				_result: e
 			},
-			_init: ue
+			_init: de
 		};
 	}, e.memo = function(e, t) {
 		return {
@@ -264,44 +264,44 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			type: e,
 			compare: t === void 0 ? null : t
 		};
-	}, e.startTransition = fe, e.unstable_useCacheRefresh = function() {
-		return S.H.useCacheRefresh();
+	}, e.startTransition = pe, e.unstable_useCacheRefresh = function() {
+		return x.H.useCacheRefresh();
 	}, e.use = function(e) {
-		return S.H.use(e);
+		return x.H.use(e);
 	}, e.useActionState = function(e, t, n) {
-		return S.H.useActionState(e, t, n);
+		return x.H.useActionState(e, t, n);
 	}, e.useCallback = function(e, t) {
-		return S.H.useCallback(e, t);
+		return x.H.useCallback(e, t);
 	}, e.useContext = function(e) {
-		return S.H.useContext(e);
+		return x.H.useContext(e);
 	}, e.useDebugValue = function() {}, e.useDeferredValue = function(e, t) {
-		return S.H.useDeferredValue(e, t);
+		return x.H.useDeferredValue(e, t);
 	}, e.useEffect = function(e, t) {
-		return S.H.useEffect(e, t);
+		return x.H.useEffect(e, t);
 	}, e.useEffectEvent = function(e) {
-		return S.H.useEffectEvent(e);
+		return x.H.useEffectEvent(e);
 	}, e.useId = function() {
-		return S.H.useId();
+		return x.H.useId();
 	}, e.useImperativeHandle = function(e, t, n) {
-		return S.H.useImperativeHandle(e, t, n);
+		return x.H.useImperativeHandle(e, t, n);
 	}, e.useInsertionEffect = function(e, t) {
-		return S.H.useInsertionEffect(e, t);
+		return x.H.useInsertionEffect(e, t);
 	}, e.useLayoutEffect = function(e, t) {
-		return S.H.useLayoutEffect(e, t);
+		return x.H.useLayoutEffect(e, t);
 	}, e.useMemo = function(e, t) {
-		return S.H.useMemo(e, t);
+		return x.H.useMemo(e, t);
 	}, e.useOptimistic = function(e, t) {
-		return S.H.useOptimistic(e, t);
+		return x.H.useOptimistic(e, t);
 	}, e.useReducer = function(e, t, n) {
-		return S.H.useReducer(e, t, n);
+		return x.H.useReducer(e, t, n);
 	}, e.useRef = function(e) {
-		return S.H.useRef(e);
+		return x.H.useRef(e);
 	}, e.useState = function(e) {
-		return S.H.useState(e);
+		return x.H.useState(e);
 	}, e.useSyncExternalStore = function(e, t, n) {
-		return S.H.useSyncExternalStore(e, t, n);
+		return x.H.useSyncExternalStore(e, t, n);
 	}, e.useTransition = function() {
-		return S.H.useTransition();
+		return x.H.useTransition();
 	}, e.version = "19.3.1";
 })), u = /* @__PURE__ */ o(((e, t) => {
 	t.exports = l();
@@ -358,29 +358,29 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	}
 	function ee(e) {
 		if (h = !1, b(e), !m) {
-			if (n(c) !== null) m = !0, te || (te = !0, ie());
+			if (n(c) !== null) m = !0, te || (te = !0, ae());
 			else {
 				var t = n(l);
-				t !== null && ae(ee, t.startTime - e);
+				t !== null && oe(ee, t.startTime - e);
 			}
 		}
 	}
-	var te = !1, x = -1, ne = 5, S = -1;
-	function re() {
-		return g ? !0 : !(e.unstable_now() - S < ne);
+	var te = !1, ne = -1, re = 5, x = -1;
+	function ie() {
+		return g ? !0 : !(e.unstable_now() - x < re);
 	}
-	function C() {
+	function S() {
 		if (g = !1, te) {
 			var t = e.unstable_now();
-			S = t;
+			x = t;
 			var i = !0;
 			try {
 				a: {
-					m = !1, h && (h = !1, v(x), x = -1), p = !0;
+					m = !1, h && (h = !1, v(ne), ne = -1), p = !0;
 					var a = f;
 					try {
 						b: {
-							for (b(t), d = n(c); d !== null && !(d.expirationTime > t && re());) {
+							for (b(t), d = n(c); d !== null && !(d.expirationTime > t && ie());) {
 								var o = d.callback;
 								if (typeof o == "function") {
 									d.callback = null, f = d.priorityLevel;
@@ -396,7 +396,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 							if (d !== null) i = !0;
 							else {
 								var u = n(l);
-								u !== null && ae(ee, u.startTime - t), i = !1;
+								u !== null && oe(ee, u.startTime - t), i = !1;
 							}
 						}
 						break a;
@@ -406,31 +406,31 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 					i = void 0;
 				}
 			} finally {
-				i ? ie() : te = !1;
+				i ? ae() : te = !1;
 			}
 		}
 	}
-	var ie;
-	if (typeof y == "function") ie = function() {
-		y(C);
+	var ae;
+	if (typeof y == "function") ae = function() {
+		y(S);
 	};
 	else if (typeof MessageChannel < "u") {
-		var w = new MessageChannel(), T = w.port2;
-		w.port1.onmessage = C, ie = function() {
-			T.postMessage(null);
+		var C = new MessageChannel(), w = C.port2;
+		C.port1.onmessage = S, ae = function() {
+			w.postMessage(null);
 		};
-	} else ie = function() {
-		_(C, 0);
+	} else ae = function() {
+		_(S, 0);
 	};
-	function ae(t, n) {
-		x = _(function() {
+	function oe(t, n) {
+		ne = _(function() {
 			t(e.unstable_now());
 		}, n);
 	}
 	e.unstable_IdlePriority = 5, e.unstable_ImmediatePriority = 1, e.unstable_LowPriority = 4, e.unstable_NormalPriority = 3, e.unstable_Profiling = null, e.unstable_UserBlockingPriority = 2, e.unstable_cancelCallback = function(e) {
 		e.callback = null;
 	}, e.unstable_forceFrameRate = function(e) {
-		0 > e || 125 < e ? console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported") : ne = 0 < e ? Math.floor(1e3 / e) : 5;
+		0 > e || 125 < e ? console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported") : re = 0 < e ? Math.floor(1e3 / e) : 5;
 	}, e.unstable_getCurrentPriorityLevel = function() {
 		return f;
 	}, e.unstable_next = function(e) {
@@ -491,8 +491,8 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			startTime: a,
 			expirationTime: s,
 			sortIndex: -1
-		}, a > o ? (r.sortIndex = a, t(l, r), n(c) === null && r === n(l) && (h ? (v(x), x = -1) : h = !0, ae(ee, a - o))) : (r.sortIndex = s, t(c, r), m || p || (m = !0, te || (te = !0, ie()))), r;
-	}, e.unstable_shouldYield = re, e.unstable_wrapCallback = function(e) {
+		}, a > o ? (r.sortIndex = a, t(l, r), n(c) === null && r === n(l) && (h ? (v(ne), ne = -1) : h = !0, oe(ee, a - o))) : (r.sortIndex = s, t(c, r), m || p || (m = !0, te || (te = !0, ae()))), r;
+	}, e.unstable_shouldYield = ie, e.unstable_wrapCallback = function(e) {
 		var t = f;
 		return function() {
 			var n = f;
@@ -789,20 +789,20 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		}
 	}
 	var ee = null, te = null;
-	function x(e, t, n) {
+	function ne(e, t, n) {
 		return e === n || e === t && (ee = e, !0);
 	}
-	function ne(e, t, n) {
+	function re(e, t, n) {
 		return e === n ? (te = e, !1) : e === t && (te !== null && (ee = e), !0);
 	}
-	function S(e) {
+	function x(e) {
 		if (e === null) return null;
 		do
 			e = e === null ? null : e.return;
 		while (e && e.tag !== 5 && e.tag !== 27 && e.tag !== 3);
 		return e || null;
 	}
-	function re(e, t, n) {
+	function ie(e, t, n) {
 		for (var r = 0, i = e; i; i = n(i)) r++;
 		i = 0;
 		for (var a = t; a; a = n(a)) i++;
@@ -814,56 +814,56 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		}
 		return null;
 	}
-	var C = Object.assign, ie = Symbol.for("react.element"), w = Symbol.for("react.transitional.element"), T = Symbol.for("react.portal"), ae = Symbol.for("react.fragment"), oe = Symbol.for("react.strict_mode"), se = Symbol.for("react.profiler"), ce = Symbol.for("react.consumer"), le = Symbol.for("react.context"), ue = Symbol.for("react.forward_ref"), de = Symbol.for("react.suspense"), fe = Symbol.for("react.suspense_list"), pe = Symbol.for("react.memo"), me = Symbol.for("react.lazy"), he = Symbol.for("react.activity"), ge = Symbol.for("react.legacy_hidden"), _e = Symbol.for("react.memo_cache_sentinel"), ve = Symbol.for("react.view_transition"), ye = Symbol.for("react.recoverable"), be = Symbol.iterator;
-	function xe(e) {
-		return typeof e != "object" || !e ? null : (e = be && e[be] || e["@@iterator"], typeof e == "function" ? e : null);
+	var S = Object.assign, ae = Symbol.for("react.element"), C = Symbol.for("react.transitional.element"), w = Symbol.for("react.portal"), oe = Symbol.for("react.fragment"), se = Symbol.for("react.strict_mode"), ce = Symbol.for("react.profiler"), le = Symbol.for("react.consumer"), ue = Symbol.for("react.context"), de = Symbol.for("react.forward_ref"), fe = Symbol.for("react.suspense"), pe = Symbol.for("react.suspense_list"), me = Symbol.for("react.memo"), he = Symbol.for("react.lazy"), ge = Symbol.for("react.activity"), _e = Symbol.for("react.legacy_hidden"), ve = Symbol.for("react.memo_cache_sentinel"), ye = Symbol.for("react.view_transition"), be = Symbol.for("react.recoverable"), xe = Symbol.iterator;
+	function Se(e) {
+		return typeof e != "object" || !e ? null : (e = xe && e[xe] || e["@@iterator"], typeof e == "function" ? e : null);
 	}
-	var Se = Symbol.for("react.client.reference");
-	function Ce(e) {
+	var Ce = Symbol.for("react.client.reference");
+	function we(e) {
 		if (e == null) return null;
-		if (typeof e == "function") return e.$$typeof === Se ? null : e.displayName || e.name || null;
+		if (typeof e == "function") return e.$$typeof === Ce ? null : e.displayName || e.name || null;
 		if (typeof e == "string") return e;
 		switch (e) {
-			case ae: return "Fragment";
-			case se: return "Profiler";
-			case oe: return "StrictMode";
-			case de: return "Suspense";
-			case fe: return "SuspenseList";
-			case he: return "Activity";
-			case ve: return "ViewTransition";
+			case oe: return "Fragment";
+			case ce: return "Profiler";
+			case se: return "StrictMode";
+			case fe: return "Suspense";
+			case pe: return "SuspenseList";
+			case ge: return "Activity";
+			case ye: return "ViewTransition";
 		}
 		if (typeof e == "object") switch (e.$$typeof) {
-			case T: return "Portal";
-			case le: return e.displayName || "Context";
-			case ce: return (e._context.displayName || "Context") + ".Consumer";
-			case ue:
+			case w: return "Portal";
+			case ue: return e.displayName || "Context";
+			case le: return (e._context.displayName || "Context") + ".Consumer";
+			case de:
 				var t = e.render;
 				return e = e.displayName, e ||= (e = t.displayName || t.name || "", e === "" ? "ForwardRef" : "ForwardRef(" + e + ")"), e;
-			case pe: return t = e.displayName || null, t === null ? Ce(e.type) || "Memo" : t;
-			case me:
+			case me: return t = e.displayName || null, t === null ? we(e.type) || "Memo" : t;
+			case he:
 				t = e._payload, e = e._init;
 				try {
-					return Ce(e(t));
+					return we(e(t));
 				} catch {}
 		}
 		return null;
 	}
-	var we = Array.isArray, E = n.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, D = r.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, Te = {
+	var Te = Array.isArray, T = n.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, E = r.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, Ee = {
 		pending: !1,
 		data: null,
 		method: null,
 		action: null
-	}, Ee = [], De = -1;
-	function Oe(e) {
+	}, De = [], Oe = -1;
+	function ke(e) {
 		return { current: e };
 	}
-	function ke(e) {
-		0 > De || (e.current = Ee[De], Ee[De] = null, De--);
+	function D(e) {
+		0 > Oe || (e.current = De[Oe], De[Oe] = null, Oe--);
 	}
 	function O(e, t) {
-		De++, Ee[De] = e.current, e.current = t;
+		Oe++, De[Oe] = e.current, e.current = t;
 	}
-	var Ae = Oe(null), je = Oe(null), Me = Oe(null), Ne = Oe(null);
+	var Ae = ke(null), je = ke(null), Me = ke(null), Ne = ke(null);
 	function Pe(e, t) {
 		switch (O(Me, t), O(je, e), O(Ae, null), t.nodeType) {
 			case 9:
@@ -881,10 +881,10 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				default: e = 0;
 			}
 		}
-		ke(Ae), O(Ae, e);
+		D(Ae), O(Ae, e);
 	}
 	function Fe() {
-		ke(Ae), ke(je), ke(Me);
+		D(Ae), D(je), D(Me);
 	}
 	function Ie(e) {
 		var t = e.memoizedState;
@@ -893,7 +893,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		t !== n && (O(je, e), O(Ae, n));
 	}
 	function Le(e) {
-		je.current === e && (ke(Ae), ke(je)), Ne.current === e && (ke(Ne), sh._currentValue = Te);
+		je.current === e && (D(Ae), D(je)), Ne.current === e && (D(Ne), sh._currentValue = Ee);
 	}
 	var Re, ze;
 	function Be(e) {
@@ -1011,10 +1011,10 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			return "\nError generating stack: " + e.message + "\n" + e.stack;
 		}
 	}
-	var Ge = Object.prototype.hasOwnProperty, Ke = t.unstable_scheduleCallback, qe = t.unstable_cancelCallback, Je = t.unstable_shouldYield, Ye = t.unstable_requestPaint, Xe = t.unstable_now, Ze = t.unstable_getCurrentPriorityLevel, k = t.unstable_ImmediatePriority, A = t.unstable_UserBlockingPriority, Qe = t.unstable_NormalPriority, $e = t.unstable_LowPriority, j = t.unstable_IdlePriority, et = t.log, M = t.unstable_setDisableYieldValue, tt = null, nt = null;
+	var Ge = Object.prototype.hasOwnProperty, Ke = t.unstable_scheduleCallback, qe = t.unstable_cancelCallback, Je = t.unstable_shouldYield, Ye = t.unstable_requestPaint, Xe = t.unstable_now, Ze = t.unstable_getCurrentPriorityLevel, Qe = t.unstable_ImmediatePriority, $e = t.unstable_UserBlockingPriority, k = t.unstable_NormalPriority, A = t.unstable_LowPriority, et = t.unstable_IdlePriority, tt = t.log, j = t.unstable_setDisableYieldValue, nt = null, M = null;
 	function rt(e) {
-		if (typeof et == "function" && M(e), nt && typeof nt.setStrictMode == "function") try {
-			nt.setStrictMode(tt, e);
+		if (typeof tt == "function" && j(e), M && typeof M.setStrictMode == "function") try {
+			M.setStrictMode(nt, e);
 		} catch {}
 	}
 	var it = Math.clz32 ? Math.clz32 : st, at = Math.log, ot = Math.LN2;
@@ -1201,15 +1201,15 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		return e &= -e, 2 < e ? 8 < e ? e & 134217727 ? 32 : 268435456 : 8 : 2;
 	}
 	function Tt() {
-		var e = D.p;
+		var e = E.p;
 		return e === 0 ? (e = window.event, e === void 0 ? 32 : Ch(e.type)) : e;
 	}
 	function Et(e, t) {
-		var n = D.p;
+		var n = E.p;
 		try {
-			return D.p = e, t();
+			return E.p = e, t();
 		} finally {
-			D.p = n;
+			E.p = n;
 		}
 	}
 	var Dt = Math.random().toString(36).slice(2), Ot = "__reactFiber$" + Dt, kt = "__reactProps$" + Dt, At = "__reactContainer$" + Dt, jt = "__reactEvents$" + Dt, Mt = "__reactListeners$" + Dt, Nt = "__reactHandles$" + Dt, Pt = "__reactResources$" + Dt, Ft = "__reactMarker$" + Dt, It = "__reactLoad$" + Dt;
@@ -1419,7 +1419,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		if (t == null) {
 			if (r != null) {
 				if (n != null) throw Error(i(92));
-				if (we(r)) {
+				if (Te(r)) {
 					if (1 < r.length) throw Error(i(93));
 					r = r[0];
 				}
@@ -1650,7 +1650,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			for (var o in this._reactName = t, this._targetInst = r, this.type = n, this.nativeEvent = i, this.target = a, this.currentTarget = null, e) e.hasOwnProperty(o) && (t = e[o], this[o] = t ? t(i) : i[o]);
 			return this.isDefaultPrevented = (i.defaultPrevented == null ? !1 === i.returnValue : i.defaultPrevented) ? Vn : Hn, this.isPropagationStopped = Hn, this;
 		}
-		return C(t.prototype, {
+		return S(t.prototype, {
 			preventDefault: function() {
 				this.defaultPrevented = !0;
 				var e = this.nativeEvent;
@@ -1673,10 +1673,10 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		},
 		defaultPrevented: 0,
 		isTrusted: 0
-	}, Gn = Un(Wn), Kn = C({}, Wn, {
+	}, Gn = Un(Wn), Kn = S({}, Wn, {
 		view: 0,
 		detail: 0
-	}), qn = Un(Kn), Jn, Yn, Xn, Zn = C({}, Kn, {
+	}), qn = Un(Kn), Jn, Yn, Xn, Zn = S({}, Kn, {
 		screenX: 0,
 		screenY: 0,
 		clientX: 0,
@@ -1699,13 +1699,13 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		movementY: function(e) {
 			return "movementY" in e ? e.movementY : Yn;
 		}
-	}), Qn = Un(Zn), $n = Un(C({}, Zn, { dataTransfer: 0 })), er = Un(C({}, Kn, { relatedTarget: 0 })), tr = Un(C({}, Wn, {
+	}), Qn = Un(Zn), $n = Un(S({}, Zn, { dataTransfer: 0 })), er = Un(S({}, Kn, { relatedTarget: 0 })), tr = Un(S({}, Wn, {
 		animationName: 0,
 		elapsedTime: 0,
 		pseudoElement: 0
-	})), nr = Un(C({}, Wn, { clipboardData: function(e) {
+	})), nr = Un(S({}, Wn, { clipboardData: function(e) {
 		return "clipboardData" in e ? e.clipboardData : window.clipboardData;
-	} })), rr = Un(C({}, Wn, { data: 0 })), ir = {
+	} })), rr = Un(S({}, Wn, { data: 0 })), ir = {
 		Esc: "Escape",
 		Spacebar: " ",
 		Left: "ArrowLeft",
@@ -1768,7 +1768,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	function cr() {
 		return sr;
 	}
-	var lr = Un(C({}, Kn, {
+	var lr = Un(S({}, Kn, {
 		key: function(e) {
 			if (e.key) {
 				var t = ir[e.key] || e.key;
@@ -1794,7 +1794,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		which: function(e) {
 			return e.type === "keypress" ? Bn(e) : e.type === "keydown" || e.type === "keyup" ? e.keyCode : 0;
 		}
-	})), ur = Un(C({}, Zn, {
+	})), ur = Un(S({}, Zn, {
 		pointerId: 0,
 		width: 0,
 		height: 0,
@@ -1805,7 +1805,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		twist: 0,
 		pointerType: 0,
 		isPrimary: 0
-	})), dr = Un(C({}, Wn, { submitter: 0 })), fr = Un(C({}, Kn, {
+	})), dr = Un(S({}, Wn, { submitter: 0 })), fr = Un(S({}, Kn, {
 		touches: 0,
 		targetTouches: 0,
 		changedTouches: 0,
@@ -1814,11 +1814,11 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		ctrlKey: 0,
 		shiftKey: 0,
 		getModifierState: cr
-	})), pr = Un(C({}, Wn, {
+	})), pr = Un(S({}, Wn, {
 		propertyName: 0,
 		elapsedTime: 0,
 		pseudoElement: 0
-	})), mr = Un(C({}, Zn, {
+	})), mr = Un(S({}, Zn, {
 		deltaX: function(e) {
 			return "deltaX" in e ? e.deltaX : "wheelDeltaX" in e ? -e.wheelDeltaX : 0;
 		},
@@ -1827,7 +1827,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		},
 		deltaZ: 0,
 		deltaMode: 0
-	})), hr = Un(C({}, Wn, {
+	})), hr = Un(S({}, Wn, {
 		newState: 0,
 		oldState: 0,
 		source: 0
@@ -2165,16 +2165,16 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		if (r = e, typeof r == "function") zi(r) && (s = 1);
 		else if (typeof r == "string") s = qm(e, n, Ae.current) ? 26 : e === "html" || e === "head" || e === "body" ? 27 : 5;
 		else a: switch (r) {
-			case he: return e = Ri(31, n, t, a), e.elementType = he, e.lanes = o, e;
-			case ae: return Ui(n.children, a, o, t);
-			case oe:
+			case ge: return e = Ri(31, n, t, a), e.elementType = ge, e.lanes = o, e;
+			case oe: return Ui(n.children, a, o, t);
+			case se:
 				s = 8, a |= 24;
 				break;
-			case se: return e = Ri(12, n, t, a | 2), e.elementType = se, e.lanes = o, e;
-			case de: return e = Ri(13, n, t, a), e.elementType = de, e.lanes = o, e;
-			case fe: return e = Ri(19, n, t, a), e.elementType = fe, e.lanes = o, e;
-			case ge:
-			case ve: return e = a | 32, e = Ri(30, n, t, e), e.elementType = ve, e.lanes = o, e.stateNode = {
+			case ce: return e = Ri(12, n, t, a | 2), e.elementType = ce, e.lanes = o, e;
+			case fe: return e = Ri(13, n, t, a), e.elementType = fe, e.lanes = o, e;
+			case pe: return e = Ri(19, n, t, a), e.elementType = pe, e.lanes = o, e;
+			case _e:
+			case ye: return e = a | 32, e = Ri(30, n, t, e), e.elementType = ye, e.lanes = o, e.stateNode = {
 				autoName: null,
 				paired: null,
 				clones: null,
@@ -2182,19 +2182,19 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			}, e;
 			default:
 				if (typeof r == "object" && r) switch (r.$$typeof) {
-					case le:
+					case ue:
 						s = 10;
 						break a;
-					case ce:
+					case le:
 						s = 9;
 						break a;
-					case ue:
+					case de:
 						s = 11;
 						break a;
-					case pe:
+					case me:
 						s = 14;
 						break a;
-					case me:
+					case he:
 						s = 16, r = null;
 						break a;
 				}
@@ -2338,12 +2338,12 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	function ya(e) {
 		ua === null ? ua = [e] : ua.push(e);
 	}
-	var ba = Oe(null), xa = null, Sa = null;
+	var ba = ke(null), xa = null, Sa = null;
 	function Ca(e, t, n) {
 		O(ba, t._currentValue), t._currentValue = n;
 	}
 	function wa(e) {
-		e._currentValue = ba.current, ke(ba);
+		e._currentValue = ba.current, D(ba);
 	}
 	function Ta(e, t, n) {
 		for (; e !== null;) {
@@ -2453,7 +2453,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			});
 		};
 	}, Pa = t.unstable_scheduleCallback, Fa = t.unstable_NormalPriority, I = {
-		$$typeof: le,
+		$$typeof: ue,
 		Consumer: null,
 		Provider: null,
 		_currentValue: null,
@@ -2524,8 +2524,8 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			for (r.status = "rejected", r.reason = e, e = 0; e < n.length; e++) (0, n[e])(void 0);
 		}), r;
 	}
-	var Ja = E.S;
-	E.S = function(e, t) {
+	var Ja = T.S;
+	T.S = function(e, t) {
 		if (gd = Xe(), typeof t == "object" && t && typeof t.then == "function" && Ga(e, t), za !== null) for (var n = bf; n !== null;) Ra(n, za), n = n.next;
 		if (n = e.types, n !== null) {
 			for (var r = bf; r !== null;) Ra(r, n), r = r.next;
@@ -2539,7 +2539,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		}
 		Ja !== null && Ja(e, t);
 	};
-	var Ya = Oe(null);
+	var Ya = ke(null);
 	function Xa() {
 		var e = Ya.current;
 		return e === null ? G.pooledCache : e;
@@ -2611,7 +2611,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		t = t.props.ref, e.ref = t === void 0 ? null : t;
 	}
 	function mo(e, t) {
-		throw t.$$typeof === ie ? Error(i(525)) : (e = Object.prototype.toString.call(t), Error(i(31, e === "[object Object]" ? "object with keys {" + Object.keys(t).join(", ") + "}" : e)));
+		throw t.$$typeof === ae ? Error(i(525)) : (e = Object.prototype.toString.call(t), Error(i(31, e === "[object Object]" ? "object with keys {" + Object.keys(t).join(", ") + "}" : e)));
 	}
 	function ho(e) {
 		function t(t, n) {
@@ -2643,7 +2643,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		}
 		function l(e, t, n, r) {
 			var i = n.type;
-			return i === ae ? (e = d(e, t, n.props.children, r, n.key), po(e, n), e) : t !== null && (t.elementType === i || typeof i == "object" && i && i.$$typeof === me && ao(i) === t.type) ? (t = a(t, n.props), po(t, n), t.return = e, t) : (t = Hi(n.type, n.key, n.props, null, e.mode, r), po(t, n), t.return = e, t);
+			return i === oe ? (e = d(e, t, n.props.children, r, n.key), po(e, n), e) : t !== null && (t.elementType === i || typeof i == "object" && i && i.$$typeof === he && ao(i) === t.type) ? (t = a(t, n.props), po(t, n), t.return = e, t) : (t = Hi(n.type, n.key, n.props, null, e.mode, r), po(t, n), t.return = e, t);
 		}
 		function u(e, t, n, r) {
 			return t === null || t.tag !== 4 || t.stateNode.containerInfo !== n.containerInfo || t.stateNode.implementation !== n.implementation ? (t = Ki(n, e.mode, r), t.return = e, t) : (t = a(t, n.children || []), t.return = e, t);
@@ -2655,13 +2655,13 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			if (typeof t == "string" && t !== "" || typeof t == "number" || typeof t == "bigint") return t = Wi("" + t, e.mode, n), t.return = e, t;
 			if (typeof t == "object" && t) {
 				switch (t.$$typeof) {
-					case w: return n = Hi(t.type, t.key, t.props, null, e.mode, n), po(n, t), n.return = e, n;
-					case T: return t = Ki(t, e.mode, n), t.return = e, t;
-					case me: return t = ao(t), f(e, t, n);
+					case C: return n = Hi(t.type, t.key, t.props, null, e.mode, n), po(n, t), n.return = e, n;
+					case w: return t = Ki(t, e.mode, n), t.return = e, t;
+					case he: return t = ao(t), f(e, t, n);
 				}
-				if (we(t) || xe(t)) return t = Ui(t, e.mode, n, null), t.return = e, t;
+				if (Te(t) || Se(t)) return t = Ui(t, e.mode, n, null), t.return = e, t;
 				if (typeof t.then == "function") return f(e, fo(t), n);
-				if (t.$$typeof === le) return f(e, ja(e, t), n);
+				if (t.$$typeof === ue) return f(e, ja(e, t), n);
 				mo(e, t);
 			}
 			return null;
@@ -2671,13 +2671,13 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			if (typeof n == "string" && n !== "" || typeof n == "number" || typeof n == "bigint") return i === null ? c(e, t, "" + n, r) : null;
 			if (typeof n == "object" && n) {
 				switch (n.$$typeof) {
-					case w: return n.key === i ? l(e, t, n, r) : null;
-					case T: return n.key === i ? u(e, t, n, r) : null;
-					case me: return n = ao(n), p(e, t, n, r);
+					case C: return n.key === i ? l(e, t, n, r) : null;
+					case w: return n.key === i ? u(e, t, n, r) : null;
+					case he: return n = ao(n), p(e, t, n, r);
 				}
-				if (we(n) || xe(n)) return i === null ? d(e, t, n, r, null) : null;
+				if (Te(n) || Se(n)) return i === null ? d(e, t, n, r, null) : null;
 				if (typeof n.then == "function") return p(e, t, fo(n), r);
-				if (n.$$typeof === le) return p(e, t, ja(e, n), r);
+				if (n.$$typeof === ue) return p(e, t, ja(e, n), r);
 				mo(e, n);
 			}
 			return null;
@@ -2686,13 +2686,13 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			if (typeof r == "string" && r !== "" || typeof r == "number" || typeof r == "bigint") return e = e.get(n) || null, c(t, e, "" + r, i);
 			if (typeof r == "object" && r) {
 				switch (r.$$typeof) {
-					case w: return e = e.get(r.key === null ? n : r.key) || null, l(t, e, r, i);
-					case T: return e = e.get(r.key === null ? n : r.key) || null, u(t, e, r, i);
-					case me: return r = ao(r), m(e, t, n, r, i);
+					case C: return e = e.get(r.key === null ? n : r.key) || null, l(t, e, r, i);
+					case w: return e = e.get(r.key === null ? n : r.key) || null, u(t, e, r, i);
+					case he: return r = ao(r), m(e, t, n, r, i);
 				}
-				if (we(r) || xe(r)) return e = e.get(n) || null, d(t, e, r, i, null);
+				if (Te(r) || Se(r)) return e = e.get(n) || null, d(t, e, r, i, null);
 				if (typeof r.then == "function") return m(e, t, n, fo(r), i);
-				if (r.$$typeof === le) return m(e, t, n, ja(t, r), i);
+				if (r.$$typeof === ue) return m(e, t, n, ja(t, r), i);
 				mo(t, r);
 			}
 			return null;
@@ -2739,18 +2739,18 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			}), F && ia(a, g), u;
 		}
 		function _(e, r, o, c) {
-			if (typeof o == "object" && o && o.type === ae && o.key === null && o.props.ref === void 0 && (o = o.props.children), typeof o == "object" && o) {
+			if (typeof o == "object" && o && o.type === oe && o.key === null && o.props.ref === void 0 && (o = o.props.children), typeof o == "object" && o) {
 				switch (o.$$typeof) {
-					case w:
+					case C:
 						a: {
 							for (var l = o.key; r !== null;) {
 								if (r.key === l) {
-									if (l = o.type, l === ae) {
+									if (l = o.type, l === oe) {
 										if (r.tag === 7) {
 											n(e, r.sibling), c = a(r, o.props.children), po(c, o), c.return = e, e = c;
 											break a;
 										}
-									} else if (r.elementType === l || typeof l == "object" && l && l.$$typeof === me && ao(l) === r.type) {
+									} else if (r.elementType === l || typeof l == "object" && l && l.$$typeof === he && ao(l) === r.type) {
 										n(e, r.sibling), c = a(r, o.props), po(c, o), c.return = e, e = c;
 										break a;
 									}
@@ -2759,10 +2759,10 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 								}
 								t(e, r), r = r.sibling;
 							}
-							o.type === ae ? (c = Ui(o.props.children, e.mode, c, o.key), po(c, o), c.return = e, e = c) : (c = Hi(o.type, o.key, o.props, null, e.mode, c), po(c, o), c.return = e, e = c);
+							o.type === oe ? (c = Ui(o.props.children, e.mode, c, o.key), po(c, o), c.return = e, e = c) : (c = Hi(o.type, o.key, o.props, null, e.mode, c), po(c, o), c.return = e, e = c);
 						}
 						return s(e);
-					case T:
+					case w:
 						a: {
 							for (l = o.key; r !== null;) {
 								if (r.key === l) {
@@ -2778,15 +2778,15 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 							c = Ki(o, e.mode, c), c.return = e, e = c;
 						}
 						return s(e);
-					case me: return o = ao(o), _(e, r, o, c);
+					case he: return o = ao(o), _(e, r, o, c);
 				}
-				if (we(o)) return h(e, r, o, c);
-				if (xe(o)) {
-					if (l = xe(o), typeof l != "function") throw Error(i(150));
+				if (Te(o)) return h(e, r, o, c);
+				if (Se(o)) {
+					if (l = Se(o), typeof l != "function") throw Error(i(150));
 					return o = l.call(o), g(e, r, o, c);
 				}
 				if (typeof o.then == "function") return _(e, r, fo(o), c);
-				if (o.$$typeof === le) return _(e, r, ja(e, o), c);
+				if (o.$$typeof === ue) return _(e, r, ja(e, o), c);
 				mo(e, o);
 			}
 			return typeof o == "string" && o !== "" || typeof o == "number" || typeof o == "bigint" ? (o = "" + o, r !== null && r.tag === 6 ? (n(e, r.sibling), c = a(r, o), c.return = e, e = c) : (n(e, r), c = Wi(o, e.mode, c), c.return = e, e = c), s(e)) : n(e, r);
@@ -2923,7 +2923,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 							case 3: m.flags = m.flags & -65537 | 128;
 							case 0:
 								if (m = h.payload, f = typeof m == "function" ? m.call(g, d, f) : m, f == null) break a;
-								d = C({}, d, f);
+								d = S({}, d, f);
 								break a;
 							case 2: vo = !0;
 						}
@@ -2952,7 +2952,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		var n = e.callbacks;
 		if (n !== null) for (e.callbacks = null, e = 0; e < n.length; e++) Oo(n[e], t);
 	}
-	var Ao = Oe(null), jo = Oe(0);
+	var Ao = ke(null), jo = ke(0);
 	function Mo(e, t) {
 		e = od, O(jo, e), O(Ao, t), od = e | t.baseLanes;
 	}
@@ -2960,9 +2960,9 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		O(jo, od), O(Ao, Ao.current);
 	}
 	function Po() {
-		od = jo.current, ke(Ao), ke(jo);
+		od = jo.current, D(Ao), D(jo);
 	}
-	var Fo = Oe(null), Io = null;
+	var Fo = ke(null), Io = null;
 	function Lo(e) {
 		var t = e.alternate;
 		O(Ho, Ho.current & 1), O(Fo, e), Io === null && (t === null || Ao.current !== null || t.memoizedState !== null) && (Io = e);
@@ -2977,14 +2977,14 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		O(Ho, Ho.current), O(Fo, Fo.current);
 	}
 	function Vo(e) {
-		ke(Fo), Io === e && (Io = null), ke(Ho);
+		D(Fo), Io === e && (Io = null), D(Ho);
 	}
-	var Ho = Oe(0);
+	var Ho = ke(0);
 	function Uo(e, t) {
 		O(Fo, Fo.current), O(Ho, t);
 	}
 	function Wo(e) {
-		ke(Ho), ke(Fo), Io === e && (Io = null);
+		D(Ho), D(Fo), Io === e && (Io = null);
 	}
 	function Go(e) {
 		for (var t = e; t !== null;) {
@@ -3016,10 +3016,10 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		return !0;
 	}
 	function ns(e, t, n, r, i, a) {
-		return Ko = a, L = t, t.memoizedState = null, t.updateQueue = null, t.lanes = 0, E.H = e === null || e.memoizedState === null ? vc : yc, Xo = !1, a = n(r, i), Xo = !1, Yo && (a = is(t, n, r, i)), rs(e), a;
+		return Ko = a, L = t, t.memoizedState = null, t.updateQueue = null, t.lanes = 0, T.H = e === null || e.memoizedState === null ? vc : yc, Xo = !1, a = n(r, i), Xo = !1, Yo && (a = is(t, n, r, i)), rs(e), a;
 	}
 	function rs(e) {
-		E.H = _c;
+		T.H = _c;
 		var t = R !== null && R.next !== null;
 		if (Ko = 0, qo = R = L = null, Jo = !1, Qo = 0, $o = null, t) throw Error(i(300));
 		e === null || Ic || (e = e.dependencies, e !== null && Oa(e) && (Ic = !0));
@@ -3033,12 +3033,12 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				var o = e.updateQueue;
 				o.lastEffect = null, o.events = null, o.stores = null, o.memoCache != null && (o.memoCache.index = 0);
 			}
-			E.H = bc, o = t(n, r);
+			T.H = bc, o = t(n, r);
 		} while (Yo);
 		return o;
 	}
 	function as() {
-		var e = E.H, t = e.useState()[0];
+		var e = T.H, t = e.useState()[0];
 		return t = typeof t.then == "function" ? ds(t) : t, e = e.useState()[0], (R === null ? null : R.memoizedState) !== e && (L.flags |= 1024), t;
 	}
 	function os() {
@@ -3097,13 +3097,13 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	}
 	function ds(e) {
 		var t = Qo;
-		return Qo += 1, $o === null && ($o = []), e = io($o, e, t), t = L, (qo === null ? t.memoizedState : qo.next) === null && (t = t.alternate, E.H = t === null || t.memoizedState === null ? vc : yc), e;
+		return Qo += 1, $o === null && ($o = []), e = io($o, e, t), t = L, (qo === null ? t.memoizedState : qo.next) === null && (t = t.alternate, T.H = t === null || t.memoizedState === null ? vc : yc), e;
 	}
 	function fs(e) {
 		if (typeof e == "object" && e) {
 			if (typeof e.then == "function") return ds(e);
-			if (e.$$typeof === ye) return;
-			if (e.$$typeof === le) return Aa(e);
+			if (e.$$typeof === be) return;
+			if (e.$$typeof === ue) return Aa(e);
 		}
 		throw Error(i(438, String(e)));
 	}
@@ -3121,7 +3121,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		if (t ??= {
 			data: [],
 			index: 0
-		}, n === null && (n = us(), L.updateQueue = n), n.memoCache = t, n = t.data[t.index], n === void 0) for (n = t.data[t.index] = Array(e), r = 0; r < e; r++) n[r] = _e;
+		}, n === null && (n = us(), L.updateQueue = n), n.memoCache = t, n = t.data[t.index], n === void 0) for (n = t.data[t.index] = Array(e), r = 0; r < e; r++) n[r] = ve;
 		return t.index++, n;
 	}
 	function ms(e, t) {
@@ -3284,21 +3284,21 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 					o.listeners.push(e);
 				}
 			};
-			E.T === null ? o.isTransition = !1 : n(!0), r(o), n = t.pending, n === null ? (o.next = t.pending = o, Ds(t, o)) : (o.next = n.next, t.pending = n.next = o);
+			T.T === null ? o.isTransition = !1 : n(!0), r(o), n = t.pending, n === null ? (o.next = t.pending = o, Ds(t, o)) : (o.next = n.next, t.pending = n.next = o);
 		}
 	}
 	function Ds(e, t) {
 		var n = t.action, r = t.payload, i = e.state;
 		if (t.isTransition) {
-			var a = E.T, o = {};
-			o.types = a === null ? null : a.types, E.T = o;
+			var a = T.T, o = {};
+			o.types = a === null ? null : a.types, T.T = o;
 			try {
-				var s = n(i, r), c = E.S;
+				var s = n(i, r), c = T.S;
 				c !== null && c(o, s), Os(e, t, s);
 			} catch (n) {
 				As(e, t, n);
 			} finally {
-				a !== null && o.types !== null && (a.types = o.types), E.T = a;
+				a !== null && o.types !== null && (a.types = o.types), T.T = a;
 			}
 		} else try {
 			a = n(i, r), Os(e, t, a);
@@ -3506,12 +3506,12 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		return qr(n, t) ? n : Ao.current === null ? !(Ko & 106) || Ko & 1073741824 && !(q & 261930) ? (Ic = !0, e.memoizedState = n) : (e = Md(), L.lanes |= e, sd |= e, t) : (e = $s(e, n, r), qr(e, t) || (Ic = !0), e);
 	}
 	function tc(e, t, n, r, i) {
-		var a = D.p;
-		D.p = a !== 0 && 8 > a ? a : 8;
-		var o = E.T, s = {};
-		s.types = o === null ? null : o.types, E.T = s, pc(e, !1, t, n);
+		var a = E.p;
+		E.p = a !== 0 && 8 > a ? a : 8;
+		var o = T.T, s = {};
+		s.types = o === null ? null : o.types, T.T = s, pc(e, !1, t, n);
 		try {
-			var c = i(), l = E.S;
+			var c = i(), l = T.S;
 			l !== null && l(s, c), typeof c == "object" && c && typeof c.then == "function" ? fc(e, t, qa(c, r), jd(e)) : fc(e, t, r, jd(e));
 		} catch (n) {
 			fc(e, t, {
@@ -3520,14 +3520,14 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				reason: n
 			}, jd());
 		} finally {
-			D.p = a, o !== null && s.types !== null && (o.types = s.types), E.T = o;
+			E.p = a, o !== null && s.types !== null && (o.types = s.types), T.T = o;
 		}
 	}
 	function nc() {}
 	function rc(e, t, n, r) {
 		if (e.tag !== 5) throw Error(i(476));
 		var a = ic(e).queue;
-		tc(e, a, t, Te, n === null ? nc : function() {
+		tc(e, a, t, Ee, n === null ? nc : function() {
 			return ac(e), n(r);
 		});
 	}
@@ -3535,15 +3535,15 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		var t = e.memoizedState;
 		if (t !== null) return t;
 		t = {
-			memoizedState: Te,
-			baseState: Te,
+			memoizedState: Ee,
+			baseState: Ee,
 			baseQueue: null,
 			queue: {
 				pending: null,
 				lanes: 0,
 				dispatch: null,
 				lastRenderedReducer: ms,
-				lastRenderedState: Te
+				lastRenderedState: Ee
 			},
 			next: null
 		};
@@ -3869,7 +3869,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		useEffectEvent: Gs
 	};
 	function xc(e, t, n, r) {
-		t = e.memoizedState, n = n(r, t), n = n == null ? t : C({}, t, n), e.memoizedState = n, e.lanes === 0 && (e.updateQueue.baseState = n);
+		t = e.memoizedState, n = n(r, t), n = n == null ? t : S({}, t, n), e.memoizedState = n, e.lanes === 0 && (e.updateQueue.baseState = n);
 	}
 	var Sc = {
 		enqueueSetState: function(e, t, n) {
@@ -3897,7 +3897,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	function Tc(e, t) {
 		var n = t;
 		if ("ref" in t) for (var r in n = {}, t) r !== "ref" && (n[r] = t[r]);
-		if (e = e.defaultProps) for (var i in n === t && (n = C({}, n)), e) n[i] === void 0 && (n[i] = e[i]);
+		if (e = e.defaultProps) for (var i in n === t && (n = S({}, n)), e) n[i] === void 0 && (n[i] = e[i]);
 		return n;
 	}
 	function Ec(e) {
@@ -4392,20 +4392,20 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 					else {
 						if (e != null) {
 							var a = e.$$typeof;
-							if (a === ue) {
+							if (a === de) {
 								t.tag = 11, t = Rc(null, t, e, r, n);
 								break a;
 							}
-							if (a === pe) {
+							if (a === me) {
 								t.tag = 14, t = zc(null, t, e, r, n);
 								break a;
 							}
-							if (a === le) {
+							if (a === ue) {
 								t.tag = 10, t.type = e, t = dl(null, t, n);
 								break a;
 							}
 						}
-						throw t = Ce(e) || e, Error(i(306, t, ""));
+						throw t = we(e) || e, Error(i(306, t, ""));
 					}
 				}
 				return t;
@@ -4694,7 +4694,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				}
 				return V(t), null;
 			case 22:
-			case 23: return Vo(t), Po(), r = t.memoizedState !== null, e === null ? r && (t.flags |= 8192) : e.memoizedState !== null !== r && (t.flags |= 8192), r ? n & 536870912 && !(t.flags & 128) && (V(t), t.subtreeFlags & 6 && (t.flags |= 8192)) : V(t), n = t.updateQueue, n !== null && yl(t, n.retryQueue), n = null, e !== null && e.memoizedState !== null && e.memoizedState.cachePool !== null && (n = e.memoizedState.cachePool.pool), r = null, t.memoizedState !== null && t.memoizedState.cachePool !== null && (r = t.memoizedState.cachePool.pool), r !== n && (t.flags |= 2048), e !== null && ke(Ya), null;
+			case 23: return Vo(t), Po(), r = t.memoizedState !== null, e === null ? r && (t.flags |= 8192) : e.memoizedState !== null !== r && (t.flags |= 8192), r ? n & 536870912 && !(t.flags & 128) && (V(t), t.subtreeFlags & 6 && (t.flags |= 8192)) : V(t), n = t.updateQueue, n !== null && yl(t, n.retryQueue), n = null, e !== null && e.memoizedState !== null && e.memoizedState.cachePool !== null && (n = e.memoizedState.cachePool.pool), r = null, t.memoizedState !== null && t.memoizedState.cachePool !== null && (r = t.memoizedState.cachePool.pool), r !== n && (t.flags |= 2048), e !== null && D(Ya), null;
 			case 24: return n = null, e !== null && (n = e.memoizedState.cache), t.memoizedState.cache !== n && (t.flags |= 2048), wa(I), V(t), null;
 			case 25: return null;
 			case 30: return t.flags |= 33554432, V(t), null;
@@ -4724,7 +4724,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			case 4: return Fe(), null;
 			case 10: return wa(t.type), null;
 			case 22:
-			case 23: return Vo(t), Po(), e !== null && ke(Ya), e = t.flags, e & 65536 ? (t.flags = e & -65537 | 128, t) : null;
+			case 23: return Vo(t), Po(), e !== null && D(Ya), e = t.flags, e & 65536 ? (t.flags = e & -65537 | 128, t) : null;
 			case 24: return wa(I), null;
 			case 25: return null;
 			default: return null;
@@ -4757,7 +4757,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				break;
 			case 22:
 			case 23:
-				Vo(t), Po(), e !== null && ke(Ya);
+				Vo(t), Po(), e !== null && D(Ya);
 				break;
 			case 24: wa(I);
 		}
@@ -5343,8 +5343,8 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		for (n = n.child; n !== null;) Tu(e, t, n), n = n.sibling;
 	}
 	function Tu(e, t, n) {
-		if (nt && typeof nt.onCommitFiberUnmount == "function") try {
-			nt.onCommitFiberUnmount(tt, n);
+		if (M && typeof M.onCommitFiberUnmount == "function") try {
+			M.onCommitFiberUnmount(nt, n);
 		} catch {}
 		switch (n.tag) {
 			case 26:
@@ -6025,7 +6025,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		}
 	}, td = typeof WeakMap == "function" ? WeakMap : Map, W = 0, G = null, K = null, q = 0, J = 0, nd = null, rd = !1, id = !1, ad = !1, od = 0, Y = 0, sd = 0, cd = 0, ld = 0, ud = 0, dd = 0, fd = null, pd = null, md = !1, hd = 0, gd = 0, _d = Infinity, vd = null, yd = null, X = 0, bd = null, xd = null, Sd = 0, Cd = 0, wd = null, Td = null, Ed = null, Dd = null, Od = null, kd = 0, Ad = null;
 	function jd() {
-		return W & 2 && q !== 0 ? q & -q : E.T === null ? Tt() : Pf();
+		return W & 2 && q !== 0 ? q & -q : T.T === null ? Tt() : Pf();
 	}
 	function Md() {
 		if (ud === 0) {
@@ -6169,19 +6169,19 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		return n !== -1 && (e.timeoutHandle = -1, _p(n)), n = e.cancelPendingCommit, n !== null && (e.cancelPendingCommit = null, n()), Sd = 0, Bd(), G = e, K = n = Bi(e.current, null), q = t, J = 0, nd = null, rd = !1, id = pt(e, t), ad = !1, dd = ud = ld = cd = sd = Y = 0, pd = fd = null, md = !1, od = mt(e, t), Ai(), n;
 	}
 	function Hd(e, t) {
-		L = null, E.H = _c, t === $a || t === to ? (t = so(), J = 3) : t === eo ? (t = so(), J = 4) : J = t === Fc ? 8 : typeof t == "object" && t && typeof t.then == "function" ? 6 : 1, nd = t, K === null && (Y = 1, kc(e, Ji(t, e.current)));
+		L = null, T.H = _c, t === $a || t === to ? (t = so(), J = 3) : t === eo ? (t = so(), J = 4) : J = t === Fc ? 8 : typeof t == "object" && t && typeof t.then == "function" ? 6 : 1, nd = t, K === null && (Y = 1, kc(e, Ji(t, e.current)));
 	}
 	function Ud() {
 		var e = Fo.current;
 		return e === null ? !0 : (q & 4194048) === q ? Io === null : (q & 62914560) === q || q & 536870912 ? e === Io : !1;
 	}
 	function Wd() {
-		var e = E.H;
-		return E.H = _c, e === null ? _c : e;
+		var e = T.H;
+		return T.H = _c, e === null ? _c : e;
 	}
 	function Gd() {
-		var e = E.A;
-		return E.A = ed, e;
+		var e = T.A;
+		return T.A = ed, e;
 	}
 	function Kd() {
 		Y = 4, rd || (q & 4194048) !== q && Fo.current !== null || (id = !0), !(sd & 134217727) && !(cd & 134217727) || G === null || Rd(G, q, ud, !1);
@@ -6220,7 +6220,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				Hd(e, t);
 			}
 		while (1);
-		return t && e.shellSuspendCounter++, Sa = xa = null, W = r, E.H = i, E.A = a, K === null && (G = null, q = 0, Ai()), o;
+		return t && e.shellSuspendCounter++, Sa = xa = null, W = r, T.H = i, T.A = a, K === null && (G = null, q = 0, Ai()), o;
 	}
 	function Jd() {
 		for (; K !== null;) Zd(K);
@@ -6293,7 +6293,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				Hd(e, t);
 			}
 		while (1);
-		return Sa = xa = null, E.H = r, E.A = a, W = n, K === null ? (G = null, q = 0, Ai(), Y) : 0;
+		return Sa = xa = null, T.H = r, T.A = a, W = n, K === null ? (G = null, q = 0, Ai(), Y) : 0;
 	}
 	function Xd() {
 		for (; K !== null && !Je();) Zd(K);
@@ -6384,14 +6384,14 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	}
 	function rf(e, t, n, r, i, a, o) {
 		var s = t.lanes | t.childLanes;
-		if (Cd = s, s |= ki, yt(e, n, s, r, i, a), Dd = null, (n & 335544064) === n ? (Od = Ba(e), r = 10262) : (Od = null, r = 10256), (t.subtreeFlags & r) !== 0 || (t.flags & r) !== 0 ? (e.callbackNode = null, e.callbackPriority = 0, yf(Qe, function() {
+		if (Cd = s, s |= ki, yt(e, n, s, r, i, a), Dd = null, (n & 335544064) === n ? (Od = Ba(e), r = 10262) : (Od = null, r = 10256), (t.subtreeFlags & r) !== 0 || (t.flags & r) !== 0 ? (e.callbackNode = null, e.callbackPriority = 0, yf(k, function() {
 			return ff(), null;
 		})) : (e.callbackNode = null, e.callbackPriority = 0), Hl = !1, r = !!(t.flags & 13878), t.subtreeFlags & 13878 || r) {
-			r = E.T, E.T = null, i = D.p, D.p = 2, a = W, W |= 4;
+			r = T.T, T.T = null, i = E.p, E.p = 2, a = W, W |= 4;
 			try {
 				gu(e, t, n);
 			} finally {
-				W = a, D.p = i, E.T = r;
+				W = a, E.p = i, T.T = r;
 			}
 		}
 		X = 1, Hl ? Ed = Mp(o, e.containerInfo, Od, sf, cf, of, lf, ff, af, null, null) : (sf(), cf(), lf());
@@ -6410,9 +6410,9 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			X = 0;
 			var e = bd, t = xd, n = Sd, r = !!(t.flags & 13878);
 			if (t.subtreeFlags & 13878 || r) {
-				r = E.T, E.T = null;
-				var i = D.p;
-				D.p = 2;
+				r = T.T, T.T = null;
+				var i = E.p;
+				E.p = 2;
 				var a = W;
 				W |= 4;
 				try {
@@ -6447,7 +6447,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 					}
 					gh = !!sp, cp = sp = null;
 				} finally {
-					W = a, D.p = i, E.T = r;
+					W = a, E.p = i, T.T = r;
 				}
 			}
 			e.current = t, X = 2;
@@ -6458,15 +6458,15 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			X = 0;
 			var e = bd, t = xd, n = !!(t.flags & 8772);
 			if (t.subtreeFlags & 8772 || n) {
-				n = E.T, E.T = null;
-				var r = D.p;
-				D.p = 2;
+				n = T.T, T.T = null;
+				var r = E.p;
+				E.p = 2;
 				var i = W;
 				W |= 4;
 				try {
 					vu(e, t.alternate, t);
 				} finally {
-					W = i, D.p = r, E.T = n;
+					W = i, E.p = r, T.T = n;
 				}
 			}
 			X = 3;
@@ -6478,18 +6478,18 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			var e = Ed;
 			Ed = null, Ye();
 			var t = bd, n = xd, r = Sd, i = Td, a = (r & 335544064) === r ? 10262 : 10256;
-			if ((n.subtreeFlags & a) !== 0 || (n.flags & a) !== 0 ? X = 5 : (X = 0, xd = bd = null, uf(t, t.pendingLanes)), a = t.pendingLanes, a === 0 && (yd = null), wt(r), n = n.stateNode, nt && typeof nt.onCommitFiberRoot == "function") try {
-				nt.onCommitFiberRoot(tt, n, void 0, (n.current.flags & 128) == 128);
+			if ((n.subtreeFlags & a) !== 0 || (n.flags & a) !== 0 ? X = 5 : (X = 0, xd = bd = null, uf(t, t.pendingLanes)), a = t.pendingLanes, a === 0 && (yd = null), wt(r), n = n.stateNode, M && typeof M.onCommitFiberRoot == "function") try {
+				M.onCommitFiberRoot(nt, n, void 0, (n.current.flags & 128) == 128);
 			} catch {}
 			if (i !== null) {
-				n = E.T, a = D.p, D.p = 2, E.T = null;
+				n = T.T, a = E.p, E.p = 2, T.T = null;
 				try {
 					for (var o = t.onRecoverableError, s = 0; s < i.length; s++) {
 						var c = i[s];
 						o(c.value, { componentStack: c.stack });
 					}
 				} finally {
-					E.T = n, D.p = a;
+					T.T = n, E.p = a;
 				}
 			}
 			if (i = Dd, o = Od, Od = null, i !== null && (Dd = null, o === null && (o = []), e !== null)) for (c = 0; c < i.length; c++) n = (0, i[c])(o), n !== void 0 && e.finished.finally(n);
@@ -6506,18 +6506,18 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		if (X !== 5) return !1;
 		var e = bd, t = Cd;
 		Cd = 0;
-		var n = wt(Sd), r = E.T, a = D.p;
+		var n = wt(Sd), r = T.T, a = E.p;
 		try {
-			D.p = 32 > n ? 32 : n, E.T = null, n = wd, wd = null;
+			E.p = 32 > n ? 32 : n, T.T = null, n = wd, wd = null;
 			var o = bd, s = Sd;
 			if (X = 0, xd = bd = null, Sd = 0, W & 6) throw Error(i(331));
 			var c = W;
-			if (W |= 4, Zu(o.current), Uu(o, o.current, s, n), W = c, Df(0, !1), nt && typeof nt.onPostCommitFiberRoot == "function") try {
-				nt.onPostCommitFiberRoot(tt, o);
+			if (W |= 4, Zu(o.current), Uu(o, o.current, s, n), W = c, Df(0, !1), M && typeof M.onPostCommitFiberRoot == "function") try {
+				M.onPostCommitFiberRoot(nt, o);
 			} catch {}
 			return !0;
 		} finally {
-			D.p = a, E.T = r, uf(e, t);
+			E.p = a, T.T = r, uf(e, t);
 		}
 	}
 	function pf(e, t, n) {
@@ -6631,15 +6631,15 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			switch (r !== null && qe(r), wt(n)) {
 				case 2:
 				case 8:
-					n = A;
+					n = $e;
 					break;
 				case 32:
-					n = Qe;
+					n = k;
 					break;
 				case 268435456:
-					n = j;
+					n = et;
 					break;
-				default: n = Qe;
+				default: n = k;
 			}
 			return r = jf.bind(null, e), n = Ke(n, r), e.callbackPriority = t, e.callbackNode = n, t;
 		}
@@ -6658,7 +6658,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	}
 	function Nf() {
 		bp(function() {
-			W & 6 ? Ke(k, Of) : kf();
+			W & 6 ? Ke(Qe, Of) : kf();
 		});
 	}
 	function Pf() {
@@ -6905,7 +6905,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			if (!(t & 7)) {
 				a: {
 					if (l = e === "mouseover" || e === "pointerover", c = e === "mouseout" || e === "pointerout", l && n !== Tn && (u = n.relatedTarget || n.fromElement) && (Rt(u) || u[At])) break a;
-					(c || l) && (u = i.window === i ? i : (l = i.ownerDocument) ? l.defaultView || l.parentWindow : window, c ? (l = n.relatedTarget || n.toElement, c = r, l = l ? Rt(l) : null, l !== null && (f = o(l), d = l.tag, l !== f || d !== 5 && d !== 27 && d !== 6) && (l = null)) : (c = null, l = r), c !== l && (d = Qn, g = "onMouseLeave", p = "onMouseEnter", m = "mouse", (e === "pointerout" || e === "pointerover") && (d = ur, g = "onPointerLeave", p = "onPointerEnter", m = "pointer"), f = c == null ? u : Bt(c), h = l == null ? u : Bt(l), u = new d(g, m + "leave", c, n, i), u.target = f, u.relatedTarget = h, g = null, Rt(i) === r && (d = new d(p, m + "enter", l, n, i), d.target = h, d.relatedTarget = f, g = d), f = g, d = c && l ? re(c, l, Yf) : null, c !== null && Xf(s, u, c, d, !1), l !== null && f !== null && Xf(s, f, l, d, !0)));
+					(c || l) && (u = i.window === i ? i : (l = i.ownerDocument) ? l.defaultView || l.parentWindow : window, c ? (l = n.relatedTarget || n.toElement, c = r, l = l ? Rt(l) : null, l !== null && (f = o(l), d = l.tag, l !== f || d !== 5 && d !== 27 && d !== 6) && (l = null)) : (c = null, l = r), c !== l && (d = Qn, g = "onMouseLeave", p = "onMouseEnter", m = "mouse", (e === "pointerout" || e === "pointerover") && (d = ur, g = "onPointerLeave", p = "onPointerEnter", m = "pointer"), f = c == null ? u : Bt(c), h = l == null ? u : Bt(l), u = new d(g, m + "leave", c, n, i), u.target = f, u.relatedTarget = h, g = null, Rt(i) === r && (d = new d(p, m + "enter", l, n, i), d.target = h, d.relatedTarget = f, g = d), f = g, d = c && l ? ie(c, l, Yf) : null, c !== null && Xf(s, u, c, d, !1), l !== null && f !== null && Xf(s, f, l, d, !0)));
 				}
 				a: {
 					if (c = r ? Bt(r) : window, l = c.nodeName && c.nodeName.toLowerCase(), l === "select" || l === "input" && c.type === "file") var _ = Fr;
@@ -7736,7 +7736,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		this._scope = document.documentElement, this._selector = "::view-transition-" + e + "(" + t + ")";
 	}
 	Np.prototype.animate = function(e, t) {
-		return t = typeof t == "number" ? { duration: t } : C({}, t), t.pseudoElement = this._selector, this._scope.animate(e, t);
+		return t = typeof t == "number" ? { duration: t } : S({}, t), t.pseudoElement = this._selector, this._scope.animate(e, t);
 	}, Np.prototype.getAnimations = function() {
 		for (var e = this._scope, t = this._selector, n = e.getAnimations({ subtree: !0 }), r = [], i = 0; i < n.length; i++) {
 			var a = n[i].effect;
@@ -7959,7 +7959,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			}
 			return a;
 		}
-		return e & Node.DOCUMENT_POSITION_PRECEDING ? ((t = !!a) && !(t = a === n) && (t = re(n, a, S), t === null ? t = !1 : (h(t, !0, x, a, n), a = ee, ee = null, t = a !== null)), t) : e & Node.DOCUMENT_POSITION_FOLLOWING ? ((t = !!a) && !(t = a === r) && (t = re(r, a, S), t === null ? t = !1 : (h(t, !0, ne, a, r), a = ee, te = ee = null, t = a !== null)), t) : !1;
+		return e & Node.DOCUMENT_POSITION_PRECEDING ? ((t = !!a) && !(t = a === n) && (t = ie(n, a, x), t === null ? t = !1 : (h(t, !0, ne, a, n), a = ee, ee = null, t = a !== null)), t) : e & Node.DOCUMENT_POSITION_FOLLOWING ? ((t = !!a) && !(t = a === r) && (t = ie(r, a, x), t === null ? t = !1 : (h(t, !0, re, a, r), a = ee, te = ee = null, t = a !== null)), t) : !1;
 	}
 	function Zp(e, t) {
 		var n = e.ownerDocument.createRange();
@@ -8185,8 +8185,8 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		}
 		return e.nodeType === 9 ? e : e.ownerDocument;
 	}
-	var xm = D.d;
-	D.d = {
+	var xm = E.d;
+	E.d = {
 		f: Sm,
 		r: Cm,
 		D: Em,
@@ -8236,7 +8236,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 					break;
 				case "script": a = Rm(e);
 			}
-			if (!(vm.has(a) || (e = C({
+			if (!(vm.has(a) || (e = S({
 				rel: "preload",
 				href: t === "image" && n && n.imageSrcSet ? void 0 : e,
 				as: t
@@ -8261,7 +8261,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				case "worker":
 				case "script": a = Rm(e);
 			}
-			if (!vm.has(a) && (e = C({
+			if (!vm.has(a) && (e = S({
 				rel: "modulepreload",
 				href: e
 			}, t), vm.set(a, e), n.querySelector(i) === null)) {
@@ -8291,7 +8291,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				};
 				if (o = r.querySelector(Fm(a))) s.loading = 5;
 				else {
-					e = C({
+					e = S({
 						rel: "stylesheet",
 						href: e,
 						"data-precedence": t
@@ -8319,7 +8319,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		var n = wm;
 		if (n && e) {
 			var r = Vt(n).hoistableScripts, i = Rm(e), a = r.get(i);
-			a || (a = n.querySelector(zm(i)), a || (e = C({
+			a || (a = n.querySelector(zm(i)), a || (e = S({
 				src: e,
 				async: !0
 			}, t), (t = vm.get(i)) && Um(e, t), a = n.createElement("script"), Ht(a), np(a, "link", e), n.head.appendChild(a)), a = {
@@ -8335,7 +8335,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		var n = wm;
 		if (n && e) {
 			var r = Vt(n).hoistableScripts, i = Rm(e), a = r.get(i);
-			a || (a = n.querySelector(zm(i)), a || (e = C({
+			a || (a = n.querySelector(zm(i)), a || (e = S({
 				src: e,
 				async: !0,
 				type: "module"
@@ -8411,7 +8411,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		return "link[rel=\"stylesheet\"][" + e + "]";
 	}
 	function Im(e) {
-		return C({}, e, {
+		return S({}, e, {
 			"data-precedence": e.precedence,
 			precedence: null
 		});
@@ -8440,7 +8440,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			case "style":
 				var r = e.querySelector("style[data-href~=\"" + ln(n.href) + "\"]");
 				if (r) return t.instance = r, Ht(r), r;
-				var a = C({}, n, {
+				var a = S({}, n, {
 					"data-href": n.href,
 					"data-precedence": n.precedence,
 					href: null,
@@ -8456,7 +8456,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 				return s._p = new Promise(function(e, t) {
 					s.onload = e, s.onerror = t;
 				}), np(o, "link", r), t.state.loading |= 4, Vm(o, n.precedence, e), t.instance = o;
-			case "script": return o = Rm(n.src), (a = e.querySelector(zm(o))) ? (t.instance = a, Ht(a), a) : (r = n, (a = vm.get(o)) && (r = C({}, n), Um(r, a)), e = e.ownerDocument || e, a = e.createElement("script"), Ht(a), np(a, "link", r), e.head.appendChild(a), t.instance = a);
+			case "script": return o = Rm(n.src), (a = e.querySelector(zm(o))) ? (t.instance = a, Ht(a), a) : (r = n, (a = vm.get(o)) && (r = S({}, n), Um(r, a)), e = e.ownerDocument || e, a = e.createElement("script"), Ht(a), np(a, "link", r), e.head.appendChild(a), t.instance = a);
 			case "void": return null;
 			default: throw Error(i(443, t.type));
 		}
@@ -8601,11 +8601,11 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		}
 	}
 	var sh = {
-		$$typeof: le,
+		$$typeof: ue,
 		Provider: null,
 		Consumer: null,
-		_currentValue: Te,
-		_currentValue2: Te,
+		_currentValue: Ee,
+		_currentValue2: Ee,
 		_threadCount: 0
 	};
 	function ch(e, t, n, r, i, a, o, s, c) {
@@ -8649,23 +8649,23 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	}
 	var gh = !0;
 	function _h(e, t, n, r) {
-		var i = E.T;
-		E.T = null;
-		var a = D.p;
+		var i = T.T;
+		T.T = null;
+		var a = E.p;
 		try {
-			D.p = 2, yh(e, t, n, r);
+			E.p = 2, yh(e, t, n, r);
 		} finally {
-			D.p = a, E.T = i;
+			E.p = a, T.T = i;
 		}
 	}
 	function vh(e, t, n, r) {
-		var i = E.T;
-		E.T = null;
-		var a = D.p;
+		var i = T.T;
+		T.T = null;
+		var a = E.p;
 		try {
-			D.p = 8, yh(e, t, n, r);
+			E.p = 8, yh(e, t, n, r);
 		} finally {
-			D.p = a, E.T = i;
+			E.p = a, T.T = i;
 		}
 	}
 	function yh(e, t, n, r) {
@@ -8799,11 +8799,11 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 			case "pointerenter":
 			case "pointerleave": return 8;
 			case "message": switch (Ze()) {
-				case k: return 2;
-				case A: return 8;
-				case Qe:
-				case $e: return 32;
-				case j: return 268435456;
+				case Qe: return 2;
+				case $e: return 8;
+				case k:
+				case A: return 32;
+				case et: return 268435456;
 				default: return 32;
 			}
 			default: return 32;
@@ -9010,7 +9010,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	};
 	var Kh = n.version;
 	if (Kh !== "19.3.1") throw Error(i(527, Kh, "19.3.1"));
-	D.findDOMNode = function(e) {
+	E.findDOMNode = function(e) {
 		var t = e._reactInternals;
 		if (t === void 0) throw typeof e.render == "function" ? Error(i(188)) : (e = Object.keys(e).join(","), Error(i(268, e)));
 		return e = d(t), e = e === null ? null : p(e), e = e === null ? null : e.stateNode, e;
@@ -9019,13 +9019,13 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		bundleType: 0,
 		version: "19.3.1",
 		rendererPackageName: "react-dom",
-		currentDispatcherRef: E,
+		currentDispatcherRef: T,
 		reconcilerVersion: "19.3.1"
 	};
 	if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u") {
 		var Jh = __REACT_DEVTOOLS_GLOBAL_HOOK__;
 		if (!Jh.isDisabled && Jh.supportsFiber) try {
-			tt = Jh.inject(qh), nt = Jh;
+			nt = Jh.inject(qh), M = Jh;
 		} catch {}
 	}
 	e.createRoot = function(e, t) {
@@ -9071,16 +9071,16 @@ function te(e, t) {
 	}
 	return n;
 }
-function x() {
-	return x = Object.assign ? Object.assign.bind() : function(e) {
+function ne() {
+	return ne = Object.assign ? Object.assign.bind() : function(e) {
 		for (var t = 1; t < arguments.length; t++) {
 			var n = arguments[t];
 			for (var r in n) ({}).hasOwnProperty.call(n, r) && (e[r] = n[r]);
 		}
 		return e;
-	}, x.apply(null, arguments);
+	}, ne.apply(null, arguments);
 }
-function ne(e, t) {
+function re(e, t) {
 	var n = Object.keys(e);
 	if (Object.getOwnPropertySymbols) {
 		var r = Object.getOwnPropertySymbols(e);
@@ -9090,30 +9090,30 @@ function ne(e, t) {
 	}
 	return n;
 }
-function S(e) {
+function x(e) {
 	for (var t = 1; t < arguments.length; t++) {
 		var n = arguments[t] == null ? {} : arguments[t];
-		t % 2 ? ne(Object(n), !0).forEach(function(t) {
-			re(e, t, n[t]);
-		}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(n)) : ne(Object(n)).forEach(function(t) {
+		t % 2 ? re(Object(n), !0).forEach(function(t) {
+			ie(e, t, n[t]);
+		}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(n)) : re(Object(n)).forEach(function(t) {
 			Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(n, t));
 		});
 	}
 	return e;
 }
-function re(e, t, n) {
-	return (t = C(t)) in e ? Object.defineProperty(e, t, {
+function ie(e, t, n) {
+	return (t = S(t)) in e ? Object.defineProperty(e, t, {
 		value: n,
 		enumerable: !0,
 		configurable: !0,
 		writable: !0
 	}) : e[t] = n, e;
 }
-function C(e) {
-	var t = ie(e, "string");
+function S(e) {
+	var t = ae(e, "string");
 	return typeof t == "symbol" ? t : t + "";
 }
-function ie(e, t) {
+function ae(e, t) {
 	if (typeof e != "object" || !e) return e;
 	var n = e[Symbol.toPrimitive];
 	if (n !== void 0) {
@@ -9123,22 +9123,22 @@ function ie(e, t) {
 	}
 	return (t === "string" ? String : Number)(e);
 }
+function C(e) {
+	return e && e.map((e, t) => /*#__PURE__*/ _.createElement(e.tag, x({ key: t }, e.attr), C(e.child)));
+}
 function w(e) {
-	return e && e.map((e, t) => /*#__PURE__*/ _.createElement(e.tag, S({ key: t }, e.attr), w(e.child)));
+	return (t) => /*#__PURE__*/ _.createElement(oe, ne({ attr: x({}, e.attr) }, t), C(e.child));
 }
-function T(e) {
-	return (t) => /*#__PURE__*/ _.createElement(ae, x({ attr: S({}, e.attr) }, t), w(e.child));
-}
-function ae(e) {
+function oe(e) {
 	var t = (t) => {
 		var n = e.attr, r = e.size, i = e.title, a = ee(e, b), o = r || t.size || "1em", s;
-		return t.className && (s = t.className), e.className && (s = (s ? s + " " : "") + e.className), /*#__PURE__*/ _.createElement("svg", x({
+		return t.className && (s = t.className), e.className && (s = (s ? s + " " : "") + e.className), /*#__PURE__*/ _.createElement("svg", ne({
 			stroke: "currentColor",
 			fill: "currentColor",
 			strokeWidth: "0"
 		}, t.attr, n, a, {
 			className: s,
-			style: S(S({ color: e.color || t.color }, t.style), e.style),
+			style: x(x({ color: e.color || t.color }, t.style), e.style),
 			height: o,
 			width: o,
 			xmlns: "http://www.w3.org/2000/svg"
@@ -9147,9 +9147,9 @@ function ae(e) {
 	return y === void 0 ? t(v) : /*#__PURE__*/ _.createElement(y.Consumer, null, (e) => t(e));
 }
 // node_modules/react-icons/lu/index.mjs
-var oe = g();
-function se(e) {
-	return T({
+var se = g();
+function ce(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9192,8 +9192,8 @@ function se(e) {
 		]
 	})(e);
 }
-function ce(e) {
-	return T({
+function le(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9246,8 +9246,8 @@ function ce(e) {
 		]
 	})(e);
 }
-function le(e) {
-	return T({
+function ue(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9268,8 +9268,8 @@ function le(e) {
 		}]
 	})(e);
 }
-function ue(e) {
-	return T({
+function de(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9290,8 +9290,8 @@ function ue(e) {
 		}]
 	})(e);
 }
-function de(e) {
-	return T({
+function fe(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9354,8 +9354,8 @@ function de(e) {
 		]
 	})(e);
 }
-function fe(e) {
-	return T({
+function pe(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9459,8 +9459,8 @@ function fe(e) {
 		]
 	})(e);
 }
-function pe(e) {
-	return T({
+function me(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9521,8 +9521,8 @@ function pe(e) {
 		]
 	})(e);
 }
-function me(e) {
-	return T({
+function he(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9547,8 +9547,8 @@ function me(e) {
 		}]
 	})(e);
 }
-function he(e) {
-	return T({
+function ge(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9569,8 +9569,8 @@ function he(e) {
 		}]
 	})(e);
 }
-function ge(e) {
-	return T({
+function _e(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9587,8 +9587,8 @@ function ge(e) {
 		}]
 	})(e);
 }
-function _e(e) {
-	return T({
+function ve(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9622,8 +9622,8 @@ function _e(e) {
 		]
 	})(e);
 }
-function ve(e) {
-	return T({
+function ye(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9657,8 +9657,8 @@ function ve(e) {
 		]
 	})(e);
 }
-function ye(e) {
-	return T({
+function be(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9702,8 +9702,8 @@ function ye(e) {
 		]
 	})(e);
 }
-function be(e) {
-	return T({
+function xe(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9728,8 +9728,8 @@ function be(e) {
 		}]
 	})(e);
 }
-function xe(e) {
-	return T({
+function Se(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9801,43 +9801,8 @@ function xe(e) {
 		]
 	})(e);
 }
-function Se(e) {
-	return T({
-		tag: "svg",
-		attr: {
-			viewBox: "0 0 24 24",
-			fill: "none",
-			stroke: "currentColor",
-			strokeWidth: "2",
-			strokeLinecap: "round",
-			strokeLinejoin: "round"
-		},
-		child: [
-			{
-				tag: "path",
-				attr: { d: "M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2" },
-				child: []
-			},
-			{
-				tag: "path",
-				attr: { d: "M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2" },
-				child: []
-			},
-			{
-				tag: "path",
-				attr: { d: "M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8" },
-				child: []
-			},
-			{
-				tag: "path",
-				attr: { d: "M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" },
-				child: []
-			}
-		]
-	})(e);
-}
 function Ce(e) {
-	return T({
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9880,7 +9845,7 @@ function Ce(e) {
 	})(e);
 }
 function we(e) {
-	return T({
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9914,8 +9879,8 @@ function we(e) {
 		]
 	})(e);
 }
-function E(e) {
-	return T({
+function Te(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9943,8 +9908,8 @@ function E(e) {
 		}]
 	})(e);
 }
-function D(e) {
-	return T({
+function T(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9969,8 +9934,8 @@ function D(e) {
 		}]
 	})(e);
 }
-function Te(e) {
-	return T({
+function E(e) {
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -9996,7 +9961,7 @@ function Te(e) {
 	})(e);
 }
 function Ee(e) {
-	return T({
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -10014,7 +9979,7 @@ function Ee(e) {
 	})(e);
 }
 function De(e) {
-	return T({
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -10032,7 +9997,7 @@ function De(e) {
 	})(e);
 }
 function Oe(e) {
-	return T({
+	return w({
 		tag: "svg",
 		attr: {
 			viewBox: "0 0 24 24",
@@ -10065,9 +10030,9 @@ var ke = /* @__PURE__ */ o(((e) => {
 		};
 	}
 	e.Fragment = n, e.jsx = r, e.jsxs = r;
-})), O = (/* @__PURE__ */ o(((e, t) => {
+})), D = (/* @__PURE__ */ o(((e, t) => {
 	t.exports = ke();
-})))(), Ae = 7.75, je = [
+})))(), O = 7.75, Ae = [
 	{
 		id: "A-01",
 		codigoCatastral: "RET-2026-A001",
@@ -10598,33 +10563,48 @@ var ke = /* @__PURE__ */ o(((e) => {
 		notasVendedor: "Joya bioclimática: esquina Norte-Este junto a reserva natural."
 	}
 ];
-function Me() {
-	let [e, t] = (0, _.useState)(je), [n, r] = (0, _.useState)("A-01"), [i, a] = (0, _.useState)("GTQ"), [o, s] = (0, _.useState)("todos"), [c, l] = (0, _.useState)("todos"), [u, d] = (0, _.useState)(""), [f, p] = (0, _.useState)("estado"), [m, h] = (0, _.useState)("ficha"), [g, v] = (0, _.useState)(15), [y, b] = (0, _.useState)("peek"), [ee, te] = (0, _.useState)(!1), [x, ne] = (0, _.useState)({
+function je() {
+	let [e, t] = (0, _.useState)(Ae), [n, r] = (0, _.useState)("A-01"), [i, a] = (0, _.useState)("GTQ"), [o, s] = (0, _.useState)("todos"), [c, l] = (0, _.useState)("todos"), [u, d] = (0, _.useState)(""), [f, p] = (0, _.useState)("estado"), [m, h] = (0, _.useState)("ficha"), [g, v] = (0, _.useState)(15), [y, b] = (0, _.useState)("peek"), [ee, te] = (0, _.useState)(!1), [ne, re] = (0, _.useState)({
 		x: 0,
 		y: 0
-	}), [S, re] = (0, _.useState)(1), [C, ie] = (0, _.useState)(!1), [w, T] = (0, _.useState)(10), [ae, oe] = (0, _.useState)(8.5), [ke, Me] = (0, _.useState)(null), [Ne, Pe] = (0, _.useState)("Carlos Méndez"), [Fe, Ie] = (0, _.useState)("+502 5544-8899"), [Le, Re] = (0, _.useState)("Ing. Sofía Barrios"), [ze, Be] = (0, _.useState)(["A-01", "B-01"]), [Ve, He] = (0, _.useState)(!1), [Ue, We] = (0, _.useState)(!1), [Ge, Ke] = (0, _.useState)(!1), [qe, Je] = (0, _.useState)(!1), [Ye, Xe] = (0, _.useState)(null), Ze = (0, _.useRef)(null), k = (0, _.useRef)({
+	}), [x, ie] = (0, _.useState)(1), [S, ae] = (0, _.useState)(!1), [C, w] = (0, _.useState)(10), [oe, se] = (0, _.useState)(8.5), [ke, je] = (0, _.useState)(null), [Me, Ne] = (0, _.useState)("Carlos Méndez"), [Pe, Fe] = (0, _.useState)("+502 5544-8899"), [Ie, Le] = (0, _.useState)("Ing. Sofía Barrios"), [Re, ze] = (0, _.useState)(["A-01", "B-01"]), [Be, Ve] = (0, _.useState)(!1), [He, Ue] = (0, _.useState)(!1), [We, Ge] = (0, _.useState)(!1), [Ke, qe] = (0, _.useState)(!1), [Je, Ye] = (0, _.useState)(null), Xe = (0, _.useRef)(null), Ze = (0, _.useRef)(null), Qe = (0, _.useRef)({
+		x: 0,
+		y: 0
+	}), $e = (0, _.useRef)(1), k = (0, _.useRef)({
 		startX: 0,
 		startY: 0,
 		startTime: 0,
-		startPanX: 0,
-		startPanY: 0,
-		startScale: 1,
-		initialDistance: 0,
-		initialMidpoint: {
+		panStart: {
 			x: 0,
 			y: 0
 		},
-		hasMoved: !1,
+		scaleStart: 1,
+		initialDistance: 0,
+		initialFocal: {
+			x: 0,
+			y: 0
+		},
+		contentPoint: {
+			x: 0,
+			y: 0
+		},
+		hasDragged: !1,
 		lastTapTime: 0
-	}), A = (0, _.useMemo)(() => e.find((e) => e.id === n) || e[0], [e, n]), Qe = ke === null ? A.cuotaInicialPct : ke, $e = (e) => {
-		Xe(e), setTimeout(() => {
-			Xe((t) => t === e ? null : t);
+	});
+	(0, _.useEffect)(() => {
+		Qe.current = ne;
+	}, [ne]), (0, _.useEffect)(() => {
+		$e.current = x;
+	}, [x]);
+	let A = (0, _.useMemo)(() => e.find((e) => e.id === n) || e[0], [e, n]), et = ke === null ? A.cuotaInicialPct : ke, tt = (e) => {
+		Ye(e), setTimeout(() => {
+			Ye((t) => t === e ? null : t);
 		}, 3500);
 	}, j = (e) => {
 		if (i === "GTQ") return `Q${Math.round(e).toLocaleString("es-GT")}`;
-		let t = e / Ae;
+		let t = e / O;
 		return `$${Math.round(t).toLocaleString("en-US")} USD`;
-	}, et = (0, _.useMemo)(() => e.filter((e) => {
+	}, nt = (0, _.useMemo)(() => e.filter((e) => {
 		let t = o === "todos" || e.estado === o, n = c === "todos" || e.sector === c, r = u.trim() === "" || e.label.toLowerCase().includes(u.toLowerCase()) || e.codigoCatastral.toLowerCase().includes(u.toLowerCase()) || e.categoria.toLowerCase().includes(u.toLowerCase()) || e.orientacion.toLowerCase().includes(u.toLowerCase());
 		return t && n && r;
 	}), [
@@ -10633,7 +10613,7 @@ function Me() {
 		c,
 		u
 	]), M = (0, _.useMemo)(() => {
-		let e = A.precioGTQ, t = e * Qe / 100, n = e - t, r = w * 12, i = ae / 100 / 12, a = i > 0 ? n * (i * (1 + i) ** +r) / ((1 + i) ** +r - 1) : n / r, o = e * .009 / 4, s = e * (1 + A.plusvaliaAnual / 100) ** 5;
+		let e = A.precioGTQ, t = e * et / 100, n = e - t, r = C * 12, i = oe / 100 / 12, a = i > 0 ? n * (i * (1 + i) ** +r) / ((1 + i) ** +r - 1) : n / r, o = e * .009 / 4, s = e * (1 + A.plusvaliaAnual / 100) ** 5;
 		return {
 			precioTotal: e,
 			cuotaInicial: t,
@@ -10646,127 +10626,138 @@ function Me() {
 		};
 	}, [
 		A,
-		Qe,
-		w,
-		ae
-	]), tt = (0, _.useCallback)((e, t = 1.6) => {
-		ie(!0);
-		let n = Math.min(Math.max(t, 1.2), 3.2), r = 360 - e.centerX * n, i = 295 - e.centerY * n;
-		re(n), ne({
-			x: r,
-			y: i
-		}), setTimeout(() => ie(!1), 300);
-	}, []), nt = (e) => {
-		k.current.hasMoved || (r(e.id), Me(null), b("peek"), tt(e, 1.5));
-	}, rt = () => {
-		ie(!0), re(1), ne({
+		et,
+		C,
+		oe
+	]), rt = (0, _.useCallback)((e, t = 1.6) => {
+		let n = Xe.current;
+		if (!n) return;
+		ae(!0);
+		let r = n.getBoundingClientRect(), i = r.width, a = r.height, o = Math.min(i / 720, a / 590), s = (i - 720 * o) / 2, c = (a - 590 * o) / 2, l = s + e.centerX * o, u = c + e.centerY * o, d = Math.min(Math.max(t, 1.2), 3.5), f = i / 2 - l * d, p = a / 2 - u * d;
+		ie(d), re({
+			x: f,
+			y: p
+		}), setTimeout(() => ae(!1), 300);
+	}, []), it = (e) => {
+		k.current.hasDragged || (r(e.id), je(null), b("peek"), rt(e, 1.5));
+	}, at = () => {
+		ae(!0), ie(1), re({
 			x: 0,
 			y: 0
-		}), setTimeout(() => ie(!1), 300);
-	}, it = (e) => {
-		ie(!0), re((t) => {
-			let n = Math.min(Math.max(t + e, .75), 4.2);
-			return ne((e) => {
-				let r = n / t;
-				return {
-					x: 360 - (360 - e.x) * r,
-					y: 295 - (295 - e.y) * r
-				};
-			}), n;
-		}), setTimeout(() => ie(!1), 250);
-	}, at = (e) => {
-		let t = Ze.current;
-		if (t) {
-			if (e.touches.length === 1) {
-				let n = e.touches[0], r = Date.now();
+		}), setTimeout(() => ae(!1), 300);
+	}, ot = (e) => {
+		let t = Xe.current;
+		if (!t) return;
+		ae(!0);
+		let n = t.getBoundingClientRect(), r = n.width / 2, i = n.height / 2, a = $e.current, o = Math.min(Math.max(a + e, .75), 4.5), s = o / a, c = r - (r - Qe.current.x) * s, l = i - (i - Qe.current.y) * s;
+		ie(o), re({
+			x: c,
+			y: l
+		}), setTimeout(() => ae(!1), 250);
+	};
+	(0, _.useEffect)(() => {
+		let e = Xe.current;
+		if (!e) return;
+		let t = (t) => {
+			t.touches.length > 1 && t.cancelable && t.preventDefault();
+			let n = e.getBoundingClientRect(), r = Date.now();
+			if (t.touches.length === 1) {
+				let e = t.touches[0];
 				if (r - k.current.lastTapTime < 280) {
-					if (ie(!0), S > 1.8) rt();
+					t.preventDefault(), ae(!0);
+					let r = e.clientX - n.left, i = e.clientY - n.top;
+					if ($e.current > 1.8) ie(1), re({
+						x: 0,
+						y: 0
+					});
 					else {
-						let e = t.getBoundingClientRect(), r = (n.clientX - e.left) / e.width * 720, i = (n.clientY - e.top) / e.height * 590, a = 2.2;
-						re(a), ne({
-							x: 360 - (r - x.x) / S * a,
-							y: 295 - (i - x.y) / S * a
-						}), setTimeout(() => ie(!1), 260);
+						let e = 2.4, t = e / $e.current, n = r - (r - Qe.current.x) * t, a = i - (i - Qe.current.y) * t;
+						ie(e), re({
+							x: n,
+							y: a
+						});
 					}
-					k.current.lastTapTime = 0;
+					setTimeout(() => ae(!1), 260), k.current.lastTapTime = 0;
 					return;
 				}
 				k.current = {
 					...k.current,
-					startX: n.clientX,
-					startY: n.clientY,
+					startX: e.clientX,
+					startY: e.clientY,
 					startTime: r,
-					startPanX: x.x,
-					startPanY: x.y,
-					startScale: S,
-					hasMoved: !1,
+					panStart: { ...Qe.current },
+					scaleStart: $e.current,
+					hasDragged: !1,
 					lastTapTime: r
 				};
-			} else if (e.touches.length === 2) {
-				let t = e.touches[0], n = e.touches[1], r = Math.hypot(n.clientX - t.clientX, n.clientY - t.clientY), i = {
-					x: (t.clientX + n.clientX) / 2,
-					y: (t.clientY + n.clientY) / 2
-				};
+			} else if (t.touches.length === 2) {
+				let e = t.touches[0], r = t.touches[1], i = Math.hypot(r.clientX - e.clientX, r.clientY - e.clientY), a = (e.clientX + r.clientX) / 2 - n.left, o = (e.clientY + r.clientY) / 2 - n.top, s = (a - Qe.current.x) / $e.current, c = (o - Qe.current.y) / $e.current;
 				k.current = {
 					...k.current,
-					initialDistance: r,
-					initialMidpoint: i,
-					startScale: S,
-					startPanX: x.x,
-					startPanY: x.y,
-					hasMoved: !0
+					initialDistance: i,
+					initialFocal: {
+						x: a,
+						y: o
+					},
+					contentPoint: {
+						x: s,
+						y: c
+					},
+					panStart: { ...Qe.current },
+					scaleStart: $e.current,
+					hasDragged: !0
 				};
 			}
-		}
-	}, ot = (e) => {
-		let t = Ze.current;
-		if (!t) return;
-		let n = 720 / t.getBoundingClientRect().width;
-		if (e.touches.length === 1) {
-			let t = e.touches[0], r = (t.clientX - k.current.startX) * n, i = (t.clientY - k.current.startY) * n;
-			Math.hypot(r, i) > 5 && (k.current.hasMoved = !0, ne({
-				x: k.current.startPanX + r,
-				y: k.current.startPanY + i
-			}));
-		} else if (e.touches.length === 2) {
-			let t = e.touches[0], r = e.touches[1], i = Math.hypot(r.clientX - t.clientX, r.clientY - t.clientY), a = {
-				x: (t.clientX + r.clientX) / 2,
-				y: (t.clientY + r.clientY) / 2
-			}, o = i / (k.current.initialDistance || 1), s = Math.min(Math.max(k.current.startScale * o, .75), 4.2), c = (a.x - k.current.initialMidpoint.x) * n, l = (a.y - k.current.initialMidpoint.y) * n;
-			re(s), ne({
-				x: k.current.startPanX + c,
-				y: k.current.startPanY + l
-			}), k.current.hasMoved = !0;
-		}
-	}, st = () => {
-		setTimeout(() => {
-			k.current.hasMoved = !1;
-		}, 150);
-	}, ct = (0, _.useRef)(!1), lt = (e) => {
-		ct.current = !0, k.current.startX = e.clientX, k.current.startY = e.clientY, k.current.startPanX = x.x, k.current.startPanY = x.y, k.current.hasMoved = !1;
-	}, ut = (e) => {
-		if (!ct.current || !Ze.current) return;
-		let t = 720 / Ze.current.getBoundingClientRect().width, n = (e.clientX - k.current.startX) * t, r = (e.clientY - k.current.startY) * t;
-		Math.hypot(n, r) > 4 && (k.current.hasMoved = !0, ne({
-			x: k.current.startPanX + n,
-			y: k.current.startPanY + r
+		}, n = (t) => {
+			t.cancelable && t.preventDefault();
+			let n = e.getBoundingClientRect();
+			if (t.touches.length === 1) {
+				let e = t.touches[0], n = e.clientX - k.current.startX, r = e.clientY - k.current.startY;
+				Math.hypot(n, r) > 6 && (k.current.hasDragged = !0, re({
+					x: k.current.panStart.x + n,
+					y: k.current.panStart.y + r
+				}));
+			} else if (t.touches.length === 2) {
+				let e = t.touches[0], r = t.touches[1], i = Math.hypot(r.clientX - e.clientX, r.clientY - e.clientY), a = (e.clientX + r.clientX) / 2 - n.left, o = (e.clientY + r.clientY) / 2 - n.top, s = i / (k.current.initialDistance || 1), c = Math.min(Math.max(k.current.scaleStart * s, .75), 4.8), l = a - k.current.contentPoint.x * c, u = o - k.current.contentPoint.y * c;
+				k.current.hasDragged = !0, ie(c), re({
+					x: l,
+					y: u
+				});
+			}
+		}, r = (e) => {
+			e.touches.length === 0 && setTimeout(() => {
+				k.current.hasDragged = !1;
+			}, 150);
+		};
+		return e.addEventListener("touchstart", t, { passive: !1 }), e.addEventListener("touchmove", n, { passive: !1 }), e.addEventListener("touchend", r, { passive: !0 }), e.addEventListener("touchcancel", r, { passive: !0 }), () => {
+			e.removeEventListener("touchstart", t), e.removeEventListener("touchmove", n), e.removeEventListener("touchend", r), e.removeEventListener("touchcancel", r);
+		};
+	}, []);
+	let st = (0, _.useRef)(!1), ct = (e) => {
+		st.current = !0, k.current.startX = e.clientX, k.current.startY = e.clientY, k.current.panStart = { ...Qe.current }, k.current.hasDragged = !1;
+	}, lt = (e) => {
+		if (!st.current) return;
+		let t = e.clientX - k.current.startX, n = e.clientY - k.current.startY;
+		Math.hypot(t, n) > 4 && (k.current.hasDragged = !0, re({
+			x: k.current.panStart.x + t,
+			y: k.current.panStart.y + n
 		}));
-	}, dt = () => {
-		ct.current = !1, setTimeout(() => {
-			k.current.hasMoved = !1;
+	}, ut = () => {
+		st.current = !1, setTimeout(() => {
+			k.current.hasDragged = !1;
 		}, 120);
-	}, ft = (e) => {
+	}, dt = (e) => {
 		e.preventDefault();
-		let t = e.deltaY < 0 ? .15 : -.15;
-		it(t);
-	}, pt = (e) => {
+		let t = e.deltaY < 0 ? .18 : -.18;
+		ot(t);
+	}, ft = (e) => {
 		t((t) => t.map((t) => t.id === A.id ? {
 			...t,
 			estado: e
-		} : t)), $e(`Estado del Lote ${A.label} actualizado a ${e.toUpperCase()}`);
-	}, mt = (e) => {
-		Be((t) => t.includes(e) ? t.filter((t) => t !== e) : t.length >= 3 ? ($e("Puedes comparar hasta 3 lotes simultáneamente"), t) : [...t, e]);
-	}, ht = (e, t, n) => {
+		} : t)), tt(`Estado del Lote ${A.label} actualizado a ${e.toUpperCase()}`);
+	}, pt = (e) => {
+		ze((t) => t.includes(e) ? t.filter((t) => t !== e) : t.length >= 3 ? (tt("Puedes comparar hasta 3 lotes simultáneamente"), t) : [...t, e]);
+	}, mt = (e, t, n) => {
 		if (!n) return "rgba(148, 163, 184, 0.22)";
 		if (f === "estado") return e.estado === "disponible" ? t ? "#059669" : "#10b981" : e.estado === "reservado" ? t ? "#d97706" : "#f59e0b" : t ? "#dc2626" : "#ef4444";
 		if (f === "categoria") return e.categoria === "Comercial" ? t ? "#7c3aed" : "#8b5cf6" : e.categoria === "Esquinero" ? t ? "#0284c7" : "#0ea5e9" : e.categoria === "Frente a Parque" ? t ? "#0d9488" : "#14b8a6" : t ? "#475569" : "#64748b";
@@ -10775,9 +10766,9 @@ function Me() {
 			return n > 910 ? t ? "#4f46e5" : "#6366f1" : n > 880 ? t ? "#0284c7" : "#38bdf8" : t ? "#059669" : "#34d399";
 		}
 		return e.orientacion === "Norte" || e.orientacion === "Este" || e.orientacion === "Noreste" ? t ? "#0284c7" : "#38bdf8" : t ? "#ea580c" : "#fb923c";
-	}, gt = (0, _.useMemo)(() => `🌴 *RESIDENCIAL PASEO LAS PALMAS - RETALHULEU, GUATEMALA* 🌴
+	}, ht = (0, _.useMemo)(() => `🌴 *RESIDENCIAL PASEO LAS PALMAS - RETALHULEU, GUATEMALA* 🌴
 📍 *Cotización Oficial — Lote ${A.label} (${A.sector})*
-👤 Preparado para: ${Ne}
+👤 Preparado para: ${Me}
 
 📐 *MEDIDAS Y UBICACIÓN:*
 • Código Catastral: ${A.codigoCatastral}
@@ -10789,30 +10780,30 @@ function Me() {
 
 💰 *PLAN FINANCIERO (${i}):*
 • Precio de Lista: ${j(M.precioTotal)}
-• Cuota Inicial (${Qe}%): *${j(M.cuotaInicial)}*
+• Cuota Inicial (${et}%): *${j(M.cuotaInicial)}*
 • Saldo a Financiar: ${j(M.saldoFinanciar)}
-• Cuota Mensual Estimada (${w} años al ${ae}%): *${j(M.cuotaMensual)}/mes*
+• Cuota Mensual Estimada (${C} años al ${oe}%): *${j(M.cuotaMensual)}/mes*
 • Proyección de Valor a 5 años (+${A.plusvaliaAnual}% anual): ${j(M.valor5Anios)}
 
 ✨ *Servicios Incluidos:* ${A.servicios.join(", ")}.
-📞 *Asesor Inmobiliario:* ${Le} | Tel: ${Fe}`, [
+📞 *Asesor Inmobiliario:* ${Ie} | Tel: ${Pe}`, [
 		A,
-		Ne,
+		Me,
 		i,
-		Qe,
+		et,
 		M,
-		w,
-		ae,
-		Le,
-		Fe
-	]), _t = () => {
+		C,
+		oe,
+		Ie,
+		Pe
+	]), gt = () => {
 		try {
-			navigator.clipboard.writeText(gt), Je(!0), $e("Ficha digital copiada al portapapeles para WhatsApp / Correo"), setTimeout(() => Je(!1), 2500);
+			navigator.clipboard.writeText(ht), qe(!0), tt("Ficha digital copiada al portapapeles para WhatsApp / Correo"), setTimeout(() => qe(!1), 2500);
 		} catch {
 			let e = document.createElement("textarea");
-			e.value = gt, document.body.appendChild(e), e.select(), document.execCommand("copy"), document.body.removeChild(e), Je(!0), $e("Ficha digital copiada al portapapeles"), setTimeout(() => Je(!1), 2500);
+			e.value = ht, document.body.appendChild(e), e.select(), document.execCommand("copy"), document.body.removeChild(e), qe(!0), tt("Ficha digital copiada al portapapeles"), setTimeout(() => qe(!1), 2500);
 		}
-	}, vt = () => {
+	}, _t = () => {
 		let e = (/* @__PURE__ */ new Date()).toLocaleDateString("es-GT", {
 			year: "numeric",
 			month: "long",
@@ -10852,7 +10843,7 @@ function Me() {
       <div class="brand">
         <h1>PASEO LAS PALMAS — RETALHULEU</h1>
         <p>Km 182.5 Carretera CA-2 Occidente, Santa Cruz Muluá / Retalhuleu, Guatemala</p>
-        <p style="margin-top:4px;font-weight:600;color:#0f172a;">Cliente: ${Ne} | Fecha: ${e}</p>
+        <p style="margin-top:4px;font-weight:600;color:#0f172a;">Cliente: ${Me} | Fecha: ${e}</p>
       </div>
       <div class="badge">Lote ${A.label} • ${A.estado.toUpperCase()}</div>
     </div>
@@ -10864,9 +10855,9 @@ function Me() {
         <div style="font-size:12px;opacity:0.85;">Equivalente a ${j(A.precioGTQ / A.areaM2)} por m²</div>
       </div>
       <div style="text-align:right;">
-        <div style="font-size:12px;text-transform:uppercase;opacity:0.9;">Cuota Inicial (${Qe}%)</div>
+        <div style="font-size:12px;text-transform:uppercase;opacity:0.9;">Cuota Inicial (${et}%)</div>
         <div class="price" style="color:#a7f3d0;">${j(M.cuotaInicial)}</div>
-        <div style="font-size:12px;opacity:0.9;">Cuota mensual a ${w} años: <strong>${j(M.cuotaMensual)}/mes</strong></div>
+        <div style="font-size:12px;opacity:0.9;">Cuota mensual a ${C} años: <strong>${j(M.cuotaMensual)}/mes</strong></div>
       </div>
     </div>
 
@@ -10895,9 +10886,9 @@ function Me() {
     <div class="card" style="margin-bottom:20px;">
       <h3>💰 Desglose Financiero y Proyección de Inversión</h3>
       <div class="row"><span>Precio de Contado / Lista:</span><span>${j(M.precioTotal)}</span></div>
-      <div class="row"><span>Enganche / Cuota Inicial (${Qe}%):</span><span>${j(M.cuotaInicial)}</span></div>
-      <div class="row"><span>Saldo a Financiar (${w} años / ${M.meses} cuotas):</span><span>${j(M.saldoFinanciar)}</span></div>
-      <div class="row"><span>Tasa de Interés Anual Referencial:</span><span>${ae}%</span></div>
+      <div class="row"><span>Enganche / Cuota Inicial (${et}%):</span><span>${j(M.cuotaInicial)}</span></div>
+      <div class="row"><span>Saldo a Financiar (${C} años / ${M.meses} cuotas):</span><span>${j(M.saldoFinanciar)}</span></div>
+      <div class="row"><span>Tasa de Interés Anual Referencial:</span><span>${oe}%</span></div>
       <div class="row"><span>Cuota Mensual Nivelada:</span><span>${j(M.cuotaMensual)} / mes</span></div>
       <div class="row"><span>Valor Proyectado del Lote en 5 Años:</span><span style="color:#059669;">${j(M.valor5Anios)} (+${j(M.gananciaPlusvalia5A)})</span></div>
     </div>
@@ -10910,20 +10901,20 @@ function Me() {
     </div>
 
     <div class="footer">
-      <div>Asesor Comercial: <strong>${Le}</strong> | Contacto: ${Fe}</div>
+      <div>Asesor Comercial: <strong>${Ie}</strong> | Contacto: ${Pe}</div>
       <div>Cotización válida por 7 días calendario • Retalhuleu, Guatemala</div>
     </div>
   </div>
   <script>setTimeout(() => { window.print(); }, 400);<\/script>
 </body>
 </html>`, n = new Blob([t], { type: "text/html;charset=utf-8" }), r = URL.createObjectURL(n), i = document.createElement("a");
-		i.href = r, i.download = `Ficha_Tecnica_Lote_${A.label}_Retalhuleu.html`, document.body.appendChild(i), i.click(), document.body.removeChild(i), URL.revokeObjectURL(r), $e(`Ficha PDF del Lote ${A.label} descargada`);
-	}, yt = (0, _.useMemo)(() => ({
+		i.href = r, i.download = `Ficha_Tecnica_Lote_${A.label}_Retalhuleu.html`, document.body.appendChild(i), i.click(), document.body.removeChild(i), URL.revokeObjectURL(r), tt(`Ficha PDF del Lote ${A.label} descargada`);
+	}, vt = (0, _.useMemo)(() => ({
 		disponibles: e.filter((e) => e.estado === "disponible").length,
 		reservados: e.filter((e) => e.estado === "reservado").length,
 		vendidos: e.filter((e) => e.estado === "vendido").length,
 		total: e.length
-	}), [e]), bt = (0, _.useMemo)(() => {
+	}), [e]), yt = (0, _.useMemo)(() => {
 		let e = (g - 7) / 11;
 		return {
 			x: 670 - e * 600,
@@ -10931,106 +10922,106 @@ function Me() {
 			progress: e
 		};
 	}, [g]);
-	return /* @__PURE__ */ (0, O.jsxs)("div", {
+	return /* @__PURE__ */ (0, D.jsxs)("div", {
 		className: `w-full bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-white transition-all ${ee ? "fixed inset-0 z-50 overflow-hidden flex flex-col bg-slate-950" : "rounded-none sm:rounded-2xl shadow-2xl border-y sm:border border-slate-800"}`,
 		children: [
-			Ye && /* @__PURE__ */ (0, O.jsxs)("div", {
+			Je && /* @__PURE__ */ (0, D.jsxs)("div", {
 				className: "fixed top-20 right-4 sm:right-6 z-50 flex items-center gap-2.5 bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-2xl border border-emerald-400/40 animate-bounce",
-				children: [/* @__PURE__ */ (0, O.jsx)(Te, { className: "w-5 h-5 shrink-0" }), /* @__PURE__ */ (0, O.jsx)("span", {
+				children: [/* @__PURE__ */ (0, D.jsx)(E, { className: "w-5 h-5 shrink-0" }), /* @__PURE__ */ (0, D.jsx)("span", {
 					className: "text-xs font-semibold",
-					children: Ye
+					children: Je
 				})]
 			}),
-			/* @__PURE__ */ (0, O.jsx)("div", {
+			/* @__PURE__ */ (0, D.jsx)("div", {
 				className: "border-b border-slate-800 bg-slate-900/95 backdrop-blur px-3 sm:px-4 py-2.5 sm:py-3 shrink-0",
-				children: /* @__PURE__ */ (0, O.jsxs)("div", {
+				children: /* @__PURE__ */ (0, D.jsxs)("div", {
 					className: "max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2.5",
-					children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+					children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 						className: "flex items-center gap-2.5 min-w-0",
-						children: [/* @__PURE__ */ (0, O.jsx)("div", {
+						children: [/* @__PURE__ */ (0, D.jsx)("div", {
 							className: "w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center shadow-lg shadow-emerald-900/40 shrink-0",
-							children: /* @__PURE__ */ (0, O.jsx)(be, { className: "w-5 h-5 text-white" })
-						}), /* @__PURE__ */ (0, O.jsxs)("div", {
+							children: /* @__PURE__ */ (0, D.jsx)(xe, { className: "w-5 h-5 text-white" })
+						}), /* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "truncate",
-							children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+							children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "flex items-center gap-1.5 sm:gap-2",
-								children: [/* @__PURE__ */ (0, O.jsx)("h1", {
+								children: [/* @__PURE__ */ (0, D.jsx)("h1", {
 									className: "text-sm sm:text-base font-bold tracking-tight text-white truncate",
 									children: "Paseo Las Palmas • Retalhuleu"
-								}), /* @__PURE__ */ (0, O.jsx)("span", {
+								}), /* @__PURE__ */ (0, D.jsx)("span", {
 									className: "hidden xs:inline-block text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-medium shrink-0",
-									children: "v2.5 Móvil"
+									children: "v2.6 Gestos"
 								})]
-							}), /* @__PURE__ */ (0, O.jsx)("p", {
+							}), /* @__PURE__ */ (0, D.jsx)("p", {
 								className: "text-[11px] text-slate-400 truncate",
 								children: "Km 182.5 CA-2 • 14.5414° N, 91.6738° W"
 							})]
 						})]
-					}), /* @__PURE__ */ (0, O.jsxs)("div", {
+					}), /* @__PURE__ */ (0, D.jsxs)("div", {
 						className: "flex items-center gap-1.5 sm:gap-2 shrink-0 ml-auto",
 						children: [
-							/* @__PURE__ */ (0, O.jsxs)("div", {
+							/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "flex items-center gap-1.5 bg-slate-800/80 border border-slate-700/80 rounded-lg px-2 py-1 text-[11px]",
 								children: [
-									/* @__PURE__ */ (0, O.jsx)("span", { className: "w-2 h-2 rounded-full bg-emerald-500 inline-block" }),
-									/* @__PURE__ */ (0, O.jsx)("strong", {
+									/* @__PURE__ */ (0, D.jsx)("span", { className: "w-2 h-2 rounded-full bg-emerald-500 inline-block" }),
+									/* @__PURE__ */ (0, D.jsx)("strong", {
 										className: "text-white",
-										children: yt.disponibles
+										children: vt.disponibles
 									}),
-									/* @__PURE__ */ (0, O.jsx)("span", {
+									/* @__PURE__ */ (0, D.jsx)("span", {
 										className: "text-slate-600",
 										children: "/"
 									}),
-									/* @__PURE__ */ (0, O.jsx)("span", { className: "w-2 h-2 rounded-full bg-amber-500 inline-block" }),
-									/* @__PURE__ */ (0, O.jsx)("strong", {
+									/* @__PURE__ */ (0, D.jsx)("span", { className: "w-2 h-2 rounded-full bg-amber-500 inline-block" }),
+									/* @__PURE__ */ (0, D.jsx)("strong", {
 										className: "text-white",
-										children: yt.reservados
+										children: vt.reservados
 									}),
-									/* @__PURE__ */ (0, O.jsx)("span", {
+									/* @__PURE__ */ (0, D.jsx)("span", {
 										className: "text-slate-600",
 										children: "/"
 									}),
-									/* @__PURE__ */ (0, O.jsx)("span", { className: "w-2 h-2 rounded-full bg-rose-500 inline-block" }),
-									/* @__PURE__ */ (0, O.jsx)("strong", {
+									/* @__PURE__ */ (0, D.jsx)("span", { className: "w-2 h-2 rounded-full bg-rose-500 inline-block" }),
+									/* @__PURE__ */ (0, D.jsx)("strong", {
 										className: "text-white",
-										children: yt.vendidos
+										children: vt.vendidos
 									})
 								]
 							}),
-							/* @__PURE__ */ (0, O.jsxs)("div", {
+							/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "flex items-center bg-slate-800 p-0.5 rounded-lg border border-slate-700",
-								children: [/* @__PURE__ */ (0, O.jsx)("button", {
+								children: [/* @__PURE__ */ (0, D.jsx)("button", {
 									onClick: () => a("GTQ"),
 									className: `px-2 py-1 rounded-md text-[11px] font-bold transition ${i === "GTQ" ? "bg-emerald-600 text-white shadow" : "text-slate-400 hover:text-white"}`,
 									children: "GTQ"
-								}), /* @__PURE__ */ (0, O.jsx)("button", {
+								}), /* @__PURE__ */ (0, D.jsx)("button", {
 									onClick: () => a("USD"),
 									className: `px-2 py-1 rounded-md text-[11px] font-bold transition ${i === "USD" ? "bg-emerald-600 text-white shadow" : "text-slate-400 hover:text-white"}`,
 									children: "USD"
 								})]
 							}),
-							/* @__PURE__ */ (0, O.jsx)("button", {
+							/* @__PURE__ */ (0, D.jsx)("button", {
 								onClick: () => te((e) => !e),
 								title: ee ? "Salir de pantalla completa" : "Pantalla completa móvil",
 								className: "p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-semibold transition",
-								children: ee ? /* @__PURE__ */ (0, O.jsx)(_e, { className: "w-4 h-4 text-emerald-400" }) : /* @__PURE__ */ (0, O.jsx)(ve, { className: "w-4 h-4" })
+								children: ee ? /* @__PURE__ */ (0, D.jsx)(ve, { className: "w-4 h-4 text-emerald-400" }) : /* @__PURE__ */ (0, D.jsx)(ye, { className: "w-4 h-4" })
 							})
 						]
 					})]
 				})
 			}),
-			/* @__PURE__ */ (0, O.jsxs)("div", {
+			/* @__PURE__ */ (0, D.jsxs)("div", {
 				className: `w-full ${ee ? "flex-grow relative overflow-hidden flex flex-col" : "grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 p-0 sm:p-4 lg:p-6"}`,
-				children: [/* @__PURE__ */ (0, O.jsxs)("section", {
+				children: [/* @__PURE__ */ (0, D.jsxs)("section", {
 					className: `${ee ? "flex-grow relative w-full h-full" : "lg:col-span-7 flex flex-col gap-3 sm:gap-4"}`,
-					children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+					children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 						className: "bg-slate-900 border-b lg:border lg:rounded-2xl border-slate-800 p-2.5 sm:p-3 flex flex-col gap-2 shadow-lg",
-						children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+						children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "flex items-center gap-2",
 							children: [
-								/* @__PURE__ */ (0, O.jsxs)("div", {
+								/* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "relative flex-1 min-w-[140px]",
-									children: [/* @__PURE__ */ (0, O.jsx)(me, { className: "w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" }), /* @__PURE__ */ (0, O.jsx)("input", {
+									children: [/* @__PURE__ */ (0, D.jsx)(he, { className: "w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" }), /* @__PURE__ */ (0, D.jsx)("input", {
 										type: "text",
 										value: u,
 										onChange: (e) => d(e.target.value),
@@ -11038,12 +11029,12 @@ function Me() {
 										className: "w-full bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-2 py-1.5 text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-emerald-500"
 									})]
 								}),
-								/* @__PURE__ */ (0, O.jsxs)("select", {
+								/* @__PURE__ */ (0, D.jsxs)("select", {
 									value: o,
 									onChange: (e) => s(e.target.value),
 									className: "bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500",
 									children: [
-										/* @__PURE__ */ (0, O.jsxs)("option", {
+										/* @__PURE__ */ (0, D.jsxs)("option", {
 											value: "todos",
 											children: [
 												"Todos (",
@@ -11051,63 +11042,63 @@ function Me() {
 												")"
 											]
 										}),
-										/* @__PURE__ */ (0, O.jsxs)("option", {
+										/* @__PURE__ */ (0, D.jsxs)("option", {
 											value: "disponible",
 											children: [
 												"Disponibles (",
-												yt.disponibles,
+												vt.disponibles,
 												")"
 											]
 										}),
-										/* @__PURE__ */ (0, O.jsxs)("option", {
+										/* @__PURE__ */ (0, D.jsxs)("option", {
 											value: "reservado",
 											children: [
 												"Reservados (",
-												yt.reservados,
+												vt.reservados,
 												")"
 											]
 										}),
-										/* @__PURE__ */ (0, O.jsxs)("option", {
+										/* @__PURE__ */ (0, D.jsxs)("option", {
 											value: "vendido",
 											children: [
 												"Vendidos (",
-												yt.vendidos,
+												vt.vendidos,
 												")"
 											]
 										})
 									]
 								}),
-								/* @__PURE__ */ (0, O.jsxs)("select", {
+								/* @__PURE__ */ (0, D.jsxs)("select", {
 									value: c,
 									onChange: (e) => l(e.target.value),
 									className: "bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 max-w-[130px] sm:max-w-none truncate",
 									children: [
-										/* @__PURE__ */ (0, O.jsx)("option", {
+										/* @__PURE__ */ (0, D.jsx)("option", {
 											value: "todos",
 											children: "Todas las Manzanas"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("option", {
+										/* @__PURE__ */ (0, D.jsx)("option", {
 											value: "Manzana A (Bulevar)",
 											children: "Manzana A"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("option", {
+										/* @__PURE__ */ (0, D.jsx)("option", {
 											value: "Manzana B (Las Palmas)",
 											children: "Manzana B"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("option", {
+										/* @__PURE__ */ (0, D.jsx)("option", {
 											value: "Manzana C (Vista Club)",
 											children: "Manzana C"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("option", {
+										/* @__PURE__ */ (0, D.jsx)("option", {
 											value: "Manzana D (Bosque Sur)",
 											children: "Manzana D"
 										})
 									]
 								})
 							]
-						}), /* @__PURE__ */ (0, O.jsxs)("div", {
+						}), /* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "flex items-center justify-between gap-2 overflow-x-auto pb-0.5 text-xs",
-							children: [/* @__PURE__ */ (0, O.jsx)("div", {
+							children: [/* @__PURE__ */ (0, D.jsx)("div", {
 								className: "flex items-center gap-1 shrink-0",
 								children: [
 									{
@@ -11126,20 +11117,20 @@ function Me() {
 										id: "solar",
 										label: "Confort Solar"
 									}
-								].map((e) => /* @__PURE__ */ (0, O.jsx)("button", {
+								].map((e) => /* @__PURE__ */ (0, D.jsx)("button", {
 									onClick: () => p(e.id),
 									className: `px-2 py-1 rounded-md text-[11px] font-semibold whitespace-nowrap transition ${f === e.id ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" : "bg-slate-800/80 text-slate-400 hover:text-slate-200"}`,
 									children: e.label
 								}, e.id))
-							}), /* @__PURE__ */ (0, O.jsxs)("div", {
+							}), /* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "flex items-center gap-1.5 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800 shrink-0",
 								children: [
-									/* @__PURE__ */ (0, O.jsx)(de, { className: "w-3.5 h-3.5 text-amber-400" }),
-									/* @__PURE__ */ (0, O.jsxs)("span", {
+									/* @__PURE__ */ (0, D.jsx)(fe, { className: "w-3.5 h-3.5 text-amber-400" }),
+									/* @__PURE__ */ (0, D.jsxs)("span", {
 										className: "text-[11px] text-slate-300 font-bold whitespace-nowrap",
 										children: [g, ":00h"]
 									}),
-									/* @__PURE__ */ (0, O.jsx)("input", {
+									/* @__PURE__ */ (0, D.jsx)("input", {
 										type: "range",
 										min: 7,
 										max: 18,
@@ -11151,146 +11142,146 @@ function Me() {
 								]
 							})]
 						})]
-					}), /* @__PURE__ */ (0, O.jsxs)("div", {
-						ref: Ze,
-						onTouchStart: at,
-						onTouchMove: ot,
-						onTouchEnd: st,
-						onMouseDown: lt,
-						onMouseMove: ut,
-						onMouseUp: dt,
-						onWheel: ft,
-						className: `relative w-full bg-slate-950 overflow-hidden select-none border-b sm:border border-slate-800 sm:rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing touch-none ${ee ? "flex-grow h-full" : "h-[52vh] sm:h-[580px] lg:h-[620px]"}`,
+					}), /* @__PURE__ */ (0, D.jsxs)("div", {
+						ref: Xe,
+						onMouseDown: ct,
+						onMouseMove: lt,
+						onMouseUp: ut,
+						onWheel: dt,
+						className: `relative w-full bg-slate-950 overflow-hidden select-none border-b sm:border border-slate-800 sm:rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing touch-none ${ee ? "flex-grow h-full" : "h-[54vh] sm:h-[580px] lg:h-[620px]"}`,
 						children: [
-							/* @__PURE__ */ (0, O.jsxs)("div", {
+							/* @__PURE__ */ (0, D.jsx)("div", {
 								className: "absolute top-2.5 left-2.5 z-20 flex items-center gap-2 pointer-events-none",
-								children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+								children: /* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "bg-slate-950/85 backdrop-blur border border-slate-800 rounded-xl px-2.5 py-1.5 flex items-center gap-2 shadow-lg",
-									children: [/* @__PURE__ */ (0, O.jsx)(D, { className: "w-4 h-4 text-emerald-400 shrink-0" }), /* @__PURE__ */ (0, O.jsxs)("div", {
+									children: [/* @__PURE__ */ (0, D.jsx)(T, { className: "w-4 h-4 text-emerald-400 shrink-0" }), /* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "text-[10px] leading-tight",
-										children: [/* @__PURE__ */ (0, O.jsx)("div", {
+										children: [/* @__PURE__ */ (0, D.jsx)("div", {
 											className: "font-bold text-white",
 											children: "NORTE ↑"
-										}), /* @__PURE__ */ (0, O.jsx)("div", {
+										}), /* @__PURE__ */ (0, D.jsx)("div", {
 											className: "text-slate-400 hidden xs:block",
 											children: "Brisa Sur → Norte"
 										})]
 									})]
-								}), /* @__PURE__ */ (0, O.jsxs)("div", {
-									className: "hidden sm:flex items-center gap-1.5 bg-slate-950/85 backdrop-blur border border-slate-800 rounded-xl px-2.5 py-1.5 text-[10px] text-slate-400 shadow-lg",
-									children: [/* @__PURE__ */ (0, O.jsx)(Se, { className: "w-3.5 h-3.5 text-emerald-400" }), /* @__PURE__ */ (0, O.jsx)("span", { children: "Pellizca para zoom • Arrastra con 1 dedo" })]
-								})]
+								})
 							}),
-							/* @__PURE__ */ (0, O.jsxs)("div", {
-								className: "absolute top-2.5 right-2.5 z-20 flex flex-col gap-1.5 bg-slate-950/90 backdrop-blur border border-slate-800 rounded-xl p-1 shadow-xl",
+							/* @__PURE__ */ (0, D.jsxs)("div", {
+								className: "absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 bg-slate-950/90 backdrop-blur border border-slate-800 rounded-xl p-1 shadow-xl",
 								children: [
-									/* @__PURE__ */ (0, O.jsx)("button", {
-										onClick: () => it(.3),
-										title: "Acercar (Zoom In)",
-										className: "w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-200 transition",
-										children: /* @__PURE__ */ (0, O.jsx)(ce, { className: "w-4 h-4" })
+									/* @__PURE__ */ (0, D.jsxs)("div", {
+										title: "Escala actual del mapa (usa 2 dedos para pellizcar y escalar)",
+										className: "flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono text-[11px] font-bold",
+										children: [/* @__PURE__ */ (0, D.jsx)("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" }), /* @__PURE__ */ (0, D.jsxs)("span", { children: [Math.round(x * 100), "%"] })]
 									}),
-									/* @__PURE__ */ (0, O.jsx)("button", {
-										onClick: () => it(-.3),
-										title: "Alejar (Zoom Out)",
-										className: "w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-200 transition",
-										children: /* @__PURE__ */ (0, O.jsx)(se, { className: "w-4 h-4" })
+									/* @__PURE__ */ (0, D.jsx)("button", {
+										onClick: () => ot(.3),
+										title: "Acercar (Solo escritorio)",
+										className: "hidden sm:flex w-7 h-7 rounded-lg hover:bg-slate-800 active:bg-slate-700 items-center justify-center text-slate-200 transition",
+										children: /* @__PURE__ */ (0, D.jsx)(le, { className: "w-3.5 h-3.5" })
 									}),
-									/* @__PURE__ */ (0, O.jsx)("button", {
-										onClick: () => tt(A, 1.8),
-										title: "Centrar en Lote Seleccionado",
-										className: "w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-emerald-400 transition",
-										children: /* @__PURE__ */ (0, O.jsx)(xe, { className: "w-4 h-4" })
+									/* @__PURE__ */ (0, D.jsx)("button", {
+										onClick: () => ot(-.3),
+										title: "Alejar (Solo escritorio)",
+										className: "hidden sm:flex w-7 h-7 rounded-lg hover:bg-slate-800 active:bg-slate-700 items-center justify-center text-slate-200 transition",
+										children: /* @__PURE__ */ (0, D.jsx)(ce, { className: "w-3.5 h-3.5" })
 									}),
-									/* @__PURE__ */ (0, O.jsx)("button", {
-										onClick: rt,
-										title: "Restablecer vista completa",
-										className: "w-8 h-8 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-200 transition",
-										children: /* @__PURE__ */ (0, O.jsx)(he, { className: "w-4 h-4" })
+									/* @__PURE__ */ (0, D.jsx)("button", {
+										onClick: () => rt(A, 1.8),
+										title: "Centrar en lote seleccionado",
+										className: "w-7 h-7 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-emerald-400 transition",
+										children: /* @__PURE__ */ (0, D.jsx)(Se, { className: "w-4 h-4" })
 									}),
-									/* @__PURE__ */ (0, O.jsxs)("div", {
-										className: "text-[9px] font-mono text-center text-slate-400 pt-0.5 border-t border-slate-800",
-										children: [Math.round(S * 100), "%"]
+									/* @__PURE__ */ (0, D.jsx)("button", {
+										onClick: at,
+										title: "Restablecer vista a 100%",
+										className: "w-7 h-7 rounded-lg hover:bg-slate-800 active:bg-slate-700 flex items-center justify-center text-slate-300 transition",
+										children: /* @__PURE__ */ (0, D.jsx)(ge, { className: "w-3.5 h-3.5" })
 									})
 								]
 							}),
-							/* @__PURE__ */ (0, O.jsxs)("svg", {
-								viewBox: "0 0 720 590",
-								preserveAspectRatio: "xMidYMid meet",
+							/* @__PURE__ */ (0, D.jsx)("div", {
+								ref: Ze,
+								style: {
+									transform: `translate3d(${ne.x}px, ${ne.y}px, 0px) scale(${x})`,
+									transformOrigin: "0 0",
+									transition: S ? "transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1)" : "none",
+									width: "100%",
+									height: "100%"
+								},
 								className: "w-full h-full select-none",
-								children: [/* @__PURE__ */ (0, O.jsxs)("defs", { children: [
-									/* @__PURE__ */ (0, O.jsxs)("pattern", {
-										id: "grassPattern2",
-										width: "24",
-										height: "24",
-										patternUnits: "userSpaceOnUse",
-										children: [/* @__PURE__ */ (0, O.jsx)("circle", {
-											cx: "4",
-											cy: "4",
-											r: "1",
-											fill: "#065f46",
-											opacity: "0.35"
-										}), /* @__PURE__ */ (0, O.jsx)("circle", {
-											cx: "16",
-											cy: "14",
-											r: "1.2",
-											fill: "#047857",
-											opacity: "0.35"
-										})]
-									}),
-									/* @__PURE__ */ (0, O.jsxs)("linearGradient", {
-										id: "riverGrad2",
-										x1: "0%",
-										y1: "0%",
-										x2: "100%",
-										y2: "0%",
-										children: [
-											/* @__PURE__ */ (0, O.jsx)("stop", {
-												offset: "0%",
-												stopColor: "#0284c7",
-												stopOpacity: "0.45"
-											}),
-											/* @__PURE__ */ (0, O.jsx)("stop", {
-												offset: "50%",
-												stopColor: "#38bdf8",
-												stopOpacity: "0.65"
-											}),
-											/* @__PURE__ */ (0, O.jsx)("stop", {
-												offset: "100%",
-												stopColor: "#0369a1",
-												stopOpacity: "0.45"
-											})
-										]
-									}),
-									/* @__PURE__ */ (0, O.jsx)("filter", {
-										id: "glowSelected2",
-										x: "-20%",
-										y: "-20%",
-										width: "140%",
-										height: "140%",
-										children: /* @__PURE__ */ (0, O.jsx)("feDropShadow", {
-											dx: "0",
-											dy: "0",
-											stdDeviation: "6",
-											floodColor: "#34d399",
-											floodOpacity: "0.95"
-										})
-									})
-								] }), /* @__PURE__ */ (0, O.jsxs)("g", {
-									transform: `translate(${x.x}, ${x.y}) scale(${S})`,
-									style: {
-										transformOrigin: "0 0",
-										transition: C ? "transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1)" : "none"
-									},
+								children: /* @__PURE__ */ (0, D.jsxs)("svg", {
+									viewBox: "0 0 720 590",
+									preserveAspectRatio: "xMidYMid meet",
+									className: "w-full h-full select-none",
 									children: [
-										/* @__PURE__ */ (0, O.jsx)("rect", {
+										/* @__PURE__ */ (0, D.jsxs)("defs", { children: [
+											/* @__PURE__ */ (0, D.jsxs)("pattern", {
+												id: "grassPattern3",
+												width: "24",
+												height: "24",
+												patternUnits: "userSpaceOnUse",
+												children: [/* @__PURE__ */ (0, D.jsx)("circle", {
+													cx: "4",
+													cy: "4",
+													r: "1",
+													fill: "#065f46",
+													opacity: "0.35"
+												}), /* @__PURE__ */ (0, D.jsx)("circle", {
+													cx: "16",
+													cy: "14",
+													r: "1.2",
+													fill: "#047857",
+													opacity: "0.35"
+												})]
+											}),
+											/* @__PURE__ */ (0, D.jsxs)("linearGradient", {
+												id: "riverGrad3",
+												x1: "0%",
+												y1: "0%",
+												x2: "100%",
+												y2: "0%",
+												children: [
+													/* @__PURE__ */ (0, D.jsx)("stop", {
+														offset: "0%",
+														stopColor: "#0284c7",
+														stopOpacity: "0.45"
+													}),
+													/* @__PURE__ */ (0, D.jsx)("stop", {
+														offset: "50%",
+														stopColor: "#38bdf8",
+														stopOpacity: "0.65"
+													}),
+													/* @__PURE__ */ (0, D.jsx)("stop", {
+														offset: "100%",
+														stopColor: "#0369a1",
+														stopOpacity: "0.45"
+													})
+												]
+											}),
+											/* @__PURE__ */ (0, D.jsx)("filter", {
+												id: "glowSelected3",
+												x: "-20%",
+												y: "-20%",
+												width: "140%",
+												height: "140%",
+												children: /* @__PURE__ */ (0, D.jsx)("feDropShadow", {
+													dx: "0",
+													dy: "0",
+													stdDeviation: "6",
+													floodColor: "#34d399",
+													floodOpacity: "0.95"
+												})
+											})
+										] }),
+										/* @__PURE__ */ (0, D.jsx)("rect", {
 											x: "0",
 											y: "0",
 											width: "720",
 											height: "590",
-											fill: "url(#grassPattern2)"
+											fill: "url(#grassPattern3)"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("rect", {
+										/* @__PURE__ */ (0, D.jsx)("rect", {
 											x: "0",
 											y: "18",
 											width: "720",
@@ -11299,7 +11290,7 @@ function Me() {
 											stroke: "#334155",
 											strokeWidth: "1.5"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("line", {
+										/* @__PURE__ */ (0, D.jsx)("line", {
 											x1: "0",
 											y1: "39",
 											x2: "720",
@@ -11308,7 +11299,7 @@ function Me() {
 											strokeWidth: "2",
 											strokeDasharray: "14,10"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "24",
 											y: "34",
 											fill: "#94a3b8",
@@ -11317,7 +11308,7 @@ function Me() {
 											letterSpacing: "1",
 											children: "← HACIA RETALHULEU / IRTRA (8 MIN)"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "445",
 											y: "54",
 											fill: "#94a3b8",
@@ -11326,7 +11317,7 @@ function Me() {
 											letterSpacing: "1",
 											children: "CA-2 OCCIDENTE • HACIA COATEPEQUE →"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("rect", {
+										/* @__PURE__ */ (0, D.jsx)("rect", {
 											x: "52",
 											y: "60",
 											width: "44",
@@ -11336,7 +11327,7 @@ function Me() {
 											stroke: "#2dd4bf",
 											strokeWidth: "1.5"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "74",
 											y: "85",
 											textAnchor: "middle",
@@ -11345,7 +11336,7 @@ function Me() {
 											fontWeight: "700",
 											children: "GARITA"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "74",
 											y: "96",
 											textAnchor: "middle",
@@ -11353,7 +11344,7 @@ function Me() {
 											fontSize: "7.5",
 											children: "CONTROL"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("path", {
+										/* @__PURE__ */ (0, D.jsx)("path", {
 											d: "M 74 60 L 74 525 L 650 525 L 650 190 L 74 190",
 											fill: "none",
 											stroke: "#334155",
@@ -11361,7 +11352,7 @@ function Me() {
 											strokeLinecap: "round",
 											strokeLinejoin: "round"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("line", {
+										/* @__PURE__ */ (0, D.jsx)("line", {
 											x1: "215",
 											y1: "190",
 											x2: "215",
@@ -11369,7 +11360,7 @@ function Me() {
 											stroke: "#334155",
 											strokeWidth: "28"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("line", {
+										/* @__PURE__ */ (0, D.jsx)("line", {
 											x1: "502",
 											y1: "190",
 											x2: "502",
@@ -11377,7 +11368,7 @@ function Me() {
 											stroke: "#334155",
 											strokeWidth: "26"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("line", {
+										/* @__PURE__ */ (0, D.jsx)("line", {
 											x1: "215",
 											y1: "418",
 											x2: "515",
@@ -11385,7 +11376,7 @@ function Me() {
 											stroke: "#334155",
 											strokeWidth: "26"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("line", {
+										/* @__PURE__ */ (0, D.jsx)("line", {
 											x1: "95",
 											y1: "198",
 											x2: "630",
@@ -11394,7 +11385,7 @@ function Me() {
 											strokeWidth: "1.2",
 											strokeDasharray: "6,6"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("line", {
+										/* @__PURE__ */ (0, D.jsx)("line", {
 											x1: "215",
 											y1: "210",
 											x2: "215",
@@ -11403,7 +11394,7 @@ function Me() {
 											strokeWidth: "1.2",
 											strokeDasharray: "6,6"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("line", {
+										/* @__PURE__ */ (0, D.jsx)("line", {
 											x1: "230",
 											y1: "418",
 											x2: "495",
@@ -11412,7 +11403,7 @@ function Me() {
 											strokeWidth: "1.2",
 											strokeDasharray: "6,6"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "310",
 											y: "202",
 											textAnchor: "middle",
@@ -11422,7 +11413,7 @@ function Me() {
 											letterSpacing: "1.5",
 											children: "BULEVAR PRINCIPAL LAS PALMAS (12M)"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "365",
 											y: "421",
 											textAnchor: "middle",
@@ -11432,7 +11423,7 @@ function Me() {
 											letterSpacing: "1",
 											children: "CALLE DEL BOSQUE SUR"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("rect", {
+										/* @__PURE__ */ (0, D.jsx)("rect", {
 											x: "235",
 											y: "225",
 											width: "250",
@@ -11443,21 +11434,21 @@ function Me() {
 											strokeWidth: "1.5",
 											strokeDasharray: "4,3"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("circle", {
+										/* @__PURE__ */ (0, D.jsx)("circle", {
 											cx: "315",
 											cy: "310",
 											r: "36",
 											fill: "#047857",
 											opacity: "0.6"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("circle", {
+										/* @__PURE__ */ (0, D.jsx)("circle", {
 											cx: "315",
 											cy: "310",
 											r: "18",
 											fill: "#10b981",
 											opacity: "0.5"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "315",
 											y: "307",
 											textAnchor: "middle",
@@ -11466,7 +11457,7 @@ function Me() {
 											fontWeight: "700",
 											children: "PARQUE CENTRAL"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "315",
 											y: "320",
 											textAnchor: "middle",
@@ -11474,7 +11465,7 @@ function Me() {
 											fontSize: "8.5",
 											children: "\"LA CEIBA\" (ÁREA VERDE)"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("rect", {
+										/* @__PURE__ */ (0, D.jsx)("rect", {
 											x: "395",
 											y: "252",
 											width: "72",
@@ -11484,7 +11475,7 @@ function Me() {
 											stroke: "#5eead4",
 											strokeWidth: "1.5"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("line", {
+										/* @__PURE__ */ (0, D.jsx)("line", {
 											x1: "395",
 											y1: "310",
 											x2: "467",
@@ -11492,7 +11483,7 @@ function Me() {
 											stroke: "#5eead4",
 											strokeWidth: "1"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("circle", {
+										/* @__PURE__ */ (0, D.jsx)("circle", {
 											cx: "431",
 											cy: "310",
 											r: "12",
@@ -11500,7 +11491,7 @@ function Me() {
 											stroke: "#5eead4",
 											strokeWidth: "1"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "431",
 											y: "245",
 											textAnchor: "middle",
@@ -11509,7 +11500,7 @@ function Me() {
 											fontWeight: "700",
 											children: "CANCHA"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("rect", {
+										/* @__PURE__ */ (0, D.jsx)("rect", {
 											x: "520",
 											y: "92",
 											width: "135",
@@ -11519,7 +11510,7 @@ function Me() {
 											stroke: "#38bdf8",
 											strokeWidth: "1.5"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("rect", {
+										/* @__PURE__ */ (0, D.jsx)("rect", {
 											x: "535",
 											y: "108",
 											width: "55",
@@ -11529,7 +11520,7 @@ function Me() {
 											stroke: "#7dd3fc",
 											strokeWidth: "1.5"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "562",
 											y: "128",
 											textAnchor: "middle",
@@ -11538,7 +11529,7 @@ function Me() {
 											fontWeight: "700",
 											children: "PISCINA"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "588",
 											y: "162",
 											textAnchor: "middle",
@@ -11547,11 +11538,11 @@ function Me() {
 											fontWeight: "700",
 											children: "CASA CLUB SOCIAL"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("path", {
+										/* @__PURE__ */ (0, D.jsx)("path", {
 											d: "M 20 555 Q 190 535, 360 555 T 700 548 L 720 590 L 0 590 Z",
-											fill: "url(#riverGrad2)"
+											fill: "url(#riverGrad3)"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("text", {
+										/* @__PURE__ */ (0, D.jsx)("text", {
 											x: "360",
 											y: "575",
 											textAnchor: "middle",
@@ -11561,7 +11552,7 @@ function Me() {
 											letterSpacing: "1.5",
 											children: "🌿 RESERVA ECOLÓGICA Y CORREDOR RÍO BOLAS"
 										}),
-										/* @__PURE__ */ (0, O.jsx)("path", {
+										/* @__PURE__ */ (0, D.jsx)("path", {
 											d: "M 670 75 Q 370 15, 70 75",
 											fill: "none",
 											stroke: "#fbbf24",
@@ -11569,23 +11560,23 @@ function Me() {
 											strokeDasharray: "4,4",
 											opacity: "0.55"
 										}),
-										/* @__PURE__ */ (0, O.jsxs)("g", {
-											transform: `translate(${bt.x}, ${bt.y})`,
+										/* @__PURE__ */ (0, D.jsxs)("g", {
+											transform: `translate(${yt.x}, ${yt.y})`,
 											children: [
-												/* @__PURE__ */ (0, O.jsx)("circle", {
+												/* @__PURE__ */ (0, D.jsx)("circle", {
 													cx: "0",
 													cy: "0",
 													r: "14",
 													fill: "#f59e0b",
 													opacity: "0.28"
 												}),
-												/* @__PURE__ */ (0, O.jsx)("circle", {
+												/* @__PURE__ */ (0, D.jsx)("circle", {
 													cx: "0",
 													cy: "0",
 													r: "8",
 													fill: "#fbbf24"
 												}),
-												/* @__PURE__ */ (0, O.jsxs)("text", {
+												/* @__PURE__ */ (0, D.jsxs)("text", {
 													x: "0",
 													y: "-13",
 													textAnchor: "middle",
@@ -11601,26 +11592,26 @@ function Me() {
 											]
 										}),
 										e.map((e) => {
-											let t = e.id === A.id, n = et.some((t) => t.id === e.id), r = ze.includes(e.id), i = ht(e, t, n), a = (12.5 - g) * 1.4;
-											return /* @__PURE__ */ (0, O.jsxs)("g", {
-												onClick: () => nt(e),
+											let t = e.id === A.id, n = nt.some((t) => t.id === e.id), r = Re.includes(e.id), i = mt(e, t, n), a = (12.5 - g) * 1.4;
+											return /* @__PURE__ */ (0, D.jsxs)("g", {
+												onClick: () => it(e),
 												className: "cursor-pointer group",
 												children: [
-													/* @__PURE__ */ (0, O.jsx)("polygon", {
+													/* @__PURE__ */ (0, D.jsx)("polygon", {
 														points: e.points,
 														transform: `translate(${a}, 3)`,
 														fill: "#020617",
 														opacity: "0.35"
 													}),
-													/* @__PURE__ */ (0, O.jsx)("polygon", {
+													/* @__PURE__ */ (0, D.jsx)("polygon", {
 														points: e.points,
 														fill: i,
 														stroke: t ? "#ffffff" : r ? "#818cf8" : "#0f172a",
 														strokeWidth: t ? 3.5 : r ? 2.5 : 1.5,
-														filter: t ? "url(#glowSelected2)" : void 0,
+														filter: t ? "url(#glowSelected3)" : void 0,
 														className: "transition-all duration-150 hover:brightness-110 active:scale-[0.99]"
 													}),
-													/* @__PURE__ */ (0, O.jsx)("text", {
+													/* @__PURE__ */ (0, D.jsx)("text", {
 														x: e.centerX,
 														y: e.centerY - 5,
 														textAnchor: "middle",
@@ -11630,7 +11621,7 @@ function Me() {
 														style: { textShadow: "0px 1px 3px rgba(0,0,0,0.9)" },
 														children: e.label
 													}),
-													/* @__PURE__ */ (0, O.jsxs)("text", {
+													/* @__PURE__ */ (0, D.jsxs)("text", {
 														x: e.centerX,
 														y: e.centerY + 10,
 														textAnchor: "middle",
@@ -11647,7 +11638,7 @@ function Me() {
 															e.fondo
 														]
 													}),
-													t && /* @__PURE__ */ (0, O.jsx)("circle", {
+													t && /* @__PURE__ */ (0, D.jsx)("circle", {
 														cx: e.centerX,
 														cy: e.centerY - 22,
 														r: "5",
@@ -11659,82 +11650,82 @@ function Me() {
 											}, e.id);
 										})
 									]
-								})]
+								})
 							}),
-							/* @__PURE__ */ (0, O.jsxs)("div", {
+							/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "absolute bottom-2 left-2 right-2 z-20 flex items-center gap-1.5 overflow-x-auto py-1 px-1.5 bg-slate-950/85 backdrop-blur border border-slate-800 rounded-xl",
-								children: [/* @__PURE__ */ (0, O.jsx)("span", {
+								children: [/* @__PURE__ */ (0, D.jsx)("span", {
 									className: "text-[10px] text-slate-400 font-semibold px-1 whitespace-nowrap hidden sm:inline",
 									children: "Ir a lote:"
-								}), et.map((e) => /* @__PURE__ */ (0, O.jsxs)("button", {
+								}), nt.map((e) => /* @__PURE__ */ (0, D.jsxs)("button", {
 									onClick: () => {
-										r(e.id), Me(null), b("peek"), tt(e, 1.5);
+										r(e.id), je(null), b("peek"), rt(e, 1.5);
 									},
 									className: `px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 border transition flex items-center gap-1 ${A.id === e.id ? "bg-emerald-600 text-white border-emerald-400 shadow" : "bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700"}`,
-									children: [/* @__PURE__ */ (0, O.jsx)("span", { className: `w-1.5 h-1.5 rounded-full ${e.estado === "disponible" ? "bg-emerald-400" : e.estado === "reservado" ? "bg-amber-400" : "bg-rose-400"}` }), /* @__PURE__ */ (0, O.jsx)("span", { children: e.label })]
+									children: [/* @__PURE__ */ (0, D.jsx)("span", { className: `w-1.5 h-1.5 rounded-full ${e.estado === "disponible" ? "bg-emerald-400" : e.estado === "reservado" ? "bg-amber-400" : "bg-rose-400"}` }), /* @__PURE__ */ (0, D.jsx)("span", { children: e.label })]
 								}, e.id))]
 							})
 						]
 					})]
-				}), /* @__PURE__ */ (0, O.jsx)("section", {
+				}), /* @__PURE__ */ (0, D.jsx)("section", {
 					className: "hidden lg:flex lg:col-span-5 flex-col gap-4",
-					children: /* @__PURE__ */ (0, O.jsxs)("div", {
+					children: /* @__PURE__ */ (0, D.jsxs)("div", {
 						className: "bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl",
 						children: [
-							/* @__PURE__ */ (0, O.jsxs)("div", {
+							/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "flex items-start justify-between gap-3 mb-4",
-								children: [/* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+								children: [/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "flex items-center gap-2",
-									children: [/* @__PURE__ */ (0, O.jsxs)("span", {
+									children: [/* @__PURE__ */ (0, D.jsxs)("span", {
 										className: "px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold",
 										children: ["LOTE ", A.label]
-									}), /* @__PURE__ */ (0, O.jsxs)("span", {
+									}), /* @__PURE__ */ (0, D.jsxs)("span", {
 										className: "text-xs font-medium text-slate-400",
 										children: ["ID: ", A.codigoCatastral]
 									})]
-								}), /* @__PURE__ */ (0, O.jsxs)("h2", {
+								}), /* @__PURE__ */ (0, D.jsxs)("h2", {
 									className: "text-xl font-bold text-white mt-1",
 									children: [
 										A.sector,
 										" • ",
 										A.categoria
 									]
-								})] }), /* @__PURE__ */ (0, O.jsx)("span", {
+								})] }), /* @__PURE__ */ (0, D.jsx)("span", {
 									className: `px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${A.estado === "disponible" ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40" : A.estado === "reservado" ? "bg-amber-500/15 text-amber-300 border-amber-500/40" : "bg-rose-500/15 text-rose-300 border-rose-500/40"}`,
 									children: A.estado
 								})]
 							}),
-							/* @__PURE__ */ (0, O.jsxs)("div", {
+							/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "grid grid-cols-2 gap-3 p-3.5 rounded-xl bg-gradient-to-br from-emerald-950/90 via-slate-900 to-slate-950 border border-emerald-500/30 mb-4",
-								children: [/* @__PURE__ */ (0, O.jsxs)("div", { children: [
-									/* @__PURE__ */ (0, O.jsx)("span", {
+								children: [/* @__PURE__ */ (0, D.jsxs)("div", { children: [
+									/* @__PURE__ */ (0, D.jsx)("span", {
 										className: "text-[11px] uppercase tracking-wider text-slate-400 block",
 										children: "Precio Total"
 									}),
-									/* @__PURE__ */ (0, O.jsx)("div", {
+									/* @__PURE__ */ (0, D.jsx)("div", {
 										className: "text-2xl font-extrabold text-white mt-0.5",
 										children: j(M.precioTotal)
 									}),
-									/* @__PURE__ */ (0, O.jsxs)("span", {
+									/* @__PURE__ */ (0, D.jsxs)("span", {
 										className: "text-[11px] text-emerald-400",
 										children: [j(A.precioGTQ / A.areaM2), " / m²"]
 									})
-								] }), /* @__PURE__ */ (0, O.jsxs)("div", {
+								] }), /* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "border-l border-slate-800 pl-3",
 									children: [
-										/* @__PURE__ */ (0, O.jsxs)("span", {
+										/* @__PURE__ */ (0, D.jsxs)("span", {
 											className: "text-[11px] uppercase tracking-wider text-slate-400 block",
 											children: [
 												"Cuota Inicial (",
-												Qe,
+												et,
 												"%)"
 											]
 										}),
-										/* @__PURE__ */ (0, O.jsx)("div", {
+										/* @__PURE__ */ (0, D.jsx)("div", {
 											className: "text-2xl font-extrabold text-emerald-400 mt-0.5",
 											children: j(M.cuotaInicial)
 										}),
-										/* @__PURE__ */ (0, O.jsxs)("span", {
+										/* @__PURE__ */ (0, D.jsxs)("span", {
 											className: "text-[11px] text-slate-300",
 											children: [
 												"Desde ",
@@ -11745,19 +11736,19 @@ function Me() {
 									]
 								})]
 							}),
-							/* @__PURE__ */ (0, O.jsxs)("div", {
+							/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "grid grid-cols-2 gap-2.5 mb-4",
-								children: [/* @__PURE__ */ (0, O.jsxs)("button", {
-									onClick: () => We(!0),
+								children: [/* @__PURE__ */ (0, D.jsxs)("button", {
+									onClick: () => Ue(!0),
 									className: "flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs shadow-lg shadow-emerald-900/40 transition",
-									children: [/* @__PURE__ */ (0, O.jsx)(pe, { className: "w-4 h-4" }), /* @__PURE__ */ (0, O.jsx)("span", { children: "Compartir Ficha Digital" })]
-								}), /* @__PURE__ */ (0, O.jsxs)("button", {
-									onClick: () => Ke(!0),
+									children: [/* @__PURE__ */ (0, D.jsx)(me, { className: "w-4 h-4" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "Compartir Ficha Digital" })]
+								}), /* @__PURE__ */ (0, D.jsxs)("button", {
+									onClick: () => Ge(!0),
 									className: "flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 font-semibold text-xs transition",
-									children: [/* @__PURE__ */ (0, O.jsx)(we, { className: "w-4 h-4 text-emerald-400" }), /* @__PURE__ */ (0, O.jsx)("span", { children: "Descargar Ficha PDF" })]
+									children: [/* @__PURE__ */ (0, D.jsx)(we, { className: "w-4 h-4 text-emerald-400" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "Descargar Ficha PDF" })]
 								})]
 							}),
-							/* @__PURE__ */ (0, O.jsx)("div", {
+							/* @__PURE__ */ (0, D.jsx)("div", {
 								className: "grid grid-cols-4 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 mb-4",
 								children: [
 									{
@@ -11776,26 +11767,26 @@ function Me() {
 										id: "ideas",
 										label: "Innovación"
 									}
-								].map((e) => /* @__PURE__ */ (0, O.jsx)("button", {
+								].map((e) => /* @__PURE__ */ (0, D.jsx)("button", {
 									onClick: () => h(e.id),
 									className: `py-2 rounded-lg text-xs font-semibold transition ${m === e.id ? "bg-slate-800 text-emerald-400 shadow" : "text-slate-400 hover:text-slate-200"}`,
 									children: e.label
 								}, e.id))
 							}),
-							m === "ficha" && /* @__PURE__ */ (0, O.jsxs)("div", {
+							m === "ficha" && /* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "space-y-3 text-xs",
 								children: [
-									/* @__PURE__ */ (0, O.jsxs)("div", {
+									/* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "grid grid-cols-2 gap-2.5",
 										children: [
-											/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "bg-slate-950/90 border border-slate-800/90 p-3 rounded-xl",
 												children: [
-													/* @__PURE__ */ (0, O.jsxs)("span", {
+													/* @__PURE__ */ (0, D.jsxs)("span", {
 														className: "text-slate-400 flex items-center gap-1.5 mb-1",
-														children: [/* @__PURE__ */ (0, O.jsx)(ye, { className: "w-3.5 h-3.5 text-emerald-400" }), " Medidas (Frente × Fondo)"]
+														children: [/* @__PURE__ */ (0, D.jsx)(be, { className: "w-3.5 h-3.5 text-emerald-400" }), " Medidas (Frente × Fondo)"]
 													}),
-													/* @__PURE__ */ (0, O.jsxs)("div", {
+													/* @__PURE__ */ (0, D.jsxs)("div", {
 														className: "text-sm font-bold text-white",
 														children: [
 															A.frente,
@@ -11804,7 +11795,7 @@ function Me() {
 															".00 m"
 														]
 													}),
-													/* @__PURE__ */ (0, O.jsxs)("div", {
+													/* @__PURE__ */ (0, D.jsxs)("div", {
 														className: "text-[11px] text-slate-400 mt-0.5",
 														children: [
 															A.areaM2,
@@ -11815,52 +11806,52 @@ function Me() {
 													})
 												]
 											}),
-											/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "bg-slate-950/90 border border-slate-800/90 p-3 rounded-xl",
 												children: [
-													/* @__PURE__ */ (0, O.jsxs)("span", {
+													/* @__PURE__ */ (0, D.jsxs)("span", {
 														className: "text-slate-400 flex items-center gap-1.5 mb-1",
-														children: [/* @__PURE__ */ (0, O.jsx)(D, { className: "w-3.5 h-3.5 text-emerald-400" }), " Orientación y Categoría"]
+														children: [/* @__PURE__ */ (0, D.jsx)(T, { className: "w-3.5 h-3.5 text-emerald-400" }), " Orientación y Categoría"]
 													}),
-													/* @__PURE__ */ (0, O.jsxs)("div", {
+													/* @__PURE__ */ (0, D.jsxs)("div", {
 														className: "text-sm font-bold text-white",
 														children: ["Orientación ", A.orientacion]
 													}),
-													/* @__PURE__ */ (0, O.jsxs)("div", {
+													/* @__PURE__ */ (0, D.jsxs)("div", {
 														className: "text-[11px] text-emerald-400 mt-0.5",
 														children: ["Categoría: ", A.categoria]
 													})
 												]
 											}),
-											/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "bg-slate-950/90 border border-slate-800/90 p-3 rounded-xl",
 												children: [
-													/* @__PURE__ */ (0, O.jsxs)("span", {
+													/* @__PURE__ */ (0, D.jsxs)("span", {
 														className: "text-slate-400 flex items-center gap-1.5 mb-1",
-														children: [/* @__PURE__ */ (0, O.jsx)(ge, { className: "w-3.5 h-3.5 text-emerald-400" }), " Latitud y Longitud GPS"]
+														children: [/* @__PURE__ */ (0, D.jsx)(_e, { className: "w-3.5 h-3.5 text-emerald-400" }), " Latitud y Longitud GPS"]
 													}),
-													/* @__PURE__ */ (0, O.jsxs)("div", {
+													/* @__PURE__ */ (0, D.jsxs)("div", {
 														className: "text-sm font-bold text-white",
 														children: [A.latitud, "° N"]
 													}),
-													/* @__PURE__ */ (0, O.jsxs)("div", {
+													/* @__PURE__ */ (0, D.jsxs)("div", {
 														className: "text-[11px] text-slate-400 mt-0.5",
 														children: [A.longitud, "° W (Retalhuleu)"]
 													})
 												]
 											}),
-											/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "bg-slate-950/90 border border-slate-800/90 p-3 rounded-xl",
 												children: [
-													/* @__PURE__ */ (0, O.jsxs)("span", {
+													/* @__PURE__ */ (0, D.jsxs)("span", {
 														className: "text-slate-400 flex items-center gap-1.5 mb-1",
-														children: [/* @__PURE__ */ (0, O.jsx)(ue, { className: "w-3.5 h-3.5 text-emerald-400" }), " Altitud y Topografía"]
+														children: [/* @__PURE__ */ (0, D.jsx)(de, { className: "w-3.5 h-3.5 text-emerald-400" }), " Altitud y Topografía"]
 													}),
-													/* @__PURE__ */ (0, O.jsxs)("div", {
+													/* @__PURE__ */ (0, D.jsxs)("div", {
 														className: "text-sm font-bold text-white",
 														children: [A.altitud, " msnm"]
 													}),
-													/* @__PURE__ */ (0, O.jsx)("div", {
+													/* @__PURE__ */ (0, D.jsx)("div", {
 														className: "text-[11px] text-slate-400 mt-0.5",
 														children: A.topografia
 													})
@@ -11868,27 +11859,27 @@ function Me() {
 											})
 										]
 									}),
-									/* @__PURE__ */ (0, O.jsxs)("div", {
+									/* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "bg-slate-950/90 border border-slate-800/90 p-3.5 rounded-xl space-y-2",
 										children: [
-											/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "font-semibold text-slate-200 flex items-center justify-between",
-												children: [/* @__PURE__ */ (0, O.jsx)("span", { children: "Servicios a Pie de Lote" }), /* @__PURE__ */ (0, O.jsx)("span", {
+												children: [/* @__PURE__ */ (0, D.jsx)("span", { children: "Servicios a Pie de Lote" }), /* @__PURE__ */ (0, D.jsx)("span", {
 													className: "text-[11px] text-emerald-400",
 													children: "Entrega Inmediata"
 												})]
 											}),
-											/* @__PURE__ */ (0, O.jsx)("div", {
+											/* @__PURE__ */ (0, D.jsx)("div", {
 												className: "flex flex-wrap gap-1.5",
-												children: A.servicios.map((e, t) => /* @__PURE__ */ (0, O.jsxs)("span", {
+												children: A.servicios.map((e, t) => /* @__PURE__ */ (0, D.jsxs)("span", {
 													className: "px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300 text-[11px]",
 													children: ["✓ ", e]
 												}, t))
 											}),
-											/* @__PURE__ */ (0, O.jsxs)("p", {
+											/* @__PURE__ */ (0, D.jsxs)("p", {
 												className: "text-slate-400 pt-1 border-t border-slate-800/80 leading-relaxed",
 												children: [
-													/* @__PURE__ */ (0, O.jsx)("strong", {
+													/* @__PURE__ */ (0, D.jsx)("strong", {
 														className: "text-slate-200",
 														children: "Argumento de Venta:"
 													}),
@@ -11898,33 +11889,33 @@ function Me() {
 											})
 										]
 									}),
-									/* @__PURE__ */ (0, O.jsxs)("div", {
+									/* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "bg-slate-950/90 border border-slate-800/90 p-3.5 rounded-xl flex flex-col gap-2.5",
-										children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+										children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "flex items-center justify-between",
-											children: [/* @__PURE__ */ (0, O.jsx)("span", {
+											children: [/* @__PURE__ */ (0, D.jsx)("span", {
 												className: "font-semibold text-slate-300",
 												children: "Control de Sala de Ventas:"
-											}), /* @__PURE__ */ (0, O.jsxs)("button", {
-												onClick: () => mt(A.id),
+											}), /* @__PURE__ */ (0, D.jsxs)("button", {
+												onClick: () => pt(A.id),
 												className: "text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1",
-												children: [/* @__PURE__ */ (0, O.jsx)(Ce, { className: "w-3.5 h-3.5" }), ze.includes(A.id) ? "Quitar de comparar" : "+ Comparar lote"]
+												children: [/* @__PURE__ */ (0, D.jsx)(Ce, { className: "w-3.5 h-3.5" }), Re.includes(A.id) ? "Quitar de comparar" : "+ Comparar lote"]
 											})]
-										}), /* @__PURE__ */ (0, O.jsxs)("div", {
+										}), /* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "grid grid-cols-3 gap-2",
 											children: [
-												/* @__PURE__ */ (0, O.jsx)("button", {
-													onClick: () => pt("disponible"),
+												/* @__PURE__ */ (0, D.jsx)("button", {
+													onClick: () => ft("disponible"),
 													className: `py-1.5 rounded-lg font-semibold border transition ${A.estado === "disponible" ? "bg-emerald-600 text-white border-emerald-400" : "bg-slate-900 text-slate-400 border-slate-800 hover:text-white"}`,
 													children: "Disponible"
 												}),
-												/* @__PURE__ */ (0, O.jsx)("button", {
-													onClick: () => pt("reservado"),
+												/* @__PURE__ */ (0, D.jsx)("button", {
+													onClick: () => ft("reservado"),
 													className: `py-1.5 rounded-lg font-semibold border transition ${A.estado === "reservado" ? "bg-amber-600 text-white border-amber-400" : "bg-slate-900 text-slate-400 border-slate-800 hover:text-white"}`,
 													children: "Reservar Lote"
 												}),
-												/* @__PURE__ */ (0, O.jsx)("button", {
-													onClick: () => pt("vendido"),
+												/* @__PURE__ */ (0, D.jsx)("button", {
+													onClick: () => ft("vendido"),
 													className: `py-1.5 rounded-lg font-semibold border transition ${A.estado === "vendido" ? "bg-rose-600 text-white border-rose-400" : "bg-slate-900 text-slate-400 border-slate-800 hover:text-white"}`,
 													children: "Marcar Vendido"
 												})
@@ -11933,137 +11924,137 @@ function Me() {
 									})
 								]
 							}),
-							m === "cotizador" && /* @__PURE__ */ (0, O.jsxs)("div", {
+							m === "cotizador" && /* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "space-y-3.5 text-xs",
 								children: [
-									/* @__PURE__ */ (0, O.jsxs)("div", {
+									/* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "grid grid-cols-2 gap-2.5",
-										children: [/* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsx)("label", {
+										children: [/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsx)("label", {
 											className: "text-slate-400 block mb-1",
 											children: "Prospecto / Cliente"
-										}), /* @__PURE__ */ (0, O.jsx)("input", {
+										}), /* @__PURE__ */ (0, D.jsx)("input", {
 											type: "text",
-											value: Ne,
-											onChange: (e) => Pe(e.target.value),
+											value: Me,
+											onChange: (e) => Ne(e.target.value),
 											className: "w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white"
-										})] }), /* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsx)("label", {
+										})] }), /* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsx)("label", {
 											className: "text-slate-400 block mb-1",
 											children: "WhatsApp Cliente"
-										}), /* @__PURE__ */ (0, O.jsx)("input", {
+										}), /* @__PURE__ */ (0, D.jsx)("input", {
 											type: "text",
-											value: Fe,
-											onChange: (e) => Ie(e.target.value),
+											value: Pe,
+											onChange: (e) => Fe(e.target.value),
 											className: "w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-white"
 										})] })]
 									}),
-									/* @__PURE__ */ (0, O.jsxs)("div", {
+									/* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "bg-slate-950 border border-slate-800 p-3.5 rounded-xl space-y-3",
 										children: [
-											/* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "flex justify-between mb-1",
-												children: [/* @__PURE__ */ (0, O.jsx)("span", {
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
 													className: "text-slate-300",
 													children: "Cuota Inicial (Enganche):"
-												}), /* @__PURE__ */ (0, O.jsxs)("strong", {
+												}), /* @__PURE__ */ (0, D.jsxs)("strong", {
 													className: "text-emerald-400",
 													children: [
-														Qe,
+														et,
 														"% (",
 														j(M.cuotaInicial),
 														")"
 													]
 												})]
-											}), /* @__PURE__ */ (0, O.jsx)("input", {
+											}), /* @__PURE__ */ (0, D.jsx)("input", {
 												type: "range",
 												min: 10,
 												max: 50,
 												step: 5,
-												value: Qe,
-												onChange: (e) => Me(Number(e.target.value)),
+												value: et,
+												onChange: (e) => je(Number(e.target.value)),
 												className: "w-full accent-emerald-500 cursor-pointer"
 											})] }),
-											/* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "flex justify-between mb-1",
-												children: [/* @__PURE__ */ (0, O.jsx)("span", {
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
 													className: "text-slate-300",
 													children: "Plazo de Financiamiento:"
-												}), /* @__PURE__ */ (0, O.jsxs)("strong", {
+												}), /* @__PURE__ */ (0, D.jsxs)("strong", {
 													className: "text-white",
 													children: [
-														w,
+														C,
 														" años (",
 														M.meses,
 														" meses)"
 													]
 												})]
-											}), /* @__PURE__ */ (0, O.jsx)("input", {
+											}), /* @__PURE__ */ (0, D.jsx)("input", {
 												type: "range",
 												min: 1,
 												max: 20,
 												step: 1,
-												value: w,
-												onChange: (e) => T(Number(e.target.value)),
+												value: C,
+												onChange: (e) => w(Number(e.target.value)),
 												className: "w-full accent-emerald-500 cursor-pointer"
 											})] }),
-											/* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "flex justify-between mb-1",
-												children: [/* @__PURE__ */ (0, O.jsx)("span", {
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
 													className: "text-slate-300",
 													children: "Tasa Anual Referencial:"
-												}), /* @__PURE__ */ (0, O.jsxs)("strong", {
+												}), /* @__PURE__ */ (0, D.jsxs)("strong", {
 													className: "text-white",
-													children: [ae, "% anual"]
+													children: [oe, "% anual"]
 												})]
-											}), /* @__PURE__ */ (0, O.jsx)("input", {
+											}), /* @__PURE__ */ (0, D.jsx)("input", {
 												type: "range",
 												min: 6.5,
 												max: 12.5,
 												step: .5,
-												value: ae,
-												onChange: (e) => oe(Number(e.target.value)),
+												value: oe,
+												onChange: (e) => se(Number(e.target.value)),
 												className: "w-full accent-emerald-500 cursor-pointer"
 											})] })
 										]
 									}),
-									/* @__PURE__ */ (0, O.jsxs)("div", {
+									/* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "bg-slate-950 border border-slate-800 p-3.5 rounded-xl space-y-2",
 										children: [
-											/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "flex justify-between",
-												children: [/* @__PURE__ */ (0, O.jsx)("span", {
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
 													className: "text-slate-400",
 													children: "Saldo a Financiar:"
-												}), /* @__PURE__ */ (0, O.jsx)("span", {
+												}), /* @__PURE__ */ (0, D.jsx)("span", {
 													className: "font-bold text-white",
 													children: j(M.saldoFinanciar)
 												})]
 											}),
-											/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "flex justify-between",
-												children: [/* @__PURE__ */ (0, O.jsx)("span", {
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
 													className: "text-slate-400",
 													children: "Cuota Mensual Nivelada:"
-												}), /* @__PURE__ */ (0, O.jsxs)("span", {
+												}), /* @__PURE__ */ (0, D.jsxs)("span", {
 													className: "font-bold text-emerald-400 text-sm",
 													children: [j(M.cuotaMensual), " / mes"]
 												})]
 											}),
-											/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "flex justify-between",
-												children: [/* @__PURE__ */ (0, O.jsx)("span", {
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
 													className: "text-slate-400",
 													children: "Ingreso Familiar Sugerido:"
-												}), /* @__PURE__ */ (0, O.jsxs)("span", {
+												}), /* @__PURE__ */ (0, D.jsxs)("span", {
 													className: "font-semibold text-slate-200",
 													children: [j(M.cuotaMensual * 3), " / mes"]
 												})]
 											}),
-											/* @__PURE__ */ (0, O.jsxs)("div", {
+											/* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "flex justify-between",
-												children: [/* @__PURE__ */ (0, O.jsx)("span", {
+												children: [/* @__PURE__ */ (0, D.jsx)("span", {
 													className: "text-slate-400",
 													children: "IUSI Trimestral Estimado:"
-												}), /* @__PURE__ */ (0, O.jsx)("span", {
+												}), /* @__PURE__ */ (0, D.jsx)("span", {
 													className: "font-semibold text-slate-300",
 													children: j(M.iusiTrimestral)
 												})]
@@ -12072,35 +12063,35 @@ function Me() {
 									})
 								]
 							}),
-							m === "plusvalia" && /* @__PURE__ */ (0, O.jsxs)("div", {
+							m === "plusvalia" && /* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "space-y-3 text-xs",
-								children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+								children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "bg-slate-950 border border-slate-800 p-3.5 rounded-xl",
 									children: [
-										/* @__PURE__ */ (0, O.jsxs)("div", {
+										/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "font-semibold text-emerald-400 mb-1 flex items-center gap-1.5",
-											children: [/* @__PURE__ */ (0, O.jsx)(de, { className: "w-4 h-4" }), " Análisis Bioclimático en Retalhuleu"]
+											children: [/* @__PURE__ */ (0, D.jsx)(fe, { className: "w-4 h-4" }), " Análisis Bioclimático en Retalhuleu"]
 										}),
-										/* @__PURE__ */ (0, O.jsxs)("p", {
+										/* @__PURE__ */ (0, D.jsxs)("p", {
 											className: "text-slate-300 leading-relaxed mb-2",
 											children: [A.asoleamiento, "."]
 										}),
-										/* @__PURE__ */ (0, O.jsxs)("div", {
+										/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "text-[11px] text-slate-400 bg-slate-900 p-2.5 rounded-lg border border-slate-800",
 											children: [
 												"💡 ",
-												/* @__PURE__ */ (0, O.jsx)("strong", { children: "Tip Arquitectónico:" }),
+												/* @__PURE__ */ (0, D.jsx)("strong", { children: "Tip Arquitectónico:" }),
 												" Orientación ",
-												/* @__PURE__ */ (0, O.jsx)("strong", { children: A.orientacion }),
+												/* @__PURE__ */ (0, D.jsx)("strong", { children: A.orientacion }),
 												" permite ubicar dormitorios hacia la sombra vespertina, ahorrando energía en climatización."
 											]
 										})
 									]
-								}), /* @__PURE__ */ (0, O.jsxs)("div", {
+								}), /* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "bg-slate-950 border border-slate-800 p-3.5 rounded-xl space-y-2",
-									children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+									children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "font-semibold text-white flex items-center justify-between",
-										children: [/* @__PURE__ */ (0, O.jsx)("span", { children: "Proyección de Plusvalía a 5 Años" }), /* @__PURE__ */ (0, O.jsxs)("span", {
+										children: [/* @__PURE__ */ (0, D.jsx)("span", { children: "Proyección de Plusvalía a 5 Años" }), /* @__PURE__ */ (0, D.jsxs)("span", {
 											className: "text-emerald-400",
 											children: [
 												"+",
@@ -12108,23 +12099,23 @@ function Me() {
 												"% Anual"
 											]
 										})]
-									}), /* @__PURE__ */ (0, O.jsxs)("div", {
+									}), /* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "grid grid-cols-2 gap-2 pt-1",
-										children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+										children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "bg-slate-900 p-2.5 rounded-lg border border-slate-800",
-											children: [/* @__PURE__ */ (0, O.jsx)("span", {
+											children: [/* @__PURE__ */ (0, D.jsx)("span", {
 												className: "text-slate-400 block text-[11px]",
 												children: "Valor Actual"
-											}), /* @__PURE__ */ (0, O.jsx)("strong", {
+											}), /* @__PURE__ */ (0, D.jsx)("strong", {
 												className: "text-sm text-white",
 												children: j(M.precioTotal)
 											})]
-										}), /* @__PURE__ */ (0, O.jsxs)("div", {
+										}), /* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "bg-emerald-950/50 p-2.5 rounded-lg border border-emerald-500/30",
-											children: [/* @__PURE__ */ (0, O.jsx)("span", {
+											children: [/* @__PURE__ */ (0, D.jsx)("span", {
 												className: "text-emerald-300 block text-[11px]",
 												children: "Valor Proyectado (5A)"
-											}), /* @__PURE__ */ (0, O.jsx)("strong", {
+											}), /* @__PURE__ */ (0, D.jsx)("strong", {
 												className: "text-sm text-emerald-400",
 												children: j(M.valor5Anios)
 											})]
@@ -12132,23 +12123,23 @@ function Me() {
 									})]
 								})]
 							}),
-							m === "ideas" && /* @__PURE__ */ (0, O.jsxs)("div", {
+							m === "ideas" && /* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "space-y-2 text-xs",
-								children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+								children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "p-3 rounded-xl bg-slate-950 border border-slate-800",
-									children: [/* @__PURE__ */ (0, O.jsx)("div", {
+									children: [/* @__PURE__ */ (0, D.jsx)("div", {
 										className: "font-bold text-emerald-400",
 										children: "Gestos Táctiles 100% Móviles"
-									}), /* @__PURE__ */ (0, O.jsx)("p", {
+									}), /* @__PURE__ */ (0, D.jsx)("p", {
 										className: "text-slate-400 mt-0.5",
 										children: "Pellizca con 2 dedos para zoom fluido o desliza con 1 dedo. En tablets y smartphones el mapa es totalmente libre y sensible."
 									})]
-								}), /* @__PURE__ */ (0, O.jsxs)("div", {
+								}), /* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "p-3 rounded-xl bg-slate-950 border border-slate-800",
-									children: [/* @__PURE__ */ (0, O.jsx)("div", {
+									children: [/* @__PURE__ */ (0, D.jsx)("div", {
 										className: "font-bold text-sky-400",
 										children: "Bottom Sheet para Vendedores"
-									}), /* @__PURE__ */ (0, O.jsx)("p", {
+									}), /* @__PURE__ */ (0, D.jsx)("p", {
 										className: "text-slate-400 mt-0.5",
 										children: "Permite a los asesores tocar cualquier lote y desplegar cotización instantánea sin perder visibilidad del masterplan."
 									})]
@@ -12158,35 +12149,35 @@ function Me() {
 					})
 				})]
 			}),
-			/* @__PURE__ */ (0, O.jsx)("div", {
+			/* @__PURE__ */ (0, D.jsx)("div", {
 				className: "block lg:hidden",
-				children: /* @__PURE__ */ (0, O.jsxs)("div", {
+				children: /* @__PURE__ */ (0, D.jsxs)("div", {
 					className: `fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 shadow-2xl transition-all duration-300 ${y === "expanded" ? "h-[85vh] rounded-t-3xl overflow-y-auto" : "h-auto rounded-t-2xl"}`,
 					children: [
-						/* @__PURE__ */ (0, O.jsxs)("div", {
+						/* @__PURE__ */ (0, D.jsxs)("div", {
 							onClick: () => b((e) => e === "peek" ? "expanded" : "peek"),
 							className: "w-full pt-2 pb-1.5 flex flex-col items-center justify-center cursor-pointer select-none active:bg-slate-800/50 rounded-t-2xl",
-							children: [/* @__PURE__ */ (0, O.jsx)("div", { className: "w-12 h-1.5 bg-slate-700 rounded-full mb-1" }), /* @__PURE__ */ (0, O.jsx)("div", {
+							children: [/* @__PURE__ */ (0, D.jsx)("div", { className: "w-12 h-1.5 bg-slate-700 rounded-full mb-1" }), /* @__PURE__ */ (0, D.jsx)("div", {
 								className: "flex items-center gap-1 text-[11px] font-bold text-slate-400",
-								children: y === "peek" ? /* @__PURE__ */ (0, O.jsxs)(O.Fragment, { children: [/* @__PURE__ */ (0, O.jsx)("span", { children: "Ver cotizador y ficha completa" }), /* @__PURE__ */ (0, O.jsx)(Ee, { className: "w-3.5 h-3.5 text-emerald-400" })] }) : /* @__PURE__ */ (0, O.jsxs)(O.Fragment, { children: [/* @__PURE__ */ (0, O.jsx)("span", { children: "Ocultar detalles (Ver mapa)" }), /* @__PURE__ */ (0, O.jsx)(De, { className: "w-3.5 h-3.5 text-emerald-400" })] })
+								children: y === "peek" ? /* @__PURE__ */ (0, D.jsxs)(D.Fragment, { children: [/* @__PURE__ */ (0, D.jsx)("span", { children: "Ver cotizador y ficha completa" }), /* @__PURE__ */ (0, D.jsx)(Ee, { className: "w-3.5 h-3.5 text-emerald-400" })] }) : /* @__PURE__ */ (0, D.jsxs)(D.Fragment, { children: [/* @__PURE__ */ (0, D.jsx)("span", { children: "Ocultar detalles (Ver mapa)" }), /* @__PURE__ */ (0, D.jsx)(De, { className: "w-3.5 h-3.5 text-emerald-400" })] })
 							})]
 						}),
-						/* @__PURE__ */ (0, O.jsxs)("div", {
+						/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "px-3.5 pb-3 pt-1",
-							children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+							children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "flex items-center justify-between gap-2",
-								children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+								children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "flex items-center gap-2",
 									children: [
-										/* @__PURE__ */ (0, O.jsx)("span", {
+										/* @__PURE__ */ (0, D.jsx)("span", {
 											className: "px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-black",
 											children: A.label
 										}),
-										/* @__PURE__ */ (0, O.jsx)("span", {
+										/* @__PURE__ */ (0, D.jsx)("span", {
 											className: `px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${A.estado === "disponible" ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40" : A.estado === "reservado" ? "bg-amber-500/15 text-amber-300 border-amber-500/40" : "bg-rose-500/15 text-rose-300 border-rose-500/40"}`,
 											children: A.estado
 										}),
-										/* @__PURE__ */ (0, O.jsxs)("span", {
+										/* @__PURE__ */ (0, D.jsxs)("span", {
 											className: "text-[11px] text-slate-400 hidden xs:inline truncate",
 											children: [
 												A.frente,
@@ -12198,12 +12189,12 @@ function Me() {
 											]
 										})
 									]
-								}), /* @__PURE__ */ (0, O.jsxs)("div", {
+								}), /* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "text-right",
-									children: [/* @__PURE__ */ (0, O.jsx)("div", {
+									children: [/* @__PURE__ */ (0, D.jsx)("div", {
 										className: "text-base font-extrabold text-white leading-tight",
 										children: j(M.precioTotal)
-									}), /* @__PURE__ */ (0, O.jsxs)("div", {
+									}), /* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "text-[10px] font-semibold text-emerald-400",
 										children: [
 											"Desde ",
@@ -12212,31 +12203,31 @@ function Me() {
 										]
 									})]
 								})]
-							}), /* @__PURE__ */ (0, O.jsxs)("div", {
+							}), /* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "grid grid-cols-4 gap-1.5 mt-2.5",
 								children: [
-									/* @__PURE__ */ (0, O.jsxs)("button", {
+									/* @__PURE__ */ (0, D.jsxs)("button", {
 										onClick: () => b((e) => e === "peek" ? "expanded" : "peek"),
 										className: "col-span-2 py-2 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-slate-700",
-										children: [/* @__PURE__ */ (0, O.jsx)(fe, { className: "w-3.5 h-3.5 text-emerald-400" }), /* @__PURE__ */ (0, O.jsx)("span", { children: y === "expanded" ? "Minimizar" : "Cotizar / Ficha" })]
+										children: [/* @__PURE__ */ (0, D.jsx)(pe, { className: "w-3.5 h-3.5 text-emerald-400" }), /* @__PURE__ */ (0, D.jsx)("span", { children: y === "expanded" ? "Minimizar" : "Cotizar / Ficha" })]
 									}),
-									/* @__PURE__ */ (0, O.jsxs)("button", {
-										onClick: _t,
+									/* @__PURE__ */ (0, D.jsxs)("button", {
+										onClick: gt,
 										className: "py-2 px-1 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1",
-										children: [/* @__PURE__ */ (0, O.jsx)(pe, { className: "w-3.5 h-3.5" }), /* @__PURE__ */ (0, O.jsx)("span", { children: "WhatsApp" })]
+										children: [/* @__PURE__ */ (0, D.jsx)(me, { className: "w-3.5 h-3.5" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "WhatsApp" })]
 									}),
-									/* @__PURE__ */ (0, O.jsxs)("button", {
-										onClick: vt,
+									/* @__PURE__ */ (0, D.jsxs)("button", {
+										onClick: _t,
 										className: "py-2 px-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-1 border border-slate-700",
-										children: [/* @__PURE__ */ (0, O.jsx)(we, { className: "w-3.5 h-3.5 text-emerald-400" }), /* @__PURE__ */ (0, O.jsx)("span", { children: "PDF" })]
+										children: [/* @__PURE__ */ (0, D.jsx)(we, { className: "w-3.5 h-3.5 text-emerald-400" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "PDF" })]
 									})
 								]
 							})]
 						}),
-						y === "expanded" && /* @__PURE__ */ (0, O.jsxs)("div", {
+						y === "expanded" && /* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "px-4 pb-8 space-y-4 pt-1 border-t border-slate-800",
 							children: [
-								/* @__PURE__ */ (0, O.jsx)("div", {
+								/* @__PURE__ */ (0, D.jsx)("div", {
 									className: "grid grid-cols-3 gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800",
 									children: [
 										{
@@ -12251,26 +12242,26 @@ function Me() {
 											id: "plusvalia",
 											label: "Clima & ROI"
 										}
-									].map((e) => /* @__PURE__ */ (0, O.jsx)("button", {
+									].map((e) => /* @__PURE__ */ (0, D.jsx)("button", {
 										onClick: () => h(e.id),
 										className: `py-1.5 rounded-lg text-xs font-semibold transition ${m === e.id ? "bg-slate-800 text-emerald-400 shadow" : "text-slate-400"}`,
 										children: e.label
 									}, e.id))
 								}),
-								m === "ficha" && /* @__PURE__ */ (0, O.jsxs)("div", {
+								m === "ficha" && /* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "space-y-3 text-xs",
 									children: [
-										/* @__PURE__ */ (0, O.jsxs)("div", {
+										/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "grid grid-cols-2 gap-2",
 											children: [
-												/* @__PURE__ */ (0, O.jsxs)("div", {
+												/* @__PURE__ */ (0, D.jsxs)("div", {
 													className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800",
 													children: [
-														/* @__PURE__ */ (0, O.jsx)("span", {
+														/* @__PURE__ */ (0, D.jsx)("span", {
 															className: "text-slate-400 text-[10px] block",
 															children: "Medidas"
 														}),
-														/* @__PURE__ */ (0, O.jsxs)("strong", {
+														/* @__PURE__ */ (0, D.jsxs)("strong", {
 															className: "text-white text-xs",
 															children: [
 																A.frente,
@@ -12279,7 +12270,7 @@ function Me() {
 																"m"
 															]
 														}),
-														/* @__PURE__ */ (0, O.jsxs)("div", {
+														/* @__PURE__ */ (0, D.jsxs)("div", {
 															className: "text-[10px] text-slate-400 mt-0.5",
 															children: [
 																A.areaM2,
@@ -12290,78 +12281,78 @@ function Me() {
 														})
 													]
 												}),
-												/* @__PURE__ */ (0, O.jsxs)("div", {
+												/* @__PURE__ */ (0, D.jsxs)("div", {
 													className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800",
 													children: [
-														/* @__PURE__ */ (0, O.jsx)("span", {
+														/* @__PURE__ */ (0, D.jsx)("span", {
 															className: "text-slate-400 text-[10px] block",
 															children: "Orientación"
 														}),
-														/* @__PURE__ */ (0, O.jsx)("strong", {
+														/* @__PURE__ */ (0, D.jsx)("strong", {
 															className: "text-white text-xs",
 															children: A.orientacion
 														}),
-														/* @__PURE__ */ (0, O.jsx)("div", {
+														/* @__PURE__ */ (0, D.jsx)("div", {
 															className: "text-[10px] text-emerald-400 mt-0.5",
 															children: A.categoria
 														})
 													]
 												}),
-												/* @__PURE__ */ (0, O.jsxs)("div", {
+												/* @__PURE__ */ (0, D.jsxs)("div", {
 													className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800",
-													children: [/* @__PURE__ */ (0, O.jsx)("span", {
+													children: [/* @__PURE__ */ (0, D.jsx)("span", {
 														className: "text-slate-400 text-[10px] block",
 														children: "Topografía"
-													}), /* @__PURE__ */ (0, O.jsx)("strong", {
+													}), /* @__PURE__ */ (0, D.jsx)("strong", {
 														className: "text-white text-xs",
 														children: A.topografia
 													})]
 												}),
-												/* @__PURE__ */ (0, O.jsxs)("div", {
+												/* @__PURE__ */ (0, D.jsxs)("div", {
 													className: "bg-slate-950 p-2.5 rounded-xl border border-slate-800",
-													children: [/* @__PURE__ */ (0, O.jsx)("span", {
+													children: [/* @__PURE__ */ (0, D.jsx)("span", {
 														className: "text-slate-400 text-[10px] block",
 														children: "Altitud GPS"
-													}), /* @__PURE__ */ (0, O.jsxs)("strong", {
+													}), /* @__PURE__ */ (0, D.jsxs)("strong", {
 														className: "text-white text-xs",
 														children: [A.altitud, " msnm"]
 													})]
 												})
 											]
 										}),
-										/* @__PURE__ */ (0, O.jsxs)("div", {
+										/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "bg-slate-950 p-3 rounded-xl border border-slate-800",
-											children: [/* @__PURE__ */ (0, O.jsx)("div", {
+											children: [/* @__PURE__ */ (0, D.jsx)("div", {
 												className: "text-[11px] font-bold text-slate-200 mb-1",
 												children: "Servicios Incluidos"
-											}), /* @__PURE__ */ (0, O.jsx)("div", {
+											}), /* @__PURE__ */ (0, D.jsx)("div", {
 												className: "flex flex-wrap gap-1",
-												children: A.servicios.map((e, t) => /* @__PURE__ */ (0, O.jsxs)("span", {
+												children: A.servicios.map((e, t) => /* @__PURE__ */ (0, D.jsxs)("span", {
 													className: "px-2 py-0.5 bg-slate-900 border border-slate-800 text-[10px] text-slate-300 rounded",
 													children: ["✓ ", e]
 												}, t))
 											})]
 										}),
-										/* @__PURE__ */ (0, O.jsxs)("div", {
+										/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2",
-											children: [/* @__PURE__ */ (0, O.jsx)("div", {
+											children: [/* @__PURE__ */ (0, D.jsx)("div", {
 												className: "text-[11px] font-bold text-slate-300",
 												children: "Cambiar Estado (Sala de Ventas):"
-											}), /* @__PURE__ */ (0, O.jsxs)("div", {
+											}), /* @__PURE__ */ (0, D.jsxs)("div", {
 												className: "grid grid-cols-3 gap-1.5",
 												children: [
-													/* @__PURE__ */ (0, O.jsx)("button", {
-														onClick: () => pt("disponible"),
+													/* @__PURE__ */ (0, D.jsx)("button", {
+														onClick: () => ft("disponible"),
 														className: `py-1.5 rounded-lg text-xs font-bold border ${A.estado === "disponible" ? "bg-emerald-600 text-white border-emerald-400" : "bg-slate-900 text-slate-400 border-slate-800"}`,
 														children: "Disponible"
 													}),
-													/* @__PURE__ */ (0, O.jsx)("button", {
-														onClick: () => pt("reservado"),
+													/* @__PURE__ */ (0, D.jsx)("button", {
+														onClick: () => ft("reservado"),
 														className: `py-1.5 rounded-lg text-xs font-bold border ${A.estado === "reservado" ? "bg-amber-600 text-white border-amber-400" : "bg-slate-900 text-slate-400 border-slate-800"}`,
 														children: "Reservar"
 													}),
-													/* @__PURE__ */ (0, O.jsx)("button", {
-														onClick: () => pt("vendido"),
+													/* @__PURE__ */ (0, D.jsx)("button", {
+														onClick: () => ft("vendido"),
 														className: `py-1.5 rounded-lg text-xs font-bold border ${A.estado === "vendido" ? "bg-rose-600 text-white border-rose-400" : "bg-slate-900 text-slate-400 border-slate-800"}`,
 														children: "Vendido"
 													})
@@ -12370,96 +12361,96 @@ function Me() {
 										})
 									]
 								}),
-								m === "cotizador" && /* @__PURE__ */ (0, O.jsxs)("div", {
+								m === "cotizador" && /* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "space-y-3 text-xs",
-									children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+									children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-3",
-										children: [/* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+										children: [/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "flex justify-between mb-1",
-											children: [/* @__PURE__ */ (0, O.jsxs)("span", {
+											children: [/* @__PURE__ */ (0, D.jsxs)("span", {
 												className: "text-slate-300",
 												children: [
 													"Enganche (",
-													Qe,
+													et,
 													"%):"
 												]
-											}), /* @__PURE__ */ (0, O.jsx)("strong", {
+											}), /* @__PURE__ */ (0, D.jsx)("strong", {
 												className: "text-emerald-400",
 												children: j(M.cuotaInicial)
 											})]
-										}), /* @__PURE__ */ (0, O.jsx)("input", {
+										}), /* @__PURE__ */ (0, D.jsx)("input", {
 											type: "range",
 											min: 10,
 											max: 50,
 											step: 5,
-											value: Qe,
-											onChange: (e) => Me(Number(e.target.value)),
+											value: et,
+											onChange: (e) => je(Number(e.target.value)),
 											className: "w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
-										})] }), /* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+										})] }), /* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "flex justify-between mb-1",
-											children: [/* @__PURE__ */ (0, O.jsx)("span", {
+											children: [/* @__PURE__ */ (0, D.jsx)("span", {
 												className: "text-slate-300",
 												children: "Plazo:"
-											}), /* @__PURE__ */ (0, O.jsxs)("strong", {
+											}), /* @__PURE__ */ (0, D.jsxs)("strong", {
 												className: "text-white",
 												children: [
-													w,
+													C,
 													" años (",
 													M.meses,
 													" meses)"
 												]
 											})]
-										}), /* @__PURE__ */ (0, O.jsx)("input", {
+										}), /* @__PURE__ */ (0, D.jsx)("input", {
 											type: "range",
 											min: 1,
 											max: 20,
 											step: 1,
-											value: w,
-											onChange: (e) => T(Number(e.target.value)),
+											value: C,
+											onChange: (e) => w(Number(e.target.value)),
 											className: "w-full accent-emerald-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
 										})] })]
-									}), /* @__PURE__ */ (0, O.jsxs)("div", {
+									}), /* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2",
-										children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+										children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "flex justify-between text-xs",
-											children: [/* @__PURE__ */ (0, O.jsx)("span", {
+											children: [/* @__PURE__ */ (0, D.jsx)("span", {
 												className: "text-slate-400",
 												children: "Saldo a Financiar:"
-											}), /* @__PURE__ */ (0, O.jsx)("strong", {
+											}), /* @__PURE__ */ (0, D.jsx)("strong", {
 												className: "text-white",
 												children: j(M.saldoFinanciar)
 											})]
-										}), /* @__PURE__ */ (0, O.jsxs)("div", {
+										}), /* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "flex justify-between text-xs",
-											children: [/* @__PURE__ */ (0, O.jsx)("span", {
+											children: [/* @__PURE__ */ (0, D.jsx)("span", {
 												className: "text-slate-400",
 												children: "Cuota Mensual Estimada:"
-											}), /* @__PURE__ */ (0, O.jsxs)("strong", {
+											}), /* @__PURE__ */ (0, D.jsxs)("strong", {
 												className: "text-emerald-400 text-sm",
 												children: [j(M.cuotaMensual), "/mes"]
 											})]
 										})]
 									})]
 								}),
-								m === "plusvalia" && /* @__PURE__ */ (0, O.jsxs)("div", {
+								m === "plusvalia" && /* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "space-y-3 text-xs",
-									children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+									children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "bg-slate-950 p-3 rounded-xl border border-slate-800",
-										children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+										children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "font-bold text-amber-400 mb-1 flex items-center gap-1",
-											children: [/* @__PURE__ */ (0, O.jsx)(de, { className: "w-4 h-4" }), " Confort Bioclimático"]
-										}), /* @__PURE__ */ (0, O.jsxs)("p", {
+											children: [/* @__PURE__ */ (0, D.jsx)(fe, { className: "w-4 h-4" }), " Confort Bioclimático"]
+										}), /* @__PURE__ */ (0, D.jsxs)("p", {
 											className: "text-slate-300 leading-relaxed text-[11px]",
 											children: [A.asoleamiento, "."]
 										})]
-									}), /* @__PURE__ */ (0, O.jsxs)("div", {
+									}), /* @__PURE__ */ (0, D.jsxs)("div", {
 										className: "bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5",
-										children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+										children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "flex justify-between",
-											children: [/* @__PURE__ */ (0, O.jsx)("span", {
+											children: [/* @__PURE__ */ (0, D.jsx)("span", {
 												className: "text-slate-400",
 												children: "Plusvalía estimada:"
-											}), /* @__PURE__ */ (0, O.jsxs)("strong", {
+											}), /* @__PURE__ */ (0, D.jsxs)("strong", {
 												className: "text-emerald-400",
 												children: [
 													"+",
@@ -12467,12 +12458,12 @@ function Me() {
 													"% anual"
 												]
 											})]
-										}), /* @__PURE__ */ (0, O.jsxs)("div", {
+										}), /* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "flex justify-between",
-											children: [/* @__PURE__ */ (0, O.jsx)("span", {
+											children: [/* @__PURE__ */ (0, D.jsx)("span", {
 												className: "text-slate-400",
 												children: "Proyección a 5 años:"
-											}), /* @__PURE__ */ (0, O.jsx)("strong", {
+											}), /* @__PURE__ */ (0, D.jsx)("strong", {
 												className: "text-white",
 												children: j(M.valor5Anios)
 											})]
@@ -12484,37 +12475,37 @@ function Me() {
 					]
 				})
 			}),
-			Ue && /* @__PURE__ */ (0, O.jsx)("div", {
+			He && /* @__PURE__ */ (0, D.jsx)("div", {
 				className: "fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4",
-				children: /* @__PURE__ */ (0, O.jsxs)("div", {
+				children: /* @__PURE__ */ (0, D.jsxs)("div", {
 					className: "bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4",
 					children: [
-						/* @__PURE__ */ (0, O.jsxs)("div", {
+						/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "flex items-center justify-between border-b border-slate-800 pb-3",
-							children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+							children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "flex items-center gap-2",
-								children: [/* @__PURE__ */ (0, O.jsx)(pe, { className: "w-5 h-5 text-emerald-400" }), /* @__PURE__ */ (0, O.jsxs)("h3", {
+								children: [/* @__PURE__ */ (0, D.jsx)(me, { className: "w-5 h-5 text-emerald-400" }), /* @__PURE__ */ (0, D.jsxs)("h3", {
 									className: "font-bold text-white text-sm sm:text-base",
 									children: ["Compartir Ficha — Lote ", A.label]
 								})]
-							}), /* @__PURE__ */ (0, O.jsx)("button", {
-								onClick: () => We(!1),
+							}), /* @__PURE__ */ (0, D.jsx)("button", {
+								onClick: () => Ue(!1),
 								className: "p-1 rounded-lg hover:bg-slate-800 text-slate-400",
-								children: /* @__PURE__ */ (0, O.jsx)(le, { className: "w-5 h-5" })
+								children: /* @__PURE__ */ (0, D.jsx)(ue, { className: "w-5 h-5" })
 							})]
 						}),
-						/* @__PURE__ */ (0, O.jsx)("pre", {
+						/* @__PURE__ */ (0, D.jsx)("pre", {
 							className: "bg-slate-950 border border-slate-800 rounded-xl p-3 text-[11px] text-slate-200 whitespace-pre-wrap font-mono max-h-56 overflow-y-auto",
-							children: gt
+							children: ht
 						}),
-						/* @__PURE__ */ (0, O.jsxs)("div", {
+						/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "flex items-center justify-end gap-2 pt-1",
-							children: [/* @__PURE__ */ (0, O.jsxs)("button", {
-								onClick: _t,
+							children: [/* @__PURE__ */ (0, D.jsxs)("button", {
+								onClick: gt,
 								className: "flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition",
-								children: [qe ? /* @__PURE__ */ (0, O.jsx)(Oe, { className: "w-4 h-4" }) : /* @__PURE__ */ (0, O.jsx)(E, { className: "w-4 h-4" }), /* @__PURE__ */ (0, O.jsx)("span", { children: qe ? "¡Copiado!" : "Copiar para WhatsApp" })]
-							}), /* @__PURE__ */ (0, O.jsx)("button", {
-								onClick: () => We(!1),
+								children: [Ke ? /* @__PURE__ */ (0, D.jsx)(Oe, { className: "w-4 h-4" }) : /* @__PURE__ */ (0, D.jsx)(Te, { className: "w-4 h-4" }), /* @__PURE__ */ (0, D.jsx)("span", { children: Ke ? "¡Copiado!" : "Copiar para WhatsApp" })]
+							}), /* @__PURE__ */ (0, D.jsx)("button", {
+								onClick: () => Ue(!1),
 								className: "px-3 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold",
 								children: "Cerrar"
 							})]
@@ -12522,33 +12513,33 @@ function Me() {
 					]
 				})
 			}),
-			Ge && /* @__PURE__ */ (0, O.jsx)("div", {
+			We && /* @__PURE__ */ (0, D.jsx)("div", {
 				className: "fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4",
-				children: /* @__PURE__ */ (0, O.jsxs)("div", {
+				children: /* @__PURE__ */ (0, D.jsxs)("div", {
 					className: "bg-slate-900 border border-slate-700 rounded-2xl max-w-xl w-full p-4 sm:p-5 shadow-2xl space-y-3 sm:space-y-4",
 					children: [
-						/* @__PURE__ */ (0, O.jsxs)("div", {
+						/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "flex items-center justify-between border-b border-slate-800 pb-2",
-							children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+							children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "flex items-center gap-2",
-								children: [/* @__PURE__ */ (0, O.jsx)(we, { className: "w-5 h-5 text-emerald-400" }), /* @__PURE__ */ (0, O.jsxs)("h3", {
+								children: [/* @__PURE__ */ (0, D.jsx)(we, { className: "w-5 h-5 text-emerald-400" }), /* @__PURE__ */ (0, D.jsxs)("h3", {
 									className: "font-bold text-white text-sm sm:text-base",
 									children: ["Ficha Oficial PDF — Lote ", A.label]
 								})]
-							}), /* @__PURE__ */ (0, O.jsx)("button", {
-								onClick: () => Ke(!1),
+							}), /* @__PURE__ */ (0, D.jsx)("button", {
+								onClick: () => Ge(!1),
 								className: "p-1 rounded-lg hover:bg-slate-800 text-slate-400",
-								children: /* @__PURE__ */ (0, O.jsx)(le, { className: "w-5 h-5" })
+								children: /* @__PURE__ */ (0, D.jsx)(ue, { className: "w-5 h-5" })
 							})]
 						}),
-						/* @__PURE__ */ (0, O.jsxs)("div", {
+						/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "bg-white text-slate-900 rounded-xl p-4 border border-slate-300 space-y-2 text-xs",
 							children: [
-								/* @__PURE__ */ (0, O.jsxs)("div", {
+								/* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "font-extrabold text-sm text-emerald-900 border-b pb-1",
 									children: ["PASEO LAS PALMAS • LOTE ", A.label]
 								}),
-								/* @__PURE__ */ (0, O.jsxs)("div", {
+								/* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "text-[11px] text-slate-600",
 									children: [
 										A.frente,
@@ -12562,31 +12553,31 @@ function Me() {
 										A.orientacion
 									]
 								}),
-								/* @__PURE__ */ (0, O.jsxs)("div", {
+								/* @__PURE__ */ (0, D.jsxs)("div", {
 									className: "flex justify-between bg-emerald-900 text-white p-2.5 rounded-lg",
 									children: [
-										/* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsx)("div", {
+										/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsx)("div", {
 											className: "text-[9px] text-emerald-200",
 											children: "Precio"
-										}), /* @__PURE__ */ (0, O.jsx)("strong", {
+										}), /* @__PURE__ */ (0, D.jsx)("strong", {
 											className: "text-xs",
 											children: j(M.precioTotal)
 										})] }),
-										/* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+										/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 											className: "text-[9px] text-emerald-200",
 											children: [
 												"Enganche (",
-												Qe,
+												et,
 												"%)"
 											]
-										}), /* @__PURE__ */ (0, O.jsx)("strong", {
+										}), /* @__PURE__ */ (0, D.jsx)("strong", {
 											className: "text-xs text-emerald-300",
 											children: j(M.cuotaInicial)
 										})] }),
-										/* @__PURE__ */ (0, O.jsxs)("div", { children: [/* @__PURE__ */ (0, O.jsx)("div", {
+										/* @__PURE__ */ (0, D.jsxs)("div", { children: [/* @__PURE__ */ (0, D.jsx)("div", {
 											className: "text-[9px] text-emerald-200",
 											children: "Mensualidad"
-										}), /* @__PURE__ */ (0, O.jsxs)("strong", {
+										}), /* @__PURE__ */ (0, D.jsxs)("strong", {
 											className: "text-xs",
 											children: [j(M.cuotaMensual), "/mes"]
 										})] })
@@ -12594,14 +12585,14 @@ function Me() {
 								})
 							]
 						}),
-						/* @__PURE__ */ (0, O.jsxs)("div", {
+						/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "flex items-center justify-end gap-2 pt-1",
-							children: [/* @__PURE__ */ (0, O.jsxs)("button", {
-								onClick: vt,
+							children: [/* @__PURE__ */ (0, D.jsxs)("button", {
+								onClick: _t,
 								className: "flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-lg transition",
-								children: [/* @__PURE__ */ (0, O.jsx)(we, { className: "w-4 h-4" }), /* @__PURE__ */ (0, O.jsx)("span", { children: "Descargar PDF" })]
-							}), /* @__PURE__ */ (0, O.jsx)("button", {
-								onClick: () => Ke(!1),
+								children: [/* @__PURE__ */ (0, D.jsx)(we, { className: "w-4 h-4" }), /* @__PURE__ */ (0, D.jsx)("span", { children: "Descargar PDF" })]
+							}), /* @__PURE__ */ (0, D.jsx)("button", {
+								onClick: () => Ge(!1),
 								className: "px-3 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold",
 								children: "Cerrar"
 							})]
@@ -12609,74 +12600,74 @@ function Me() {
 					]
 				})
 			}),
-			Ve && /* @__PURE__ */ (0, O.jsx)("div", {
+			Be && /* @__PURE__ */ (0, D.jsx)("div", {
 				className: "fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4",
-				children: /* @__PURE__ */ (0, O.jsxs)("div", {
+				children: /* @__PURE__ */ (0, D.jsxs)("div", {
 					className: "bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-4 sm:p-5 shadow-2xl space-y-3",
 					children: [
-						/* @__PURE__ */ (0, O.jsxs)("div", {
+						/* @__PURE__ */ (0, D.jsxs)("div", {
 							className: "flex items-center justify-between border-b border-slate-800 pb-2",
-							children: [/* @__PURE__ */ (0, O.jsxs)("div", {
+							children: [/* @__PURE__ */ (0, D.jsxs)("div", {
 								className: "flex items-center gap-2",
-								children: [/* @__PURE__ */ (0, O.jsx)(Ce, { className: "w-5 h-5 text-indigo-400" }), /* @__PURE__ */ (0, O.jsxs)("h3", {
+								children: [/* @__PURE__ */ (0, D.jsx)(Ce, { className: "w-5 h-5 text-indigo-400" }), /* @__PURE__ */ (0, D.jsxs)("h3", {
 									className: "font-bold text-white text-sm sm:text-base",
 									children: [
 										"Comparador (",
-										ze.length,
+										Re.length,
 										"/3)"
 									]
 								})]
-							}), /* @__PURE__ */ (0, O.jsx)("button", {
-								onClick: () => He(!1),
+							}), /* @__PURE__ */ (0, D.jsx)("button", {
+								onClick: () => Ve(!1),
 								className: "p-1 rounded-lg hover:bg-slate-800 text-slate-400",
-								children: /* @__PURE__ */ (0, O.jsx)(le, { className: "w-5 h-5" })
+								children: /* @__PURE__ */ (0, D.jsx)(ue, { className: "w-5 h-5" })
 							})]
 						}),
-						ze.length === 0 ? /* @__PURE__ */ (0, O.jsx)("p", {
+						Re.length === 0 ? /* @__PURE__ */ (0, D.jsx)("p", {
 							className: "text-xs text-slate-400 py-4 text-center",
 							children: "No hay lotes en el comparador. Usa \"+ Comparar lote\" en la ficha técnica."
-						}) : /* @__PURE__ */ (0, O.jsx)("div", {
+						}) : /* @__PURE__ */ (0, D.jsx)("div", {
 							className: "overflow-x-auto",
-							children: /* @__PURE__ */ (0, O.jsxs)("table", {
+							children: /* @__PURE__ */ (0, D.jsxs)("table", {
 								className: "w-full text-left text-xs border-collapse",
-								children: [/* @__PURE__ */ (0, O.jsx)("thead", { children: /* @__PURE__ */ (0, O.jsxs)("tr", {
+								children: [/* @__PURE__ */ (0, D.jsx)("thead", { children: /* @__PURE__ */ (0, D.jsxs)("tr", {
 									className: "border-b border-slate-800 text-slate-400",
-									children: [/* @__PURE__ */ (0, O.jsx)("th", {
+									children: [/* @__PURE__ */ (0, D.jsx)("th", {
 										className: "py-1.5 px-2",
 										children: "Dato"
-									}), ze.map((e) => /* @__PURE__ */ (0, O.jsxs)("th", {
+									}), Re.map((e) => /* @__PURE__ */ (0, D.jsxs)("th", {
 										className: "py-1.5 px-2 text-white font-bold",
 										children: ["Lote ", e]
 									}, e))]
-								}) }), /* @__PURE__ */ (0, O.jsxs)("tbody", {
+								}) }), /* @__PURE__ */ (0, D.jsxs)("tbody", {
 									className: "divide-y divide-slate-800/60",
 									children: [
-										/* @__PURE__ */ (0, O.jsxs)("tr", { children: [/* @__PURE__ */ (0, O.jsx)("td", {
+										/* @__PURE__ */ (0, D.jsxs)("tr", { children: [/* @__PURE__ */ (0, D.jsx)("td", {
 											className: "py-1.5 px-2 text-slate-400",
 											children: "Área"
-										}), ze.map((t) => {
+										}), Re.map((t) => {
 											let n = e.find((e) => e.id === t);
-											return /* @__PURE__ */ (0, O.jsxs)("td", {
+											return /* @__PURE__ */ (0, D.jsxs)("td", {
 												className: "py-1.5 px-2 text-slate-200",
 												children: [n?.areaM2, " m²"]
 											}, t);
 										})] }),
-										/* @__PURE__ */ (0, O.jsxs)("tr", { children: [/* @__PURE__ */ (0, O.jsx)("td", {
+										/* @__PURE__ */ (0, D.jsxs)("tr", { children: [/* @__PURE__ */ (0, D.jsx)("td", {
 											className: "py-1.5 px-2 text-slate-400",
 											children: "Precio"
-										}), ze.map((t) => {
+										}), Re.map((t) => {
 											let n = e.find((e) => e.id === t);
-											return /* @__PURE__ */ (0, O.jsx)("td", {
+											return /* @__PURE__ */ (0, D.jsx)("td", {
 												className: "py-1.5 px-2 font-bold text-emerald-400",
 												children: n ? j(n.precioGTQ) : "-"
 											}, t);
 										})] }),
-										/* @__PURE__ */ (0, O.jsxs)("tr", { children: [/* @__PURE__ */ (0, O.jsx)("td", {
+										/* @__PURE__ */ (0, D.jsxs)("tr", { children: [/* @__PURE__ */ (0, D.jsx)("td", {
 											className: "py-1.5 px-2 text-slate-400",
 											children: "Enganche"
-										}), ze.map((t) => {
+										}), Re.map((t) => {
 											let n = e.find((e) => e.id === t);
-											return /* @__PURE__ */ (0, O.jsx)("td", {
+											return /* @__PURE__ */ (0, D.jsx)("td", {
 												className: "py-1.5 px-2 text-slate-200",
 												children: n ? j(n.precioGTQ * n.cuotaInicialPct / 100) : "-"
 											}, t);
@@ -12685,10 +12676,10 @@ function Me() {
 								})]
 							})
 						}),
-						/* @__PURE__ */ (0, O.jsx)("div", {
+						/* @__PURE__ */ (0, D.jsx)("div", {
 							className: "flex justify-end pt-1",
-							children: /* @__PURE__ */ (0, O.jsx)("button", {
-								onClick: () => He(!1),
+							children: /* @__PURE__ */ (0, D.jsx)("button", {
+								onClick: () => Ve(!1),
 								className: "px-4 py-1.5 rounded-xl bg-slate-800 text-slate-200 text-xs font-semibold",
 								children: "Cerrar"
 							})
@@ -12700,5 +12691,5 @@ function Me() {
 	});
 }
 // src/lotificacion-entry.tsx
-var Ne = document.getElementById("lotificacion-root");
-Ne ? (0, oe.createRoot)(Ne).render(/* @__PURE__ */ (0, O.jsx)(_.StrictMode, { children: /* @__PURE__ */ (0, O.jsx)(Me, {}) })) : console.error("No element with id 'lotificacion-root' found");
+var Me = document.getElementById("lotificacion-root");
+Me ? (0, se.createRoot)(Me).render(/* @__PURE__ */ (0, D.jsx)(_.StrictMode, { children: /* @__PURE__ */ (0, D.jsx)(je, {}) })) : console.error("No element with id 'lotificacion-root' found");
