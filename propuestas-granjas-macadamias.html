@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <script>
+        if (location.protocol === 'http:' && !['localhost', '127.0.0.1'].includes(location.hostname)) {
+            location.replace('https://' + location.hostname + location.pathname + location.search + location.hash);
+        }
+    </script>
+    <title>Cotización Parcelamiento Granjas Las Macadamias — Colomba, Quetzaltenango | Tecno Volckánica</title>
+    <meta name="description"
+        content="Propuesta comercial para el Mapa Interactivo de Lotes, Cotizador Móvil y Automatización de Ventas de Parcelamiento Granjas Las Macadamias, Colomba, Quetzaltenango.">
+    <link rel="icon" type="image/png" href="public/images/logo-volckan.png" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&family=Space+Grotesk:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0A1128", // Navy Blue
+                        "brand-purple": "#6b21a8",
+                        "brand-red": "#dc2626",
+                        "brand-yellow": "#facc15",
+                        "electric-blue": "#6b21a8", // Mapped to purple
+                        "safety-orange": "#dc2626", // Mapped to red
+                        "safety-yellow": "#facc15", // Mapped to yellow
+                        "brand-dark": "#0A1128",    // Mapped to primary navy
+
+                        // Legacy mappings for the existing header
+                        "navy": "#0A1128",
+                        "accent-orange": "#dc2626",
+                        "accent-yellow": "#facc15",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "heading": ["Montserrat", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "card": "24px",
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+
+        @layer base {
+            body { @apply font-sans bg-white text-slate-900; }
+            h1, h2, h3, h4 { @apply font-heading uppercase tracking-tight; }
+        }
+        .card-shadow {
+            box-shadow: 0 10px 40px -10px rgba(0, 82, 255, 0.1);
+        }
+        .icon-3d {
+            filter: drop-shadow(4px 4px 0px rgba(255, 215, 0, 0.4));
+        }
+    
+</style>
+    
+
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            color: #0a192f;
+        }
+
+        /* EXACT 2-PAGE PRINT / PDF STYLES */
+        @media print {
+            @page {
+                size: letter portrait;
+                margin: 10mm 12mm 10mm 12mm;
+            }
+
+            /* Hide interactive UI */
+            header, footer, #mobile-menu, #demo-modal, .no-print, .action-buttons, .hero-decorations {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+                color: #111827 !important;
+                font-family: 'Inter', sans-serif !important;
+                font-size: 10.5px !important;
+                line-height: 1.32 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .print-page {
+                height: 255mm !important;
+                max-height: 255mm !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+                box-sizing: border-box !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .print-page-break {
+                page-break-before: always !important;
+                break-before: page !important;
+            }
+
+            .print-header {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                border-bottom: 2px solid #0A1128 !important;
+                padding-bottom: 4px !important;
+                margin-bottom: 8px !important;
+            }
+
+            .print-footer {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                border-top: 1px solid #e5e7eb !important;
+                padding-top: 4px !important;
+                font-size: 9px !important;
+                color: #4b5563 !important;
+                margin-top: auto !important;
+            }
+
+            * {
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+
+            .print-table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+            }
+
+            .print-table th {
+                background-color: #0A1128 !important;
+                color: white !important;
+                font-size: 10px !important;
+                padding: 6px 8px !important;
+            }
+
+            .print-table td {
+                border-bottom: 1px solid #e5e7eb !important;
+                padding: 6px 8px !important;
+                font-size: 10px !important;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="./src/styles/main.css" type="text/tailwindcss" />
+</head>
+
+<body class="antialiased font-sans bg-white text-slate-900 flex flex-col min-h-screen">
+
+    <!-- Header (Sincronizado con index.html) -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex items-center justify-between h-20 md:h-24">
+                <a href="index.html" class="flex items-center group">
+                    <img src="public/images/logo-volckan.png" alt="Tecno Volckánica"
+                        class="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105">
+                </a>
+                <nav class="hidden lg:flex items-center gap-7 xl:gap-9">
+                    <a class="font-bold text-sm uppercase text-slate-700 hover:text-brand-purple transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-purple hover:after:w-full after:transition-all after:duration-300"
+                        href="index.html">Inicio</a>
+
+                    <!-- Menú Desplegable: Soluciones -->
+                    <div class="relative group">
+                        <button
+                            class="font-bold text-sm uppercase text-slate-700 hover:text-brand-purple transition-colors inline-flex items-center gap-1 py-1">
+                            Soluciones
+                            <span
+                                class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+                        </button>
+
+                        <!-- Contenedor del Dropdown -->
+                        <div
+                            class="absolute left-0 mt-6 w-72 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
+                            <div class="py-2">
+                                <a href="soluciones-sosqr.html"
+                                    class="flex items-center gap-4 px-5 py-3.5 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red">
+                                        <span class="material-symbols-outlined text-base">emergency</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-brand-dark text-sm">Sistema SOSQR</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Alertas escolares</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-parqueos.html"
+                                    class="flex items-center gap-4 px-5 py-3.5 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple">
+                                        <span class="material-symbols-outlined text-base">local_parking</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-brand-dark text-sm">Parqueos Digitales</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Control de acceso</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-modulo-ventas.html"
+                                    class="flex items-center gap-4 px-5 py-3 rounded-lg hover:bg-slate-50 transition-all group/sub">
+                                    <div class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                        <span class="material-symbols-outlined text-lg">point_of_sale</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Módulo de Ventas</span>
+                                        <span class="text-xs text-slate-400 mt-0.5">Cero Fricción</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-modulo-tiendas.html"
+                                    class="flex items-center gap-4 px-5 py-3 rounded-lg hover:bg-slate-50 transition-all group/sub">
+                                    <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                                        <span class="material-symbols-outlined text-lg">storefront</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-brand-dark group-hover/sub:text-blue-600 transition-colors">Admin. de Tiendas</span>
+                                        <span class="text-xs text-slate-400 mt-0.5">Sincronización Omnicanal</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-modulo-personal.html"
+                                    class="flex items-center gap-4 px-5 py-3 rounded-lg hover:bg-slate-50 transition-all group/sub">
+                                    <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                                        <span class="material-symbols-outlined text-lg">groups</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-brand-dark group-hover/sub:text-green-600 transition-colors">Control de Personal</span>
+                                        <span class="text-xs text-slate-400 mt-0.5">Gestión de Equipos</span>
+                                    </div>
+                                </a>
+                                <a href="soluciones-modulo-nutricion.html"
+                                    class="flex items-center gap-4 px-5 py-3 rounded-lg hover:bg-slate-50 transition-all group/sub">
+                                    <div class="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 flex-shrink-0">
+                                        <span class="material-symbols-outlined text-lg">favorite</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-brand-dark group-hover/sub:text-pink-600 transition-colors">Nutrición de Clientes</span>
+                                        <span class="text-xs text-slate-400 mt-0.5">Post-Venta Activa</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Menú Desplegable: Propuestas -->
+                    <div class="relative group">
+                        <button
+                            class="font-bold text-sm uppercase text-slate-700 hover:text-brand-purple transition-colors inline-flex items-center gap-1 py-1">
+                            Propuestas
+                            <span
+                                class="material-symbols-outlined text-[1rem] transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+                        </button>
+
+                        <div
+                            class="absolute left-0 mt-6 w-80 rounded-2xl bg-white border border-slate-200 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden transform origin-top scale-95 group-hover:scale-100">
+                            <div class="py-2">
+                                <a href="propuestas-landing-tracking.html"
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                        <span class="material-symbols-outlined text-base">analytics</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-brand-dark text-sm">Landing + Tracking</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Seguimiento de gestiones</span>
+                                    </div>
+                                </a>
+                                <a href="propuestas-metroproyectos.html"
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-brand-purple transition-colors border-t border-slate-100">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple flex-shrink-0">
+                                        <span class="material-symbols-outlined text-base">request_quote</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-brand-dark text-sm">Cotización Metroproyectos</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Portal Web & Mapa Interactivo</span>
+                                    </div>
+                                </a>
+                                <a href="demo-lotificacion/"
+                                    class="flex items-center gap-4 px-5 py-4 text-sm text-slate-800 hover:bg-slate-50 hover:text-emerald-600 transition-colors border-t border-slate-100">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 flex-shrink-0">
+                                        <span class="material-symbols-outlined text-base">map</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-brand-dark text-sm">Demo Masterplan Lotes</span>
+                                        <span class="text-xs text-slate-800 mt-0.5">Mapa y Cotizador Inmobiliario</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="font-bold text-sm uppercase text-slate-700 hover:text-brand-purple transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-purple hover:after:w-full after:transition-all after:duration-300"
+                        href="soluciones-automatizaciones.html">Automatizaciones</a>
+                    <a class="font-bold text-sm uppercase text-slate-700 hover:text-brand-purple transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-purple hover:after:w-full after:transition-all after:duration-300"
+                        href="soluciones-ciberseguridad.html">Ciberseguridad</a>
+                </nav>
+
+                <!-- Acción Principal Destacada: BOTÓN MERCADO ONLINE -->
+                <div class="flex items-center gap-3">
+                    <a href="tienda/index.html"
+                        class="relative inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-purple-900 via-brand-purple to-indigo-600 shadow-md shadow-purple-900/20 hover:shadow-lg hover:shadow-purple-700/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 overflow-hidden group border border-purple-300/30">
+                        <!-- Brillo dinámico en hover -->
+                        <div class="absolute inset-0 w-1/2 h-full bg-white/20 skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-700 ease-out pointer-events-none"></div>
+                        
+                        <span class="material-symbols-outlined text-lg sm:text-xl transition-transform duration-300 group-hover:scale-110">storefront</span>
+                        <span class="relative z-10 tracking-wide uppercase">MERCADO ONLINE</span>
+                    </a>
+
+                    <!-- Botón Menú Móvil -->
+                    <button id="mobile-menu-btn" class="lg:hidden text-brand-dark p-2 rounded-xl hover:bg-slate-100 transition-colors" aria-label="Abrir menú de navegación">
+                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <!-- ========================================== -->
+        <!-- PÁGINA 1 (EN PANTALLA Y EN PDF / IMPRESIÓN) -->
+        <!-- ========================================== -->
+        <div class="print-page max-w-5xl mx-auto px-3 sm:px-6 py-4 md:py-8">
+
+            <!-- Print Header: Exclusivo Página 1 PDF -->
+            <div class="hidden print:flex print-header">
+                <div class="font-black text-xs text-brand-dark uppercase tracking-wider">PARCELAMIENTO GRANJAS LAS MACADAMIAS | PROPUESTA COMERCIAL</div>
+                <div class="text-[9px] text-slate-800 font-sans">Colomba, Quetzaltenango · Documento generado por Tecno Volckánica · Página 1</div>
+            </div>
+
+            <!-- Top Actions & Breadcrumb Bar (Solo Pantalla) -->
+            <div class="no-print flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
+                <div class="flex items-center gap-1.5 text-xs text-slate-800">
+                    <a href="index.html" class="hover:text-brand-purple">Inicio</a>
+                    <span>/</span>
+                    <a href="demo-lotificacion/" class="hover:text-brand-purple">Demo Lotificación</a>
+                    <span>/</span>
+                    <span class="text-brand-dark font-bold">Granjas Las Macadamias</span>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <a href="demo-lotificacion/"
+                       class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-brand-dark font-bold text-xs uppercase tracking-wider transition-all">
+                        <span class="material-symbols-outlined text-base text-emerald-600">map</span>
+                        <span>Ver Demo en Vivo</span>
+                    </a>
+                    <button onclick="window.print()"
+                            title="Guardar o imprimir esta cotización en PDF (2 páginas)"
+                            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 border border-brand-purple/40 hover:border-brand-purple text-brand-purple font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer">
+                        <span class="material-symbols-outlined text-base">picture_as_pdf</span>
+                        <span>Descargar PDF</span>
+                    </button>
+                    <a href="https://wa.me/50246741239?text=Hola%20Tecno%20Volck%C3%A1nica%2C%20deseo%20aprobar%20la%20cotizaci%C3%B3n%20para%20Parcelamiento%20Granjas%20Las%20Macadamias." target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-purple hover:bg-brand-red text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-all">
+                        <span class="material-symbols-outlined text-sm">verified</span>
+                        <span>Aprobar Propuesta</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card Encabezado y Metadatos -->
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-7 border border-slate-200/80 shadow-sm print:p-0 print:border-0 print:shadow-none mb-4 md:mb-5 print:mb-3">
+                <div class="flex flex-wrap items-center justify-between border-b border-slate-100 pb-3 md:pb-4 mb-3 md:mb-4 gap-2 print:pb-2 print:mb-2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 md:w-11 md:h-11 rounded-xl bg-emerald-600/10 flex items-center justify-center text-emerald-700 flex-shrink-0 print:hidden">
+                            <span class="material-symbols-outlined text-xl md:text-2xl">park</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-700 block">Cliente &amp; Proyecto</span>
+                            <h3 class="text-base md:text-xl font-black text-brand-dark tracking-tight">PARCELAMIENTO GRANJAS LAS MACADAMIAS</h3>
+                            <span class="text-xs text-emerald-700 font-semibold block">Colomba, Quetzaltenango</span>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold text-[10px] md:text-xs uppercase tracking-wider print:border-slate-300">
+                        Cotización Comercial
+                    </span>
+                </div>
+
+                <div class="mb-3 md:mb-4 print:mb-2">
+                    <h1 class="text-xl sm:text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight leading-tight mb-1 print:text-lg">
+                        Mapa Interactivo de Lotes y Herramienta Móvil de Ventas
+                    </h1>
+                    <p class="text-xs sm:text-sm md:text-base text-brand-purple font-bold print:text-xs">
+                        Plataforma visual para mostrar terrenos disponibles, cotizar cuotas en segundos y agilizar el trabajo de los vendedores
+                    </p>
+                </div>
+
+                <!-- Grid de Metadatos -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3 p-3 sm:p-4 bg-slate-50 rounded-xl border border-slate-100 text-[11px] md:text-xs print:p-2 print:gap-1 print:text-[10px]">
+                    <div>
+                        <span class="font-bold text-slate-700 block text-[9px] uppercase">Cliente:</span>
+                        <span class="font-bold text-brand-dark block truncate">Granjas Las Macadamias</span>
+                    </div>
+                    <div>
+                        <span class="font-bold text-slate-700 block text-[9px] uppercase">Ubicación:</span>
+                        <span class="font-bold text-brand-dark block truncate">Colomba, Quetgo.</span>
+                    </div>
+                    <div>
+                        <span class="font-bold text-slate-700 block text-[9px] uppercase">Fecha:</span>
+                        <span class="font-bold text-brand-dark block" id="cotizacion-fecha">Hoy</span>
+                    </div>
+                    <div>
+                        <span class="font-bold text-slate-700 block text-[9px] uppercase">Inversión Total:</span>
+                        <span class="font-bold text-brand-purple block">Q 4,800.00</span>
+                    </div>
+                    <div>
+                        <span class="font-bold text-slate-700 block text-[9px] uppercase">Entrega Pruebas:</span>
+                        <span class="font-bold text-brand-dark block">15 días hábiles</span>
+                    </div>
+                    <div>
+                        <span class="font-bold text-slate-700 block text-[9px] uppercase">Ajustes en Campo:</span>
+                        <span class="font-bold text-emerald-700 block">+ 5 días hábiles</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 1: ¿En qué consiste la solución? -->
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-0 print:border-0 print:shadow-none mb-4 md:mb-5 print:mb-3">
+                <div class="flex items-center gap-2 mb-2 md:mb-3">
+                    <div class="w-6 h-6 rounded-lg bg-brand-purple text-white flex items-center justify-center font-bold text-xs font-mono">1</div>
+                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight">¿En qué consiste el proyecto para Granjas Las Macadamias?</h2>
+                </div>
+
+                <p class="text-xs md:text-sm text-slate-800 leading-relaxed font-medium print:text-[10px] print:leading-snug">
+                    Convertimos el plano de <strong>Parcelamiento Granjas Las Macadamias</strong> en un <strong>mapa interactivo fácil de usar desde cualquier teléfono, tablet o computadora</strong>, sin necesidad de instalar aplicaciones ni cargar planos impresos. Al abrir el enlace, tanto el comprador como el vendedor pueden acercar o mover el mapa con los dedos, identificar al instante qué lotes están <strong>disponibles, reservados o vendidos</strong> por medio de colores claros, y tocar cualquier terreno para ver su medida, precio y opciones de pago al momento.
+                </p>
+            </div>
+
+            <!-- Sección 2: Cualidades y Cómo Funciona para Vendedores -->
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-0 print:border-0 print:shadow-none mb-2 md:mb-4 print:mb-2">
+                <div class="flex items-center gap-2 mb-3 md:mb-4 print:mb-2">
+                    <div class="w-6 h-6 rounded-lg bg-brand-red text-white flex items-center justify-center font-bold text-xs font-mono">2</div>
+                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight">Cualidades del Proyecto y Automatización para Vendedores</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 print:grid-cols-3 print:gap-2">
+                    <!-- Cualidad A -->
+                    <div class="bg-slate-50 rounded-xl p-3.5 sm:p-4 border border-slate-200/70 print:p-2 print:border-slate-300">
+                        <div class="flex items-center gap-2 mb-1.5">
+                            <span class="material-symbols-outlined text-emerald-700 text-lg print:hidden">touch_app</span>
+                            <span class="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">A. Mapa Móvil 100% Cómodo</span>
+                        </div>
+                        <p class="text-[11px] md:text-xs text-slate-800 leading-relaxed font-medium print:text-[9.5px] print:leading-snug">
+                            Diseñado especialmente para <strong>teléfonos y tablets</strong> que el equipo comercial usa en campo. Permite ampliar cualquier sector con gestos naturales, identificar cada lote por color y mostrar una ficha clara en pantalla cada vez que se selecciona un terreno.
+                        </p>
+                    </div>
+
+                    <!-- Cualidad B -->
+                    <div class="bg-slate-50 rounded-xl p-3.5 sm:p-4 border border-slate-200/70 print:p-2 print:border-slate-300">
+                        <div class="flex items-center gap-2 mb-1.5">
+                            <span class="material-symbols-outlined text-brand-purple text-lg print:hidden">calculate</span>
+                            <span class="text-[10px] font-bold text-brand-purple uppercase tracking-wider">B. Cómo Funciona en la Venta</span>
+                        </div>
+                        <p class="text-[11px] md:text-xs text-slate-800 leading-relaxed font-medium print:text-[9.5px] print:leading-snug">
+                            En 3 pasos: <strong>1)</strong> El vendedor ubica el lote en el mapa frente al cliente. <strong>2)</strong> Al tocarlo ve el área exacta, precio y calcula al instante enganche y cuotas mensuales. <strong>3)</strong> Envía el detalle directo por WhatsApp para cerrar la reserva sin esperar a llegar a la oficina.
+                        </p>
+                    </div>
+
+                    <!-- Cualidad C -->
+                    <div class="bg-slate-50 rounded-xl p-3.5 sm:p-4 border border-slate-200/70 print:p-2 print:border-slate-300">
+                        <div class="flex items-center gap-2 mb-1.5">
+                            <span class="material-symbols-outlined text-brand-red text-lg print:hidden">bolt</span>
+                            <span class="text-[10px] font-bold text-brand-red uppercase tracking-wider">C. Potencial de Automatización</span>
+                        </div>
+                        <p class="text-[11px] md:text-xs text-slate-800 leading-relaxed font-medium print:text-[9.5px] print:leading-snug">
+                            Evita ofrecer terrenos ya vendidos, ahorra horas cotizando a mano y permite escalar hacia <strong>mensajes automáticos por WhatsApp con el lote elegido, registro inmediato de interesados, reservas en tiempo real</strong> y control ordenado para todo el equipo de ventas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Print Footer: Exclusivo Página 1 PDF -->
+            <div class="hidden print:flex print-footer">
+                <div>Cotización preparada para Parcelamiento Granjas Las Macadamias (Colomba, Quetzaltenango).</div>
+                <div>Página 1 de 2</div>
+            </div>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- PÁGINA 2 (EN PANTALLA Y EN PDF / IMPRESIÓN) -->
+        <!-- ========================================== -->
+        <div class="print-page print-page-break max-w-5xl mx-auto px-3 sm:px-6 py-4 md:py-8">
+
+            <!-- Print Header: Exclusivo Página 2 PDF -->
+            <div class="hidden print:flex print-header">
+                <div class="font-black text-xs text-brand-dark uppercase tracking-wider">PARCELAMIENTO GRANJAS LAS MACADAMIAS | INVERSIÓN Y CONDICIONES</div>
+                <div class="text-[9px] text-slate-800 font-sans">Colomba, Quetzaltenango · Tecno Volckánica · Página 2</div>
+            </div>
+
+            <!-- Sección 3: Cotización Económica Detallada -->
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-0 print:border-0 print:shadow-none mb-4 md:mb-5 print:mb-3">
+                <div class="flex items-center gap-2 mb-3 print:mb-2">
+                    <div class="w-6 h-6 rounded-lg bg-brand-yellow text-brand-dark flex items-center justify-center font-bold text-xs font-mono">3</div>
+                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight">Cotización Económica y Forma de Pago</h2>
+                </div>
+
+                <p class="text-xs text-slate-800 font-medium mb-3 print:hidden">
+                    Inversión única por la implementación completa de la plataforma para Parcelamiento Granjas Las Macadamias:
+                </p>
+
+                <!-- Vista Móvil de Precios: Tarjetas Compactas -->
+                <div class="block md:hidden print:hidden space-y-3 mb-4">
+                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                        <div class="flex justify-between items-start mb-1.5 gap-2">
+                            <div>
+                                <h4 class="font-black text-xs text-brand-dark">Mapa Interactivo + Cotizador Móvil</h4>
+                                <span class="inline-block mt-0.5 px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-bold">Entrega 15 días + 5 días ajustes</span>
+                            </div>
+                            <span class="font-mono font-black text-sm text-brand-dark whitespace-nowrap">Q 4,800.00</span>
+                        </div>
+                        <p class="text-[11px] text-slate-800 leading-snug">
+                            Digitalización interactiva del parcelamiento con colores por estado, consulta táctil desde celular/tablet, calculadora de enganche y cuotas, botón de contacto directo y acompañamiento de ajustes con los vendedores.
+                        </p>
+                    </div>
+
+                    <div class="p-3.5 bg-gradient-to-r from-purple-50 via-slate-50 to-emerald-50 rounded-xl border-2 border-brand-purple flex justify-between items-center">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-purple block">Inversión Total del Proyecto</span>
+                            <span class="text-[10px] text-slate-800">Precio cerrado en Quetzales</span>
+                        </div>
+                        <span class="font-mono font-black text-xl text-brand-purple">Q 4,800.00</span>
+                    </div>
+                </div>
+
+                <!-- Vista Desktop y Print: Tabla Estructurada -->
+                <div class="hidden md:block print:block overflow-x-auto rounded-xl border border-slate-200 mb-4 print:mb-2 shadow-sm print:border-slate-300">
+                    <table class="print-table w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-brand-dark text-white text-xs uppercase tracking-wider print:text-[9.5px]">
+                                <th class="py-2.5 px-4 font-bold w-1/3">Concepto</th>
+                                <th class="py-2.5 px-4 font-bold w-1/2">Qué incluye para su equipo comercial</th>
+                                <th class="py-2.5 px-4 font-bold text-right w-1/4">Inversión (GTQ)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-xs print:text-[9.5px]">
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="py-2.5 px-4 font-black text-brand-dark align-top">
+                                    Plataforma Interactiva de Lotificación <br>
+                                    <span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[9px] font-bold font-sans">Especial para Móvil, Tablet y Web</span>
+                                </td>
+                                <td class="py-2.5 px-4 text-slate-800 leading-snug align-top">
+                                    Mapa interactivo con todos los lotes de Granjas Las Macadamias, estados por color (disponible, reservado, vendido), manejo táctil fluido en celular, ficha clara por terreno, calculadora instantánea de enganche y cuotas mensuales, y envío directo de información por WhatsApp.
+                                </td>
+                                <td class="py-2.5 px-4 font-mono font-black text-sm text-brand-dark text-right align-top whitespace-nowrap">
+                                    Incluido
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="py-2.5 px-4 font-black text-brand-dark align-top">
+                                    Pruebas Reales y Ajustes con Vendedores <br>
+                                    <span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-purple-100 text-brand-purple text-[9px] font-bold font-sans">Acompañamiento Post-Entrega</span>
+                                </td>
+                                <td class="py-2.5 px-4 text-slate-800 leading-snug align-top">
+                                    Periodo de 5 días hábiles dedicados exclusivamente a pulir detalles visuales, textos, precios o comodidad de uso según la experiencia real de los vendedores en campo.
+                                </td>
+                                <td class="py-2.5 px-4 font-mono font-bold text-xs text-slate-800 text-right align-top whitespace-nowrap">
+                                    Incluido
+                                </td>
+                            </tr>
+                            <tr class="bg-purple-50/50 font-bold border-t-2 border-brand-purple print:bg-slate-100">
+                                <td class="py-3 px-4 font-black text-sm text-brand-purple uppercase tracking-tight">
+                                    Inversión Total del Proyecto
+                                </td>
+                                <td class="py-3 px-4 text-slate-800 text-xs font-semibold leading-snug">
+                                    Implementación completa lista para operar en campo con su equipo de ventas.
+                                </td>
+                                <td class="py-3 px-4 font-mono font-black text-base md:text-lg text-brand-purple text-right whitespace-nowrap">
+                                    Q 4,800.00
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Condiciones de Pago y Tiempos -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 text-xs print:grid-cols-3 print:gap-2">
+                    <div class="p-3 bg-purple-50/70 rounded-xl border border-purple-200 flex justify-between sm:flex-col items-center sm:items-start print:p-2">
+                        <div>
+                            <span class="text-[9px] font-bold text-brand-purple uppercase tracking-wider block">50% Anticipo (Para Iniciar)</span>
+                            <span class="text-[10px] text-slate-800 hidden sm:block">Arranque de diseño e implementación</span>
+                        </div>
+                        <span class="font-mono font-black text-sm text-brand-purple">Q 2,400.00</span>
+                    </div>
+                    <div class="p-3 bg-yellow-50/70 rounded-xl border border-yellow-200 flex justify-between sm:flex-col items-center sm:items-start print:p-2">
+                        <div>
+                            <span class="text-[9px] font-bold text-brand-dark uppercase tracking-wider block">50% Contra Entrega</span>
+                            <span class="text-[10px] text-slate-800 hidden sm:block">Al concluir pruebas y ajustes finales</span>
+                        </div>
+                        <span class="font-mono font-black text-sm text-brand-dark">Q 2,400.00</span>
+                    </div>
+                    <div class="p-3 bg-emerald-50/70 rounded-xl border border-emerald-200 flex justify-between sm:flex-col items-center sm:items-start print:p-2">
+                        <div>
+                            <span class="text-[9px] font-bold text-emerald-800 uppercase tracking-wider block">Tiempo Total de Entrega</span>
+                            <span class="text-[10px] text-slate-800 hidden sm:block">15 días pruebas + 5 días ajustes</span>
+                        </div>
+                        <span class="font-mono font-black text-xs text-emerald-800">15 + 5 días hábiles</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 4: Plan de Entrega, Condiciones y Firmas -->
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-0 print:border-0 print:shadow-none mb-4 md:mb-6 print:mb-2">
+                <div class="flex items-center gap-2 mb-3 print:mb-2">
+                    <div class="w-6 h-6 rounded-lg bg-slate-800 text-white flex items-center justify-center font-bold text-xs font-mono">4</div>
+                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight">Plan de Trabajo, Condiciones y Aprobación</h2>
+                </div>
+
+                <div class="space-y-2 md:space-y-2.5 text-xs print:text-[9px] print:space-y-1.5">
+                    <div class="p-2.5 sm:p-3 bg-slate-50 rounded-xl border border-slate-100 print:p-1.5">
+                        <strong class="text-brand-dark block text-[11px] print:text-[9.5px]">1. Primera entrega para pruebas (15 días hábiles):</strong>
+                        <span class="text-slate-800 leading-snug">A partir de recibir el anticipo y el plano con precios/medidas del parcelamiento, en <strong>15 días hábiles</strong> entregamos la versión funcional en línea para que el equipo de ventas la pruebe directamente desde sus teléfonos.</span>
+                    </div>
+
+                    <div class="p-2.5 sm:p-3 bg-slate-50 rounded-xl border border-slate-100 print:p-1.5">
+                        <strong class="text-brand-dark block text-[11px] print:text-[9.5px]">2. Periodo de ajustes según la experiencia de los vendedores (+ 5 días hábiles):</strong>
+                        <span class="text-slate-800 leading-snug">Luego de las pruebas en campo, dedicamos <strong>5 días hábiles adicionales</strong> para realizar mejoras y ajustes prácticos basados en lo que sus vendedores necesiten para atender más rápido a los clientes.</span>
+                    </div>
+
+                    <div class="p-2.5 sm:p-3 bg-slate-50 rounded-xl border border-slate-100 print:p-1.5">
+                        <strong class="text-brand-dark block text-[11px] print:text-[9.5px]">3. Condiciones de pago y validez:</strong>
+                        <span class="text-slate-800 leading-snug">Inversión total de <strong>Q 4,800.00</strong> pagaderos con <strong>50% de anticipo (Q 2,400.00)</strong> para iniciar y <strong>50% restante (Q 2,400.00)</strong> contra entrega final a satisfacción. Propuesta válida por 30 días calendario.</span>
+                    </div>
+                </div>
+
+                <!-- Formalización y Firmas -->
+                <div class="mt-4 pt-3 border-t border-slate-200 print:mt-2 print:pt-2">
+                    <div class="grid grid-cols-2 gap-4 sm:gap-8 max-w-2xl mx-auto text-center">
+                        <div class="p-2 sm:p-3 rounded-xl bg-slate-50 border border-slate-200 print:p-1.5">
+                            <span class="text-[9px] font-bold uppercase text-slate-800 block mb-6 sm:mb-8 print:mb-5">Aceptado por:</span>
+                            <div class="w-4/5 border-b border-dashed border-slate-400 mx-auto mb-1"></div>
+                            <span class="font-bold text-[10px] md:text-xs text-brand-dark block">Parcelamiento Granjas Las Macadamias</span>
+                            <span class="text-[9px] text-slate-800">Colomba, Quetzaltenango</span>
+                        </div>
+
+                        <div class="p-2 sm:p-3 rounded-xl bg-slate-50 border border-slate-200 print:p-1.5">
+                            <span class="text-[9px] font-bold uppercase text-slate-800 block mb-6 sm:mb-8 print:mb-5">Presentado por:</span>
+                            <div class="w-4/5 border-b border-dashed border-slate-400 mx-auto mb-1"></div>
+                            <span class="font-bold text-[10px] md:text-xs text-brand-dark block">Tecno Volckánica</span>
+                            <span class="text-[9px] text-brand-purple font-semibold">Soluciones Digitales &amp; Automatización</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to action footer banner (Solo en Pantalla) -->
+            <div class="no-print bg-gradient-to-r from-brand-dark via-slate-900 to-brand-purple text-white rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-xl text-center mb-6">
+                <h3 class="text-lg md:text-2xl font-black uppercase tracking-tight mb-2">¿Listos para implementar Granjas Las Macadamias?</h3>
+                <p class="text-slate-300 text-xs md:text-sm max-w-xl mx-auto mb-4">
+                    Puede descargar esta cotización en PDF para compartirla con su equipo directivo o aprobar el inicio por WhatsApp.
+                </p>
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="window.print()"
+                       class="px-6 py-3 rounded-full bg-white hover:bg-slate-100 text-brand-dark font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center gap-1.5 cursor-pointer">
+                        <span class="material-symbols-outlined text-base text-brand-purple">picture_as_pdf</span>
+                        Descargar en PDF
+                    </button>
+                    <a href="https://wa.me/50246741239?text=Hola%20Tecno%20Volck%C3%A1nica%2C%20quiero%20aprobar%20la%20cotizaci%C3%B3n%20de%20Q4%2C800%20para%20Parcelamiento%20Granjas%20Las%20Macadamias." target="_blank" rel="noopener noreferrer"
+                       class="px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-base">chat</span>
+                        Aprobar por WhatsApp
+                    </a>
+                    <a href="demo-lotificacion/"
+                       class="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-base">map</span>
+                        Volver al Demo Interactivo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Print Footer: Exclusivo Página 2 PDF -->
+            <div class="hidden print:flex print-footer">
+                <div>Cotización preparada para Parcelamiento Granjas Las Macadamias (Colomba, Quetzaltenango).</div>
+                <div>Página 2 de 2</div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer (Sincronizado con index.html) -->
+    <footer class="bg-brand-dark text-white pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-8">
+                        <img src="public/images/logo-volckan.png" alt="Tecno Volckánica"
+                            class="h-10 w-auto object-contain brightness-0 invert">
+                    </div>
+                    <p class="text-slate-400 max-w-sm mb-10 font-medium">Líderes en tecnología de automatización,
+                        desarrollo y seguridad para Centroamérica. Optimizando lo que más importa con innovación constante.</p>
+                    <div class="flex gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">share</span>
+                        </div>
+                        <div
+                            class="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-brand-purple transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-sm">public</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">SOLUCIONES</h5>
+                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
+                        <li><a class="hover:text-white transition-colors" href="soluciones-sosqr.html">Sistema SOSQR</a></li>
+                        <li><a class="hover:text-white transition-colors" href="soluciones-parqueos.html">Parqueos Digitales</a></li>
+                        <li><a class="hover:text-white transition-colors" href="soluciones-modulo-ventas.html">Módulo de Ventas</a></li>
+                        <li><a class="hover:text-white transition-colors cursor-default opacity-70" href="#">Automatización de Procesos</a></li>
+                        <li><a class="hover:text-white transition-colors cursor-default opacity-70" href="#">Consultoría de Sistemas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-black text-sm tracking-widest mb-8 text-brand-yellow">CONTACTO</h5>
+                    <ul class="space-y-4 text-slate-400 font-bold text-sm">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-brand-purple text-lg">mail</span>
+                            <a href="mailto:tecnovolckanica@gmail.com" class="hover:text-white transition-colors">tecnovolckanica@gmail.com</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-brand-purple text-lg">phone</span>
+                            <a href="tel:+50231097191" class="hover:text-white transition-colors">+502 3109-7191</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="pt-12 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8 text-xs font-bold text-slate-800 uppercase tracking-widest">
+                <p>© 2024 Tecno Volckánica. Todos los derechos reservados.</p>
+                <div class="flex gap-10">
+                    <a class="hover:text-white transition-colors" href="#">Aviso de Privacidad</a>
+                    <a class="hover:text-white transition-colors" href="#">Términos de Servicio</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón Flotante Premium de WhatsApp (Diseño Moderno) -->
+        <div id="floating-whatsapp-widget" class="fixed bottom-6 right-6 z-40 flex items-center gap-3">
+            <!-- Badge Expandible con Asesoría en Línea -->
+            <a href="https://wa.me/50246741239?text=Hola%20Tecno%20Volck%C3%A1nica%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20soluciones%20y%20tienda." 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="hidden sm:flex items-center gap-3 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-xl shadow-slate-950/15 border border-slate-200/90 hover:border-emerald-400 hover:shadow-2xl hover:shadow-emerald-500/20 hover:-translate-y-0.5 transition-all duration-300 group">
+                <div class="flex flex-col text-left">
+                    <div class="flex items-center gap-1.5">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <span class="text-[10px] font-black uppercase tracking-wider text-emerald-600">Asesoría en línea</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-800 group-hover:text-emerald-600 transition-colors">¿Dudas o pedidos? <span class="font-extrabold text-emerald-600 underline decoration-emerald-300">Escríbenos</span></span>
+                </div>
+            </a>
+
+            <!-- Botón Circular Principal con Halo de Pulso e Icono SVG Oficial -->
+            <a href="https://wa.me/50246741239?text=Hola%20Tecno%20Volck%C3%A1nica%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20soluciones%20y%20tienda." 
+               target="_blank" 
+               rel="noopener noreferrer"
+               aria-label="Contactar por WhatsApp Oficial"
+               class="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-emerald-600 via-green-500 to-emerald-400 text-white shadow-xl shadow-emerald-600/40 hover:shadow-2xl hover:shadow-emerald-500/60 hover:scale-105 active:scale-95 transition-all duration-300 group">
+                <!-- Anillo de pulso sutil -->
+                <span class="absolute inset-0 rounded-full bg-emerald-500/35 animate-ping opacity-60 pointer-events-none" style="animation-duration: 3s;"></span>
+                
+                <!-- Icono SVG oficial de WhatsApp -->
+                <svg class="w-7 h-7 sm:w-8 sm:h-8 relative z-10 fill-current drop-shadow-md transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110" viewBox="0 0 24 24">
+                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 7.03C9.36 7.03 9.09 7.1 8.86 7.33C8.63 7.56 8 8.16 8 9.37C8 10.58 8.89 11.75 9.01 11.92C9.14 12.09 10.74 14.56 13.18 15.62C13.76 15.87 14.21 16.02 14.57 16.13C15.16 16.32 15.69 16.29 16.12 16.23C16.6 16.16 17.59 15.63 17.8 15.05C18 14.47 18 13.97 17.94 13.87C17.87 13.77 17.69 13.71 17.43 13.58C17.16 13.45 15.86 12.81 15.62 12.72C15.38 12.63 15.21 12.59 15.03 12.85C14.86 13.12 14.36 13.71 14.21 13.88C14.06 14.06 13.92 14.08 13.65 13.95C13.39 13.82 12.54 13.54 11.53 12.64C10.74 11.94 10.21 11.07 10.06 10.81C9.9 10.55 10.04 10.4 10.18 10.26C10.3 10.14 10.44 9.95 10.58 9.79C10.71 9.63 10.76 9.5 10.85 9.34C10.94 9.17 10.89 9.02 10.83 8.9C10.76 8.78 10.26 7.56 10.06 7.07C9.86 6.59 9.65 6.65 9.5 6.65C9.36 6.65 9.19 6.65 9.01 6.65L9.53 7.03Z"/>
+                </svg>
+                
+                <!-- Badge notificación "1" -->
+                <span class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-black text-white shadow-md border-2 border-white animate-bounce" style="animation-duration: 2.5s;">1</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[60] bg-white translate-x-full transition-transform duration-300 ease-in-out pointer-events-none md:hidden">
+        <div class="flex flex-col h-full pointer-events-auto overflow-y-auto">
+
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 h-24 border-b border-slate-100 flex-shrink-0">
+                <a href="index.html">
+                    <img src="public/images/logo-volckan.png" alt="Tecno Volckánica" class="h-10 w-auto">
+                </a>
+                <button id="mobile-menu-close"
+                    class="w-10 h-10 rounded-full bg-slate-100 hover:bg-red-50 flex items-center justify-center text-slate-800 hover:text-brand-red transition-all">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+
+            <!-- Navigation Cards -->
+            <nav class="flex flex-col gap-3 p-5 flex-grow">
+
+                <!-- Inicio -->
+                <a href="index.html"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple transition-colors group-hover:bg-brand-purple group-hover:text-white">
+                        <span class="material-symbols-outlined text-xl">home</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">Inicio</span>
+                </a>
+
+                <!-- Soluciones (Accordion) -->
+                <div class="rounded-xl bg-slate-50/80 border-l-4 border-brand-red overflow-hidden transition-all">
+                    <button id="mobile-soluciones-btn"
+                        class="w-full flex items-center gap-4 px-5 py-4 hover:bg-slate-100 transition-all group">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-brand-red/10 flex items-center justify-center text-brand-red transition-colors group-hover:bg-brand-red group-hover:text-white">
+                            <span class="material-symbols-outlined text-xl">widgets</span>
+                        </div>
+                        <span
+                            class="font-bold text-sm uppercase tracking-wider text-brand-dark flex-grow text-left">Soluciones</span>
+                        <span id="mobile-soluciones-icon"
+                            class="material-symbols-outlined text-slate-400 transition-transform duration-300 text-xl">expand_more</span>
+                    </button>
+
+                    <!-- Submenu (Tailwind CDN hint: max-h-[800px]) -->
+                    <div id="mobile-soluciones-menu"
+                        class="overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out">
+                        <div class="px-4 pb-4 pt-1 flex flex-col gap-2">
+                            <a href="soluciones-sosqr.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div
+                                    class="w-9 h-9 rounded-full bg-brand-red/10 flex items-center justify-center text-brand-red flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">emergency</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span
+                                        class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-red transition-colors">Sistema
+                                        SOSQR</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Alertas escolares</span>
+                                </div>
+                            </a>
+                            <a href="soluciones-parqueos.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div
+                                    class="w-9 h-9 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">local_parking</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span
+                                        class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-purple transition-colors">Parqueos
+                                        Digitales</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Control de acceso</span>
+                                </div>
+                            </a>
+                            <a href="soluciones-modulo-ventas.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">point_of_sale</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Módulo de Ventas</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Cero Fricción</span>
+                                </div>
+                            </a>
+                            <a href="soluciones-modulo-tiendas.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">storefront</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-blue-600 transition-colors">Admin. de Tiendas</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Sincronización Omnicanal</span>
+                                </div>
+                            </a>
+                            <a href="soluciones-modulo-personal.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">groups</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-green-600 transition-colors">Control de Personal</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Gestión de Equipos</span>
+                                </div>
+                            </a>
+                            <a href="soluciones-modulo-nutricion.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div class="w-9 h-9 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">favorite</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-sm text-brand-dark group-hover/sub:text-pink-600 transition-colors">Nutrición de Clientes</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Post-Venta Activa</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Propuestas (Accordion) -->
+                <div class="rounded-xl bg-slate-50/80 border-l-4 border-brand-yellow overflow-hidden transition-all">
+                    <button id="mobile-propuestas-btn"
+                        class="w-full flex items-center gap-4 px-5 py-4 hover:bg-slate-100 transition-all group">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-brand-yellow/10 flex items-center justify-center text-brand-yellow transition-colors group-hover:bg-brand-yellow group-hover:text-white">
+                            <span class="material-symbols-outlined text-xl">description</span>
+                        </div>
+                        <span
+                            class="font-bold text-sm uppercase tracking-wider text-brand-dark flex-grow text-left">Propuestas</span>
+                        <span id="mobile-propuestas-icon"
+                            class="material-symbols-outlined text-slate-400 transition-transform duration-300 text-xl">expand_more</span>
+                    </button>
+
+                    <!-- Submenu -->
+                    <div id="mobile-propuestas-menu"
+                        class="overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out">
+                        <div class="px-4 pb-4 pt-1 flex flex-col gap-2">
+                            <a href="propuestas-landing-tracking.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div
+                                    class="w-9 h-9 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">analytics</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span
+                                        class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-yellow transition-colors">Landing + Tracking</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Gestiones y solicitudes</span>
+                                </div>
+                            </a>
+                            <a href="propuestas-metroproyectos.html"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div
+                                    class="w-9 h-9 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">request_quote</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span
+                                        class="font-bold text-sm text-brand-dark group-hover/sub:text-brand-purple transition-colors">Cotización Metroproyectos</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Portal Web & Mapa Interactivo</span>
+                                </div>
+                            </a>
+                            <a href="demo-lotificacion/"
+                                class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-white transition-all group/sub">
+                                <div
+                                    class="w-9 h-9 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 flex-shrink-0">
+                                    <span class="material-symbols-outlined text-lg">map</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span
+                                        class="font-bold text-sm text-brand-dark group-hover/sub:text-emerald-600 transition-colors">Demo Masterplan Lotes</span>
+                                    <span class="text-xs text-slate-400 mt-0.5">Mapa y Cotizador Inmobiliario</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Automatizaciones -->
+                <a href="soluciones-automatizaciones.html"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple transition-colors group-hover:bg-brand-purple group-hover:text-white">
+                        <span class="material-symbols-outlined text-xl">precision_manufacturing</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">Automatizaciones</span>
+                </a>
+
+                <!-- Ciberseguridad -->
+                <a href="soluciones-ciberseguridad.html"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-slate-50/80 hover:bg-slate-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center text-brand-purple transition-colors group-hover:bg-brand-purple group-hover:text-white">
+                        <span class="material-symbols-outlined text-xl">shield_lock</span>
+                    </div>
+                    <span class="font-bold text-sm uppercase tracking-wider text-brand-dark">Ciberseguridad</span>
+                </a>
+
+                <!-- Mercado Online & Apps -->
+                <a href="tienda/index.html"
+                    class="flex items-center gap-4 px-5 py-4 rounded-xl bg-purple-50 hover:bg-purple-100 border-l-4 border-brand-purple transition-all group">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-brand-purple flex items-center justify-center text-white transition-colors">
+                        <span class="material-symbols-outlined text-xl">storefront</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-sm uppercase tracking-wider text-brand-purple">Mercado Online</span>
+                        <span class="text-xs text-slate-800">Credenciales, software y módulos</span>
+                    </div>
+                </a>
+
+            </nav>
+
+            <!-- CTA Principal Móvil: Ir a la Tienda -->
+            <div class="p-5 flex-shrink-0 border-t border-slate-100 bg-slate-50/70">
+                <a href="tienda/index.html"
+                    class="group relative overflow-hidden w-full flex items-center justify-center gap-2.5 bg-gradient-to-r from-purple-900 via-brand-purple to-indigo-600 text-white py-3.5 rounded-xl font-bold text-sm uppercase tracking-wide shadow-md shadow-purple-900/25 transition-all duration-300 hover:shadow-lg hover:shadow-purple-700/40 hover:-translate-y-0.5 active:scale-[0.98]">
+                    <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">storefront</span>
+                    <span>MERCADO ONLINE</span>
+                    <div
+                        class="absolute inset-0 h-full w-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 rounded-xl pointer-events-none">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Agendar Demo Modal -->
+    <div id="demo-modal"
+        class="fixed inset-0 z-[70] bg-slate-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <!-- Modal Content -->
+        <div
+            class="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 relative group flex flex-col max-h-[90vh]">
+
+            <!-- Header -->
+            <div
+                class="bg-white p-6 pb-4 border-b border-slate-100 flex justify-between items-start shrink-0 rounded-t-3xl">
+                <div class="flex items-center gap-4">
+                    <img src="public/images/logo-sosqr.png" alt="SOSQR" class="h-10 sm:h-12 w-auto object-contain">
+                    <div>
+                        <h3 class="font-display font-black text-xl sm:text-2xl text-slate-800">Agendar Demo</h3>
+                        <p class="text-slate-800 text-xs sm:text-sm mt-1">Transforma la seguridad escolar</p>
+                    </div>
+                </div>
+                <button id="demo-modal-close"
+                    class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-800 hover:text-slate-800 -mt-1 -mr-1">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+
+            <!-- Form Body (Scrollable) -->
+            <div class="p-6 md:p-8 overflow-y-auto">
+                <form id="demo-form" class="space-y-5">
+
+                    <!-- Name -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-name">Nombre Completo
+                            <span class="text-brand-red">*</span></label>
+                        <input type="text" id="demo-name" required
+                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
+                    </div>
+
+                    <!-- Institution -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-institution">Institución
+                            Educativa <span class="text-brand-red">*</span></label>
+                        <input type="text" id="demo-institution" required
+                            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
+                    </div>
+
+                    <!-- Contact (Phone/Email) -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-contact">Teléfono
+                            (WhatsApp)
+                            <span class="text-brand-red">*</span></label>
+                        <div class="relative flex items-center">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                <span class="text-lg mr-2 leading-none">🇬🇹</span>
+                                <span class="text-slate-800 font-bold border-r border-slate-200 pr-3 mr-1">+502</span>
+                            </div>
+                            <input type="tel" id="demo-contact" required
+                                class="w-full pl-[100px] pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700 font-medium tracking-wider">
+                        </div>
+                    </div>
+
+                    <!-- Date & Time Row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <!-- Date -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-date">Fecha Deseada
+                                <span class="text-brand-red">*</span></label>
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-slate-400">
+                                    <span class="material-symbols-outlined text-lg">calendar_today</span>
+                                </div>
+                                <input type="date" id="demo-date" required
+                                    class="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700">
+                            </div>
+                        </div>
+                        <!-- Time -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1.5" for="demo-time">Preferencia de
+                                Horario <span class="text-brand-red">*</span></label>
+                            <select id="demo-time" required
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 transition-all outline-none text-slate-700 appearance-none">
+                                <option value="" disabled selected>Selecciona un turno</option>
+                                <option value="Mañana (8:00 AM - 12:00 PM)">Mañana (8:00 AM - 12:00 PM)</option>
+                                <option value="Tarde (1:00 PM - 5:00 PM)">Tarde (1:00 PM - 5:00 PM)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Botón de Envío -->
+                    <button type="submit" id="demo-submit-btn"
+                        class="w-full mt-4 bg-brand-red text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg shadow-red-500/20 hover:bg-orange-600 hover:shadow-xl hover:-translate-y-0.5 transition-all flex justify-center items-center gap-2">
+                        <span>Solicitar Demo</span>
+                        <span class="material-symbols-outlined text-lg">send</span>
+                    </button>
+
+                    <!-- Feedback Message -->
+                    <div id="demo-feedback" class="hidden text-center mt-3 text-sm font-bold p-3 rounded-lg">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Accordion elements
+            const solucionesBtn = document.getElementById('mobile-soluciones-btn');
+            const solucionesMenu = document.getElementById('mobile-soluciones-menu');
+            const solucionesIcon = document.getElementById('mobile-soluciones-icon');
+
+            const propuestasBtn = document.getElementById('mobile-propuestas-btn');
+            const propuestasMenu = document.getElementById('mobile-propuestas-menu');
+            const propuestasIcon = document.getElementById('mobile-propuestas-icon');
+
+            function openMenu() {
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+                // Reset accordion when closing menu
+                solucionesMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                solucionesMenu.classList.add('max-h-0', 'opacity-0');
+                solucionesIcon.classList.remove('rotate-180');
+                solucionesBtn.closest('div.rounded-xl').classList.remove('bg-white', 'shadow-md');
+                solucionesBtn.closest('div.rounded-xl').classList.add('bg-slate-50/80');
+
+                propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                propuestasMenu.classList.add('max-h-0', 'opacity-0');
+                propuestasIcon.classList.remove('rotate-180');
+                propuestasBtn.closest('div.rounded-xl').classList.remove('bg-white', 'shadow-md');
+                propuestasBtn.closest('div.rounded-xl').classList.add('bg-slate-50/80');
+            }
+
+            mobileMenuBtn.addEventListener('click', openMenu);
+            mobileMenuClose.addEventListener('click', closeMenu);
+
+            // Close menu when clicking nav links
+            mobileMenu.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+
+            // Accordion toggle for Soluciones
+            solucionesBtn.addEventListener('click', () => {
+                const isOpen = solucionesMenu.classList.contains('max-h-[800px]');
+                const card = solucionesBtn.closest('div.rounded-xl');
+
+                if (isOpen) {
+                    solucionesMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                    solucionesMenu.classList.add('max-h-0', 'opacity-0');
+                    solucionesIcon.classList.remove('rotate-180');
+                    card.classList.remove('bg-white', 'shadow-md');
+                    card.classList.add('bg-slate-50/80');
+                } else {
+                    solucionesMenu.classList.remove('max-h-0', 'opacity-0');
+                    solucionesMenu.classList.add('max-h-[800px]', 'opacity-100');
+                    solucionesIcon.classList.add('rotate-180');
+                    card.classList.remove('bg-slate-50/80');
+                    card.classList.add('bg-white', 'shadow-md');
+                }
+            });
+
+            // Accordion toggle for Propuestas
+            propuestasBtn.addEventListener('click', () => {
+                const isOpen = propuestasMenu.classList.contains('max-h-[800px]');
+                const card = propuestasBtn.closest('div.rounded-xl');
+
+                if (isOpen) {
+                    propuestasMenu.classList.remove('max-h-[800px]', 'opacity-100');
+                    propuestasMenu.classList.add('max-h-0', 'opacity-0');
+                    propuestasIcon.classList.remove('rotate-180');
+                    card.classList.remove('bg-white', 'shadow-md');
+                    card.classList.add('bg-slate-50/80');
+                } else {
+                    propuestasMenu.classList.remove('max-h-0', 'opacity-0');
+                    propuestasMenu.classList.add('max-h-[800px]', 'opacity-100');
+                    propuestasIcon.classList.add('rotate-180');
+                    card.classList.remove('bg-slate-50/80');
+                    card.classList.add('bg-white', 'shadow-md');
+                }
+            });
+
+            
+
+            // ==========================================
+            // Fecha dinámica en formato español
+            const fechaEl = document.getElementById('cotizacion-fecha');
+            if (fechaEl) {
+                const hoy = new Date();
+                const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                fechaEl.textContent = `${hoy.getDate()} de ${meses[hoy.getMonth()]} de ${hoy.getFullYear()}`;
+            }
+        });
+    </script>
+</body>
+
+</html>
