@@ -50,6 +50,7 @@
             },
         }
     </script>
+    
     <style type="text/tailwindcss">
 
         @layer base {
@@ -88,8 +89,8 @@
                 background: white !important;
                 color: #111827 !important;
                 font-family: 'Inter', sans-serif !important;
-                font-size: 10.5px !important;
-                line-height: 1.32 !important;
+                font-size: 11px !important;
+                line-height: 1.42 !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 -webkit-print-color-adjust: exact !important;
@@ -97,11 +98,12 @@
             }
 
             .print-page {
-                height: 255mm !important;
-                max-height: 255mm !important;
+                height: 254mm !important;
+                max-height: 254mm !important;
                 display: flex !important;
                 flex-direction: column !important;
-                justify-content: space-between !important;
+                justify-content: flex-start !important;
+                gap: 3.5mm !important;
                 box-sizing: border-box !important;
                 padding: 0 !important;
                 margin: 0 !important;
@@ -117,8 +119,8 @@
                 justify-content: space-between !important;
                 align-items: center !important;
                 border-bottom: 2px solid #0A1128 !important;
-                padding-bottom: 4px !important;
-                margin-bottom: 8px !important;
+                padding-bottom: 5px !important;
+                margin-bottom: 2px !important;
             }
 
             .print-footer {
@@ -371,24 +373,24 @@
             </div>
 
             <!-- Card Encabezado y Metadatos -->
-            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-7 border border-slate-200/80 shadow-sm print:p-0 print:border-0 print:shadow-none mb-4 md:mb-5 print:mb-3">
-                <div class="flex flex-wrap items-center justify-between border-b border-slate-100 pb-3 md:pb-4 mb-3 md:mb-4 gap-2 print:pb-2 print:mb-2">
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-7 border border-slate-200/80 shadow-sm print:p-3 print:border print:border-slate-200 print:rounded-xl print:shadow-none mb-4 md:mb-5 print:mb-0">
+                <div class="flex flex-wrap items-center justify-between border-b border-slate-100 pb-3 md:pb-4 mb-3 md:mb-4 gap-2 print:pb-2.5 print:mb-2.5">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 md:w-11 md:h-11 rounded-xl bg-emerald-600/10 flex items-center justify-center text-emerald-700 flex-shrink-0 print:hidden">
-                            <span class="material-symbols-outlined text-xl md:text-2xl">park</span>
+                        <div class="w-9 h-9 md:w-11 md:h-11 rounded-xl bg-emerald-600/10 flex items-center justify-center text-emerald-700 flex-shrink-0 print:w-9 print:h-9">
+                            <span class="material-symbols-outlined text-xl md:text-2xl print:text-lg">park</span>
                         </div>
                         <div>
                             <span class="text-[10px] font-bold uppercase tracking-widest text-slate-700 block">Cliente &amp; Proyecto</span>
-                            <h3 class="text-base md:text-xl font-black text-brand-dark tracking-tight">PARCELAMIENTO GRANJAS LAS MACADAMIAS</h3>
-                            <span class="text-xs text-emerald-700 font-semibold block">Colomba, Quetzaltenango</span>
+                            <h3 class="text-base md:text-xl font-black text-brand-dark tracking-tight print:text-base">PARCELAMIENTO GRANJAS LAS MACADAMIAS</h3>
+                            <span class="text-xs text-emerald-700 font-semibold block print:text-[10.5px]">Colomba, Quetzaltenango</span>
                         </div>
                     </div>
-                    <span class="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold text-[10px] md:text-xs uppercase tracking-wider print:border-slate-300">
+                    <span class="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold text-[10px] md:text-xs uppercase tracking-wider print:border-emerald-300">
                         Cotización Comercial
                     </span>
                 </div>
 
-                <div class="mb-3 md:mb-4 print:mb-2">
+                <div class="mb-3 md:mb-4 print:mb-2.5">
                     <h1 class="text-xl sm:text-2xl md:text-3xl font-black text-brand-dark uppercase tracking-tight leading-tight mb-1 print:text-lg">
                         Mapa Interactivo de Lotes y Herramienta Móvil de Ventas
                     </h1>
@@ -398,7 +400,7 @@
                 </div>
 
                 <!-- Grid de Metadatos -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3 p-3 sm:p-4 bg-slate-50 rounded-xl border border-slate-100 text-[11px] md:text-xs print:p-2 print:gap-1 print:text-[10px]">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3 p-3 sm:p-4 bg-slate-50 rounded-xl border border-slate-100 text-[11px] md:text-xs print:grid-cols-6 print:p-2.5 print:gap-2 print:text-[10px]">
                     <div>
                         <span class="font-bold text-slate-700 block text-[9px] uppercase">Cliente:</span>
                         <span class="font-bold text-brand-dark block truncate">Granjas Las Macadamias</span>
@@ -427,56 +429,110 @@
             </div>
 
             <!-- Sección 1: ¿En qué consiste la solución? -->
-            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-0 print:border-0 print:shadow-none mb-4 md:mb-5 print:mb-3">
-                <div class="flex items-center gap-2 mb-2 md:mb-3">
-                    <div class="w-6 h-6 rounded-lg bg-brand-purple text-white flex items-center justify-center font-bold text-xs font-mono">1</div>
-                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight">¿En qué consiste el proyecto para Granjas Las Macadamias?</h2>
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-3 print:border print:border-slate-200 print:rounded-xl print:shadow-none mb-4 md:mb-5 print:mb-0">
+                <div class="flex items-center gap-2 mb-2 md:mb-3 print:mb-1.5">
+                    <div class="w-6 h-6 rounded-lg bg-brand-purple text-white flex items-center justify-center font-bold text-xs font-mono print:w-5 print:h-5 print:text-[10px]">1</div>
+                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight print:text-xs">¿En qué consiste el proyecto para Granjas Las Macadamias?</h2>
                 </div>
 
-                <p class="text-xs md:text-sm text-slate-800 leading-relaxed font-medium print:text-[10px] print:leading-snug">
-                    Convertimos el plano de <strong>Parcelamiento Granjas Las Macadamias</strong> en un <strong>mapa interactivo fácil de usar desde cualquier teléfono, tablet o computadora</strong>, sin necesidad de instalar aplicaciones ni cargar planos impresos. Al abrir el enlace, tanto el comprador como el vendedor pueden acercar o mover el mapa con los dedos, identificar al instante qué lotes están <strong>disponibles, reservados o vendidos</strong> por medio de colores claros, y tocar cualquier terreno para ver su medida, precio y opciones de pago al momento.
+                <p class="text-xs md:text-sm text-slate-800 leading-relaxed font-medium print:text-[10.5px] print:leading-[1.45]">
+                    Convertimos el plano completo de <strong>Parcelamiento Granjas Las Macadamias</strong> en un <strong>mapa interactivo fácil de usar desde cualquier teléfono, tablet o computadora</strong>, sin necesidad de instalar aplicaciones ni cargar planos de papel. Al abrir el enlace, tanto el comprador como el vendedor pueden acercar o mover el mapa con los dedos, identificar al instante qué lotes están <strong>disponibles, reservados o vendidos</strong> por medio de colores claros, y tocar cualquier terreno para ver su medida, precio y opciones de pago al momento.
                 </p>
             </div>
 
-            <!-- Sección 2: Cualidades y Cómo Funciona para Vendedores -->
-            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-0 print:border-0 print:shadow-none mb-2 md:mb-4 print:mb-2">
+            <!-- Sección 2: Cualidades Principales del Proyecto (Grid 2x2) -->
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-3 print:border print:border-slate-200 print:rounded-xl print:shadow-none mb-4 md:mb-5 print:mb-0">
                 <div class="flex items-center gap-2 mb-3 md:mb-4 print:mb-2">
-                    <div class="w-6 h-6 rounded-lg bg-brand-red text-white flex items-center justify-center font-bold text-xs font-mono">2</div>
-                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight">Cualidades del Proyecto y Automatización para Vendedores</h2>
+                    <div class="w-6 h-6 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-xs font-mono print:w-5 print:h-5 print:text-[10px]">2</div>
+                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight print:text-xs">Cualidades Clave de la Plataforma</h2>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 print:grid-cols-3 print:gap-2">
-                    <!-- Cualidad A -->
-                    <div class="bg-slate-50 rounded-xl p-3.5 sm:p-4 border border-slate-200/70 print:p-2 print:border-slate-300">
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="material-symbols-outlined text-emerald-700 text-lg print:hidden">touch_app</span>
-                            <span class="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">A. Mapa Móvil 100% Cómodo</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 print:grid-cols-2 print:gap-2.5">
+                    <div class="bg-slate-50 rounded-xl p-3.5 sm:p-4 border border-slate-200/70 print:p-2.5 print:border-slate-300">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="material-symbols-outlined text-emerald-700 text-lg print:text-sm">touch_app</span>
+                            <span class="text-[11px] font-bold text-emerald-800 uppercase tracking-wider print:text-[10px]">A. 100% Cómodo en Celular y Tablet</span>
                         </div>
-                        <p class="text-[11px] md:text-xs text-slate-800 leading-relaxed font-medium print:text-[9.5px] print:leading-snug">
-                            Diseñado especialmente para <strong>teléfonos y tablets</strong> que el equipo comercial usa en campo. Permite ampliar cualquier sector con gestos naturales, identificar cada lote por color y mostrar una ficha clara en pantalla cada vez que se selecciona un terreno.
+                        <p class="text-[11px] md:text-xs text-slate-800 leading-relaxed font-medium print:text-[10px] print:leading-[1.38]">
+                            Pensado para el trabajo diario en campo: se acerca, aleja y recorre suavemente con gestos de la mano, aprovechando todo el ancho de la pantalla del teléfono aunque el mapa crezca con nuevas etapas.
                         </p>
                     </div>
 
-                    <!-- Cualidad B -->
-                    <div class="bg-slate-50 rounded-xl p-3.5 sm:p-4 border border-slate-200/70 print:p-2 print:border-slate-300">
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="material-symbols-outlined text-brand-purple text-lg print:hidden">calculate</span>
-                            <span class="text-[10px] font-bold text-brand-purple uppercase tracking-wider">B. Cómo Funciona en la Venta</span>
+                    <div class="bg-slate-50 rounded-xl p-3.5 sm:p-4 border border-slate-200/70 print:p-2.5 print:border-slate-300">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="material-symbols-outlined text-brand-purple text-lg print:text-sm">palette</span>
+                            <span class="text-[11px] font-bold text-brand-purple uppercase tracking-wider print:text-[10px]">B. Semáforo Visual de Disponibilidad</span>
                         </div>
-                        <p class="text-[11px] md:text-xs text-slate-800 leading-relaxed font-medium print:text-[9.5px] print:leading-snug">
-                            En 3 pasos: <strong>1)</strong> El vendedor ubica el lote en el mapa frente al cliente. <strong>2)</strong> Al tocarlo ve el área exacta, precio y calcula al instante enganche y cuotas mensuales. <strong>3)</strong> Envía el detalle directo por WhatsApp para cerrar la reserva sin esperar a llegar a la oficina.
+                        <p class="text-[11px] md:text-xs text-slate-800 leading-relaxed font-medium print:text-[10px] print:leading-[1.38]">
+                            Cada lote muestra de forma inmediata si está disponible, reservado o vendido mediante colores claros. El vendedor identifica de un vistazo las opciones libres sin revisar listas impresas desactualizadas.
                         </p>
                     </div>
 
-                    <!-- Cualidad C -->
-                    <div class="bg-slate-50 rounded-xl p-3.5 sm:p-4 border border-slate-200/70 print:p-2 print:border-slate-300">
-                        <div class="flex items-center gap-2 mb-1.5">
-                            <span class="material-symbols-outlined text-brand-red text-lg print:hidden">bolt</span>
-                            <span class="text-[10px] font-bold text-brand-red uppercase tracking-wider">C. Potencial de Automatización</span>
+                    <div class="bg-slate-50 rounded-xl p-3.5 sm:p-4 border border-slate-200/70 print:p-2.5 print:border-slate-300">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="material-symbols-outlined text-brand-red text-lg print:text-sm">calculate</span>
+                            <span class="text-[11px] font-bold text-brand-red uppercase tracking-wider print:text-[10px]">C. Cotizador Instantáneo de Cuotas</span>
                         </div>
-                        <p class="text-[11px] md:text-xs text-slate-800 leading-relaxed font-medium print:text-[9.5px] print:leading-snug">
-                            Evita ofrecer terrenos ya vendidos, ahorra horas cotizando a mano y permite escalar hacia <strong>mensajes automáticos por WhatsApp con el lote elegido, registro inmediato de interesados, reservas en tiempo real</strong> y control ordenado para todo el equipo de ventas.
+                        <p class="text-[11px] md:text-xs text-slate-800 leading-relaxed font-medium print:text-[10px] print:leading-[1.38]">
+                            Al tocar un lote se abre una ficha clara con su área, dimensiones y precio total, permitiendo calcular en el acto el monto de enganche y la cuota mensual según el plazo que el cliente prefiera.
                         </p>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-xl p-3.5 sm:p-4 border border-slate-200/70 print:p-2.5 print:border-slate-300">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="material-symbols-outlined text-amber-600 text-lg print:text-sm">verified</span>
+                            <span class="text-[11px] font-bold text-brand-dark uppercase tracking-wider print:text-[10px]">D. Confirmación Clara y Sin Errores</span>
+                        </div>
+                        <p class="text-[11px] md:text-xs text-slate-800 leading-relaxed font-medium print:text-[10px] print:leading-[1.38]">
+                            Cada vez que se selecciona un terreno distinto, la ficha cambia su encabezado visual para confirmar la selección al vendedor, evitando confusiones al comparar varios lotes frente al comprador.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 3: Cómo Funciona y Potencial de Automatización para Vendedores -->
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-3 print:border print:border-slate-200 print:rounded-xl print:shadow-none mb-2 md:mb-4 print:mb-0">
+                <div class="flex items-center gap-2 mb-3 md:mb-4 print:mb-2">
+                    <div class="w-6 h-6 rounded-lg bg-brand-red text-white flex items-center justify-center font-bold text-xs font-mono print:w-5 print:h-5 print:text-[10px]">3</div>
+                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight print:text-xs">Cómo Funciona en la Venta y Potencial de Automatización</h2>
+                </div>
+
+                <!-- 3 Pasos en Campo -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-3 mb-3 print:grid-cols-3 print:gap-2 print:mb-2">
+                    <div class="p-3 rounded-xl bg-purple-50/70 border border-purple-200/80 print:p-2">
+                        <span class="text-[10px] font-black text-brand-purple uppercase block mb-0.5">Paso 1 · Ubicar Lote</span>
+                        <p class="text-[11px] text-slate-800 leading-snug print:text-[9.5px]">El vendedor abre el mapa en su teléfono durante la visita o por llamada y acerca la zona de interés del cliente.</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200/80 print:p-2">
+                        <span class="text-[10px] font-black text-emerald-800 uppercase block mb-0.5">Paso 2 · Cotizar al Instante</span>
+                        <p class="text-[11px] text-slate-800 leading-snug print:text-[9.5px]">Toca el terreno, confirma sus medidas y simula enganche y mensualidades en vivo sin hacer cuentas manuales.</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-200/80 print:p-2">
+                        <span class="text-[10px] font-black text-amber-900 uppercase block mb-0.5">Paso 3 · Enviar y Apartar</span>
+                        <p class="text-[11px] text-slate-800 leading-snug print:text-[9.5px]">Con un toque comparte la información del lote por WhatsApp para cerrar la reserva sin esperar a llegar a oficina.</p>
+                    </div>
+                </div>
+
+                <!-- Potencial de Automatización -->
+                <div class="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200 print:p-2.5">
+                    <span class="text-[10px] font-black uppercase tracking-wider text-brand-dark block mb-1.5">Potencial de Automatización para su Equipo Comercial:</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px] text-slate-800 print:grid-cols-2 print:gap-x-4 print:gap-y-1 print:text-[9.5px]">
+                        <div class="flex items-start gap-1.5">
+                            <span class="text-emerald-700 font-black">•</span>
+                            <span><strong>Cero dobles ventas:</strong> Todos los vendedores consultan la misma disponibilidad actualizada en un solo lugar.</span>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <span class="text-emerald-700 font-black">•</span>
+                            <span><strong>Mensajes de WhatsApp automáticos:</strong> Envío rápido de cotizaciones con número de lote, precio y cuota listos.</span>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <span class="text-emerald-700 font-black">•</span>
+                            <span><strong>Ahorro de tiempo diario:</strong> Elimina cotizaciones escritas a mano y llamadas repetitivas para confirmar precios.</span>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <span class="text-emerald-700 font-black">•</span>
+                            <span><strong>Base preparada para crecer:</strong> Lista para conectar registro automático de interesados, alertas a gerencia y control de reservas.</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -500,11 +556,11 @@
                 <div class="text-[9px] text-slate-800 font-sans">Colomba, Quetzaltenango · Tecno Volckánica · Página 2</div>
             </div>
 
-            <!-- Sección 3: Cotización Económica Detallada -->
-            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-0 print:border-0 print:shadow-none mb-4 md:mb-5 print:mb-3">
+            <!-- Sección 4: Cotización Económica Detallada -->
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-3 print:border print:border-slate-200 print:rounded-xl print:shadow-none mb-4 md:mb-5 print:mb-0">
                 <div class="flex items-center gap-2 mb-3 print:mb-2">
-                    <div class="w-6 h-6 rounded-lg bg-brand-yellow text-brand-dark flex items-center justify-center font-bold text-xs font-mono">3</div>
-                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight">Cotización Económica y Forma de Pago</h2>
+                    <div class="w-6 h-6 rounded-lg bg-brand-yellow text-brand-dark flex items-center justify-center font-bold text-xs font-mono print:w-5 print:h-5 print:text-[10px]">4</div>
+                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight print:text-xs">Cotización Económica y Forma de Pago</h2>
                 </div>
 
                 <p class="text-xs text-slate-800 font-medium mb-3 print:hidden">
@@ -611,42 +667,42 @@
                 </div>
             </div>
 
-            <!-- Sección 4: Plan de Entrega, Condiciones y Firmas -->
-            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-0 print:border-0 print:shadow-none mb-4 md:mb-6 print:mb-2">
+            <!-- Sección 5: Plan de Entrega, Condiciones y Firmas -->
+            <div class="bg-white rounded-2xl md:rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm print:p-3 print:border print:border-slate-200 print:rounded-xl print:shadow-none mb-4 md:mb-6 print:mb-0">
                 <div class="flex items-center gap-2 mb-3 print:mb-2">
-                    <div class="w-6 h-6 rounded-lg bg-slate-800 text-white flex items-center justify-center font-bold text-xs font-mono">4</div>
-                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight">Plan de Trabajo, Condiciones y Aprobación</h2>
+                    <div class="w-6 h-6 rounded-lg bg-slate-800 text-white flex items-center justify-center font-bold text-xs font-mono print:w-5 print:h-5 print:text-[10px]">5</div>
+                    <h2 class="text-sm md:text-base font-black text-brand-dark uppercase tracking-tight print:text-xs">Plan de Trabajo, Condiciones y Aprobación</h2>
                 </div>
 
-                <div class="space-y-2 md:space-y-2.5 text-xs print:text-[9px] print:space-y-1.5">
-                    <div class="p-2.5 sm:p-3 bg-slate-50 rounded-xl border border-slate-100 print:p-1.5">
-                        <strong class="text-brand-dark block text-[11px] print:text-[9.5px]">1. Primera entrega para pruebas (15 días hábiles):</strong>
+                <div class="space-y-2 md:space-y-2.5 text-xs print:text-[10px] print:space-y-2">
+                    <div class="p-2.5 sm:p-3 bg-slate-50 rounded-xl border border-slate-100 print:p-2">
+                        <strong class="text-brand-dark block text-[11px] print:text-[10px]">1. Primera entrega para pruebas (15 días hábiles):</strong>
                         <span class="text-slate-800 leading-snug">A partir de recibir el anticipo y el plano con precios/medidas del parcelamiento, en <strong>15 días hábiles</strong> entregamos la versión funcional en línea para que el equipo de ventas la pruebe directamente desde sus teléfonos.</span>
                     </div>
 
-                    <div class="p-2.5 sm:p-3 bg-slate-50 rounded-xl border border-slate-100 print:p-1.5">
-                        <strong class="text-brand-dark block text-[11px] print:text-[9.5px]">2. Periodo de ajustes según la experiencia de los vendedores (+ 5 días hábiles):</strong>
+                    <div class="p-2.5 sm:p-3 bg-slate-50 rounded-xl border border-slate-100 print:p-2">
+                        <strong class="text-brand-dark block text-[11px] print:text-[10px]">2. Periodo de ajustes según la experiencia de los vendedores (+ 5 días hábiles):</strong>
                         <span class="text-slate-800 leading-snug">Luego de las pruebas en campo, dedicamos <strong>5 días hábiles adicionales</strong> para realizar mejoras y ajustes prácticos basados en lo que sus vendedores necesiten para atender más rápido a los clientes.</span>
                     </div>
 
-                    <div class="p-2.5 sm:p-3 bg-slate-50 rounded-xl border border-slate-100 print:p-1.5">
-                        <strong class="text-brand-dark block text-[11px] print:text-[9.5px]">3. Condiciones de pago y validez:</strong>
+                    <div class="p-2.5 sm:p-3 bg-slate-50 rounded-xl border border-slate-100 print:p-2">
+                        <strong class="text-brand-dark block text-[11px] print:text-[10px]">3. Condiciones de pago y validez:</strong>
                         <span class="text-slate-800 leading-snug">Inversión total de <strong>Q 4,800.00</strong> pagaderos con <strong>50% de anticipo (Q 2,400.00)</strong> para iniciar y <strong>50% restante (Q 2,400.00)</strong> contra entrega final a satisfacción. Propuesta válida por 30 días calendario.</span>
                     </div>
                 </div>
 
                 <!-- Formalización y Firmas -->
-                <div class="mt-4 pt-3 border-t border-slate-200 print:mt-2 print:pt-2">
+                <div class="mt-4 pt-3 border-t border-slate-200 print:mt-3 print:pt-3">
                     <div class="grid grid-cols-2 gap-4 sm:gap-8 max-w-2xl mx-auto text-center">
-                        <div class="p-2 sm:p-3 rounded-xl bg-slate-50 border border-slate-200 print:p-1.5">
-                            <span class="text-[9px] font-bold uppercase text-slate-800 block mb-6 sm:mb-8 print:mb-5">Aceptado por:</span>
+                        <div class="p-2 sm:p-3 rounded-xl bg-slate-50 border border-slate-200 print:p-2.5">
+                            <span class="text-[9px] font-bold uppercase text-slate-800 block mb-6 sm:mb-8 print:mb-7">Aceptado por:</span>
                             <div class="w-4/5 border-b border-dashed border-slate-400 mx-auto mb-1"></div>
                             <span class="font-bold text-[10px] md:text-xs text-brand-dark block">Parcelamiento Granjas Las Macadamias</span>
                             <span class="text-[9px] text-slate-800">Colomba, Quetzaltenango</span>
                         </div>
 
-                        <div class="p-2 sm:p-3 rounded-xl bg-slate-50 border border-slate-200 print:p-1.5">
-                            <span class="text-[9px] font-bold uppercase text-slate-800 block mb-6 sm:mb-8 print:mb-5">Presentado por:</span>
+                        <div class="p-2 sm:p-3 rounded-xl bg-slate-50 border border-slate-200 print:p-2.5">
+                            <span class="text-[9px] font-bold uppercase text-slate-800 block mb-6 sm:mb-8 print:mb-7">Presentado por:</span>
                             <div class="w-4/5 border-b border-dashed border-slate-400 mx-auto mb-1"></div>
                             <span class="font-bold text-[10px] md:text-xs text-brand-dark block">Tecno Volckánica</span>
                             <span class="text-[9px] text-brand-purple font-semibold">Soluciones Digitales &amp; Automatización</span>
