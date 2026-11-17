@@ -85,8 +85,45 @@ function drawCmykColorBar(pdf: jsPDF, x: number, y: number, totalW: number, h = 
 }
 
 /**
+ * Optimiza una imagen DataURL para impresión en PDF a 300 DPI con compresión de alta calidad (JPEG 0.94).
+ */
+async function optimizeImageForPrintPdf(
+  dataUrl: string,
+  quality = 0.94
+): Promise<{ dataUrl: string; format: 'JPEG' | 'PNG' }> {
+  if (dataUrl.startsWith('data:image/jpeg') || dataUrl.startsWith('data:image/jpg')) {
+    return { dataUrl, format: 'JPEG' };
+  }
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth || 1087;
+        canvas.height = img.naturalHeight || 614;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve({ dataUrl, format: 'PNG' });
+          return;
+        }
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+        const jpegUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve({ dataUrl: jpegUrl, format: 'JPEG' });
+      } catch {
+        resolve({ dataUrl, format: 'PNG' });
+      }
+    };
+    img.onerror = () => resolve({ dataUrl, format: 'PNG' });
+    img.src = dataUrl;
+  });
+}
+
+/**
  * Genera y descarga un PDF industrial en pliego ARCH B (12" x 18" / 304.8 x 457.2 mm)
  * optimizado para 24 tarjetas de presentación por pliego (3 columnas x 8 filas).
+ * Usa compresión Flate (compress: true) y deduplicación XObject (alias) para archivo liviano sin perder 300 DPI.
  */
 export async function exportBusinessCardsArchBPdf({
   frontDataUrl,
@@ -117,10 +154,16 @@ export async function exportBusinessCardsArchBPdf({
   const marginX = (sheetW - totalGridW) / 2; // 10.4 mm
   const marginY = (sheetH - totalGridH) / 2; // 15.35 mm
 
+  const optimizedFront = await optimizeImageForPrintPdf(frontDataUrl, 0.94);
+  const optimizedBack = doubleSided && backDataUrl
+    ? await optimizeImageForPrintPdf(backDataUrl, 0.94)
+    : null;
+
   const pdf = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
-    format: [sheetW, sheetH]
+    format: [sheetW, sheetH],
+    compress: true
   });
 
   const safeSheets = Math.max(1, Math.min(sheetsCount, 50));
@@ -163,13 +206,13 @@ export async function exportBusinessCardsArchBPdf({
         const x = marginX + c * (cardW + gapX);
         const y = marginY + r * (cardH + gapY);
 
-        pdf.addImage(frontDataUrl, 'PNG', x, y, cardW, cardH);
+        pdf.addImage(optimizedFront.dataUrl, optimizedFront.format, x, y, cardW, cardH, 'card-front', 'MEDIUM');
         drawCornerCropMarks(pdf, x, y, cardW, cardH, bleed);
       }
     }
 
     // HOJA RETIRO (REVERSOS ESPEJADOS DÚPLEX)
-    if (doubleSided && backDataUrl) {
+    if (doubleSided && optimizedBack) {
       pdf.addPage([sheetW, sheetH], 'portrait');
 
       drawRegistrationCross(pdf, sheetW / 2, 7.5);
@@ -203,7 +246,7 @@ export async function exportBusinessCardsArchBPdf({
           const x = marginX + mirroredCol * (cardW + gapX);
           const y = marginY + r * (cardH + gapY);
 
-          pdf.addImage(backDataUrl, 'PNG', x, y, cardW, cardH);
+          pdf.addImage(optimizedBack.dataUrl, optimizedBack.format, x, y, cardW, cardH, 'card-back', 'MEDIUM');
           drawCornerCropMarks(pdf, x, y, cardW, cardH, bleed);
         }
       }

@@ -139,15 +139,16 @@ export async function exportSingleCarnetPdf(
   const pdf = new jsPDF({
     orientation: isVertical ? 'portrait' : 'landscape',
     unit: 'mm',
-    format: [cardW, cardH]
+    format: [cardW, cardH],
+    compress: true
   });
 
   // Página 1: Frente Oficial
-  pdf.addImage(frontImg, 'PNG', 0, 0, cardW, cardH);
+  pdf.addImage(frontImg, 'PNG', 0, 0, cardW, cardH, undefined, 'MEDIUM');
 
   // Página 2: Reverso con QR
   pdf.addPage([cardW, cardH], isVertical ? 'portrait' : 'landscape');
-  pdf.addImage(backImg, 'PNG', 0, 0, cardW, cardH);
+  pdf.addImage(backImg, 'PNG', 0, 0, cardW, cardH, undefined, 'MEDIUM');
 
   const cleanName = (submission.fullName || 'carnet').replace(/[^a-zA-Z0-9]/g, '_');
   pdf.save(`Carnet_CR80_${isVertical ? 'Vertical' : 'Horizontal'}_${cleanName}.pdf`);
@@ -190,7 +191,8 @@ export async function exportArchBBatchCarnetsPdf(
   const pdf = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
-    format: [sheetW, sheetH]
+    format: [sheetW, sheetH],
+    compress: true
   });
 
   const totalSheets = Math.ceil(cardsData.length / cardsPerPage);
@@ -251,7 +253,7 @@ export async function exportArchBBatchCarnetsPdf(
       pdf.rect(x, y, cardW, cardH);
 
       // Imagen del Frente en alta resolución
-      pdf.addImage(card.frontDataUrl, 'PNG', x, y, cardW, cardH);
+      pdf.addImage(card.frontDataUrl, 'PNG', x, y, cardW, cardH, undefined, 'MEDIUM');
 
       // Pequeño indicador de corte y CUI bajo el carnet
       pdf.setFontSize(5);
@@ -311,7 +313,7 @@ export async function exportArchBBatchCarnetsPdf(
       pdf.setLineWidth(0.1);
       pdf.rect(x, y, cardW, cardH);
 
-      pdf.addImage(card.backDataUrl, 'PNG', x, y, cardW, cardH);
+      pdf.addImage(card.backDataUrl, 'PNG', x, y, cardW, cardH, undefined, 'MEDIUM');
 
       pdf.setFontSize(5);
       pdf.setTextColor(140, 150, 160);
@@ -341,7 +343,8 @@ export async function exportBatchCarnetsPdf(
   const pdf = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
-    format: 'letter'
+    format: 'letter',
+    compress: true
   });
 
   const cardW = 55.98;
@@ -387,7 +390,7 @@ export async function exportBatchCarnetsPdf(
       pdf.setLineWidth(0.1);
       pdf.rect(x, y, cardW, cardH);
 
-      pdf.addImage(card.frontDataUrl, 'PNG', x, y, cardW, cardH);
+      pdf.addImage(card.frontDataUrl, 'PNG', x, y, cardW, cardH, undefined, 'MEDIUM');
     });
 
     // Hoja de Reversos
@@ -415,7 +418,7 @@ export async function exportBatchCarnetsPdf(
       pdf.setLineWidth(0.1);
       pdf.rect(x, y, cardW, cardH);
 
-      pdf.addImage(card.backDataUrl, 'PNG', x, y, cardW, cardH);
+      pdf.addImage(card.backDataUrl, 'PNG', x, y, cardW, cardH, undefined, 'MEDIUM');
     });
   }
 
