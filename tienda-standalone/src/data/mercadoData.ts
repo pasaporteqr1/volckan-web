@@ -81,7 +81,8 @@ export const DEFAULT_MERCADO_DEPARTMENTS: MercadoCategory[] = [
   { id: 'software', label: 'Software & SaaS', icon: '💻', description: 'Plataformas en la nube, licencias y módulos digitales', order: 1 },
   { id: 'hardware', label: 'Hardware & Equipamiento', icon: '🖨️', description: 'Lectores QR, impresoras térmicas y terminales de punto de venta', order: 2 },
   { id: 'insumos', label: 'Insumos & Credenciales', icon: '🏷️', description: 'Gafetes PVC, llaveros token y stickers de alta resistencia', order: 3 },
-  { id: 'servicios', label: 'Servicios & Automatizaciones', icon: '⚙️', description: 'Automatización con IA, consultoría técnica y ciberseguridad', order: 4 }
+  { id: 'servicios', label: 'Servicios & Automatizaciones', icon: '⚙️', description: 'Automatización con IA, consultoría técnica y ciberseguridad', order: 4 },
+  { id: 'tarjetas', label: 'Tarjetas de Presentación', icon: '🪪', description: 'Impresión en pliego Arch B (12"×18") con editor de ajuste y corte', order: 5 }
 ];
 
 export const MERCADO_CATEGORIES = [
@@ -89,7 +90,8 @@ export const MERCADO_CATEGORIES = [
   { id: 'software', label: 'Software & SaaS', icon: '💻' },
   { id: 'hardware', label: 'Hardware & POS', icon: '🖨️' },
   { id: 'insumos', label: 'Credenciales & QR', icon: '🏷️' },
-  { id: 'servicios', label: 'Servicios e IA', icon: '⚙️' }
+  { id: 'servicios', label: 'Servicios e IA', icon: '⚙️' },
+  { id: 'tarjetas', label: 'Tarjetas de Presentación', icon: '🪪' }
 ] as const;
 
 // Catálogo inicial limpio: los productos y suites reales se administran desde /panel (Firestore)

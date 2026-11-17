@@ -731,10 +731,27 @@ export default function StorePage() {
                     style={{ background: 'rgba(249, 115, 22, 0.12)', border: '1px solid rgba(249, 115, 22, 0.35)' }}
                   >
                     <div className="sidebar-cat-left">
-                      <span className="sidebar-cat-emoji">🪪</span>
+                      <span className="sidebar-cat-emoji">🆔</span>
                       <span className="sidebar-cat-name" style={{ color: '#fb923c', fontWeight: 800 }}>Servicio de Carnets</span>
                     </div>
-                    <span className="sidebar-cat-number" style={{ background: '#f97316', color: '#ffffff', fontWeight: 800 }}>NUEVO</span>
+                    <span className="sidebar-cat-number" style={{ background: '#f97316', color: '#ffffff', fontWeight: 800 }}>QR</span>
+                  </button>
+
+                  {/* Acceso Directo a Tarjetas de Presentación Arch B */}
+                  <button
+                    type="button"
+                    className="sidebar-vertical-cat-item"
+                    onClick={() => {
+                      soundEffects.playClick();
+                      navigate('/tarjetas');
+                    }}
+                    style={{ background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.35)' }}
+                  >
+                    <div className="sidebar-cat-left">
+                      <span className="sidebar-cat-emoji">🪪</span>
+                      <span className="sidebar-cat-name" style={{ color: '#34d399', fontWeight: 800 }}>Tarjetas de Presentación</span>
+                    </div>
+                    <span className="sidebar-cat-number" style={{ background: '#059669', color: '#ffffff', fontWeight: 800 }}>ARCH B</span>
                   </button>
 
                   {categories.map(cat => {
@@ -826,10 +843,26 @@ export default function StorePage() {
                   Conectando con la base de datos en tiempo real de <strong>Tecno Volckánica</strong>.
                 </p>
                 <div className="prelaunch-categories-preview">
-                  <div className="prelaunch-cat-chip">💻 Software & SaaS</div>
-                  <div className="prelaunch-cat-chip">🖨️ Hardware & POS</div>
-                  <div className="prelaunch-cat-chip">🏷️ Credenciales & Insumos QR</div>
-                  <div className="prelaunch-cat-chip">⚙️ Automatización e IA</div>
+                  <div
+                    className="prelaunch-cat-chip"
+                    style={{ cursor: 'pointer', borderColor: 'rgba(16, 185, 129, 0.5)', background: 'rgba(16, 185, 129, 0.14)' }}
+                    onClick={() => {
+                      soundEffects.playClick();
+                      navigate('/tarjetas');
+                    }}
+                  >
+                    🪪 Tarjetas de Presentación (Pliego Arch B) ➔
+                  </div>
+                  <div
+                    className="prelaunch-cat-chip"
+                    style={{ cursor: 'pointer', borderColor: 'rgba(249, 115, 22, 0.5)', background: 'rgba(249, 115, 22, 0.14)' }}
+                    onClick={() => {
+                      soundEffects.playClick();
+                      navigate('/carnet');
+                    }}
+                  >
+                    🆔 Servicio de Carnets Inteligentes QR ➔
+                  </div>
                 </div>
                 <div className="prelaunch-contact-box">
                   <p>¿Deseas cotizar o consultar disponibilidad para tu empresa de forma anticipada?</p>
@@ -887,6 +920,55 @@ export default function StorePage() {
                 )}
               </div>
             </div>
+
+            {/* Si está en Tarjetas de Presentación (o Todos), mostrar el banner interactivo de Pliego Arch B */}
+            {(selectedCategory === 'tarjetas' || selectedCategory === 'todos') && (
+              <div className="volckan-carnet-service-banner animate-fade-in" style={{
+                background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(6, 78, 59, 0.55) 100%)',
+                border: '1.5px solid rgba(16, 185, 129, 0.45)',
+                borderRadius: '16px',
+                padding: '22px 26px',
+                marginBottom: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '20px',
+                flexWrap: 'wrap',
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.45)'
+              }}>
+                <div style={{ flex: 1, minWidth: '260px' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(16, 185, 129, 0.16)', border: '1px solid rgba(16, 185, 129, 0.4)', color: '#34d399', padding: '3px 10px', borderRadius: '20px', fontSize: '0.74rem', fontWeight: 800, marginBottom: '8px' }}>
+                    <span>🪪</span> VOLCKAN PRINT STUDIO · ARCH B (12"×18")
+                  </div>
+                  <h3 style={{ margin: '0 0 6px', fontSize: '1.22rem', fontWeight: 800, color: '#ffffff' }}>
+                    Tarjetas de Presentación en Pliego Arch B
+                  </h3>
+                  <p style={{ margin: 0, fontSize: '0.88rem', color: '#cbd5e1', lineHeight: 1.5 }}>
+                    Sube tu diseño frontal y posterior, ajusta zoom, rotación, brillo y corte con guías de guillotina, elige cuántos pliegos necesitas (24 tarjetas por pliego) y descarga tu PDF Arch B listo para impresión.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    soundEffects.playClick();
+                    navigate('/tarjetas');
+                  }}
+                  style={{
+                    padding: '12px 20px',
+                    borderRadius: '12px',
+                    border: 'none',
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    color: '#ffffff',
+                    fontWeight: 800,
+                    fontSize: '0.9rem',
+                    cursor: 'pointer',
+                    boxShadow: '0 6px 18px rgba(16, 185, 129, 0.35)'
+                  }}
+                >
+                  🪪 Abrir Estudio de Tarjetas ➔
+                </button>
+              </div>
+            )}
 
             {/* Si está en Insumos & Credenciales (o Todos), mostrar el banner interactivo de Carnetización */}
             {(selectedCategory === 'insumos' || selectedCategory === 'todos') && (
@@ -1909,7 +1991,29 @@ export default function StorePage() {
                   <div className="mobile-cat-info">
                     <span className="mobile-cat-name" style={{ color: '#ff6b6b', fontWeight: 700 }}>Servicio de Carnets</span>
                   </div>
-                  <span className="mobile-cat-count" style={{ background: '#e63946', color: '#fff', fontSize: '0.65rem', padding: '2px 6px', borderRadius: '4px' }}>NUEVO</span>
+                  <span className="mobile-cat-count" style={{ background: '#e63946', color: '#fff', fontSize: '0.65rem', padding: '2px 6px', borderRadius: '4px' }}>QR</span>
+                </button>
+
+                {/* Tarjetas de Presentación Arch B acceso directo móvil */}
+                <button
+                  type="button"
+                  className="mobile-drawer-cat-btn"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15))',
+                    border: '1px solid rgba(16, 185, 129, 0.35)',
+                    marginBottom: '8px'
+                  }}
+                  onClick={() => {
+                    soundEffects.playClick();
+                    setIsMobileDrawerOpen(false);
+                    navigate('/tarjetas');
+                  }}
+                >
+                  <span className="mobile-cat-emoji">🪪</span>
+                  <div className="mobile-cat-info">
+                    <span className="mobile-cat-name" style={{ color: '#34d399', fontWeight: 700 }}>Tarjetas de Presentación</span>
+                  </div>
+                  <span className="mobile-cat-count" style={{ background: '#059669', color: '#fff', fontSize: '0.65rem', padding: '2px 6px', borderRadius: '4px' }}>ARCH B</span>
                 </button>
 
                 {/* Colecciones / Suites */}

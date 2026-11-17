@@ -7,6 +7,7 @@ import CheckoutPage from './pages/CheckoutPage';
 import AdminStorePage from './pages/AdminStorePage';
 import CarnetServicePage from './pages/CarnetServicePage';
 import CarnetVerifyPage from './pages/CarnetVerifyPage';
+import BusinessCardsServicePage from './pages/BusinessCardsServicePage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentCancelPage from './pages/PaymentCancelPage';
 import './App.css';
@@ -35,6 +36,9 @@ export default function App() {
             <Route path="/carnet/verify" element={<CarnetVerifyPage />} />
             <Route path="/verificar" element={<CarnetVerifyPage />} />
             <Route path="/verify" element={<CarnetVerifyPage />} />
+            <Route path="/tarjetas" element={<BusinessCardsServicePage />} />
+            <Route path="/tarjetas-presentacion" element={<BusinessCardsServicePage />} />
+            <Route path="/servicios/tarjetas" element={<BusinessCardsServicePage />} />
             <Route path="/pago-completado" element={<PaymentSuccessPage />} />
             <Route path="/pago-cancelado" element={<PaymentCancelPage />} />
             <Route path="/admin" element={<AdminStorePage />} />
