@@ -39,6 +39,8 @@ export default function App() {
             <Route path="/tarjetas" element={<BusinessCardsServicePage />} />
             <Route path="/tarjetas-presentacion" element={<BusinessCardsServicePage />} />
             <Route path="/servicios/tarjetas" element={<BusinessCardsServicePage />} />
+            <Route path="/volantes" element={<BusinessCardsServicePage />} />
+            <Route path="/servicios/volantes" element={<BusinessCardsServicePage />} />
             <Route path="/pago-completado" element={<PaymentSuccessPage />} />
             <Route path="/pago-cancelado" element={<PaymentCancelPage />} />
             <Route path="/admin" element={<AdminStorePage />} />

@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { soundEffects } from '../../utils/soundEffects';
+import type { PrintFormatSpec } from '../../utils/businessCardExport';
 import './CardEditorModal.css';
 
 interface CardEditorModalProps {
   isOpen: boolean;
   imageSrc: string;
   sideLabel: string; // 'Frente (Tiro)' | 'Reverso (Retiro)'
-  cardFormat: '90x50' | '88.9x50.8';
+  formatSpec: PrintFormatSpec;
   onApply: (croppedDataUrl: string) => void;
   onCancel: () => void;
 }
@@ -15,7 +16,7 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
   isOpen,
   imageSrc,
   sideLabel,
-  cardFormat,
+  formatSpec,
   onApply,
   onCancel
 }) => {
@@ -36,9 +37,11 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
   const viewportRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  // Dimensiones de salida a 300 DPI incluyendo +1mm de sangrado por lado
-  const OUT_W = cardFormat === '88.9x50.8' ? 1074 : 1087; // ~90.9mm o 92mm @ 300DPI
-  const OUT_H = cardFormat === '88.9x50.8' ? 624 : 614;  // ~52.8mm o 52mm @ 300DPI
+  const OUT_W = formatSpec.outPxW;
+  const OUT_H = formatSpec.outPxH;
+  const fullW = formatSpec.trimW + formatSpec.bleed * 2;
+  const fullH = formatSpec.trimH + formatSpec.bleed * 2;
+  const isFlyer = formatSpec.category === 'flyer';
 
   useEffect(() => {
     if (isOpen) {
@@ -51,7 +54,7 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
       setSaturate(100);
       setPosition({ x: 0, y: 0 });
     }
-  }, [isOpen, imageSrc]);
+  }, [isOpen, imageSrc, formatSpec.id]);
 
   const handleImageLoaded = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
@@ -61,7 +64,6 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
     });
   };
 
-  // Escala base para cubrir el viewport respetando su proporción
   const getViewportSize = () => {
     if (viewportRef.current) {
       const rect = viewportRef.current.getBoundingClientRect();
@@ -69,7 +71,7 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
         return { w: rect.width, h: rect.height };
       }
     }
-    return { w: 460, h: 260 };
+    return isFlyer ? { w: 280, h: 360 } : { w: 460, h: 260 };
   };
 
   const vp = getViewportSize();
@@ -159,6 +161,11 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
     setPosition({ x: 0, y: 0 });
   };
 
+  const handleCenterOnly = () => {
+    soundEffects.playClick();
+    setPosition({ x: 0, y: 0 });
+  };
+
   const handleResetAll = () => {
     soundEffects.playClick();
     setScale(1);
@@ -178,8 +185,8 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
 
     try {
       const rect = viewportRef.current.getBoundingClientRect();
-      const vpW = rect.width || 460;
-      const vpH = rect.height || 260;
+      const vpW = rect.width || vp.w;
+      const vpH = rect.height || vp.h;
 
       const canvas = document.createElement('canvas');
       canvas.width = OUT_W;
@@ -187,7 +194,6 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
       const ctx = canvas.getContext('2d');
       if (!ctx) throw new Error('No se pudo inicializar el lienzo 2D');
 
-      // Fondo blanco limpio para impresión
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, OUT_W, OUT_H);
 
@@ -197,7 +203,6 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
       ctx.save();
       ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%)`;
 
-      // Centro del lienzo + desplazamiento proporcional del usuario
       ctx.translate(OUT_W / 2 + position.x * ratioX, OUT_H / 2 + position.y * ratioY);
       ctx.rotate((rotation * Math.PI) / 180);
       ctx.scale(flipH ? -1 : 1, flipV ? -1 : 1);
@@ -212,7 +217,7 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
       soundEffects.playSuccessFanfare();
       onApply(dataUrl);
     } catch (err) {
-      console.error('Error exportando tarjeta editada:', err);
+      console.error('Error exportando diseño editado:', err);
     } finally {
       setIsExporting(false);
     }
@@ -222,29 +227,34 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
 
   const displayW = naturalSize.width > 0 ? naturalSize.width * baseCoverScale : vp.w;
   const displayH = naturalSize.height > 0 ? naturalSize.height * baseCoverScale : vp.h;
-  const trimText = cardFormat === '88.9x50.8' ? '88.9 × 50.8 mm (3.5"×2")' : '90 × 50 mm';
+  const trimText = `${formatSpec.trimW} × ${formatSpec.trimH} mm`;
 
   return (
     <div className="card-editor-overlay" onClick={onCancel}>
       <div className="card-editor-modal" onClick={(e) => e.stopPropagation()}>
+        {/* Header del Modal */}
         <div className="card-editor-header">
           <div>
-            <h3>✂️ Editor de Ajuste y Corte · {sideLabel}</h3>
-            <p>Medida final de corte: {trimText} (+1 mm de sangrado por lado)</p>
+            <h3>
+              <span>✂️ Editor de Ajuste y Corte · {sideLabel}</span>
+              <span className="card-editor-dim-badge">{trimText}</span>
+            </h3>
+            <p>Arrastra la imagen para encuadrar · Sangrado de corte: +{formatSpec.bleed} mm por lado</p>
           </div>
-          <button type="button" className="card-editor-close" onClick={onCancel}>
+          <button type="button" className="card-editor-close" onClick={onCancel} aria-label="Cerrar editor">
             ✕
           </button>
         </div>
 
+        {/* Cuerpo en 2 Columnas Organizadas */}
         <div className="card-editor-body">
-          {/* Área de Encuadre Interactivo */}
+          {/* Columna 1: Lienzo Interactivo */}
           <div className="card-editor-stage-wrap">
             <div
               ref={viewportRef}
-              className="card-editor-viewport"
+              className={`card-editor-viewport ${isFlyer ? 'is-flyer' : 'is-card'}`}
               style={{
-                aspectRatio: cardFormat === '88.9x50.8' ? '90.9 / 52.8' : '92 / 52'
+                aspectRatio: `${fullW} / ${fullH}`
               }}
               onMouseDown={handleMouseDown}
               onTouchStart={handleTouchStart}
@@ -255,7 +265,7 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
               <img
                 ref={imgRef}
                 src={imageSrc}
-                alt="Diseño de tarjeta"
+                alt="Diseño para impresión"
                 onLoad={handleImageLoaded}
                 draggable={false}
                 style={{
@@ -281,34 +291,32 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
               )}
             </div>
 
-            <div className="card-guides-legend">
-              <span>
-                <i className="legend-dot" style={{ background: '#ef4444' }} /> Línea Roja: Corte exacto ({trimText})
-              </span>
-              <span>
-                <i className="legend-dot" style={{ background: '#10b981' }} /> Línea Verde: Margen seguro de textos
-              </span>
+            <div className="card-guides-bar">
+              <div className="card-guides-legend">
+                <span>
+                  <i className="legend-dot" style={{ background: '#ef4444' }} /> Corte ({trimText})
+                </span>
+                <span>
+                  <i className="legend-dot" style={{ background: '#10b981' }} /> Zona segura
+                </span>
+              </div>
               <button
                 type="button"
                 className={`card-mini-btn ${showGuides ? 'active' : ''}`}
                 onClick={() => setShowGuides(prev => !prev)}
               >
-                {showGuides ? '👁️ Ocultar Guías' : '👁️ Mostrar Guías'}
+                {showGuides ? '👁️ Ocultar Guías' : '👁️ Ver Guías'}
               </button>
             </div>
           </div>
 
-          {/* Controles de Edición */}
-          <div className="card-editor-tools-grid">
-            {/* Herramientas de Corte, Zoom y Orientación */}
+          {/* Columna 2: Panel de Herramientas Organizado */}
+          <div className="card-editor-sidebar">
+            {/* Bloque 1: Encuadre y Zoom */}
             <div className="card-tool-box">
               <h4>
-                <span>📐 Corte, Zoom y Rotación</span>
-                <button type="button" className="card-mini-btn" onClick={handleResetAll}>
-                  ↺ Restablecer
-                </button>
+                <span>📐 1. Encuadre y Zoom</span>
               </h4>
-
               <div className="card-slider-row">
                 <label>Zoom:</label>
                 <input
@@ -321,24 +329,25 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
                 />
                 <span className="card-slider-val">{Math.round(scale * 100)}%</span>
               </div>
-
-              <div className="card-slider-row">
-                <label>Inclinación:</label>
-                <input
-                  type="range"
-                  min={-15}
-                  max={15}
-                  step={0.5}
-                  value={((rotation % 90) + 90) % 90 > 45 ? (rotation % 90) - 90 : rotation % 90}
-                  onChange={(e) => {
-                    const base90 = Math.round(rotation / 90) * 90;
-                    setRotation(base90 + Number(e.target.value));
-                  }}
-                />
-                <span className="card-slider-val">{rotation}°</span>
+              <div className="card-btn-grid">
+                <button type="button" className="card-mini-btn" onClick={handleFitCover}>
+                  ⛶ Llenar
+                </button>
+                <button type="button" className="card-mini-btn" onClick={handleFitContain}>
+                  🖼️ Ver Todo
+                </button>
+                <button type="button" className="card-mini-btn" onClick={handleCenterOnly}>
+                  🎯 Centrar
+                </button>
               </div>
+            </div>
 
-              <div className="card-btn-row">
+            {/* Bloque 2: Orientación y Rotación */}
+            <div className="card-tool-box">
+              <h4>
+                <span>🔄 2. Orientación y Giro</span>
+              </h4>
+              <div className="card-btn-grid-4">
                 <button type="button" className="card-mini-btn" onClick={() => setRotation(r => r - 90)}>
                   ⟲ -90°
                 </button>
@@ -359,21 +368,29 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
                 >
                   ⇅ Voltear V
                 </button>
-                <button type="button" className="card-mini-btn" onClick={handleFitCover}>
-                  ⛶ Llenar
-                </button>
-                <button type="button" className="card-mini-btn" onClick={handleFitContain}>
-                  🖼️ Ver Todo
-                </button>
+              </div>
+              <div className="card-slider-row">
+                <label>Inclinación:</label>
+                <input
+                  type="range"
+                  min={-15}
+                  max={15}
+                  step={0.5}
+                  value={((rotation % 90) + 90) % 90 > 45 ? (rotation % 90) - 90 : rotation % 90}
+                  onChange={(e) => {
+                    const base90 = Math.round(rotation / 90) * 90;
+                    setRotation(base90 + Number(e.target.value));
+                  }}
+                />
+                <span className="card-slider-val">{rotation}°</span>
               </div>
             </div>
 
-            {/* Ajustes de Color para Preimpresión */}
+            {/* Bloque 3: Color Preimpresión */}
             <div className="card-tool-box">
               <h4>
-                <span>🎨 Ajuste de Color (Preimpresión)</span>
+                <span>🎨 3. Color (Preimpresión)</span>
               </h4>
-
               <div className="card-slider-row">
                 <label>Brillo:</label>
                 <input
@@ -386,7 +403,6 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
                 />
                 <span className="card-slider-val">{brightness}%</span>
               </div>
-
               <div className="card-slider-row">
                 <label>Contraste:</label>
                 <input
@@ -399,7 +415,6 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
                 />
                 <span className="card-slider-val">{contrast}%</span>
               </div>
-
               <div className="card-slider-row">
                 <label>Saturación:</label>
                 <input
@@ -416,18 +431,24 @@ export const CardEditorModal: React.FC<CardEditorModalProps> = ({
           </div>
         </div>
 
+        {/* Footer Fijo con Restablecer + Acciones */}
         <div className="card-editor-footer">
-          <button type="button" className="btn-card-cancel" onClick={onCancel}>
-            Cancelar
+          <button type="button" className="card-mini-btn" onClick={handleResetAll}>
+            ↺ Restablecer Todo
           </button>
-          <button
-            type="button"
-            className="btn-card-apply"
-            onClick={handleExportCropped}
-            disabled={isExporting}
-          >
-            {isExporting ? '⏳ Procesando...' : '✅ Aplicar Recorte al Pliego Arch B'}
-          </button>
+          <div className="card-editor-footer-actions">
+            <button type="button" className="btn-card-cancel" onClick={onCancel}>
+              Cancelar
+            </button>
+            <button
+              type="button"
+              className="btn-card-apply"
+              onClick={handleExportCropped}
+              disabled={isExporting}
+            >
+              {isExporting ? '⏳ Procesando...' : '✅ Aplicar Recorte'}
+            </button>
+          </div>
         </div>
       </div>
     </div>

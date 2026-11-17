@@ -7,12 +7,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 14px;
 }
 
 .card-editor-modal {
   width: 100%;
-  max-width: 780px;
+  max-width: 980px;
   max-height: 92vh;
   background: #0f172a;
   border: 1px solid rgba(148, 163, 184, 0.25);
@@ -20,30 +20,45 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
   color: #f8fafc;
 }
 
 .card-editor-header {
   padding: 14px 20px;
-  background: rgba(30, 41, 59, 0.9);
+  background: rgba(30, 41, 59, 0.92);
   border-bottom: 1px solid rgba(148, 163, 184, 0.18);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 .card-editor-header h3 {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 800;
   color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.card-editor-dim-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(249, 115, 22, 0.18);
+  color: #fdba74;
+  border: 1px solid rgba(249, 115, 22, 0.4);
 }
 
 .card-editor-header p {
-  margin: 2px 0 0;
-  font-size: 0.78rem;
+  margin: 3px 0 0;
+  font-size: 0.77rem;
   color: #94a3b8;
 }
 
@@ -59,38 +74,53 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .card-editor-body {
   padding: 18px 20px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 820px) {
+  .card-editor-body {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
 }
 
 .card-editor-stage-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   background: #020617;
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
-  padding: 18px 12px;
+  padding: 16px;
 }
 
 .card-editor-viewport {
   position: relative;
   width: 100%;
-  max-width: 460px;
-  aspect-ratio: 92 / 52;
   background: #ffffff;
   overflow: hidden;
   cursor: grab;
   touch-action: none;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
   border-radius: 4px;
+}
+
+.card-editor-viewport.is-card {
+  max-width: 460px;
+}
+
+.card-editor-viewport.is-flyer {
+  max-width: 280px;
 }
 
 .card-editor-viewport:active {
@@ -104,27 +134,35 @@
   z-index: 10;
 }
 
-/* Zona de corte final (descontando 1mm de sangrado por lado) */
 .card-trim-line {
   position: absolute;
-  inset: 1.9% 1.1%;
+  inset: 1.6% 1.1%;
   border: 1.5px dashed #ef4444;
   box-shadow: 0 0 0 999px rgba(15, 23, 42, 0.16);
 }
 
-/* Margen de seguridad interno (-3mm del borde de corte) */
 .card-safe-line {
   position: absolute;
-  inset: 7.7% 4.3%;
+  inset: 5.5% 4%;
   border: 1px dashed rgba(16, 185, 129, 0.85);
+}
+
+.card-guides-bar {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(148, 163, 184, 0.14);
 }
 
 .card-guides-legend {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  font-size: 0.74rem;
+  gap: 10px;
+  font-size: 0.72rem;
   color: #cbd5e1;
 }
 
@@ -135,54 +173,50 @@
 }
 
 .legend-dot {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 3px;
   display: inline-block;
 }
 
-.card-editor-tools-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.card-editor-sidebar {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
-@media (max-width: 640px) {
-  .card-editor-tools-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .card-tool-box {
-  background: rgba(30, 41, 59, 0.55);
+  background: rgba(30, 41, 59, 0.52);
   border: 1px solid rgba(148, 163, 184, 0.16);
-  border-radius: 12px;
+  border-radius: 13px;
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
 }
 
 .card-tool-box h4 {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .card-slider-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.78rem;
+  gap: 8px;
+  font-size: 0.76rem;
   color: #cbd5e1;
 }
 
 .card-slider-row label {
-  min-width: 78px;
+  min-width: 74px;
 }
 
 .card-slider-row input[type="range"] {
@@ -192,29 +226,37 @@
 }
 
 .card-slider-val {
-  min-width: 42px;
+  min-width: 40px;
   text-align: right;
   font-family: monospace;
   font-weight: 700;
   color: #fb923c;
 }
 
-.card-btn-row {
-  display: flex;
-  flex-wrap: wrap;
+.card-btn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.card-btn-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
 }
 
 .card-mini-btn {
-  padding: 6px 10px;
+  padding: 6px 8px;
   border-radius: 8px;
-  border: 1px solid rgba(148, 163, 184, 0.25);
-  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(15, 23, 42, 0.85);
   color: #e2e8f0;
-  font-size: 0.76rem;
+  font-size: 0.73rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .card-mini-btn:hover {
@@ -223,38 +265,48 @@
 }
 
 .card-mini-btn.active {
-  background: rgba(249, 115, 22, 0.2);
+  background: rgba(249, 115, 22, 0.22);
   border-color: #f97316;
   color: #fdba74;
 }
 
 .card-editor-footer {
-  padding: 14px 20px;
-  background: rgba(15, 23, 42, 0.96);
+  padding: 12px 20px;
+  background: rgba(15, 23, 42, 0.98);
   border-top: 1px solid rgba(148, 163, 184, 0.18);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 10px;
+  flex-shrink: 0;
+}
+
+.card-editor-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
 }
 
 .btn-card-cancel {
-  padding: 10px 16px;
+  padding: 9px 16px;
   border-radius: 10px;
   border: 1px solid rgba(148, 163, 184, 0.28);
   background: transparent;
   color: #cbd5e1;
   font-weight: 600;
+  font-size: 0.84rem;
   cursor: pointer;
 }
 
 .btn-card-apply {
-  padding: 10px 20px;
+  padding: 9px 18px;
   border-radius: 10px;
   border: none;
   background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
   color: #ffffff;
   font-weight: 700;
+  font-size: 0.85rem;
   cursor: pointer;
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.35);
 }

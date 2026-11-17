@@ -1,31 +1,116 @@
 import jsPDF from 'jspdf';
 
+export type PrintFormatId = 'arch_b_90x50' | 'arch_b_88.9x50.8' | 'flyer_letter' | 'flyer_a4';
+
+export interface PrintFormatSpec {
+  id: PrintFormatId;
+  category: 'card' | 'flyer';
+  label: string;
+  sheetLabel: string;
+  sheetW: number;
+  sheetH: number;
+  cols: number;
+  rows: number;
+  perSheet: number;
+  trimW: number;
+  trimH: number;
+  bleed: number;
+  gapX: number;
+  gapY: number;
+  outPxW: number; // 300 DPI width (con bleed)
+  outPxH: number; // 300 DPI height (con bleed)
+}
+
+export const PRINT_FORMATS: Record<PrintFormatId, PrintFormatSpec> = {
+  arch_b_90x50: {
+    id: 'arch_b_90x50',
+    category: 'card',
+    label: 'Tarjeta 90 × 50 mm (Estándar)',
+    sheetLabel: 'Pliego Arch B (12" × 18" / 304.8 × 457.2 mm)',
+    sheetW: 304.8,
+    sheetH: 457.2,
+    cols: 3,
+    rows: 8,
+    perSheet: 24,
+    trimW: 90.0,
+    trimH: 50.0,
+    bleed: 1.0,
+    gapX: 4.0,
+    gapY: 1.5,
+    outPxW: 1087,
+    outPxH: 614
+  },
+  'arch_b_88.9x50.8': {
+    id: 'arch_b_88.9x50.8',
+    category: 'card',
+    label: 'Tarjeta 88.9 × 50.8 mm (3.5" × 2")',
+    sheetLabel: 'Pliego Arch B (12" × 18" / 304.8 × 457.2 mm)',
+    sheetW: 304.8,
+    sheetH: 457.2,
+    cols: 3,
+    rows: 8,
+    perSheet: 24,
+    trimW: 88.9,
+    trimH: 50.8,
+    bleed: 1.0,
+    gapX: 4.0,
+    gapY: 1.5,
+    outPxW: 1074,
+    outPxH: 624
+  },
+  flyer_letter: {
+    id: 'flyer_letter',
+    category: 'flyer',
+    label: 'Volante 1/4 Carta (100 × 131 mm)',
+    sheetLabel: 'Hoja US Letter (8.5" × 11" / 215.9 × 279.4 mm)',
+    sheetW: 215.9,
+    sheetH: 279.4,
+    cols: 2,
+    rows: 2,
+    perSheet: 4,
+    trimW: 100.0,
+    trimH: 131.0,
+    bleed: 1.0,
+    gapX: 2.0,
+    gapY: 2.0,
+    outPxW: 1205,
+    outPxH: 1559
+  },
+  flyer_a4: {
+    id: 'flyer_a4',
+    category: 'flyer',
+    label: 'Volante 1/4 A4 (97 × 140 mm)',
+    sheetLabel: 'Hoja A4 (210 × 297 mm)',
+    sheetW: 210.0,
+    sheetH: 297.0,
+    cols: 2,
+    rows: 2,
+    perSheet: 4,
+    trimW: 97.0,
+    trimH: 140.0,
+    bleed: 1.0,
+    gapX: 2.0,
+    gapY: 2.0,
+    outPxW: 1169,
+    outPxH: 1677
+  }
+};
+
 export interface BusinessCardPrintOptions {
   frontDataUrl: string;
   backDataUrl?: string;
   sheetsCount: number;
-  cardFormat?: '90x50' | '88.9x50.8';
+  formatId?: PrintFormatId;
   doubleSided?: boolean;
   clientName?: string;
 }
 
-export const ARCH_B_SHEET = {
-  widthMm: 304.8,  // 12 pulgadas
-  heightMm: 457.2, // 18 pulgadas
-  cols: 3,
-  rows: 8,
-  cardsPerSheet: 24,
-  bleedMm: 1.0,    // +1mm por lado para guillotina sin bordes blancos
-  gapXMm: 4.0,
-  gapYMm: 1.5
-};
-
-function drawRegistrationCross(pdf: jsPDF, cx: number, cy: number, radius = 3.0) {
+function drawRegistrationCross(pdf: jsPDF, cx: number, cy: number, radius = 2.6) {
   pdf.setDrawColor(35, 35, 35);
   pdf.setLineWidth(0.15);
   pdf.circle(cx, cy, radius);
-  pdf.line(cx - radius - 2, cy, cx + radius + 2, cy);
-  pdf.line(cx, cy - radius - 2, cx, cy + radius + 2);
+  pdf.line(cx - radius - 1.5, cy, cx + radius + 1.5, cy);
+  pdf.line(cx, cy - radius - 1.5, cx, cy + radius + 1.5);
   pdf.circle(cx, cy, radius * 0.4);
 }
 
@@ -36,10 +121,9 @@ function drawCornerCropMarks(
   w: number,
   h: number,
   bleed = 1.0,
-  markLen = 3.0,
-  offset = 0.6
+  markLen = 2.5,
+  offset = 0.5
 ) {
-  // Las marcas de corte apuntan al tamaño FINAL recortado (descontando la demasía/bleed)
   const trimX = x + bleed;
   const trimY = y + bleed;
   const trimW = w - bleed * 2;
@@ -48,24 +132,20 @@ function drawCornerCropMarks(
   pdf.setDrawColor(90, 90, 90);
   pdf.setLineWidth(0.15);
 
-  // Superior izquierda
   pdf.line(trimX - offset - markLen, trimY, trimX - offset, trimY);
   pdf.line(trimX, trimY - offset - markLen, trimX, trimY - offset);
 
-  // Superior derecha
   pdf.line(trimX + trimW + offset, trimY, trimX + trimW + offset + markLen, trimY);
   pdf.line(trimX + trimW, trimY - offset - markLen, trimX + trimW, trimY - offset);
 
-  // Inferior izquierda
   pdf.line(trimX - offset - markLen, trimY + trimH, trimX - offset, trimY + trimH);
   pdf.line(trimX, trimY + trimH + offset, trimX, trimY + trimH + offset + markLen);
 
-  // Inferior derecha
   pdf.line(trimX + trimW + offset, trimY + trimH, trimX + trimW + offset + markLen, trimY + trimH);
   pdf.line(trimX + trimW, trimY + trimH + offset, trimX + trimW, trimY + trimH + offset + markLen);
 }
 
-function drawCmykColorBar(pdf: jsPDF, x: number, y: number, totalW: number, h = 2.2) {
+function drawCmykColorBar(pdf: jsPDF, x: number, y: number, totalW: number, h = 1.8) {
   const swatches = [
     [0, 180, 230],
     [230, 0, 120],
@@ -84,11 +164,10 @@ function drawCmykColorBar(pdf: jsPDF, x: number, y: number, totalW: number, h = 
   });
 }
 
-/**
- * Optimiza una imagen DataURL para impresión en PDF a 300 DPI con compresión de alta calidad (JPEG 0.94).
- */
 async function optimizeImageForPrintPdf(
   dataUrl: string,
+  fallbackW: number,
+  fallbackH: number,
   quality = 0.94
 ): Promise<{ dataUrl: string; format: 'JPEG' | 'PNG' }> {
   if (dataUrl.startsWith('data:image/jpeg') || dataUrl.startsWith('data:image/jpg')) {
@@ -99,8 +178,8 @@ async function optimizeImageForPrintPdf(
     img.onload = () => {
       try {
         const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth || 1087;
-        canvas.height = img.naturalHeight || 614;
+        canvas.width = img.naturalWidth || fallbackW;
+        canvas.height = img.naturalHeight || fallbackH;
         const ctx = canvas.getContext('2d');
         if (!ctx) {
           resolve({ dataUrl, format: 'PNG' });
@@ -121,42 +200,31 @@ async function optimizeImageForPrintPdf(
 }
 
 /**
- * Genera y descarga un PDF industrial en pliego ARCH B (12" x 18" / 304.8 x 457.2 mm)
- * optimizado para 24 tarjetas de presentación por pliego (3 columnas x 8 filas).
- * Usa compresión Flate (compress: true) y deduplicación XObject (alias) para archivo liviano sin perder 300 DPI.
+ * Genera y descarga un PDF de impresión con compresión Flate, JPEG 300 DPI y deduplicación XObject.
+ * Soporta Tarjetas de Presentación en Pliego Arch B (24/pliego) y Volantes 1/4 Carta en US Letter / A4 (4/hoja).
  */
-export async function exportBusinessCardsArchBPdf({
+export async function exportPrintSheetPdf({
   frontDataUrl,
   backDataUrl,
   sheetsCount,
-  cardFormat = '90x50',
+  formatId = 'arch_b_90x50',
   doubleSided = false,
   clientName = 'Cliente_Volckan'
 }: BusinessCardPrintOptions): Promise<void> {
-  const sheetW = ARCH_B_SHEET.widthMm;
-  const sheetH = ARCH_B_SHEET.heightMm;
-  const cols = ARCH_B_SHEET.cols;
-  const rows = ARCH_B_SHEET.rows;
-  const bleed = ARCH_B_SHEET.bleedMm;
+  const spec = PRINT_FORMATS[formatId] || PRINT_FORMATS.arch_b_90x50;
+  const { sheetW, sheetH, cols, rows, perSheet, trimW, trimH, bleed, gapX, gapY, outPxW, outPxH } = spec;
 
-  const trimW = cardFormat === '88.9x50.8' ? 88.9 : 90.0;
-  const trimH = cardFormat === '88.9x50.8' ? 50.8 : 50.0;
+  const itemW = trimW + bleed * 2;
+  const itemH = trimH + bleed * 2;
 
-  // Tamaño con demasía (+1 mm por lado)
-  const cardW = trimW + bleed * 2; // 92.0 mm o 90.9 mm
-  const cardH = trimH + bleed * 2; // 52.0 mm o 52.8 mm
+  const totalGridW = cols * itemW + (cols - 1) * gapX;
+  const totalGridH = rows * itemH + (rows - 1) * gapY;
+  const marginX = (sheetW - totalGridW) / 2;
+  const marginY = (sheetH - totalGridH) / 2;
 
-  const gapX = ARCH_B_SHEET.gapXMm;
-  const gapY = ARCH_B_SHEET.gapYMm;
-
-  const totalGridW = cols * cardW + (cols - 1) * gapX; // 284.0 mm
-  const totalGridH = rows * cardH + (rows - 1) * gapY; // 426.5 mm
-  const marginX = (sheetW - totalGridW) / 2; // 10.4 mm
-  const marginY = (sheetH - totalGridH) / 2; // 15.35 mm
-
-  const optimizedFront = await optimizeImageForPrintPdf(frontDataUrl, 0.94);
+  const optimizedFront = await optimizeImageForPrintPdf(frontDataUrl, outPxW, outPxH, 0.94);
   const optimizedBack = doubleSided && backDataUrl
-    ? await optimizeImageForPrintPdf(backDataUrl, 0.94)
+    ? await optimizeImageForPrintPdf(backDataUrl, outPxW, outPxH, 0.94)
     : null;
 
   const pdf = new jsPDF({
@@ -167,6 +235,9 @@ export async function exportBusinessCardsArchBPdf({
   });
 
   const safeSheets = Math.max(1, Math.min(sheetsCount, 50));
+  const isFlyer = spec.category === 'flyer';
+  const pieceWord = isFlyer ? 'volantes' : 'tarjetas';
+  const sheetWord = isFlyer ? 'Hoja' : 'Pliego';
 
   for (let s = 0; s < safeSheets; s++) {
     const sheetNum = s + 1;
@@ -176,38 +247,42 @@ export async function exportBusinessCardsArchBPdf({
       pdf.addPage([sheetW, sheetH], 'portrait');
     }
 
-    drawRegistrationCross(pdf, sheetW / 2, 7.5);
-    drawRegistrationCross(pdf, sheetW / 2, sheetH - 7.5);
-    drawRegistrationCross(pdf, 5.5, sheetH / 2);
-    drawRegistrationCross(pdf, sheetW - 5.5, sheetH / 2);
+    if (!isFlyer) {
+      drawRegistrationCross(pdf, sheetW / 2, 7.5);
+      drawRegistrationCross(pdf, sheetW / 2, sheetH - 7.5);
+      drawRegistrationCross(pdf, 5.5, sheetH / 2);
+      drawRegistrationCross(pdf, sheetW - 5.5, sheetH / 2);
+    }
 
-    drawCmykColorBar(pdf, marginX, sheetH - 11.5, totalGridW, 2.2);
+    drawCmykColorBar(pdf, marginX, sheetH - (isFlyer ? 3.2 : 11.5), totalGridW, isFlyer ? 1.4 : 2.2);
 
     pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(7.5);
+    pdf.setFontSize(isFlyer ? 6.5 : 7.5);
     pdf.setTextColor(30, 41, 59);
     pdf.text(
-      `VOLCKAN PRINT STUDIO · ARCH B (12"x18") · TARJETAS ${trimW}x${trimH}mm · TIRO (FRENTE)`,
+      `VOLCKAN PRINT STUDIO · ${spec.label.toUpperCase()} · TIRO (FRENTE)`,
       marginX,
-      8.5
+      isFlyer ? 3.8 : 8.5
     );
 
-    pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(6.5);
-    pdf.setTextColor(100, 116, 139);
-    pdf.text(
-      `Pliego ${sheetNum}/${safeSheets} · 24 tarjetas/pliego (${safeSheets * 24} total) · Sangrado +${bleed}mm`,
-      marginX,
-      11.8
-    );
+    if (!isFlyer) {
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(6.5);
+      pdf.setTextColor(100, 116, 139);
+      pdf.text(
+        `${sheetWord} ${sheetNum}/${safeSheets} · ${perSheet} ${pieceWord}/hoja (${safeSheets * perSheet} total) · Sangrado +${bleed}mm`,
+        marginX,
+        11.8
+      );
+    }
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        const x = marginX + c * (cardW + gapX);
-        const y = marginY + r * (cardH + gapY);
+        const x = marginX + c * (itemW + gapX);
+        const y = marginY + r * (itemH + gapY);
 
-        pdf.addImage(optimizedFront.dataUrl, optimizedFront.format, x, y, cardW, cardH, 'card-front', 'MEDIUM');
-        drawCornerCropMarks(pdf, x, y, cardW, cardH, bleed);
+        pdf.addImage(optimizedFront.dataUrl, optimizedFront.format, x, y, itemW, itemH, 'print-front', 'MEDIUM');
+        drawCornerCropMarks(pdf, x, y, itemW, itemH, bleed, isFlyer ? 2.0 : 2.5, 0.4);
       }
     }
 
@@ -215,44 +290,42 @@ export async function exportBusinessCardsArchBPdf({
     if (doubleSided && optimizedBack) {
       pdf.addPage([sheetW, sheetH], 'portrait');
 
-      drawRegistrationCross(pdf, sheetW / 2, 7.5);
-      drawRegistrationCross(pdf, sheetW / 2, sheetH - 7.5);
-      drawRegistrationCross(pdf, 5.5, sheetH / 2);
-      drawRegistrationCross(pdf, sheetW - 5.5, sheetH / 2);
+      if (!isFlyer) {
+        drawRegistrationCross(pdf, sheetW / 2, 7.5);
+        drawRegistrationCross(pdf, sheetW / 2, sheetH - 7.5);
+        drawRegistrationCross(pdf, 5.5, sheetH / 2);
+        drawRegistrationCross(pdf, sheetW - 5.5, sheetH / 2);
+      }
 
-      drawCmykColorBar(pdf, marginX, sheetH - 11.5, totalGridW, 2.2);
+      drawCmykColorBar(pdf, marginX, sheetH - (isFlyer ? 3.2 : 11.5), totalGridW, isFlyer ? 1.4 : 2.2);
 
       pdf.setFont('helvetica', 'bold');
-      pdf.setFontSize(7.5);
+      pdf.setFontSize(isFlyer ? 6.5 : 7.5);
       pdf.setTextColor(30, 41, 59);
       pdf.text(
-        `VOLCKAN PRINT STUDIO · ARCH B (12"x18") · TARJETAS ${trimW}x${trimH}mm · RETIRO (REVERSO DÚPLEX)`,
+        `VOLCKAN PRINT STUDIO · ${spec.label.toUpperCase()} · RETIRO (REVERSO DÚPLEX)`,
         marginX,
-        8.5
-      );
-
-      pdf.setFont('helvetica', 'normal');
-      pdf.setFontSize(6.5);
-      pdf.setTextColor(100, 116, 139);
-      pdf.text(
-        `Pliego ${sheetNum}/${safeSheets} · Alineación volteo horizontal · 24 tarjetas/pliego`,
-        marginX,
-        11.8
+        isFlyer ? 3.8 : 8.5
       );
 
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const mirroredCol = cols - 1 - c;
-          const x = marginX + mirroredCol * (cardW + gapX);
-          const y = marginY + r * (cardH + gapY);
+          const x = marginX + mirroredCol * (itemW + gapX);
+          const y = marginY + r * (itemH + gapY);
 
-          pdf.addImage(optimizedBack.dataUrl, optimizedBack.format, x, y, cardW, cardH, 'card-back', 'MEDIUM');
-          drawCornerCropMarks(pdf, x, y, cardW, cardH, bleed);
+          pdf.addImage(optimizedBack.dataUrl, optimizedBack.format, x, y, itemW, itemH, 'print-back', 'MEDIUM');
+          drawCornerCropMarks(pdf, x, y, itemW, itemH, bleed, isFlyer ? 2.0 : 2.5, 0.4);
         }
       }
     }
   }
 
   const cleanClient = clientName.replace(/[^a-zA-Z0-9_-]/g, '_');
-  pdf.save(`Tarjetas_ArchB_${safeSheets}Pliegos_${safeSheets * 24}pcs_${cleanClient}.pdf`);
+  const prefix = isFlyer
+    ? formatId === 'flyer_a4'
+      ? 'Volantes_CuartoCarta_A4'
+      : 'Volantes_CuartoCarta_USLetter'
+    : 'Tarjetas_ArchB';
+  pdf.save(`${prefix}_${safeSheets}Hojas_${safeSheets * perSheet}pcs_${cleanClient}.pdf`);
 }

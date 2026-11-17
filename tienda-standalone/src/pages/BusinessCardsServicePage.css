@@ -386,6 +386,12 @@
   margin: 6px 0;
 }
 
+.archb-cards-grid.is-flyer-grid {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 4px;
+}
+
 .archb-card-slot {
   border: 0.5px dashed #94a3b8;
   background: #f8fafc;

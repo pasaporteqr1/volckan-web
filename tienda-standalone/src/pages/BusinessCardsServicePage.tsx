@@ -2,7 +2,11 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StoreTopBar from '../components/StoreTopBar';
 import { CardEditorModal } from '../components/tarjetas/CardEditorModal';
-import { exportBusinessCardsArchBPdf, ARCH_B_SHEET } from '../utils/businessCardExport';
+import {
+  exportPrintSheetPdf,
+  PRINT_FORMATS,
+  type PrintFormatId
+} from '../utils/businessCardExport';
 import { useStoreConfig } from '../context/StoreConfigContext';
 import { CONTACT } from '../constants';
 import { soundEffects } from '../utils/soundEffects';
@@ -12,7 +16,7 @@ export default function BusinessCardsServicePage() {
   const navigate = useNavigate();
   const { storeConfig } = useStoreConfig();
 
-  const [cardFormat, setCardFormat] = useState<'90x50' | '88.9x50.8'>('90x50');
+  const [formatId, setFormatId] = useState<PrintFormatId>('arch_b_90x50');
   const [doubleSided, setDoubleSided] = useState<boolean>(false);
   const [sheetsCount, setSheetsCount] = useState<number>(1);
   const [clientName, setClientName] = useState<string>('');
@@ -32,9 +36,31 @@ export default function BusinessCardsServicePage() {
   const frontInputRef = useRef<HTMLInputElement>(null);
   const backInputRef = useRef<HTMLInputElement>(null);
 
+  const spec = PRINT_FORMATS[formatId];
+  const isFlyer = spec.category === 'flyer';
+  const pieceWord = isFlyer ? 'volantes' : 'tarjetas';
+  const sheetWord = isFlyer ? 'Hoja' : 'Pliego';
+  const sheetWordPlural = isFlyer ? 'Hojas' : 'Pliegos';
+
   const notify = (msg: string) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(prev => (prev === msg ? null : prev)), 4000);
+  };
+
+  const handleSelectFormat = (nextId: PrintFormatId) => {
+    if (nextId === formatId) return;
+    const prevCategory = spec.category;
+    const nextSpec = PRINT_FORMATS[nextId];
+    setFormatId(nextId);
+    soundEffects.playClick();
+
+    // Si cambia entre tarjeta (horizontal) y volante (vertical), avisar si ya había diseño subido
+    if (prevCategory !== nextSpec.category && (frontRawSrc || backRawSrc)) {
+      if (frontRawSrc) {
+        setEditorTarget('front');
+      }
+      notify(`📐 Formato cambiado a ${nextSpec.label}. Ajusta el recorte a la nueva proporción.`);
+    }
   };
 
   const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>, side: 'front' | 'back') => {
@@ -69,15 +95,15 @@ export default function BusinessCardsServicePage() {
       setPreviewSide('back');
     }
     setEditorTarget(null);
-    notify('✅ Diseño ajustado y encuadrado al tamaño estándar con sangrado.');
+    notify(`✅ Diseño ajustado al formato ${spec.trimW} × ${spec.trimH} mm con sangrado.`);
   };
 
-  const totalCards = sheetsCount * ARCH_B_SHEET.cardsPerSheet;
-  const trimLabel = cardFormat === '88.9x50.8' ? '88.9 × 50.8 mm (3.5" × 2")' : '90 × 50 mm';
+  const totalPieces = sheetsCount * spec.perSheet;
+  const trimLabel = `${spec.trimW} × ${spec.trimH} mm`;
 
-  const handleDownloadArchBPdf = async () => {
+  const handleDownloadPdf = async () => {
     if (!frontFinalUrl) {
-      notify('⚠️ Primero sube y ajusta el diseño del frente de tu tarjeta.');
+      notify('⚠️ Primero sube y ajusta el diseño frontal.');
       return;
     }
     if (doubleSided && !backFinalUrl) {
@@ -88,19 +114,21 @@ export default function BusinessCardsServicePage() {
     setIsGeneratingPdf(true);
     soundEffects.playClick();
     try {
-      await exportBusinessCardsArchBPdf({
+      await exportPrintSheetPdf({
         frontDataUrl: frontFinalUrl,
         backDataUrl: doubleSided ? backFinalUrl : undefined,
         sheetsCount,
-        cardFormat,
+        formatId,
         doubleSided,
         clientName: clientName.trim() || 'Volckan_Print'
       });
       soundEffects.playSuccessFanfare();
-      notify(`✅ PDF Arch B generado: ${sheetsCount} pliego(s) · ${totalCards} tarjetas listas para imprenta.`);
+      notify(
+        `✅ PDF generado con compresión 300 DPI: ${sheetsCount} ${sheetsCount === 1 ? sheetWord.toLowerCase() : sheetWordPlural.toLowerCase()} · ${totalPieces} ${pieceWord}.`
+      );
     } catch (err) {
-      console.error('Error generando PDF Arch B:', err);
-      notify('❌ Ocurrió un error al generar el PDF Arch B.');
+      console.error('Error generando PDF:', err);
+      notify('❌ Ocurrió un error al generar el PDF.');
     } finally {
       setIsGeneratingPdf(false);
     }
@@ -110,13 +138,14 @@ export default function BusinessCardsServicePage() {
   const waText = encodeURIComponent(
     [
       '¡Hola Tecno Volckánica! 👋',
-      'Deseo solicitar impresión de *Tarjetas de Presentación en Pliego Arch B (12"×18")*:',
-      `• Pliegos Arch B solicitados: *${sheetsCount}* (${totalCards} tarjetas en total, 24 por pliego)`,
-      `• Medida estándar: ${trimLabel}`,
+      `Deseo solicitar impresión de *${isFlyer ? 'Volantes 1/4 de Carta' : 'Tarjetas de Presentación'}*:`,
+      `• Formato de papel: ${spec.sheetLabel}`,
+      `• Medida final de corte: ${trimLabel}`,
+      `• Cantidad: *${sheetsCount} ${sheetsCount === 1 ? sheetWord.toLowerCase() : sheetWordPlural.toLowerCase()}* (${totalPieces} ${pieceWord} en total, ${spec.perSheet} por hoja)`,
       `• Modalidad: ${doubleSided ? 'Doble Cara (Tiro y Retiro)' : '1 Cara (Solo Frente)'}`,
-      clientName.trim() ? `• A nombre de: ${clientName.trim()}` : '',
+      clientName.trim() ? `• Referencia: ${clientName.trim()}` : '',
       '',
-      'Ya preparé mi PDF Arch B con guías de corte desde la tienda web. ¿Me confirman precio y tiempo de entrega?'
+      'Ya preparé mi PDF con guías de corte desde la tienda web. ¿Me confirman precio y tiempo de entrega?'
     ]
       .filter(Boolean)
       .join('\n')
@@ -124,10 +153,11 @@ export default function BusinessCardsServicePage() {
   const waUrl = `https://wa.me/${targetPhone}?text=${waText}`;
 
   const activePreviewImg = previewSide === 'back' && doubleSided && backFinalUrl ? backFinalUrl : frontFinalUrl;
+  const quickCounts = isFlyer ? [5, 10, 25, 50, 100] : [1, 2, 4, 8, 10, 20];
 
   return (
     <div className="cards-service-root animate-fade-in">
-      <StoreTopBar slogan="Tarjetas de Presentación · Impresión en Pliego Arch B (12×18)" />
+      <StoreTopBar slogan="Estudio de Impresión · Tarjetas (Arch B) y Volantes 1/4 Carta (US Letter / A4)" />
 
       {toastMsg && (
         <div
@@ -153,10 +183,16 @@ export default function BusinessCardsServicePage() {
       <main className="cards-service-container">
         <div className="cards-hero-bar">
           <div>
-            <span className="cards-hero-badge">Volckan Print Studio · Formato Industrial Arch B</span>
-            <h1>🪪 Tarjetas de Presentación en Pliego Arch B</h1>
+            <span className="cards-hero-badge">Volckan Print Studio · Imposición Automática + Compresión 300 DPI</span>
+            <h1>
+              {isFlyer
+                ? '📄 Volantes 1/4 de Carta (US Letter / A4)'
+                : '🪪 Tarjetas de Presentación en Pliego Arch B'}
+            </h1>
             <p>
-              Aprovechamiento máximo de <strong>24 tarjetas por pliego</strong> (3×8 en 304.8 × 457.2 mm) con editor de ajuste, corte y marcas de guillotina.
+              {isFlyer
+                ? `Aprovechamiento óptimo de 4 volantes por hoja (2×2 en ${spec.id === 'flyer_a4' ? 'A4' : 'US Letter'}) con editor de ajuste, corte y marcas de guillotina.`
+                : 'Aprovechamiento máximo de 24 tarjetas por pliego (3×8 en 304.8 × 457.2 mm) con editor de ajuste, corte y marcas de guillotina.'}
             </p>
           </div>
           <button
@@ -174,27 +210,53 @@ export default function BusinessCardsServicePage() {
         <div className="cards-workspace-grid">
           {/* COLUMNA IZQUIERDA: Configuración, Subida y Edición */}
           <div className="cards-panel-box">
-            {/* Paso 1: Medida y Caras */}
+            {/* Paso 1: Producto / Formato */}
             <div>
               <h2 className="cards-section-title">
-                <span className="cards-step-pill">1</span> Medida Estándar y Caras
+                <span className="cards-step-pill">1</span> Elige el Formato de Impresión y Caras
               </h2>
-              <div className="cards-options-row" style={{ marginBottom: '10px' }}>
+
+              <div style={{ fontSize: '0.76rem', color: '#94a3b8', marginBottom: '6px', fontWeight: 700 }}>
+                🪪 Tarjetas de Presentación (Pliego Arch B · 24/pliego)
+              </div>
+              <div className="cards-options-row" style={{ marginBottom: '12px' }}>
                 <button
                   type="button"
-                  className={`cards-option-btn ${cardFormat === '90x50' ? 'active' : ''}`}
-                  onClick={() => setCardFormat('90x50')}
+                  className={`cards-option-btn ${formatId === 'arch_b_90x50' ? 'active' : ''}`}
+                  onClick={() => handleSelectFormat('arch_b_90x50')}
                 >
                   <strong>90 × 50 mm (Estándar)</strong>
-                  <span>9 × 5 cm · 24 tarjetas/pliego</span>
+                  <span>Arch B · 24 tarjetas/pliego</span>
                 </button>
                 <button
                   type="button"
-                  className={`cards-option-btn ${cardFormat === '88.9x50.8' ? 'active' : ''}`}
-                  onClick={() => setCardFormat('88.9x50.8')}
+                  className={`cards-option-btn ${formatId === 'arch_b_88.9x50.8' ? 'active' : ''}`}
+                  onClick={() => handleSelectFormat('arch_b_88.9x50.8')}
                 >
                   <strong>88.9 × 50.8 mm (3.5"×2")</strong>
-                  <span>Formato USA · 24 tarjetas/pliego</span>
+                  <span>Arch B · 24 tarjetas/pliego</span>
+                </button>
+              </div>
+
+              <div style={{ fontSize: '0.76rem', color: '#94a3b8', marginBottom: '6px', fontWeight: 700 }}>
+                📄 Volantes 1/4 de Carta (4 por hoja · Grilla 2×2)
+              </div>
+              <div className="cards-options-row" style={{ marginBottom: '12px' }}>
+                <button
+                  type="button"
+                  className={`cards-option-btn ${formatId === 'flyer_letter' ? 'active' : ''}`}
+                  onClick={() => handleSelectFormat('flyer_letter')}
+                >
+                  <strong>US Letter (1/4 Carta)</strong>
+                  <span>215.9 × 279.4 mm · 4/hoja (100×131 mm)</span>
+                </button>
+                <button
+                  type="button"
+                  className={`cards-option-btn ${formatId === 'flyer_a4' ? 'active' : ''}`}
+                  onClick={() => handleSelectFormat('flyer_a4')}
+                >
+                  <strong>A4 (2ª Opción)</strong>
+                  <span>210 × 297 mm · 4/hoja (97×140 mm)</span>
                 </button>
               </div>
 
@@ -227,7 +289,6 @@ export default function BusinessCardsServicePage() {
                 <span className="cards-step-pill">2</span> Sube tu Diseño y Ajústalo para Corte
               </h2>
 
-              {/* Frente */}
               <div className="cards-upload-box" style={{ marginBottom: doubleSided ? '10px' : '0' }}>
                 <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#e2e8f0' }}>
                   Diseño Frontal (Tiro) *
@@ -242,7 +303,15 @@ export default function BusinessCardsServicePage() {
 
                 {frontFinalUrl ? (
                   <div className="cards-upload-preview">
-                    <img src={frontFinalUrl} alt="Frente ajustado" className="cards-upload-thumb" />
+                    <img
+                      src={frontFinalUrl}
+                      alt="Frente ajustado"
+                      className="cards-upload-thumb"
+                      style={{
+                        aspectRatio: `${spec.trimW + spec.bleed * 2} / ${spec.trimH + spec.bleed * 2}`,
+                        width: isFlyer ? '95px' : '145px'
+                      }}
+                    />
                     <div className="cards-upload-actions">
                       <button
                         type="button"
@@ -271,7 +340,6 @@ export default function BusinessCardsServicePage() {
                 )}
               </div>
 
-              {/* Reverso opcional */}
               {doubleSided && (
                 <div className="cards-upload-box">
                   <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#e2e8f0' }}>
@@ -287,7 +355,15 @@ export default function BusinessCardsServicePage() {
 
                   {backFinalUrl ? (
                     <div className="cards-upload-preview">
-                      <img src={backFinalUrl} alt="Reverso ajustado" className="cards-upload-thumb" />
+                      <img
+                        src={backFinalUrl}
+                        alt="Reverso ajustado"
+                        className="cards-upload-thumb"
+                        style={{
+                          aspectRatio: `${spec.trimW + spec.bleed * 2} / ${spec.trimH + spec.bleed * 2}`,
+                          width: isFlyer ? '95px' : '145px'
+                        }}
+                      />
                       <div className="cards-upload-actions">
                         <button
                           type="button"
@@ -318,10 +394,10 @@ export default function BusinessCardsServicePage() {
               )}
             </div>
 
-            {/* Paso 3: Cantidad de Pliegos Arch B */}
+            {/* Paso 3: Cantidad de Pliegos / Hojas */}
             <div className="cards-sheets-selector">
               <h2 className="cards-section-title">
-                <span className="cards-step-pill">3</span> ¿Cuántos Pliegos Arch B deseas?
+                <span className="cards-step-pill">3</span> ¿Cuántos {sheetWordPlural} deseas?
               </h2>
 
               <div className="cards-sheets-counter">
@@ -333,8 +409,8 @@ export default function BusinessCardsServicePage() {
                   −
                 </button>
                 <div className="cards-qty-display">
-                  <strong>{sheetsCount} {sheetsCount === 1 ? 'Pliego' : 'Pliegos'}</strong>
-                  <span>{totalCards} tarjetas</span>
+                  <strong>{sheetsCount} {sheetsCount === 1 ? sheetWord : sheetWordPlural}</strong>
+                  <span>{totalPieces} {pieceWord}</span>
                 </div>
                 <button
                   type="button"
@@ -346,14 +422,14 @@ export default function BusinessCardsServicePage() {
               </div>
 
               <div className="cards-quick-chips">
-                {[1, 2, 4, 8, 10, 20].map((qty) => (
+                {quickCounts.map((qty) => (
                   <button
                     key={qty}
                     type="button"
                     className={`cards-chip-btn ${sheetsCount === qty ? 'active' : ''}`}
                     onClick={() => setSheetsCount(qty)}
                   >
-                    {qty} {qty === 1 ? 'pliego' : 'pliegos'} ({qty * 24} tarj.)
+                    {qty} {qty === 1 ? sheetWord.toLowerCase() : sheetWordPlural.toLowerCase()} ({qty * spec.perSheet})
                   </button>
                 ))}
               </div>
@@ -378,21 +454,21 @@ export default function BusinessCardsServicePage() {
             {/* Resumen Técnico */}
             <div className="cards-summary-box">
               <div className="cards-summary-row">
-                <span>Formato de Pliego:</span>
-                <strong>Arch B (12" × 18" / 304.8 × 457.2 mm)</strong>
+                <span>Formato de Papel:</span>
+                <strong>{spec.sheetLabel}</strong>
               </div>
               <div className="cards-summary-row">
                 <span>Disposición Optimizada:</span>
-                <strong>3 Columnas × 8 Filas (24 tarjetas/pliego)</strong>
+                <strong>{spec.cols} Columnas × {spec.rows} Filas ({spec.perSheet} {pieceWord}/hoja)</strong>
               </div>
               <div className="cards-summary-row">
                 <span>Medida de Corte:</span>
-                <strong>{trimLabel} (+1 mm sangrado)</strong>
+                <strong>{trimLabel} (+{spec.bleed} mm sangrado)</strong>
               </div>
               <div className="cards-summary-row">
                 <span>Total a Producir:</span>
                 <strong style={{ color: '#34d399' }}>
-                  {sheetsCount} {sheetsCount === 1 ? 'pliego' : 'pliegos'} · {totalCards} tarjetas
+                  {sheetsCount} {sheetsCount === 1 ? sheetWord.toLowerCase() : sheetWordPlural.toLowerCase()} · {totalPieces} {pieceWord}
                 </strong>
               </div>
             </div>
@@ -402,12 +478,12 @@ export default function BusinessCardsServicePage() {
               <button
                 type="button"
                 className="btn-cards-pdf"
-                onClick={handleDownloadArchBPdf}
+                onClick={handleDownloadPdf}
                 disabled={isGeneratingPdf || !frontFinalUrl}
               >
                 {isGeneratingPdf
-                  ? '⏳ Generando Pliego PDF Arch B...'
-                  : `📥 Descargar PDF Arch B (${sheetsCount} ${sheetsCount === 1 ? 'Pliego' : 'Pliegos'} · ${totalCards} Tarjetas)`}
+                  ? '⏳ Generando PDF Optimizado...'
+                  : `📥 Descargar PDF (${sheetsCount} ${sheetsCount === 1 ? sheetWord : sheetWordPlural} · ${totalPieces} ${pieceWord})`}
               </button>
 
               <a
@@ -422,10 +498,12 @@ export default function BusinessCardsServicePage() {
             </div>
           </div>
 
-          {/* COLUMNA DERECHA: Vista Previa en Vivo del Pliego Arch B */}
+          {/* COLUMNA DERECHA: Vista Previa en Vivo del Pliego / Hoja */}
           <div className="archb-preview-card">
             <div className="archb-preview-header">
-              <h3>📄 Vista Previa del Pliego Arch B (24 por hoja)</h3>
+              <h3>
+                📄 Vista Previa ({spec.perSheet} {pieceWord} por {sheetWord.toLowerCase()})
+              </h3>
               {doubleSided && (
                 <div className="cards-quick-chips">
                   <button
@@ -446,16 +524,21 @@ export default function BusinessCardsServicePage() {
               )}
             </div>
 
-            <div className="archb-sheet-paper">
+            <div
+              className="archb-sheet-paper"
+              style={{
+                aspectRatio: `${spec.sheetW} / ${spec.sheetH}`
+              }}
+            >
               <div className="archb-paper-slug">
-                ARCH B (304.8×457.2mm) · {trimLabel} · 24 TARJETAS · {previewSide === 'back' ? 'RETIRO ESPEJADO' : 'TIRO'}
+                {spec.label.toUpperCase()} · {spec.perSheet} {pieceWord.toUpperCase()} · {previewSide === 'back' ? 'RETIRO ESPEJADO' : 'TIRO'}
               </div>
 
-              <div className="archb-cards-grid">
-                {Array.from({ length: 24 }).map((_, idx) => (
+              <div className={`archb-cards-grid ${isFlyer ? 'is-flyer-grid' : ''}`}>
+                {Array.from({ length: spec.perSheet }).map((_, idx) => (
                   <div key={idx} className="archb-card-slot">
                     {activePreviewImg ? (
-                      <img src={activePreviewImg} alt={`Tarjeta ${idx + 1}`} />
+                      <img src={activePreviewImg} alt={`${pieceWord} ${idx + 1}`} />
                     ) : (
                       <span>#{idx + 1}</span>
                     )}
@@ -483,7 +566,7 @@ export default function BusinessCardsServicePage() {
         isOpen={editorTarget !== null}
         imageSrc={editorTarget === 'back' ? backRawSrc : frontRawSrc}
         sideLabel={editorTarget === 'back' ? 'Reverso (Retiro)' : 'Frente (Tiro)'}
-        cardFormat={cardFormat}
+        formatSpec={spec}
         onApply={handleApplyCrop}
         onCancel={() => setEditorTarget(null)}
       />

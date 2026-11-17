@@ -851,7 +851,7 @@ export default function StorePage() {
                       navigate('/tarjetas');
                     }}
                   >
-                    🪪 Tarjetas de Presentación (Pliego Arch B) ➔
+                    🪪 Tarjetas (Arch B) y Volantes 1/4 Carta ➔
                   </div>
                   <div
                     className="prelaunch-cat-chip"
