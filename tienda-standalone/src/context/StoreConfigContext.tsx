@@ -73,7 +73,18 @@ const DEFAULT_STORE_CONFIG: StoreAnnouncementConfig = {
 
 const StoreConfigContext = createContext<StoreConfigContextProps | undefined>(undefined);
 
+const CATALOG_CACHE_VERSION = '2026-11-clean';
+
 export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Invalidar caché local obsoleta de productos/colecciones de ejemplo una sola vez
+  try {
+    if (typeof window !== 'undefined' && localStorage.getItem('store_catalog_schema_version') !== CATALOG_CACHE_VERSION) {
+      localStorage.removeItem('store_products_cache');
+      localStorage.removeItem('store_collections_cache');
+      localStorage.setItem('store_catalog_schema_version', CATALOG_CACHE_VERSION);
+    }
+  } catch {}
+
   const [products, setProducts] = useState<MercadoProduct[]>(() => {
     try {
       const saved = localStorage.getItem('store_products_cache');
