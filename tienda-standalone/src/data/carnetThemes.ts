@@ -121,6 +121,6 @@ export const DEFAULT_CARNET_FORM_CONFIG: CarnetServiceFormConfig = {
   },
   isActive: true,
   deliveryNotes: 'Entrega física en la recepción del evento o envío previo de credenciales en PVC. El pase digital QR se emite inmediatamente.',
-  supportPhone: '50246741239',
+  supportPhone: '50252493030',
   createdAt: '2025-01-01T00:00:00Z'
 };

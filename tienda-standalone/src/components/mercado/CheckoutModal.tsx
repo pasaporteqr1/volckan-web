@@ -169,7 +169,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         ].filter(Boolean);
 
         const message = encodeURIComponent(lines.join('\n'));
-        const targetPhone = whatsappPhone || CONTACT.whatsappPhone || '50246741239';
+        const targetPhone = whatsappPhone || CONTACT.whatsappPhone || '50252493030';
         const waUrl = `https://wa.me/${targetPhone}?text=${message}`;
 
         soundEffects.playSuccessFanfare();
@@ -280,7 +280,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 id="chk-phone"
                 type="tel"
                 required
-                placeholder="Ej. 4674-1239"
+                placeholder="Ej. 5249-3030"
                 value={customer.phone}
                 onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
                 disabled={submitting}

@@ -252,7 +252,7 @@ export default function CarnetServicePage() {
 
   // Enviar confirmación comercial a WhatsApp
   const handleShareToWhatsApp = () => {
-    const phone = carnetConfig.supportPhone || storeConfig.whatsappPhone || '50246741239';
+    const phone = carnetConfig.supportPhone || storeConfig.whatsappPhone || '50252493030';
     const text = [
       `¡Hola ${carnetConfig.institutionName}! 👋`,
       `He completado mi registro de acreditación y credencial oficial:`,

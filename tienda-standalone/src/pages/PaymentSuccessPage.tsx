@@ -20,6 +20,11 @@ export default function PaymentSuccessPage() {
   useEffect(() => {
     soundEffects.playSuccessFanfare();
 
+    // Limpiar el carrito al confirmarse el retorno exitoso desde la pasarela
+    try {
+      localStorage.removeItem('mercado_cart_v1');
+    } catch {}
+
     async function loadOrder() {
       if (orderId && db) {
         try {
@@ -58,6 +63,12 @@ export default function PaymentSuccessPage() {
               <span>Número de Pedido:</span>
               <strong>#{orderNum || order?.orderNumber || orderId || 'VOLCKAN-PAY'}</strong>
             </div>
+            {loading && (
+              <div className="status-detail-row">
+                <span>Consultando detalle de orden...</span>
+                <span>⏳</span>
+              </div>
+            )}
             {order && (
               <>
                 <div className="status-detail-row">

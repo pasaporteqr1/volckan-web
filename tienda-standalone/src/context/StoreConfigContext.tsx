@@ -157,7 +157,7 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       const unsubProducts = onSnapshot(doc(db, 'config', 'mercado_products'), (snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.data();
-          if (Array.isArray(data?.products) && data.products.length > 0) {
+          if (Array.isArray(data?.products)) {
             setProducts(data.products);
             try { localStorage.setItem('store_products_cache', JSON.stringify(data.products)); } catch {}
           }
@@ -169,7 +169,7 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       const unsubCollections = onSnapshot(doc(db, 'config', 'mercado_collections'), (snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.data();
-          if (Array.isArray(data?.collections) && data.collections.length > 0) {
+          if (Array.isArray(data?.collections)) {
             setCollections(data.collections);
             try { localStorage.setItem('store_collections_cache', JSON.stringify(data.collections)); } catch {}
           }
@@ -181,7 +181,7 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
       const unsubCategories = onSnapshot(doc(db, 'config', 'mercado_categories'), (snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.data();
-          if (Array.isArray(data?.categories) && data.categories.length > 0) {
+          if (Array.isArray(data?.categories)) {
             setCategories(data.categories);
             try { localStorage.setItem('store_categories_cache', JSON.stringify(data.categories)); } catch {}
           }
@@ -301,11 +301,14 @@ export const StoreConfigProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const saveStoreConfig = async (newConfig: Partial<StoreAnnouncementConfig>) => {
     const updated = { ...storeConfig, ...newConfig };
+    // Nunca exponer llaves secretas en el documento público de Firestore
+    const { recurrenteSecretKey: _omitSecret, ...publicConfig } = updated;
+    const cleanPublic = sanitizeFirestoreData(publicConfig);
     setStoreConfig(updated);
-    try { localStorage.setItem('store_announcement_cache', JSON.stringify(updated)); } catch {}
+    try { localStorage.setItem('store_announcement_cache', JSON.stringify(cleanPublic)); } catch {}
     if (db) {
       const docRef = doc(db, 'config', 'mercado_config');
-      await setDoc(docRef, { ...updated, updatedAt: new Date().toISOString() }, { merge: true });
+      await setDoc(docRef, { ...cleanPublic, updatedAt: new Date().toISOString() }, { merge: true });
     }
   };
 

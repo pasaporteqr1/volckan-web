@@ -1,9 +1,18 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    
+
     function isAdmin() {
-      return request.auth != null;
+      return request.auth != null
+        && request.auth.token.email != null
+        && (
+          request.auth.token.email.matches('.*@volckan\\.com$')
+          || request.auth.token.email in [
+            'grupovolckan@gmail.com',
+            'pasaportealacultura@gmail.com',
+            'lluviadeideaseditorial@gmail.com'
+          ]
+        );
     }
 
     // Fotografías de carnets y credenciales oficiales
@@ -11,15 +20,15 @@ service firebase.storage {
       // Subida de fotografías desde el formulario (máximo 5 MB, tipo imagen)
       allow create: if request.resource.size < 5 * 1024 * 1024
                     && request.resource.contentType.matches('image/.*');
-      
+
       // Lectura pública de la fotografía para renderizado en credenciales y carnets digitales
       allow read: if true;
-      
+
       // Eliminación o reemplazo restringido a administradores
       allow update, delete: if isAdmin();
     }
 
-    // Assets del portal y tienda (logos, portadas de cuentos/soluciones, banners)
+    // Assets del portal y tienda (logos, portadas de soluciones, banners)
     match /mercado-assets/{allPaths=**} {
       allow read: if true;
       allow write: if isAdmin();

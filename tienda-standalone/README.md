@@ -101,7 +101,7 @@ function App() {
 ### 1. Número de WhatsApp para Pedidos
 Edita `.env` o [`src/constants.ts`](file:///home/lluviadeideas/Im%C3%A1genes/Editorial/Portal%20web/tienda-standalone/src/constants.ts):
 ```env
-VITE_WHATSAPP_PHONE=50246741239
+VITE_WHATSAPP_PHONE=50252493030
 ```
 Cada pedido generado desde el carrito creará un mensaje estructurado con el desglose de productos, cantidades, subtotales, ahorro aplicado y total en Quetzales.
 

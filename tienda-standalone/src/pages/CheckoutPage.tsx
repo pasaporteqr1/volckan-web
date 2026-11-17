@@ -170,11 +170,7 @@ export default function CheckoutPage() {
 
         await createOrder(updatedOrder);
 
-        // Limpiar carrito antes de redirigir
-        try {
-          localStorage.removeItem(CART_STORAGE_KEY);
-        } catch {}
-
+        // No borrar el carrito hasta confirmar el retorno exitoso en PaymentSuccessPage
         soundEffects.playSuccessFanfare();
         // Redirigir al cliente a la pasarela segura de Recurrente
         window.location.href = recurrenteRes.checkout_url;
@@ -203,7 +199,7 @@ export default function CheckoutPage() {
         ].filter(Boolean);
 
         const message = encodeURIComponent(lines.join('\n'));
-        const targetPhone = mercadoConfig.whatsappPhone || CONTACT.whatsappPhone || '50246741239';
+        const targetPhone = mercadoConfig.whatsappPhone || CONTACT.whatsappPhone || '50252493030';
         const waUrl = `https://wa.me/${targetPhone}?text=${message}`;
 
         try {
@@ -211,8 +207,13 @@ export default function CheckoutPage() {
         } catch {}
 
         soundEffects.playSuccessFanfare();
-        window.open(waUrl, '_blank');
-        navigate('/');
+        // Evitar bloqueo de popups en Safari/iOS tras operación asíncrona
+        const popup = window.open(waUrl, '_blank', 'noopener,noreferrer');
+        if (!popup) {
+          window.location.href = waUrl;
+        } else {
+          navigate('/');
+        }
       }
 
     } catch (err: any) {
@@ -365,7 +366,7 @@ export default function CheckoutPage() {
                         id="chk-phone"
                         type="tel"
                         required
-                        placeholder="Ej. 4674-1239"
+                        placeholder="Ej. 5249-3030"
                         value={customer.phone}
                         onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
                         disabled={submitting}

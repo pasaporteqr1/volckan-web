@@ -16,7 +16,6 @@ import KindleBookCover from '../components/mercado/KindleBookCover';
 import KindleBookCard from '../components/mercado/KindleBookCard';
 import KindleCollectionsView from '../components/mercado/KindleCollectionsView';
 import ProductShareModal from '../components/mercado/ProductShareModal';
-import CheckoutModal from '../components/mercado/CheckoutModal';
 import { soundEffects } from '../utils/soundEffects';
 import { CONTACT } from '../constants';
 import './StorePage.css';
@@ -31,12 +30,17 @@ const CART_STORAGE_KEY = 'mercado_cart_v1';
 export default function StorePage() {
   const navigate = useNavigate();
   const { 
-    products: allProducts, 
+    products: rawProducts, 
     collections: allCollections, 
     categories: storeCategories, 
-    storeConfig: mercadoConfig,
-    createOrder
+    storeConfig: mercadoConfig
   } = useStoreConfig();
+
+  // Solo mostrar productos activos (ocultar borradores o deshabilitados desde el panel)
+  const allProducts = useMemo(
+    () => rawProducts.filter(p => p.isActive !== false),
+    [rawProducts]
+  );
 
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -53,8 +57,6 @@ export default function StorePage() {
   // Estado del Modal de Compartir
   const [shareItem, setShareItem] = useState<{ product?: MercadoProduct; collection?: BookCollection } | null>(null);
   const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
-  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState<boolean>(false);
-  const [checkoutInitialMethod, setCheckoutInitialMethod] = useState<'recurrente_card' | 'whatsapp'>('recurrente_card');
 
   // Carrito de compras
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -354,7 +356,7 @@ export default function StorePage() {
     ].filter(Boolean);
 
     const message = encodeURIComponent(lines.join('\n'));
-    const phone = mercadoConfig.whatsappPhone || CONTACT.whatsappPhone || '50246741239';
+    const phone = mercadoConfig.whatsappPhone || CONTACT.whatsappPhone || '50252493030';
     return `https://wa.me/${phone}?text=${message}`;
   };
 
@@ -369,7 +371,7 @@ export default function StorePage() {
       '¿Podrían brindarme asesoría técnica y detalles de implementación? ¡Gracias!'
     ];
     const message = encodeURIComponent(lines.join('\n'));
-    const phone = mercadoConfig.whatsappPhone || CONTACT.whatsappPhone || '50246741239';
+    const phone = mercadoConfig.whatsappPhone || CONTACT.whatsappPhone || '50252493030';
     return `https://wa.me/${phone}?text=${message}`;
   };
 
@@ -385,7 +387,7 @@ export default function StorePage() {
       '¿Podrían darme más información para coordinar la activación? ¡Muchas gracias!'
     ];
     const message = encodeURIComponent(lines.join('\n'));
-    const phone = mercadoConfig.whatsappPhone || CONTACT.whatsappPhone || '50246741239';
+    const phone = mercadoConfig.whatsappPhone || CONTACT.whatsappPhone || '50252493030';
     return `https://wa.me/${phone}?text=${message}`;
   };
 
@@ -485,12 +487,12 @@ export default function StorePage() {
             <span className="announcement-badge">⚡ Volckan</span>
             <span className="announcement-text">{mercadoConfig.announcement || 'Ecosistema Tecnológico Volckan · Implementación, Licencias y Soporte Técnico Especializado'}</span>
             <a 
-              href={`https://wa.me/${mercadoConfig.whatsappPhone || '50246741239'}?text=${encodeURIComponent('Hola Tecno Volckánica, deseo información de sus aplicaciones y soluciones.')}`}
+              href={`https://wa.me/${mercadoConfig.whatsappPhone || '50252493030'}?text=${encodeURIComponent('Hola Tecno Volckánica, deseo información de sus aplicaciones y soluciones.')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="announcement-link"
             >
-              <span>Ventas & Asesoría: <strong>{mercadoConfig.whatsappPhone || '4674-1239'}</strong></span>
+              <span>Ventas & Asesoría: <strong>{mercadoConfig.whatsappPhone || '5249-3030'}</strong></span>
             </a>
           </div>
         </div>
@@ -795,7 +797,7 @@ export default function StorePage() {
                 <span className="whatsapp-card-title">💬 ¿Cotización Empresarial?</span>
                 <p className="whatsapp-card-desc">Atención personalizada, cotizaciones formales y facturación electrónica FEL para empresas y colegios.</p>
                 <a
-                  href={`https://wa.me/${mercadoConfig.whatsappPhone || '50246741239'}?text=${encodeURIComponent('Hola Tecno Volckánica, deseo información y cotización de soluciones empresariales.')}`}
+                  href={`https://wa.me/${mercadoConfig.whatsappPhone || '50252493030'}?text=${encodeURIComponent('Hola Tecno Volckánica, deseo información y cotización de soluciones empresariales.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="whatsapp-card-btn"
@@ -832,7 +834,7 @@ export default function StorePage() {
                 <div className="prelaunch-contact-box">
                   <p>¿Deseas cotizar o consultar disponibilidad para tu empresa de forma anticipada?</p>
                   <a 
-                    href={`https://wa.me/${mercadoConfig.whatsappPhone || '50246741239'}?text=${encodeURIComponent('¡Hola Tecno Volckánica! Me gustaría consultar sobre las aplicaciones y soluciones del ecosistema.')}`}
+                    href={`https://wa.me/${mercadoConfig.whatsappPhone || '50252493030'}?text=${encodeURIComponent('¡Hola Tecno Volckánica! Me gustaría consultar sobre las aplicaciones y soluciones del ecosistema.')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-prelaunch-whatsapp"
@@ -1168,7 +1170,7 @@ export default function StorePage() {
                 </div>
               </div>
               <a
-                href={`https://wa.me/${mercadoConfig.whatsappPhone || '50246741239'}?text=${encodeURIComponent('¡Hola Tecno Volckánica! Me gustaría cotizar soluciones y licencias para una organización.')}`}
+                href={`https://wa.me/${mercadoConfig.whatsappPhone || '50252493030'}?text=${encodeURIComponent('¡Hola Tecno Volckánica! Me gustaría cotizar soluciones y licencias para una organización.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inst-banner-btn"
@@ -1340,19 +1342,7 @@ export default function StorePage() {
                       navigate('/checkout');
                     }}
                   >
-                    <span>💳 Proceder al Pago (Recurrente / Transferencia)</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="amazon-proceed-wa-btn"
-                    onClick={() => {
-                      soundEffects.playClick();
-                      setIsCartDrawerOpen(false);
-                      navigate('/checkout');
-                    }}
-                  >
-                    <span>📋 Revisar Pedido & Facturación FEL ➔</span>
+                    <span>💳 Finalizar Compra y Facturación ➔</span>
                   </button>
 
                   <button
@@ -2006,7 +1996,7 @@ export default function StorePage() {
                   <p className="support-card-desc">Atención por WhatsApp para organizaciones e instituciones.</p>
                 </div>
                 <a
-                  href={`https://wa.me/${mercadoConfig.whatsappPhone || '50246741239'}?text=${encodeURIComponent('Hola Tecno Volckánica, deseo información de sus soluciones de software y hardware.')}`}
+                  href={`https://wa.me/${mercadoConfig.whatsappPhone || '50252493030'}?text=${encodeURIComponent('Hola Tecno Volckánica, deseo información de sus soluciones de software y hardware.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mobile-support-link"
@@ -2044,26 +2034,6 @@ export default function StorePage() {
         product={shareItem?.product}
         collection={shareItem?.collection}
       />
-
-      {/* Modal de Datos de Facturación y Guardado de Pedido */}
-      <CheckoutModal
-        isOpen={isCheckoutModalOpen}
-        onClose={() => setIsCheckoutModalOpen(false)}
-        cartItems={cartItems}
-        totalPrice={totalCartPrice}
-        totalSavings={totalSavings}
-        totalCount={totalCartCount}
-        whatsappPhone={mercadoConfig.whatsappPhone || CONTACT.whatsappPhone}
-        initialMethod={checkoutInitialMethod}
-        onOrderCreated={async (order) => {
-          await createOrder(order);
-        }}
-        onOrderCompleted={() => {
-          setCartItems([]);
-          setIsCartDrawerOpen(false);
-        }}
-      />
-
     </div>
   );
 }

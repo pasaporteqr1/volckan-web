@@ -14,7 +14,7 @@ import { uploadImageToStorage, shrinkBase64Image } from '../utils/imageUpload';
 import { soundEffects } from '../utils/soundEffects';
 import AdminCarnetServicesTab from '../components/carnet/AdminCarnetServicesTab';
 import AdminOrdersTab from '../components/mercado/AdminOrdersTab';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, isAuthorizedAdmin } from '../context/AuthContext';
 import AdminLoginModal from '../components/AdminLoginModal';
 import './AdminStorePage.css';
 
@@ -165,15 +165,18 @@ export default function AdminStorePage() {
     updateOrderStatus
   } = useStoreConfig();
 
-  // Suscribir en vivo a la colección carnet_submissions y orders
+  const hasAdminAccess = Boolean(!authLoading && currentUser && isAdmin && isAuthorizedAdmin(currentUser.email));
+
+  // Suscribir en vivo a la colección carnet_submissions y orders SOLO cuando el admin está autenticado
   useEffect(() => {
+    if (!hasAdminAccess) return;
     const unsubCarnets = subscribeToCarnetSubmissions();
     const unsubOrders = subscribeToOrders();
     return () => {
       if (unsubCarnets) unsubCarnets();
       if (unsubOrders) unsubOrders();
     };
-  }, [subscribeToCarnetSubmissions, subscribeToOrders]);
+  }, [hasAdminAccess, subscribeToCarnetSubmissions, subscribeToOrders]);
 
   const [localConfig, setLocalConfig] = useState<LocalStoreState>({
     mercadoProducts: initialProducts,
@@ -325,7 +328,7 @@ export default function AdminStorePage() {
   // Configuración del Mercado
   const mercadoConfig = localConfig.mercadoConfig || {
     announcement: "Envíos a todo el país en 24-48 hrs · Descuentos por volumen para colegios y docentes",
-    whatsappPhone: "50246741239",
+    whatsappPhone: "50252493030",
     bannerTitle: "Mercado Educativo & Creativo",
     bannerSubtitle: "Materiales didácticos, cuentos y proyectos pedagógicos directos de la editorial",
     showPromoStrip: true
@@ -461,7 +464,7 @@ export default function AdminStorePage() {
 
     const cleanLabel = editingDepartment.label.trim();
     if (!cleanLabel) {
-      alert('Por favor ingresa un nombre para el departamento.');
+      showToast('⚠️ Por favor ingresa un nombre para el departamento.');
       return;
     }
 
@@ -473,7 +476,7 @@ export default function AdminStorePage() {
     // Verificar ID duplicado
     const isDuplicate = departments.some(d => d.id === cleanId && d.id !== originalDepartmentId);
     if (isDuplicate) {
-      alert(`Ya existe un departamento con el identificador "${cleanId}". Por favor usa otro ID.`);
+      showToast(`⚠️ Ya existe un departamento con el identificador "${cleanId}". Usa otro ID.`);
       return;
     }
 
@@ -629,7 +632,7 @@ export default function AdminStorePage() {
   const handleSaveProduct = async () => {
     if (!editingProduct) return;
     if (!editingProduct.title.trim()) {
-      alert('Por favor, ingresa al menos un título para el producto.');
+      showToast('⚠️ Por favor, ingresa al menos un título para el producto.');
       return;
     }
 
@@ -714,7 +717,7 @@ export default function AdminStorePage() {
       setTimeout(() => setUploadStatus(null), 2500);
     } catch (err) {
       console.error('Error subiendo imagen:', err);
-      alert('Error al subir la imagen. Inténtalo de nuevo.');
+      showToast('❌ Error al subir la imagen. Inténtalo de nuevo.');
     } finally {
       setUploadingForId(null);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -734,7 +737,7 @@ export default function AdminStorePage() {
       setTimeout(() => setUploadStatus(null), 2500);
     } catch (err) {
       console.error('Error subiendo imagen modal:', err);
-      alert('Error al subir la imagen.');
+      showToast('❌ Error al subir la imagen.');
     } finally {
       if (modalFileInputRef.current) modalFileInputRef.current.value = '';
     }
@@ -836,7 +839,7 @@ export default function AdminStorePage() {
       setTimeout(() => setUploadStatus(null), 2500);
     } catch (err) {
       console.error('Error subiendo imagen de colección:', err);
-      alert('Error al subir la imagen de la colección.');
+      showToast('❌ Error al subir la imagen de la colección.');
     } finally {
       if (colCoverInputRef.current) colCoverInputRef.current.value = '';
     }
@@ -856,7 +859,7 @@ export default function AdminStorePage() {
       setTimeout(() => setUploadStatus(null), 2500);
     } catch (err) {
       console.error('Error subiendo portada de libro:', err);
-      alert('Error al subir la portada del libro.');
+      showToast('❌ Error al subir la portada del producto.');
     } finally {
       setUploadingBookCoverIdx(null);
     }
@@ -866,7 +869,7 @@ export default function AdminStorePage() {
   const handleSaveCollection = async () => {
     if (!editingCollection) return;
     if (!editingCollection.title.trim()) {
-      alert('Por favor escribe un título para la colección.');
+      showToast('⚠️ Por favor escribe un título para la colección.');
       return;
     }
 
@@ -968,6 +971,88 @@ export default function AdminStorePage() {
     });
     return counts;
   }, [products, departments]);
+
+  if (authLoading) {
+    return (
+      <div className="admin-mercado-wrapper" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', color: '#cbd5e1' }}>
+          <div style={{ fontSize: '2.2rem', marginBottom: '12px' }}>⏳</div>
+          <h3 style={{ margin: 0, color: '#ffffff' }}>Verificando credenciales de administrador...</h3>
+        </div>
+      </div>
+    );
+  }
+
+  if (!hasAdminAccess) {
+    return (
+      <div className="admin-mercado-wrapper" style={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+        <div style={{
+          maxWidth: '460px',
+          width: '100%',
+          background: 'rgba(15, 23, 42, 0.95)',
+          border: '1px solid rgba(255, 255, 255, 0.14)',
+          borderRadius: '20px',
+          padding: '32px 28px',
+          textAlign: 'center',
+          boxShadow: '0 24px 60px rgba(0,0,0,0.45)'
+        }}>
+          <div style={{ fontSize: '2.6rem', marginBottom: '10px' }}>🔐</div>
+          <h2 style={{ margin: '0 0 8px', color: '#ffffff', fontSize: '1.35rem' }}>
+            Acceso Restringido · Panel Administrativo
+          </h2>
+          <p style={{ margin: '0 0 22px', color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.5 }}>
+            Inicia sesión con una cuenta autorizada de <strong>Tecno Volckánica</strong> para administrar productos, pedidos, carnets y configuraciones.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <button
+              type="button"
+              onClick={() => {
+                soundEffects.playClick();
+                setIsAuthModalOpen(true);
+              }}
+              style={{
+                padding: '12px 18px',
+                borderRadius: '10px',
+                border: 'none',
+                background: 'linear-gradient(135deg, #2563eb 0%, #4f46e5 100%)',
+                color: '#ffffff',
+                fontWeight: 700,
+                fontSize: '0.95rem',
+                cursor: 'pointer'
+              }}
+            >
+              🔑 Iniciar Sesión con Google / Correo
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                soundEffects.playClick();
+                navigate('/');
+              }}
+              style={{
+                padding: '10px 16px',
+                borderRadius: '10px',
+                border: '1px solid rgba(255, 255, 255, 0.16)',
+                background: 'transparent',
+                color: '#cbd5e1',
+                fontWeight: 600,
+                fontSize: '0.88rem',
+                cursor: 'pointer'
+              }}
+            >
+              ← Volver a la Tienda
+            </button>
+          </div>
+        </div>
+
+        <AdminLoginModal
+          isOpen={isAuthModalOpen}
+          onClose={() => setIsAuthModalOpen(false)}
+          onSuccess={() => setIsAuthModalOpen(false)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="admin-mercado-wrapper animate-fade-in">
@@ -1834,6 +1919,15 @@ export default function AdminStorePage() {
                       onChange={(e) => setEditingProduct({ ...editingProduct, onlySoldAsPack: e.target.checked })}
                     />
                     <span>🔒 Exclusivo de Suite</span>
+                  </label>
+
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#cbd5e1', fontSize: '0.88rem' }}>
+                    <input
+                      type="checkbox"
+                      checked={editingProduct.isActive ?? true}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, isActive: e.target.checked })}
+                    />
+                    <span>👁️ Visible en Tienda Pública</span>
                   </label>
                 </div>
               </div>
@@ -3229,7 +3323,7 @@ export default function AdminStorePage() {
                       type="text"
                       value={mercadoConfig.whatsappPhone || ''}
                       onChange={(e) => updateMercadoConfig('whatsappPhone', e.target.value)}
-                      placeholder="Ej: 50246741239"
+                      placeholder="Ej: 50252493030"
                     />
                     <small style={{ color: '#94a3b8', fontSize: '0.75rem', marginTop: '4px' }}>
                       A este número se dirigirán los botones de "Comprar Ya en WhatsApp" del catálogo.

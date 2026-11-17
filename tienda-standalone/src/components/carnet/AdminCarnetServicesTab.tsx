@@ -742,7 +742,7 @@ export const AdminCarnetServicesTab: React.FC = () => {
               type="text"
               value={localFormConfig.supportPhone || ''}
               onChange={(e) => updateConfigField('supportPhone', e.target.value)}
-              placeholder="Ej: 50246741239"
+              placeholder="Ej: 50252493030"
             />
           </div>
 

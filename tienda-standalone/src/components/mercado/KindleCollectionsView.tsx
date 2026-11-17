@@ -26,7 +26,7 @@ export const KindleCollectionsView: React.FC<KindleCollectionsViewProps> = ({
   onAddCollectionToCart,
   onQuickView,
   onShareCollection,
-  whatsappPhone = '50246741239',
+  whatsappPhone = '50252493030',
   onGoBackToCatalog
 }) => {
   const [selectedFilter, setSelectedFilter] = useState<string>('all');

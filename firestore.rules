@@ -1,42 +1,61 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Función auxiliar para determinar si el usuario es administrador autenticado
+
+    // Función auxiliar para determinar si el usuario es administrador autorizado
     function isAdmin() {
-      return request.auth != null;
+      return request.auth != null
+        && request.auth.token.email != null
+        && (
+          request.auth.token.email.matches('.*@volckan\\.com$')
+          || request.auth.token.email in [
+            'grupovolckan@gmail.com',
+            'pasaportealacultura@gmail.com',
+            'lluviadeideaseditorial@gmail.com'
+          ]
+        );
     }
 
-    // 1. Configuración del portal, catálogos, servicios y formularios
-    // Permite lectura y escritura directa desde el panel administrativo
+    // 1. Configuración pública del portal, catálogos, servicios y formularios
+    // Lectura pública para la tienda; escritura restringida a administradores
     match /config/{configDoc} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     // 2. Colección de Solicitudes y Emisión de Carnets
+    // Creación pública (formulario), verificación puntual por ID (QR), listado y gestión solo admin
     match /carnet_submissions/{submissionId} {
-      allow read, write: if true;
+      allow create: if true;
+      allow get: if true;
+      allow list, update, delete: if isAdmin();
     }
 
-    // 3. Documento legado de respaldo para sincronización
+    // 3. Documento legado de respaldo para sincronización (solo admin)
     match /data/carnet_submissions {
-      allow read, write: if true;
+      allow read, write: if isAdmin();
     }
 
     // 4. Catálogos y colecciones de la tienda
     match /mercado_products/{document=**} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin();
     }
     match /mercado_collections/{document=**} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin();
     }
     match /mercado_categories/{document=**} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     // 5. Colección de Pedidos y Cotizaciones Comerciales (Store Orders)
+    // Creación pública en checkout, lectura puntual por ID para comprobante, listado/edición solo admin
     match /orders/{orderId} {
-      allow read, write: if true;
+      allow create: if true;
+      allow get: if true;
+      allow list, update, delete: if isAdmin();
     }
   }
 }
